@@ -25,7 +25,7 @@ html[data-motion=reduced]{scroll-behavior:auto}html[data-motion=reduced] *,html[
 /* Navigation labels: two steps larger than the previous 12px desktop size. */
 #main-nav > a:not(.button),
 #main-nav > .promo-dropdown > summary {
-  font-size: 14px;
+  font-size:  17px;
 }
 
 #main-nav .nav-vitrin-link {
@@ -78,7 +78,7 @@ html[data-motion=reduced]{scroll-behavior:auto}html[data-motion=reduced] *,html[
 @media (max-width: 767px) {
   #main-nav > a:not(.button),
   #main-nav > .promo-dropdown > summary {
-    font-size: 16px;
+    font-size:  19px;
   }
 
   #main-nav .nav-vitrin-link {
