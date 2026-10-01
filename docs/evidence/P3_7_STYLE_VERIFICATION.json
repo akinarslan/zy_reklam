@@ -1,0 +1,31 @@
+{
+  "task": "P3.7a",
+  "baselineCommit": "bea521c411c3086f852113117cde63b91f443b99",
+  "tests": {
+    "passed": 29,
+    "failed": 0
+  },
+  "browserEvidence": "P3_7_SHOWROOM_VERIFICATION.json",
+  "preservationEvidence": "P3_7_STYLE_PRESERVATION.json",
+  "runtime": {
+    "panelCapHeights": [
+      0.345,
+      0.345,
+      0.345,
+      0.345
+    ],
+    "titleCapHeight": 0.437193620311142,
+    "titleToPanelRatio": 1.267227884959832,
+    "triangles": 71014,
+    "style": "approved-wordmark-geometric",
+    "chrome": true,
+    "lightPalette": [
+      "#20bcc9",
+      "#c94e58",
+      "#467acb",
+      "#d78c44",
+      "#eef3ed"
+    ]
+  },
+  "deviceCaveat": "Chromium / ANGLE SwiftShader; viewport emulation, not physical mobile GPU acceptance."
+}

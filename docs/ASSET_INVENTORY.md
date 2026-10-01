@@ -65,3 +65,7 @@ Altı fotoğraf (ilk beş Tabela, sonuncu Totem) ve yazili_su.mp4 (Özel Üretim
 P3.7 modelleri bu proje için kodla üretildi; fotoğraf yapıştırılan düzlem veya üçüncü taraf müşteri referansı kullanılmadı. `public/assets/showroom/letter-outlines.json` gerçek font konturlarından türetilmiş SVG yollarıdır; SVGLoader + bevel/extrusion ile fiziksel ön/yan yüzler üretir. ZY REKLAM/totem için DejaVu Sans Bold; DAHA İLERİYE için Nimbus Sans Narrow Regular kullanıldı. Türkçe İ/Ü/Ş dahil kaynak glifler doğrulandı. Font yazılımları dağıtılmadı; türetilmiş konturlar ve ilgili DejaVu/URW lisans bildirimleri `FONT_NOTICES.txt` ile kaydedildi. Hero’nun özgün logo/font varlıkları aynı kaldı.
 
 `static-desktop.webp` ve `static-mobile.webp` yeni gerçek WebGL sahnesinin hareketsiz ekran görüntüleridir; Three.js yüklenemediğinde veya context kaybında aynı ürün düzenini gösterir. Her üç ürün temsili ürün tasarımı olarak etiketlenir; gerçek üretim/müşteri sahipliği kabulü değildir.
+
+## 2026-10-01 — P3.7a harf revizyonu
+
+Yeni ekran görüntüsü açılıp geometrik/yuvarlatılmış özgün ZY wordmark stili doğrulandı. letter-outlines.json artık DejaVu/Nimbus fontlarını kullanmaz: özgün SVG’den Z/Y/R/E/K/L/A/M konturları ve aynı dilde kodla oluşturulan ek glifler. Hero wordmark dosyası değişmedi. Python fontTools yalnız isteğe bağlı kontur üretim script’i içindir; npm build sürümlenmiş JSON’u kullanır. Önceki FONT_NOTICES.txt önceki varlıkların tarihsel bildirimi olarak tutulur. Masaüstü/mobil WebP yedekler yeni gerçek krom kasalı 3D görünümden yenilendi.

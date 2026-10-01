@@ -1,6 +1,6 @@
 # ZY Reklam — Yol Haritası
 
-**Sürüm:** 1.9 · **Başlangıç:** 2026-10-01
+**Sürüm:** 1.10 · **Başlangıç:** 2026-10-01
 
 **Kaynak:** [ARCHITECTURE.md](ARCHITECTURE.md) · **Zorunlu kontrol:** [AGENTS.md](AGENTS.md)
 
@@ -10,7 +10,7 @@
 
 **Aktif aşama:** P3 — Gerçek 3D açılış uygulandı; performans kapanışı devam ediyor.
 
-**Kullanıcı önceliği:** P3.7 — Hero’ya dokunmadan bağımsız 3D Vitrin. Kullanıcının açık önceliği fiziksel P3.6 kapanışı beklenirken uygulanır; diğer aşamalar tamamlanmış sayılmaz.
+**Kullanıcı önceliği:** P3.7a — Vitrin harf stili, krom kasa ve kontrollü renkli yaklaşma ışığı. Kullanıcının açık önceliği fiziksel P3.6 kapanışı beklenirken uygulanır; diğer aşamalar tamamlanmış sayılmaz.
 
 P1 kaynak, logo, font ve iletişim incelemesi yapıldı; gerçek proje bilgileri/fotoğrafları doğrulanmadığı için P1.5 açık kalır. Planın engel yönetimi uyarınca bağımsız P2 temeli tamamlandı. Vite/TypeScript sayfası, statik SVG poster, mobil menü, hareket tercihi ve temel WhatsApp iletişim akışı çalışıyor. Gerçek 3D açılış şimdi uygulanmıştır. Üretim animasyonları, galeri, stüdyo ve upload henüz uygulanmadı.
 
@@ -90,6 +90,8 @@ Süreler takvim taahhüdü değildir. P1 sonrası logo kalitesi, gerçek görsel
 - [x] P3.7 Bağımsız 3D Vitrin: iki farklı kutu harf tabela/asimetrik totem; obje bazlı etkileşim, lazy/reduced/mobile/fallback ve korunan hero kanıtı. **Tamamlandı; fiziksel GPU kabulü P3.6 kapsamında açık.**
 
 **Kabul:** Amblem özgün kaynakla eşleşir; yaklaşık yazı logosu kullanılmaz. İlk içerik 3D’yi beklemez. CTA üzerine canvas binmez. Model/texture/env başlangıç 3 MB hedefinde ölçülür. Tanımlı masaüstü ve mobil cihazlarda kare hızı kaydedilir; bütçe aşılıyorsa sonraki aşamadan önce optimize edilir veya hedef revizyonu gerekçelendirilir.
+
+- [x] P3.7a Referanstaki geometrik harf stili; krom çevre, beş kontrollü ışık rengi; eşit yön yazıları ve büyük ZY REKLAM. **Tamamlandı.**
 
 ## 7. P4 — Üretim sahnesi ve hizmetler
 
@@ -335,3 +337,12 @@ Sıradaki tek iş:
 - npm run build / TypeScript ve mevcut 26 + yeni 3 = 29 test başarılı. 360/768/1440 px yatay taşma yok; vitrin 360/1440 görüntüleri incelendi. P3_7_SHOWROOM_VERIFICATION.json ve dört ekran görüntüsü. Yazılım GPU/emülasyon fiziksel mobil performans kabulü değildir.
 - Vite ortak Three/SVGLoader chunk’ı ~600 KB / gzip ~154 KB için boyut uyarısı verir; dinamik yükleme korunur. Domain/Cloudflare, menüler ve WhatsApp değişmedi. LAST_REPORT.md üzerine yazıldı ve terminalde gösterildi.
 - Kayıt hedefi GitHub main. Canlı Cloudflare yayını bu yerel/üretim preview kabulünün parçası değildir; sonraki tek iş canlı yeni bölümün görünürlüğünü doğrulamaktır.
+
+### 2026-10-01 — P3.7a geometrik harf/krom/renkli ışık revizyonu
+
+- Yeni görsel açıldı: özgün wordmark’ın yuvarlatılmış/geometrik harf dili. Vitrindeki ZY REKLAM için özgün SVG konturları, diğer yazılar için aynı harfler ve uyumlu ek glifler. Önceki farklı-font şartı kullanıcının açık yeni talimatıyla revize edildi; hero kaynağı değişmedi.
+- Her harf gerçek ekstrüzyon krom kasa + ayrı iç ön yüz. Mouse/touch/klavye ile cam göbeği/kırmızı/mavi/turuncu/beyaz kontrollü ışık; idle kapalı. Totem amber tepkisini korur. FİKİR/TASARIM/ÜRETİM/GELİŞTİRME cap-height 0,345; ZY REKLAM 0,4372, yaklaşık %27 büyük. Uzun kelime küçültülmedi, kutular genişletildi.
+- Geometri 71.014 üçgen; ilk krom prototipindeki 167.318 üçgen bevel/curve bütçesiyle azaltıldı. Dinamik yükleme, idle/offscreen duruşu, mobil DPR/kalite düşürme ve reduced-motion sabit poz korunur. Fiziksel GPU kabulü hâlâ P3.6 kapsamında açık.
+- npm run build / TypeScript ve tüm 29 test başarılı, 0 fail. Yeni kabul stil/krom/beş renk, eşit harf yüksekliği/büyük başlık ile genişletildi. 360/1440 vitrin ekranları ve iki tabela ışıklı görünümü incelendi; 360/768/1440 genel taşma kontrolleri geçti.
+- P3_7_STYLE_PRESERVATION.json: index/main/CSS, hero modülleri, navigation, WhatsApp ve Wrangler aynı. Modeller/renderer, kontur üretici/JSON, responsive yedekler, showroom testi, envanter/plan/rapor ve kabul kanıtları değişti. Mimari v1.11/A12; roadmap v1.10. LAST_REPORT.md üzerine yazıldı ve terminalde gösterildi.
+- GitHub main kayıt hedefidir; canlı Cloudflare yayını bu yerel kabulden çıkarılmaz. Sıradaki tek iş: canlı vitrinde yeni krom/renkli harflerin yayınlandığını doğrulamak.

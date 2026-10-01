@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-01T18:28:23.677Z",
+  "date": "2026-10-01T18:47:41.039Z",
   "browser": "153.0.8010.0",
   "renderer": "ANGLE SwiftShader; viewport emulation, not a physical GPU",
   "checks": [
@@ -7,13 +7,13 @@
       "check": "geometry, independent pointer/touch, idle/offscreen, overflow",
       "width": 1440,
       "passed": true,
-      "triangles": "34374"
+      "triangles": "71014"
     },
     {
       "check": "geometry, independent pointer/touch, idle/offscreen, overflow",
       "width": 360,
       "passed": true,
-      "triangles": "34374"
+      "triangles": "71014"
     },
     {
       "check": "reduced motion with real 3D and fixed pose",
