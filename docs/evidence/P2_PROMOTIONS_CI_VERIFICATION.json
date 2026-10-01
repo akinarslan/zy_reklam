@@ -1,0 +1,27 @@
+{
+  "stage": "P2.7",
+  "commit": "740e8c6c2b54155d99cf113f6331cfe9221b1ee5",
+  "runId": 36871098814,
+  "jobId": 110398761411,
+  "url": "https://github.com/akinarslan/zy_reklam/actions/runs/36871098814",
+  "verifiedAt": "2026-10-01T13:48:24.871817+00:00",
+  "status": "completed",
+  "conclusion": "success",
+  "tests": 23,
+  "pass": 23,
+  "fail": 0,
+  "artifactId": 11166564298,
+  "checks": [
+    "npm ci",
+    "generated five production HTML entries",
+    "TypeScript and production build",
+    "Playwright browser install",
+    "desktop hover/keyboard/Escape/outside click and category navigation",
+    "mobile touch/category navigation and nested Escape focus",
+    "four direct category routes at 360/768/1440 with image decode, SEO and no 3D request",
+    "JavaScript-disabled category navigation, WhatsApp text and sitemap",
+    "existing 19 P2/P3/device tool regressions"
+  ],
+  "logVerification": "Job log reread; 23 tests, 23 pass, 0 fail and four new promotion checks confirmed.",
+  "scope": "Headless browser layout and interaction evidence; P3 physical GPU acceptance remains open."
+}

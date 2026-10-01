@@ -264,3 +264,5 @@ Sıradaki tek iş:
 - Düzeltme: native odak aktarımı sırasında erken microtask kapanması dokunma/Tab hedefini gizliyordu; kontrol sonraki macrotask’e alındı ve regresyon testinde geçti. Ana nav stilleri breadcrumb’dan ayrılır; alt bölüm lazy görselleri ilk viewport testiyle karıştırılmaz.
 - Mimari v1.7 / A10, roadmap v1.6. P2.7 tamamlandı; P3.6 fiziksel kabulü açık. Main JS 8.162 bayt, Node gzip 3.377; renderer öncekiyle aynı 606.055 / 155.041. Vite 500 KB uyarısı sürer. Canlı DNS/hosting değiştirilmedi.
 - Sıradaki tek plan işi: tanımlı fiziksel masaüstü ve orta seviye mobil ölçümü/manual kontrollerle P3.6 kabulünü kapatmak.
+
+- Uzak kayıt 740e8c6c2b54155d99cf113f6331cfe9221b1ee5 main üzerinde yeniden okundu: 55 dosyanın blob kimliği ve yedi ana dosyanın tam içeriği eşleşti; diğer 73 dosya değişmedi. GitHub Actions 36871098814 / job 110398761411 başarılı tamamlandı. Loglar tekrar okundu: npm ci, beş HTML sayfası üretimi/build, tarayıcı kurulumu ve 23 test / 23 pass / 0 fail; dört yeni promosyon kontrolü doğrulandı. Artifact 11166564298 kaydedildi. Kanıt: docs/evidence/P2_PROMOTIONS_CI_VERIFICATION.json.

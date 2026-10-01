@@ -18,7 +18,7 @@ Güncel AGENTS.md, mimari v1.6 ve roadmap v1.5 tamamen okundu. Uzak main başlan
 
 ## Değişen dosyalar
 
-index.html; package.json; vite.config.ts; scripts/generate-promotions.mjs; src/content/promotions.json; src/sections/navigation.ts; src/styles/main.css ve promotions.css; promosyonlar altındaki dört index.html; public/assets/promotions altındaki 28 WebP ve public/sitemap.xml; tests/browser.test.mjs ve promotions.test.mjs; ARCHITECTURE.md, ROADMAP.md, README.md, LAST_REPORT.md; docs/ASSET_INVENTORY.md, PROMOTION_ASSETS.md ve güncel P2/P3/araç test kanıtları ile kaynak bütçesi.
+index.html; package.json; vite.config.ts; scripts/generate-promotions.mjs; src/content/promotions.json; src/sections/navigation.ts; src/styles/main.css ve promotions.css; promosyonlar altındaki dört index.html; public/assets/promotions altındaki 28 WebP ve public/sitemap.xml; tests/browser.test.mjs ve promotions.test.mjs; ARCHITECTURE.md, ROADMAP.md, README.md, LAST_REPORT.md; docs/ASSET_INVENTORY.md, PROMOTION_ASSETS.md ve güncel P2/P3/araç test kanıtları ile kaynak bütçesi; docs/evidence/P2_PROMOTIONS_CI_VERIFICATION.json.
 
 ## Doğrulama ve sınırlar
 
@@ -29,7 +29,7 @@ index.html; package.json; vite.config.ts; scripts/generate-promotions.mjs; src/c
 - Masaüstü/mobil mega menü ve ofis/VIP kategori ekranları incelendi. Fotoğraflar dosya adlarıyla tahmin edilmedi; görsel içerik eşlemesi kaynak hash’leriyle kayıtlıdır.
 - Main JS 8.162 ham / 3.377 Node gzip bayt; renderer 606.055 / 155.041 bayt ile değişmedi. 500 KB Vite uyarısı sürer. Güncel bütçe P3_BUDGET.json içindedir.
 - Bu katalog ürün görselleri P1.5/P5 gerçek müşteri projesi kabulünü kapatmaz. P3 fiziksel GPU kabulü ve P4–P9 açık kalır. Canlı DNS/hosting değişikliği yapılmadı.
-- Uzak kayıt ve CI sonucu doğrulama sonrası rapora eklenecek.
+- Uzak kayıt 740e8c6c2b54155d99cf113f6331cfe9221b1ee5 main üzerinde yeniden okundu: 55 dosyanın blob kimliği ve yedi ana dosyanın tam içeriği eşleşti; diğer 73 dosya değişmedi. GitHub Actions 36871098814 / job 110398761411 başarılı tamamlandı. Loglar tekrar okundu: npm ci, beş HTML sayfası üretimi/build, tarayıcı kurulumu ve 23 test / 23 pass / 0 fail; dört yeni promosyon kontrolü doğrulandı. Artifact 11166564298 kaydedildi. Kanıt: docs/evidence/P2_PROMOTIONS_CI_VERIFICATION.json.
 
 ## Sıradaki tek iş
 
