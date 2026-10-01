@@ -298,3 +298,12 @@ Sıradaki tek iş:
 
 - Uzak kayıt: uygulama commit’i f1b63733417776c17fff32118e6e1e5a4913b0dc; 71 değişen blob ve yedi ana dosyanın tam içeriği yeniden okunup eşleştirildi. GitHub Actions 36878091598 / job 110422601064: npm ci/build başarılı, son kontrolde test devam ediyor; CI başarı iddiası yok.
 - Canlı kontrol: Workers adresi yeni kayıttan sonra açıldı ve bir kez yeniden yüklendi. Promosyon menüsü mevcut; Projeler eski #projeler bağlantısı. P2.8 yeni canlı yayını doğrulanmadı; en güncel commit için Cloudflare build/Retry kontrolü gerekir.
+
+### 2026-10-01 — P2.8 ek tabela/totem/fıskiye medyası
+
+- Kullanıcı Projeler mega menüsünün canlıya ulaştığını bildirdi. İlk beş yeni görsel Tabela, son fotoğraf Totem, yazili_su.mp4 Özel Üretim kategorisine eklendi.
+- Başta AGENTS.md, mimari v1.8 ve roadmap v1.7 tamamen okundu. Uzak main d3c1cbc9534b8076f73fd63b4b4248efb19ecc5a; uzak ek workflow/Wrangler değişiklikleri korunur.
+- Altı görsel ve video karesi incelendi. Kaynaklar değişmeden tutuldu; 12 responsive WebP, 540×960 H.264/14,51 sn sessiz faststart video ve poster üretildi. Yeni görseller galeri başında. Tabela toplam 7, Totem 3 fotoğraf+1 video; Özel Üretim 5 fotoğraf+1 video.
+- TypeScript/production build ve üç proje tarayıcı testi geçti; 360/1440 px tüm kategori görselleri decode, menüler/SEO/JS kapalı gezinme, iki videonun ilk yükte indirilmemesi ve gerçek oynatılması doğrulandı. P2_PROJECTS_VERIFICATION.json güncellendi. Tüm 26 test bu işte yeniden çalıştırılmadı.
+- Video açıklaması kategoriye göre JSON’dan üretilebilir; mimari v1.9. P3 fiziksel performans, P1.5/P5 sahiplik kabulü ve aşama kapıları değişmedi.
+- GitHub kaydı sonrası yeni içeriklerin canlı yayını ayrıca doğrulanır. Sıradaki tek iş: Workers önizlemesinde yeni medya yayınının kontrolü.

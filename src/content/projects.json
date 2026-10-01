@@ -43,6 +43,126 @@
   ],
   "photos": [
     {
+      "id": "ornek-20",
+      "category": "tabela",
+      "title": "Cephe üzerinde büyük harf tabela",
+      "alt": "Cephe üzerinde büyük harf tabela",
+      "sourceFile": "913d55f381339a131027accd62d47b00(1).jpg",
+      "sourceSHA256": "9101654ff044a9b8ddb1f74150396e863647ae62e6b1b0f2b6fa25f087053d1c",
+      "variants": [
+        {
+          "src": "/assets/project-examples/ornek-20-480.webp",
+          "width": 480,
+          "height": 565
+        },
+        {
+          "src": "/assets/project-examples/ornek-20-960.webp",
+          "width": 828,
+          "height": 974
+        }
+      ]
+    },
+    {
+      "id": "ornek-21",
+      "category": "tabela",
+      "title": "Dikey turuncu giriş tabelası",
+      "alt": "Dikey turuncu giriş tabelası",
+      "sourceFile": "13121bf69332fa3c7218f1fb3a111593(1).jpg",
+      "sourceSHA256": "aceb5791acc5ab714bba5fa681a7ad39f5b891fe1183d0210cb825449ab7262a",
+      "variants": [
+        {
+          "src": "/assets/project-examples/ornek-21-480.webp",
+          "width": 480,
+          "height": 960
+        },
+        {
+          "src": "/assets/project-examples/ornek-21-960.webp",
+          "width": 541,
+          "height": 1082
+        }
+      ]
+    },
+    {
+      "id": "ornek-22",
+      "category": "tabela",
+      "title": "Duvar üzerinde kabartma yazılı tabela",
+      "alt": "Duvar üzerinde kabartma yazılı tabela",
+      "sourceFile": "b90c261e1297f75f6b545429c8524370(1).jpg",
+      "sourceSHA256": "ce324adfbe842c1c2b12ff9589619b83613d235c590a1542ed0a2046e3cd49ac",
+      "variants": [
+        {
+          "src": "/assets/project-examples/ornek-22-480.webp",
+          "width": 480,
+          "height": 360
+        },
+        {
+          "src": "/assets/project-examples/ornek-22-960.webp",
+          "width": 936,
+          "height": 702
+        }
+      ]
+    },
+    {
+      "id": "ornek-23",
+      "category": "tabela",
+      "title": "Renkli yüzeyli büyük harf tabela",
+      "alt": "Renkli yüzeyli büyük harf tabela",
+      "sourceFile": "e4f9f9e32fa97211065f6a951992c783(1).jpg",
+      "sourceSHA256": "b25dd302d994f6e2379e869d993fdee5af6f6ab41a6e5f180da60a25ab774265",
+      "variants": [
+        {
+          "src": "/assets/project-examples/ornek-23-480.webp",
+          "width": 480,
+          "height": 480
+        },
+        {
+          "src": "/assets/project-examples/ornek-23-960.webp",
+          "width": 960,
+          "height": 960
+        }
+      ]
+    },
+    {
+      "id": "ornek-24",
+      "category": "tabela",
+      "title": "Işıklı kutu asma tabela",
+      "alt": "Işıklı kutu asma tabela",
+      "sourceFile": "Ekran görüntüsü 2026-10-01 164247.png",
+      "sourceSHA256": "5b8dd8f9f4a4d26dcdb72e67f8e7d8f8950a8392a6775c6cec2b92d6cbfd85b5",
+      "variants": [
+        {
+          "src": "/assets/project-examples/ornek-24-480.webp",
+          "width": 397,
+          "height": 383
+        },
+        {
+          "src": "/assets/project-examples/ornek-24-960.webp",
+          "width": 397,
+          "height": 383
+        }
+      ]
+    },
+    {
+      "id": "ornek-25",
+      "category": "totem",
+      "title": "Çok markalı alışveriş merkezi totemi",
+      "alt": "Çok markalı alışveriş merkezi totemi",
+      "sourceFile": "c274857879888c58625a67cb7ecaa1c9.jpg",
+      "sourceSHA256": "e64af42c78f5aa1086bc2b17644564aa18df0b9ab5e56f141d187ea70e6b17e4",
+      "variants": [
+        {
+          "src": "/assets/project-examples/ornek-25-480.webp",
+          "width": 480,
+          "height": 821
+        },
+        {
+          "src": "/assets/project-examples/ornek-25-960.webp",
+          "width": 935,
+          "height": 1600
+        }
+      ]
+    },
+    {
       "id": "ornek-01",
       "category": "lazer-kesim",
       "title": "Işıklı ağaç desenli duvar panoları",
@@ -435,6 +555,19 @@
       "durationSeconds": 14.72,
       "sourceFile": "indirpin.com.tr_fe0bb3eda3cece275f1e6b43940d4869(1).mp4",
       "sourceSHA256": "968bc4ff4f7c91e40125e38a963815749432a084f26844c90d28f52fbe1038c3"
+    },
+    {
+      "id": "yazili-su",
+      "category": "ozel-uretim",
+      "title": "Su ile yazı oluşturan özel üretim fıskiye",
+      "description": "Su akışlarıyla yazı ve desen oluşturan düzeneği gösteren 15 saniyelik örnek video. Videoyu oynat düğmesiyle başlatabilirsiniz.",
+      "src": "/assets/project-examples/yazili-su.mp4",
+      "poster": "/assets/project-examples/yazili-su-poster.webp",
+      "width": 540,
+      "height": 960,
+      "durationSeconds": 14.512,
+      "sourceFile": "yazili_su.mp4",
+      "sourceSHA256": "0b72158641c5e704540b9984053868c163f027228892c980f0fb8acb8a505ac5"
     }
   ],
   "disclaimer": "Bu görseller tasarım ve uygulama örnekleridir; ZY REKLAM tarafından tamamlanmış müşteri projeleri olarak sunulmaz."

@@ -1,6 +1,6 @@
 # ZY Reklam — Mimari
 
-**Sürüm:** 1.8 · **Tarih:** 2026-10-01 · **Durum:** P3 gerçek 3D ve güvenli yollar uygulandı; fiziksel cihaz performans kabulü açık
+**Sürüm:** 1.9 · **Tarih:** 2026-10-01 · **Durum:** P3 gerçek 3D ve güvenli yollar uygulandı; fiziksel cihaz performans kabulü açık
 
 **İlgili belgeler:** [Yol haritası](ROADMAP.md) · [Çalışma kuralları](AGENTS.md)
 
@@ -315,3 +315,7 @@ JSON kaynak src/content/projects.json; 19 fotoğraf ve bir dijital totem videosu
 Gezinme adaptörü iki disclosure’ı birlikte yönetir; birini açmak diğerini kapatır. Native summary, dokunma, hover, ArrowDown, Escape odak dönüşü ve JS kapalı kategori geçişleri korunur. Türetilmiş fotoğraflar lazy/responsive; büyük görsel ayrı bağlantıdan açılır. Video H.264/540×960, ses çıkarılmış, faststart; poster, controls/playsinline/preload=none ile açık kullanıcı eyleminde oynar. Menüde video yüklenmez.
 
 Görseller tasarım ve uygulama örnekleridir; gerçek ZY müşteri işleri veya doğrulanmış lazer kesim tekniği iddiası yoktur. P1.5/P5 gerçek müşteri bilgisi kabulü açık, P3 fiziksel GPU kabulü ve sonraki aşamaların kapıları korunur. 26/26 yerel test geçti; üç yeni kabul iki menü etkileşimi, beş doğrudan sayfa/görsel/video/SEO ve JS kapalı koleksiyon geçişidir.
+
+### 2026-10-01 — v1.9 proje medya genişletmesi (P2.8 / A11)
+
+Video içerik kaydı isteğe bağlı description alanı içerir; üretici açıklamayı HTML-escape ederek gösterir. Varsayılan açıklama kategori bağımsızdır, video sayısı clips.length ile üretilir. Su ile yazı/desen oluşturan fıskiye Özel Üretim kategorisinde kullanıcı başlatmalı video olarak sunulur. Altı yeni fotoğrafla toplam 25 fotoğraf ve iki video vardır. Fotoğraf/video lazy yükleme ve tek renderer sınırı korunur.

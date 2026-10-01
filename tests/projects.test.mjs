@@ -39,11 +39,11 @@ test('Beş proje sayfası: gerçek URL, tüm görseller, SEO, mobil düzen ve is
   await page.locator('img').evaluateAll(images=>Promise.all(images.map(i=>{i.loading='eager';return i.decode();})));
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);assert.deepEqual(errors,[]);assert.deepEqual(renderers,[]);assert.deepEqual(videos,[]);
   assert.ok(await page.locator('.project-disclaimer').isVisible());
-  if(cat.id==='totem'){
+  if(await page.locator('video').count()){
    const v=page.locator('video');assert.equal(await v.getAttribute('preload'),'none');assert.equal(await v.getAttribute('autoplay'),null);
    await v.evaluate(e=>{e.load();});await page.waitForFunction(()=>document.querySelector('video').readyState>=2);
    assert.ok(await v.evaluate(e=>e.duration>14&&e.duration<16));await v.evaluate(e=>e.play());await page.waitForFunction(()=>document.querySelector('video').currentTime>0.1);await v.evaluate(e=>e.pause());
-   if(width===1440)await page.screenshot({path:'docs/evidence/projects-totem-1440.png',fullPage:true});
+   if(width===1440)await page.screenshot({path:`docs/evidence/projects-${cat.id}-1440.png`,fullPage:true});
   }
   checks.push({check:'direct-page',category:cat.id,width,passed:true});await page.close();
  }

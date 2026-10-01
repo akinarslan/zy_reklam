@@ -29,3 +29,17 @@ Kullanıcının 1 Ekim 2026 yüklemesi. Görsel içerik incelenerek sınıfland�
 
 Lazer Kesim: desen/silüet/dekor görselleri bu kullanım fikrine göre sınıflandırılmıştır; kaynak üretim yönteminin doğrulandığı iddia edilmez.
 Dijital Baskı: illüstrasyonlar baskıda kullanılabilecek görsel tasarım örnekleridir; tamamlanmış baskı işleri olarak etiketlenmez.
+
+## 1 Ekim ek yüklemesi
+
+| Kaynak | Kategori | İçerik |
+| --- | --- | --- |
+| 913d55f381339a131027accd62d47b00(1).jpg | Tabela | Cephe üzerinde büyük harf tabela |
+| 13121bf69332fa3c7218f1fb3a111593(1).jpg | Tabela | Dikey turuncu giriş tabelası |
+| b90c261e1297f75f6b545429c8524370(1).jpg | Tabela | Duvar üzerinde kabartma yazılı tabela |
+| e4f9f9e32fa97211065f6a951992c783(1).jpg | Tabela | Renkli yüzeyli büyük harf tabela |
+| Ekran görüntüsü 2026-10-01 164247.png | Tabela | Işıklı kutu asma tabela |
+| c274857879888c58625a67cb7ecaa1c9.jpg | Totem | Çok markalı alışveriş merkezi totemi |
+| yazili_su.mp4 | Özel Üretim | Su ile yazı/desen oluşturan fıskiye |
+
+Altı fotoğrafın 480/960 WebP türevleri kaynak büyütülmeden hazırlandı. Video 540×960, 14,51 sn, ses çıkarılmış H.264/faststart ve WebP poster ile sunulur. Orijinal dosyalar değiştirilmedi; kaynak SHA-256 ve ölçüler JSON içindedir.

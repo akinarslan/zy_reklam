@@ -55,3 +55,7 @@ Kullanıcının sağladığı 14 görsel açılıp dört ana kategoriye ayrıld�
 ## 2026-10-01 — Proje örnekleri
 
 19 fotoğraf ve bir video kullanıcı tarafından örnek kategoriler için sağlandı. Görsel inceleme/eşleme docs/PROJECT_ASSETS.md, kaynak hash ve ölçüler src/content/projects.json içinde. Üçüncü taraf marka/filigran içerikleri müşteri referansı olarak sunulmaz; mevcut işaretler silinmedi. 38 WebP ve video/poster public/assets/project-examples altında; kaynak dosyalar değiştirilmedi.
+
+## 2026-10-01 — Ek proje medyası
+
+Altı fotoğraf (ilk beş Tabela, sonuncu Totem) ve yazili_su.mp4 (Özel Üretim) kullanıcı talimatıyla eklendi. Dosya eşleşmeleri docs/PROJECT_ASSETS.md; kaynak SHA-256 ve türev ölçüleri src/content/projects.json içinde. 12 WebP ve video/poster; kaynaklar değişmedi, sahiplik/gerçek ZY müşteri referansı doğrulaması yapılmadı.
