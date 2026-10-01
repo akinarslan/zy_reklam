@@ -1,0 +1,22 @@
+{
+  "stage": "P3.6",
+  "commit": "410f4dfc6215ef1308839ad6063bc5a997a47ed3",
+  "runId": 36861229725,
+  "jobId": 110365655795,
+  "url": "https://github.com/akinarslan/zy_reklam/actions/runs/36861229725",
+  "status": "completed",
+  "conclusion": "success",
+  "verifiedAt": "2026-10-01T12:23:40.884083+00:00",
+  "checks": {
+    "npmCi": "success",
+    "build": "success",
+    "browserInstall": "success",
+    "tests": 16,
+    "pass": 16,
+    "fail": 0,
+    "shadowFinalPoseAndIdle": "success"
+  },
+  "artifactId": 11161358935,
+  "logVerification": "Job log reread; 16 tests, 16 pass, 0 fail and shadow test success confirmed.",
+  "physicalDeviceAcceptance": "Not run; remains open."
+}

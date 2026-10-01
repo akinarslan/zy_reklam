@@ -220,3 +220,5 @@ Sıradaki tek iş:
 - Üç dönüşümlü önce/sonra ölçümü: masaüstü yazılımsal ortanca 36,6 → 38,2 FPS; mobil emülasyon 51,2 → 52,3 FPS. Sonuç aralıkları örtüşür; fiziksel GPU başarısı iddia edilmez. Ham örnekler ve yöntem P3_PERFORMANCE_COMPARISON.json içinde; tekrar ölçüm aracı scripts/compare-scene.mjs.
 - Mimari v1.4, roadmap v1.3 ve kaynak bütçesi güncellendi. Logo/font/legacy, yayın ve iletişim bilgileri değiştirilmedi. Vite ertelenen paket için 500 KB uyarısı sürüyor.
 - P3.6 ve P3 kabulü açık; P4 başlatılmadı. Sıradaki tek iş: fiziksel masaüstü ve orta seviye mobil ölçümünü tamamlayıp P3 kabulünü kapatmak.
+
+- Uzak kayıt: 410f4dfc6215ef1308839ad6063bc5a997a47ed3 main üzerinde yeniden okundu; 12 dosyanın Git blob kimliği ve altı ana dosyanın tam içeriği eşleşti. Özgün SVG blobu korundu. GitHub Actions 36861229725 / job 110365655795 başarılı; loglarda 16 test / 16 pass / 0 fail doğrulandı. CI kanıtı P3_PERFORMANCE_CI_VERIFICATION.json içinde.
