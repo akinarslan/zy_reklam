@@ -274,3 +274,12 @@ Sıradaki tek iş:
 - https://zyreklamdijital.com.tr/ sayfasının bu tarihte alınan web içeriğinde eski hero/CTA/promosyon başlıkları bulunuyor; proje kaynaklarındaki yeni içerikle eşleşmiyor. Bu fark yayın sürümünün eşleşmediğine işaret eder. Kullanıcının baktığı tam URL henüz bilinmiyor; o adresin canlı DOM kontrolü yapılmadı.
 - Main commit status kaydında yayımlama/Cloudflare önizleme bağlantısı yok (statuses=[]); bu tek başına hosting bulunmadığını kanıtlamaz. Önceki GitHub kayıt ve test başarısı canlı yayın başarısı olarak sunulmaz.
 - Mimari değişmedi; v1.7 / A10 korundu. P3.6 fiziksel kabulü ve sonraki aşamaların kapıları korunur. Kullanıcı önceliği: önce baktığı URL ve ona bağlı yayın hedefini belirleyip P2.7 canlı görünürlüğünü doğrulamak. DNS/hosting değişikliği yapılmadı.
+
+### 2026-10-01 — P2.7 Workers adresinde yayın farkının doğrulanması
+
+- Kullanıcı önizleme hedefini verdi: https://zy-reklam.akinarslanceng.workers.dev/#promosyonlar. AGENTS.md, mimari v1.7 ve roadmap v1.6 okundu; main 86bd58bbafcaa11d5e12d4a266db378ff96b9328 doğrulandı. Yerel Git commit içermez.
+- Cloud Browser’da hedef açıldı ve Promosyonlar bağlantısına basıldı. Canlı #main-nav içinde yalnızca <a href="#promosyonlar">Promosyonlar</a> var; dört kategorili disclosure yok. Promosyon bölümü eski üç maddeli içerik gösteriyor. Canlı JS /assets/index-BxE0oBOY.js, CSS /assets/index-Dq4TeZOt.css. GitHub güncel index.html mega menüsünden farklı sürüm sunuluyor.
+- Güncel GitHub main kontrolünde yalnızca GitHub Actions verify success bulundu; Cloudflare check/status kaydı yok. Bu, entegrasyonun kapalı olduğunun kesin kanıtı değildir. Doğru repo/dal, otomatik build tetikleyicisi, son build ve aktif deployment bilgisi Cloudflare panelinde görülmeden neden kesinleştirilemez.
+- Web aracı hedefi açamadı; shell isteği 403 verdi. Canlı tarayıcı gözlemi başarılıdır; shell 403 sitesi kapalı/bot engeli diye yorumlanmadı.
+- Cloudflare resmi Workers Builds belgeleri repo bağlantısı, production branch, build ve deploy adımlarını doğruluyor. Hesap/panel erişimi mevcut değil; ayar veya DNS değiştirilmedi. Uygulama/mimari değişmedi; P3.6 ve aşama kapıları korunur.
+- Sıradaki tek iş: zy-reklam Worker’ın Settings > Builds ekranında bağlı repo/dal ve son build/deployment commit’ini kontrol edip otomatik yayın eşleşmesini düzeltmek.

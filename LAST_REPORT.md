@@ -2,22 +2,23 @@
 
 **Tarih:** 2026-10-01
 
-**Talimat:** Promosyonlar mega menüsünün görünmediği bildiriminin kontrolü. **İş:** P2.7 görünürlük/yayın teşhisi.
+**Talimat / iş:** Kullanıcının verdiği Cloudflare Workers önizlemesinin GitHub değişikliklerini alıp almadığını kontrol etme; P2.7 canlı görünürlük, P9.1 yayın teşhisi.
 
-Güncel AGENTS.md, mimari v1.7 ve roadmap v1.6 kontrol edildi. Yerel Git commit içermez; uzak main 11b099f9d506b853f851385e1aa72244f0c7941f doğrulandı. Uzak index.html içinde fotoğraflı dört kategorili mega menü mevcuttur. Mimari değişmedi; v1.7 / A10 sınırlarına uyuldu.
+AGENTS.md, mimari v1.7 ve roadmap v1.6 okundu; uzak main 86bd58bbafcaa11d5e12d4a266db378ff96b9328 kontrol edildi. Mimari ve uygulama kodu değişmedi.
 
-## Sonuç
+## Doğrulanmış sonuç
 
-- Güncel production build üzerinde dört promosyon testi yeniden geçti, sıfır hata: masaüstü hover/klavye/Escape, mobil dokunma/kategori geçişi, dört doğrudan sayfa/SEO/görsel/responsive kontrol ve JavaScript kapalı gezinme.
-- Gerçek masaüstü mega menü ekran görüntüsü yeniden incelendi. Uygulama kodunda yeni hata tespit edilmedi.
-- ZY Reklam alan adı https://zyreklamdijital.com.tr/ için alınan güncel web içeriği eski hero/CTA/promosyon başlıklarını gösteriyor; yeni proje içeriğiyle eşleşmiyor. Bu, yayın sürümünün farklı olduğuna işaret eder. Kullanıcının baktığı adres bilinmediğinden o sayfanın DOM veya menü kontrolü yapılmadı.
-- Uzak main commit status kaydında Cloudflare/yayın URL'si yok. Bu kaydın boş olması hosting bulunmadığını kanıtlamaz. Önceki 23/23 CI sonucu ve GitHub kayıtları canlı yayını doğrulamaz.
-- Hosting/DNS veya uygulama kodu değiştirilmedi; P3.6 fiziksel cihaz kabulü açık kalır.
+- https://zy-reklam.akinarslanceng.workers.dev/#promosyonlar Cloud Browser’da açıldı. Promosyonlar bağlantısına tıklanıp güncel erişim ağacı ve canlı gezinme HTML’i incelendi.
+- Canlı gezinmede Promosyonlar basit #promosyonlar bağlantısıdır; fotoğraflı dört kategorili mega menü yoktur. Bölümde önceki üç maddeli promosyon metni vardır. GitHub’da hazırlanan güncel menü bu adreste sunulmuyor.
+- Canlı paketler: /assets/index-BxE0oBOY.js ve /assets/index-Dq4TeZOt.css. Bu gözlem kullanıcının bildirimiyle uyumludur; yerel önizleme başarıları canlı yayın başarısı değildir.
+- Güncel main kontrolünde GitHub Actions verify başarılı; Cloudflare check veya status görünmüyor. Otomatik entegrasyonun kapalı olduğu kesinleştirilmedi. Yanlış repo/dal, başarısız build, eski aktif deployment veya tetikleme sorunu panel/log kontrolünü gerektirir.
+- Web aracı hedefi açamadı; shell isteği 403 verdi. Canlı tarayıcı gözlemi başarılıdır; bu diğer erişim hataları site arızası olarak yorumlanmadı.
+- Cloudflare resmi Workers Builds/Git integration/Build branches belgeleri incelendi. Otomatik yayın bağlı repo ve production branch için build ve deploy işlemlerinin başarıyla çalışmasına bağlıdır.
 
-## Değişen dosyalar
+## Dosyalar ve sınır
 
-ROADMAP.md, LAST_REPORT.md ve tekrar çalıştırılan testin docs/evidence/P2_PROMOTIONS_VERIFICATION.json kanıtı. Önceki CI kanıtları korunur.
+ROADMAP.md ile LAST_REPORT.md güncellendi. Uygulama değişmediği için build/test yeniden çalıştırılmadı; bu talimat için gerçek canlı gezinme kontrolü yapıldı. Cloudflare hesap ayarları ve build logları erişilebilir değil; DNS veya hosting değişikliği yapılmadı. P3.6 fiziksel kabulü açık kalır.
 
 ## Sıradaki tek iş
 
-Kullanıcının baktığı tam URL ve ona bağlı yayın hedefini belirlemek; ardından mega menünün o yayında açıldığını ve dört kategori bağlantısının çalıştığını doğrulamak. Bu adres bilgisi henüz yok.
+Cloudflare’da Workers & Pages > zy-reklam > Settings > Builds ekranındaki bağlı depo/dal ve son build/deployment commit’ini kontrol etmek. Beklenen kaynak akinarslan/zy_reklam, production branch main, build npm run build ve derlenmiş statik yayın dizini dist’tir. Panel görülmeden deploy komutu veya mevcut yapılandırma hakkında kesin hüküm verilmez.
