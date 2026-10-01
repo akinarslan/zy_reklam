@@ -1,0 +1,140 @@
+{
+  "stage": "P3",
+  "date": "2026-10-01T12:01:40.590Z",
+  "browser": "153.0.8010.0",
+  "renderer": "headless Chromium / ANGLE SwiftShader (software GPU)",
+  "deviceCaveat": "Viewport emulation is not a physical mobile GPU measurement.",
+  "checks": [
+    {
+      "check": "production-webgl",
+      "width": 1440,
+      "heroStage": "",
+      "sceneState": "ready",
+      "sceneReason": "",
+      "logoPaths": "8",
+      "logoHoles": "2",
+      "sceneResources": "active",
+      "quality": "high",
+      "renderCount": "3",
+      "renderLoop": "idle",
+      "rotationY": "-0.12",
+      "rotationX": "0.05",
+      "triangles": "9714",
+      "passed": true
+    },
+    {
+      "check": "production-webgl",
+      "width": 360,
+      "heroStage": "",
+      "sceneState": "ready",
+      "sceneReason": "",
+      "logoPaths": "8",
+      "logoHoles": "2",
+      "sceneResources": "active",
+      "quality": "high",
+      "renderCount": "3",
+      "renderLoop": "idle",
+      "rotationY": "-0.12",
+      "rotationX": "0.05",
+      "triangles": "9714",
+      "passed": true
+    },
+    {
+      "check": "mouse-bounds-cta-visibility-idle",
+      "angles": {
+        "yaw": 0.22856589038666464,
+        "pitch": 0.14893594212155714
+      },
+      "passed": true
+    },
+    {
+      "check": "real-touch-horizontal-drag-vertical-scroll",
+      "yaw": 0.2522269234076845,
+      "passed": true
+    },
+    {
+      "check": "reduced-motion-no-download-disposal",
+      "passed": true
+    },
+    {
+      "check": "fallback",
+      "scenario": "no-webgl",
+      "reason": "load-or-webgl-error",
+      "passed": true
+    },
+    {
+      "check": "fallback",
+      "scenario": "module-failure",
+      "reason": "load-or-webgl-error",
+      "passed": true
+    },
+    {
+      "check": "fallback",
+      "scenario": "context-loss",
+      "reason": "context-lost",
+      "passed": true
+    },
+    {
+      "check": "adaptive-quality-policy",
+      "measuredSimulationFPS": 10,
+      "decisions": [
+        "lower",
+        "poster"
+      ],
+      "passed": true
+    },
+    {
+      "check": "late-module-motion-race-and-initial-content",
+      "passed": true
+    },
+    {
+      "check": "visibility-page-transition-events-disposal",
+      "method": "controlled lifecycle event simulation",
+      "passed": true
+    },
+    {
+      "check": "interaction-fps-sample",
+      "profile": {
+        "name": "desktop-software",
+        "width": 1440,
+        "dpr": 1,
+        "cpu": 1
+      },
+      "elapsedMs": 4503.900000001117,
+      "renderedFrames": 168,
+      "state": "ready",
+      "quality": "high",
+      "fps": 37.30100579496843,
+      "physicalDevice": false,
+      "passed": true
+    },
+    {
+      "check": "interaction-fps-sample",
+      "profile": {
+        "name": "mobile-software-emulation",
+        "width": 360,
+        "dpr": 2,
+        "cpu": 4
+      },
+      "elapsedMs": 4514.799999999627,
+      "renderedFrames": 232,
+      "state": "ready",
+      "quality": "high",
+      "fps": 51.38655089926888,
+      "physicalDevice": false,
+      "passed": true
+    }
+  ],
+  "chunks": [
+    {
+      "file": "index-CkxKmveN.js",
+      "bytes": 7235,
+      "gzipBytes": 3089
+    },
+    {
+      "file": "renderer-Matpv4fW.js",
+      "bytes": 604835,
+      "gzipBytes": 154582
+    }
+  ]
+}

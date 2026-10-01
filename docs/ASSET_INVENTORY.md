@@ -22,7 +22,7 @@
 | --- | --- | --- |
 | Mevcut site kaynakları | 32 dosya legacy altında; manifest doğrulandı | P1.1 tamamlandı |
 | Vektör ve PDF logo | Kaynak SVG ve kullanıcı PDF’si incelendi | P1.3 tamamlandı |
-| Statik poster / 3D kontur girdisi | Özgün SVG hazır; 3D geometri henüz yok | P1.3 tamamlandı, P3.1 bekliyor |
+| Statik poster / 3D kontur girdisi | Özgün SVG hazır; P3 gerçek ekstrüzyon geometrisi bu konturlardan üretilir | P1.3/P3.1 tamamlandı |
 | Citadel of Blackrose | WOFF, lisans metni ve glif kontrolü kaydedildi | P1.4 tamamlandı; ödeme belgesi yok |
 | Gerçek proje fotoğrafları | Müşteri işi oldukları doğrulanmadı | P1.5 / P5 bekliyor |
 
@@ -45,3 +45,5 @@ P1.2 envanter çalışması tamamlandı; eksik proje içeriği varmış gibi gö
 Kaynak PDF, ekran görüntüsündeki yatay yazıya ek olarak geometrik amblem içerir. Son verilen referans gereği yatay tam yazı logosu ana kimliktir; PDF’nin ek amblemi zorunlu açılış sahnesi olarak eklenmedi.
 
 Fontun ticari kullanım koşulu kaydedilmiştir; kaynakta mevcut kullanımı ve kullanıcının font talimatı geliştirme kararıdır. Bu envanter bir satın alma belgesi veya hak onayı üretmez.
+
+P3 kaynak bütünlüğü: özgün SVG değişmedi; sekiz path ve iki iç boşluk renderer geometrisinde doğrulandı. Harici GLB/HDR/texture eklenmedi. docs/evidence/P3_BUDGET.json kimlik ve boyut kanıtını içerir.

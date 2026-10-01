@@ -2,36 +2,35 @@
 
 **Tarih:** 2026-10-01
 
-**Talimat:** “devam et”; mimari ve yol haritasına bağlı kalarak geliştirmeyi sürdür, GitHub deposuna kaydet.
+**Talimat:** “devam et”; planın sıradaki P3 açılış sahnesini uygula ve GitHub’a kaydet.
 
-**Aşama/iş:** P1.1–P1.7 incelemesi; bağımsız P2.1–P2.6 tamamlandı. P1.5 gerçek proje içeriği bekliyor.
+**Aşama/iş:** P3.1–P3.5 uygulandı ve doğrulandı; P3.6 fiziksel cihaz performans kabulü açık. P3 bütünü devam ediyor.
 
 ## Yapılanlar
 
-- Güncel AGENTS.md, mimari v1.1 ve roadmap v1.0 tamamen okundu. Uzak main başlangıcı d066a2afc095367608d3932a75e62064c2755819 doğrulandı. Yerel Git ağacında commit yok; uzak kayıt GitHub bağlayıcısı üzerinden yönetiliyor.
-- Mevcut adex-reklam-demo kaynağının 497677a411e8e229333152b7474a1d5f34eb6152 commit'inden 32 dosya legacy altında değişmeden arşivlendi; SHA-256/Git blob manifesti yazıldı.
-- Kullanıcı logo PDF’si ve kaynak SVG incelendi. Son verilen yatay logo korunarak SVG poster ve siyah zeminli favicon hazırlandı. Kaynak PNG değişmedi.
-- Citadel WOFF ve lisans metni alındı; başlığın glifleri mevcut, genel Türkçe sette Ğ/ğ/İ/Ş/ş eksik. Gövde/formda sistem fontu kullanıldı. Kaynak lisansın tek proje için €2 koşulu kaydedildi; ödeme belgesi yok.
-- Vite/TypeScript, paket/lockfile, semantik responsive sayfa, özgün logo, hizmet içeriği, zümrüt footer, mobil menü ve hareket tercihi uygulandı.
-- Temel iletişim formu doğrulanmış numarayla WhatsApp metni hazırlar. Mesaj otomatik gönderilmez; testler gerçek mesaj göndermez.
-- Mimari v1.2, roadmap v1.1, README, envanter ve baseline güncellendi. Altı davranış testi ve doğrulama CI tanımı eklendi.
+- Güncel AGENTS.md, mimari v1.2 ve roadmap v1.1 tamamen okundu; main başlangıcı 86173e1b45bb93c89dc81828f00a49288c956ed2 doğrulandı. Yerel belge blobları uzakla aynı; yerel Git commit içermiyor, uzak kayıt GitHub bağlayıcısıyla yönetilir.
+- Özgün yatay SVG’nin sekiz path’i ve iki iç boşluğu gerçek katmanlı ekstrüzyona çevrildi. Beyaz ZY kasa/LED/pleksi; altın REKLAM metal materyalidir. Kaynak logo değiştirilmedi ve yaklaşık fontla çizilmedi.
+- Three.js 0.186.1 ve tip paketi 0.186.0 lockfile ile sabitlendi; renderer yalnızca görünür sahne için dinamik yüklenir. RoomEnvironment cihazda üretilir; harici HDR/model/texture yoktur.
+- Fare ±18°/±10° sınırları, mobil yatay sürükleme/dikey scroll, idle/offscreen/gizli sekmede durma ve kaynak temizliği uygulandı. Düşük hızda kalite azaltma/poster politikası eklendi.
+- Hareket azaltma, yükleme yarışı ve WebGL/context/paket hata yolları statik SVG’yi korur. İletişim normal DOM’da çalışır; otomatik mesaj gönderilmez.
+- Mimari v1.3 ve roadmap v1.2 güncellendi; P3_ACCEPTANCE, JSON bütçe/test kanıtları ve masaüstü/mobil gerçek renderer JPEG önizlemeleri kaydedildi.
 
 ## Değişen dosyalar
 
-ARCHITECTURE.md, ROADMAP.md, README.md, LAST_REPORT.md; docs/ASSET_INVENTORY.md, docs/BASELINE.md, docs/sources/*, docs/evidence/P2_VERIFICATION.json; legacy/*; index.html, package.json, package-lock.json, tsconfig.json, .gitignore, .github/workflows/verify.yml; src/config, sections, motion, quote, styles ve main.ts; tests/browser.test.mjs; public marka/font/SEO varlıkları. AGENTS.md ve verilen PNG korunmuştur.
+src/scene/hero.ts, renderer.ts, logo.ts, quality.ts; src/main.ts, src/styles/main.css, index.html; package.json/package-lock.json; tests/scene.test.mjs; ARCHITECTURE.md, ROADMAP.md, README.md, LAST_REPORT.md, docs/ASSET_INVENTORY.md, docs/P3_ACCEPTANCE.md, docs/evidence/P2_VERIFICATION.json, P3_VERIFICATION.json, P3_BUDGET.json ve p3-hero-1440/360.jpg. Kaynak PNG/SVG/PDF/font/legacy dosyaları korundu.
 
-## Doğrulama
+## Doğrulama ve sınırlar
 
-- TypeScript ve `npm run build` başarılı. Son build: HTML 11,08 KB, CSS 13,95 KB, JS 3,89 KB; bu değerler public font/görsellerini içermez.
-- Chromium 153.0.8010.0 ile altı Playwright testi başarılı, sıfır hata. 360/768/1440 px genişliklerde yatay taşma yok; görseller yüklendi ve JS çalışma hatası görülmedi. Masaüstü başlık 60 CSS px = 45 pt.
-- Mobil menü, Escape/odak dönüşü, hareket azaltma, Türkçe/özel karakterli WhatsApp metni, boş girdi ve JavaScript kapalı iletişim yolu doğrulandı.
-- Üç ekran boyutunda tam sayfa görüntüsü üretildi; masaüstü ve mobil görsel kontrolü yapıldı. JSON kanıt depoya alınır; PNG’ler yerel test çıktısıdır; CI’de de üretilir ve Git dışında tutulur.
-- Playwright CDN tarayıcı kurulumu bu ortamda bozuk ZIP ile başarısız oldu. Gerçek yerel Chromium yolu ile aynı test paketi 6/6 geçti; alternatif kurulum araçları repo dışında tutuldu.
-- Kaynak dosyaların 32 blob kimliği doğrulandı. GitHub main üzerinde 00e642bcdc9e2517892ea6406deea796952f1a2d commit’i yeniden okundu. 62 değişen dosyanın Git blob kimliği yerel beklenen değerlerle eşleşti; mimari, roadmap, README, bu raporun ilk kaydı ve index.html tam içerikleri yeniden okunarak karşılaştırıldı. AGENTS.md ve özgün PNG blobları korundu. Raporun bu son doğrulama eki ayrı kayıtla güncellenir; kendi commit SHA’sı için döngü oluşturulmaz.
-- CI tanımı eklendi; GitHub Actions 36857500110 çalışması başladı, npm ci ve build başarılı. Tarayıcı kurulum/test adımları son gözlemde devam ediyordu; uzak test başarısı henüz iddia edilmez. Lighthouse/FPS, gerçek 3D, stüdyo, upload ve P8 kabulü çalıştırılmadı.
+- `npm run build`: TypeScript ve production build başarılı. Vite uyarısı: ertelenen renderer ham boyutu 500 KB üzerindedir; uyarı eşiği değiştirilmedi, maliyet raporlandı.
+- 15/15 yerel test geçti: altı P2 regresyon + dokuz P3 testi. P3 testleri production preview ile gerçek Chromium/WebGL kullanır; yalnızca mock çizim değildir. 360/768/1440 px taşma ve JS kapalı iletişim kontrolü geçti.
+- Gerçek mobil dokunma CDP touch olaylarıyla sınandı; yatay dönüş ve dikey kaydırma geçti. R/A boşlukları ve sekiz kontur doğru. Tek aktif canvas var.
+- Context kaybı gerçek WEBGL_lose_context uzantısıyla üretildi; poster ve form korundu. Sekme/BFCache geçişleri kontrollü olay simülasyonudur. Kaynak temizliği ve geciken import/tercih yarışı kontrolleri geçti.
+- İlk grafik denemesi eksik loader nedeniyle WebGL açamadı; Chromium paketinin loader/SwiftShader dosyaları geçici QA klasöründe düzeltildi. Bu dosyalar uygulama bağımlılığı veya repo varlığı yapılmadı. Son gerçek WebGL testleri başarılıdır.
+- Sahne SVG kaynağı 8.340 bayt; dış model/texture/env transferi sıfır. Ertelenen renderer JS 604.835 bayt ham / 154.582 bayt Node gzip; ana JS 7.235 bayt ham. Model/texture/env 3 MB transfer hedefi altında.
+- Yazılımsal ANGLE SwiftShader etkileşim örneği: masaüstü ~37,3 FPS; CPU4 mobil görünüm ~51,4 FPS. Bunlar fiziksel GPU sonuçları değildir; masaüstü örnek yaklaşık 60 FPS hedefinin altındadır. Hedef karşılandı denmez. Fiziksel masaüstü/orta seviye mobil kabulü açık; P3 tamamlandı işaretlenmedi.
+- Masaüstü ve mobil JPEG ekran görüntüleri incelendi. Tam sayfa mobil software compositor görüntüsünde görülen tekrar eden capture tile’ları kullanıcı önizlemesi olarak kullanılmadı; gerçek viewport JPEG’leri kontrol edildi.
+- Önceki P2 GitHub Actions 36857500110 başarılı tamamlandı. Bu P3 değişikliğinin uzak CI sonucu ve GitHub kayıt doğrulaması kayıt sonrası eklenecektir. Lighthouse/P8/stüdyo/upload çalıştırılmadı; P4 başlamadı.
 
-## Durum ve sıradaki iş
+## Sıradaki tek iş
 
-P2 tamamlandı; P1 gerçek proje bilgileri nedeniyle kısmi. CNC/UV hizmetleri ve demo fotoğrafları gerçek müşteri işi olarak eklenmedi. Hero mevcut durumda statik özgün SVG tabela posteridir. Canlı site/DNS/hosting değiştirilmedi.
-
-**Sıradaki tek iş:** P3.1 — özgün yatay SVG konturlarını katmanlı tabela geometrisine dönüştürmek.
+**P3.6 — Fiziksel cihaz profillerinde aktif etkileşim FPS ölçümü ve gerekiyorsa optimizasyonla P3 kabulünü kapatmak.** P1.5 gerçek proje içeriği de bekliyor. Canlı site, DNS ve hosting değiştirilmedi.

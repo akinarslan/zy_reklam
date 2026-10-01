@@ -1,6 +1,6 @@
 # ZY Reklam — Yol Haritası
 
-**Sürüm:** 1.1 · **Başlangıç:** 2026-10-01
+**Sürüm:** 1.2 · **Başlangıç:** 2026-10-01
 
 **Kaynak:** [ARCHITECTURE.md](ARCHITECTURE.md) · **Zorunlu kontrol:** [AGENTS.md](AGENTS.md)
 
@@ -8,9 +8,9 @@
 
 **Son tamamlanan aşama:** P2 — Ön yüz ve içerik temeli.
 
-**Sıradaki uygulama aşaması:** P3 — Özgün yatay logo ile gerçek 3D açılış.
+**Aktif aşama:** P3 — Gerçek 3D açılış uygulandı; performans kapanışı devam ediyor.
 
-P1 kaynak, logo, font ve iletişim incelemesi yapıldı; gerçek proje bilgileri/fotoğrafları doğrulanmadığı için P1.5 açık kalır. Planın engel yönetimi uyarınca bağımsız P2 temeli tamamlandı. Vite/TypeScript sayfası, statik SVG poster, mobil menü, hareket tercihi ve temel WhatsApp iletişim akışı çalışıyor. 3D, üretim animasyonları, galeri, stüdyo ve upload henüz uygulanmadı.
+P1 kaynak, logo, font ve iletişim incelemesi yapıldı; gerçek proje bilgileri/fotoğrafları doğrulanmadığı için P1.5 açık kalır. Planın engel yönetimi uyarınca bağımsız P2 temeli tamamlandı. Vite/TypeScript sayfası, statik SVG poster, mobil menü, hareket tercihi ve temel WhatsApp iletişim akışı çalışıyor. Gerçek 3D açılış şimdi uygulanmıştır. Üretim animasyonları, galeri, stüdyo ve upload henüz uygulanmadı.
 
 Durumlar: `bekliyor`, `devam ediyor`, `engelli`, `tamamlandı`. İş kutuları yalnızca kabul kanıtı üretildikten sonra işaretlenir. Bu dosya her kullanıcı talimatından önce okunur ve iş bitiminde güncellenir.
 
@@ -21,7 +21,7 @@ Durumlar: `bekliyor`, `devam ediyor`, `engelli`, `tamamlandı`. İş kutuları y
 | P0 | Mimari, roadmap ve çalışma kuralları | Kullanıcının tasarım yönü | Tamamlandı |
 | P1 | Mevcut site, varlık, SEO ve yayın envanteri | P0 | Devam ediyor |
 | P2 | Ön yüz temeli, mobil düzen, içerik ve güvenli yedek | P1 geliştirme kaynakları; P1.5 proje içeriği açık | Tamamlandı |
-| P3 | Özgün ZY ile 3D açılış | P2 + doğrulanmış logo | Bekliyor |
+| P3 | Özgün ZY ile 3D açılış | P2 + doğrulanmış logo | Devam ediyor; fiziksel GPU kabulü açık |
 | P4 | Üretim anlatımı ve hizmet etkileşimleri | P3 | Bekliyor |
 | P5 | Gerçek proje galerisi | P2 + gerçek görseller; teslim sırası P4 sonrası | Bekliyor |
 | P6 | Mini stüdyo ve WhatsApp teklif metni | P3, P5 + doğrulanmış iletişim | Bekliyor |
@@ -70,11 +70,12 @@ Süreler takvim taahhüdü değildir. P1 sonrası logo kalitesi, gerçek görsel
 
 ## 6. P3 — 3D ZY açılış
 
-- [ ] P3.1 Onaylı özgün amblemi katmanlı tabela geometrisine dönüştür.
-- [ ] P3.2 Beyaz ışıklı pleksi, altın metal, çevre ışığı ve gölgeyi oluştur.
-- [ ] P3.3 Masaüstü sınırlı fare dönüşünü ve mobil sürüklemeyi uygula; dikey scroll’u koru.
-- [ ] P3.4 Ertelenmiş 3D yükleme, kalite düşürme, görünmezken durma ve kaynak temizliğini uygula.
-- [ ] P3.5 WebGL yokluğu, context kaybı ve hareket azaltma yollarını doğrula.
+- [x] P3.1 Onaylı özgün amblemi katmanlı tabela geometrisine dönüştür.
+- [x] P3.2 Beyaz ışıklı pleksi, altın metal, çevre ışığı ve gölgeyi oluştur.
+- [x] P3.3 Masaüstü sınırlı fare dönüşünü ve mobil sürüklemeyi uygula; dikey scroll’u koru.
+- [x] P3.4 Ertelenmiş 3D yükleme, kalite düşürme, görünmezken durma ve kaynak temizliğini uygula.
+- [x] P3.5 WebGL yokluğu, context kaybı ve hareket azaltma yollarını doğrula.
+- [ ] P3.6 Aşama kabulündeki fiziksel masaüstü/orta seviye mobil FPS hedeflerini ölç; gerekiyorsa sonraki aşamadan önce optimize et. Yazılımsal emülasyon ölçümü tek başına bu kabulü kapatmaz.
 
 **Kabul:** Amblem özgün kaynakla eşleşir; yaklaşık yazı logosu kullanılmaz. İlk içerik 3D’yi beklemez. CTA üzerine canvas binmez. Model/texture/env başlangıç 3 MB hedefinde ölçülür. Tanımlı masaüstü ve mobil cihazlarda kare hızı kaydedilir; bütçe aşılıyorsa sonraki aşamadan önce optimize edilir veya hedef revizyonu gerekçelendirilir.
 
@@ -193,3 +194,18 @@ Sıradaki tek iş:
 - Durum: P2 tamamlandı. P1.5 gerçek proje içeriği bekliyor; P1 bütünü tamamlanmadı. P3–P9 kutuları açık. Mevcut hero statik SVG tabela posteridir; 3D değildir.
 - Mimari revizyonu: v1.2 / A04 ve A05; framework eklemeden Vite/TypeScript, onaylı SVG konturları ve font/glif sınırları kaydedildi.
 - Sıradaki tek iş: P3.1 — özgün yatay SVG konturlarını katmanlı tabela geometrisine dönüştürmek.
+
+### 2026-10-01 — Özgün 3D tabela ve güvenli sahne yolları
+
+- Talimat: “devam et”; P3.1–P3.5 uygulandı/test edildi, P3.6 performans kapanışı açık.
+- Başta okunan belgeler: güncel AGENTS.md, mimari v1.2 ve roadmap v1.1. Uzak main `86173e1b45bb93c89dc81828f00a49288c956ed2`; yerel kopyanın belge blobları uzakla aynı. Yerel Git hâlâ commit içermiyor; kayıt GitHub bağlayıcısıyla yönetilir. Kullanıcı dosyaları silinmedi.
+- Önceki teslimin CI kanıtı: GitHub Actions 36857500110 / Verify başarılı tamamlandı.
+- Dosyalar: dört src/scene modülü, src/main.ts, CSS, index.html, package/lockfile, tests/scene.test.mjs, P3 kanıtları/önizlemeler ve proje belgeleri. Logo/PDF/font/legacy kaynakları değiştirilmedi.
+- Kanıt: TypeScript/build başarılı. Altı P2 regresyon + dokuz P3 test olmak üzere **15/15** yerel test geçti. P3 testleri production preview kullanır. Sekiz path/two hole geometri, gerçek WebGL çizimi, ±18°/±10° sınırları, CTA, yatay dokunma/dikey scroll, idle/offscreen durma, yükleme/hareket yarışı, azaltılmış harekette hiç 3D indirmeme ve kaynak temizliği doğrulandı.
+- Hata yolları: WebGL2 yokluğu, renderer paket hatası ve gerçek WEBGL_lose_context ile poster/form korunması geçti. Sekme/BFCache geçiş kontrolü kontrollü event simülasyonudur; fiziksel tarayıcı BFCache saha ölçümü değildir.
+- Grafik ortamı: ilk yerel denemede Vulkan loader eksik olduğu için WebGL açılamadı. Chromium paketinin kendi loader/SwiftShader dosyaları çalışma alanı dışındaki QA klasöründe doğru yerleştirildi; gerçek WebGL testleri geçti. Normal kullanıcı/CI kurulumu bu geçici QA dosyalarına bağlı değildir.
+- Bütçe: SVG 8.340 bayt, harici GLB/texture/HDR transferi 0; 3 MB sahne varlık hedefi altında. Ertelenen renderer JS ham 604.835 / Node gzip 154.582 bayt; ana JS ham 7.235 bayt. Vite’ın 500 KB chunk uyarısı var; ertelenmiş paket maliyeti gizlenmedi.
+- Görsel kontrol: gerçek renderer ekran görüntülerinin masaüstü ve mobil JPEG’leri incelendi; docs/evidence altında kaydedildi.
+- FPS: ANGLE SwiftShader ile 4,5 saniye masaüstü ~37,3; CPU4 mobil görünüm ~51,4. Örneklemenin kaydedilmesi test başarısıdır, hedef başarısı değildir. Fiziksel cihaz ölçümü yok; masaüstü yazılımsal örnek yaklaşık 60 FPS hedefinin altında. P3 tamamlandı işaretlenmez ve P4 başlatılmaz.
+- Mimari: v1.3, A02/A03 uygulama durumu ve yaşam döngüsü ayrıntıları; kapsam/hedefler korunur. Roadmap v1.2 / P3.6 mevcut kabulün açık iş maddesidir, yeni kapsam değildir.
+- Sıradaki tek iş: P3.6 — fiziksel cihaz profillerinde kare hızını doğrulayıp performans kabulünü kapatmak.

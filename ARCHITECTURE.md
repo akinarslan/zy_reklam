@@ -1,6 +1,6 @@
 # ZY Reklam — Mimari
 
-**Sürüm:** 1.2 · **Tarih:** 2026-10-01 · **Durum:** P2 ön yüz temeli doğrulandı; P3 gerçek 3D bekliyor
+**Sürüm:** 1.3 · **Tarih:** 2026-10-01 · **Durum:** P3 gerçek 3D ve güvenli yollar uygulandı; fiziksel cihaz performans kabulü açık
 
 **İlgili belgeler:** [Yol haritası](ROADMAP.md) · [Çalışma kuralları](AGENTS.md)
 
@@ -8,7 +8,7 @@
 
 ZY Reklam web sitesi bir **dijital üretim atölyesi** olarak tasarlanacaktır. Ziyaretçi üretim kabiliyetini görür, gerçek işleri inceler, kendi tabela fikrini dener ve anlaşılır bir teklif talebi oluşturur.
 
-GitHub deposu `akinarslan/zy_reklam`, 1 Ekim 2026 tarihinde boş olarak doğrulanmıştır. Bu belge hedef mimariyi ve doğrulanmış uygulama durumunu ayrı tutar. P2 temeli uygulanmıştır; P3–P9 özellikleri hedeftir. Mevcut kod, iletişim ve varlıklar incelendi; canlı yayın erişimi henüz doğrulanmadı. Kullanıcının aynı gün belirlediği logo PNG’si `public/assets/brand/zy-reklam-reference.png` yoluna alınmıştır. Mevcut kaynaklar `akinarslan/adex-reklam-demo` deposunun `497677a411e8e229333152b7474a1d5f34eb6152` commit’inden `legacy/` altına değişmeden alındı. Yatay vektör logo ve Citadel WOFF dosyası public alana taşındı; önceki logo PDF’si okunup vektör içerdiği doğrulandı. Detaylar `docs/BASELINE.md` ve `docs/ASSET_INVENTORY.md` içindedir.
+GitHub deposu `akinarslan/zy_reklam`, 1 Ekim 2026 tarihinde boş olarak doğrulanmıştır. Bu belge hedef mimariyi ve doğrulanmış uygulama durumunu ayrı tutar. P2 temeli ve P3 açılış sahnesi uygulanmıştır; P3 performans kapanışı ile P4–P9 özellikleri hedeftir. Mevcut kod, iletişim ve varlıklar incelendi; canlı yayın erişimi henüz doğrulanmadı. Kullanıcının aynı gün belirlediği logo PNG’si `public/assets/brand/zy-reklam-reference.png` yoluna alınmıştır. Mevcut kaynaklar `akinarslan/adex-reklam-demo` deposunun `497677a411e8e229333152b7474a1d5f34eb6152` commit’inden `legacy/` altına değişmeden alındı. Yatay vektör logo ve Citadel WOFF dosyası public alana taşındı; önceki logo PDF’si okunup vektör içerdiği doğrulandı. Detaylar `docs/BASELINE.md` ve `docs/ASSET_INVENTORY.md` içindedir.
 
 Temel yolculuk: **İşi anla → Gerçek projeleri gör → Tabela fikrini dene → Teklif talebini hazırla → WhatsApp’ta gönder.**
 
@@ -49,7 +49,7 @@ Ana başlık **“Projenize özel çözümler üretiyoruz.”** Açılış eylem
 
 Önerilen yeni ön yüz: **Vite + TypeScript + semantik HTML/CSS + Three.js**. Arayüz, içerik ve formlar normal DOM’da kalır; Three.js yalnızca ürün görselleştirmesini yönetir. CSS, `IntersectionObserver` ve kontrollü `requestAnimationFrame` ile hareket yönetilir. Ek animasyon kütüphanesi varsayılan olarak eklenmez.
 
-P1 kararı: mevcut statik HTML/CSS/DOM yaklaşımı korunur; Vite ve TypeScript geliştirme/build ve modül sınırları için eklenir. Arayüz framework’ü eklenmez. Vite 8.3.2, TypeScript 7.0.2, Playwright 1.62.1 ve npm lockfile kurulmuştur; `npm run build` tip kontrolüyle başarılıdır. Three.js P3’e kadar yüklenmez. Korunan başlangıç sürümü `legacy/` içinde kalır; build çıktısı `dist/` yalnızca yeni uygulamadır.
+P1 kararı: mevcut statik HTML/CSS/DOM yaklaşımı korunur; Vite ve TypeScript geliştirme/build ve modül sınırları için eklenir. Arayüz framework’ü eklenmez. Vite 8.3.2, TypeScript 7.0.2, Playwright 1.62.1 ve npm lockfile kurulmuştur; `npm run build` tip kontrolüyle başarılıdır. Three.js 0.186.1 P3’te görünür sahne için dinamik import ile yüklenir; hareket azaltma başlangıcında indirilmez. @types/three 0.186.0 geliştirme bağımlılığıdır. Korunan başlangıç sürümü `legacy/` içinde kalır; build çıktısı `dist/` yalnızca yeni uygulamadır.
 
 ### 4.2 Katmanlar
 
@@ -230,8 +230,8 @@ Görsel kanıtlar: açılış, üretim, galeri, stüdyo, form ve footer için se
 | ID | Karar | Durum | Gerekçe / sonraki kontrol |
 | --- | --- | --- | --- |
 | A01 | Dijital üretim atölyesi; zümrüt/siyah, beyaz/altın | Kabul | Kullanıcının istediği tasarım yönü |
-| A02 | Bir kaliteli açılış sahnesi; sınırlı ek animasyon | Kabul | Etki, okunabilirlik ve performans |
-| A03 | DOM içerik/forma öncelik; 3D bağımsız ve yedekli | Kabul | Erişim ve teklif akışının devamlılığı |
+| A02 | Bir kaliteli açılış sahnesi; sınırlı ek animasyon | Uygulandı; performans kabulü açık | 15 test geçti; fiziksel GPU ölçümleri henüz yok |
+| A03 | DOM içerik/forma öncelik; 3D bağımsız ve yedekli | Uygulandı ve test edildi | WebGL/context/yükleme hataları ve hareket tercihi kontrolleri geçti |
 | A04 | Mevcut DOM korunur; Vite/TypeScript modüler build, Three.js P3 | Kabul; temel build doğrulandı | Statik başlangıç arşivlendi; framework eklenmedi, sürümler/lockfile sabitlendi |
 | A05 | Tam yatay SVG logo; Citadel başlık 45 pt; gövde sistem fontu | Kabul; kaynak/glif incelemesi yapıldı | Orijinal SVG/PDF konturları mevcut; sabit başlık destekleniyor, diğer metinlerde Türkçe eksikleri önleniyor |
 | A06 | WhatsApp metin talebi; otomatik gönderim/fiyat yok | Kabul | İlk sürümün satış akışı |
@@ -250,3 +250,16 @@ Mimari değişiklikte sürüm, tarih, ilgili karar ve etkilenen roadmap işi gü
 32 dosyalık başlangıç snapshot’ı, vektör logo, font ve iletişim envanteri alındı. P2 için mevcut DOM mantığı korunarak Vite/TypeScript kabul edildi. Gerçek proje fotoğrafları doğrulanmadığı için P1.5/P5 açık kalır; bu eksik bağımsız temel layout hazırlığını engellemez. CNC/UV mevcut içerikte doğrulanmadı ve hizmet listesine eklenmedi. Hosting yayın erişimi P9’da, upload sağlayıcısı P7’de kesinleşecek. P2’deki mevcut ad/mesaj formu eski iletişim davranışını korur; P6’daki ölçü/adet/stüdyo ve P7 upload henüz uygulanmış değildir.
 
 P2 kabul kanıtı: TypeScript/build başarılı, altı gerçek tarayıcı testi başarılı; 360/768/1440 px taşma ve JS kapalı iletişim yolu denetlendi. Ayrıntılar ROADMAP.md ve docs/evidence/P2_VERIFICATION.json içindedir. 3D/FPS/Lighthouse ve upload kabulü henüz yapılmadı.
+
+### 2026-10-01 — v1.3 P3 sahne uygulaması
+
+- `src/scene/hero.ts` DOM adaptörüdür; Three.js içermez. Görünürlükten 250 ms sonra renderer dinamik yüklenir. 8 saniyelik yükleme süresi, iptal/generation kontrolü ve hareket tercihinin yükleme sırasında değişmesi güvenli yedeğe döner. Gizli sekmede başlangıç yüklemesi yapılmaz.
+- `src/scene/logo.ts` onaylı SVG’nin sekiz path’ini `SVGLoader.parse` ve `ShapePath.toShapes` ile gerçek ekstrüzyona çevirir; R/A içindeki iki boşluk korunur. ViewBox merkezi/ölçeği kaynakta korunur; benzer font kullanılmaz. Beyaz ZY kasa/LED/pleksi katmanlıdır; altın REKLAM metal yüzeydir.
+- `src/scene/renderer.ts` bir renderer kullanır. RoomEnvironment/PMREM çevresi cihazda üretilir; harici HDR, texture ve GLB indirilmez. 512 px gölge haritası; DPR masaüstü 1,5, dar ekranda 1,25 ile sınırlı; düşük kalitede DPR 1 ve gölge kapalıdır.
+- Dönüş yatay ±18°, dikey ±10° ile sınırlandırılır. Dokunma alanında `touch-action: pan-y` dikey scroll’u korur. Dokunma sonrası seçilen dönüş korunur; fare çıkışında başlangıç açısına döner. Otomatik sürekli salınım eklenmedi.
+- Dönüş yerleşince RAF döngüsü durur; görünmeyen sahne ve gizli sekme durur. Context kaybında poster açılır ve renderer/geometri/materyal/env/gölge/listener/observer kaynakları temizlenir. BFCache geçişleri modeli yok etmeden durdurur; gerçek çıkışta temizler.
+- İki ardışık 2 saniyelik pencerede 24 FPS altındaki etkileşim kaliteyi azaltır; aynı durum düşük kalitede sürerse poster seçilir. Bu politikanın 10 FPS örneklemesi simülasyonla denetlendi; fiziksel yavaş cihaz testi yerine sayılmaz.
+- 15 yerel test geçti; P3 testleri derlenmiş `dist/` preview üzerinde çalıştı. Yazılımsal ANGLE/SwiftShader: masaüstü 1440 px/DPR1/CPU1 ~37,3 FPS; mobil görünüm 360 px/DPR2/CPU4 ~51,4 FPS. Ölçüm 4,5 saniyelik etkileşim örneğidir; gerçek masaüstü/orta seviye telefon GPU kabulü değildir. Masaüstü yazılımsal örnek 60 FPS hedefinin altında olduğundan hedef karşılandı iddiası yok.
+- Kaynak SVG 8.340 bayt; dış model/texture/env transferi sıfır; ertelenen JS 604.835 bayt ham / 154.582 bayt Node gzip ölçümü. Vite’ın 500 KB chunk uyarısı görünür biçimde kaydedildi; ilk JS’ye birleştirilmedi ve uyarı eşiği yükseltilmedi. Kabul kanıtları docs/evidence/P3_VERIFICATION.json ve P3_BUDGET.json içindedir.
+
+P3.1–P3.5 işlevleri doğrulandı; P3 aşama kabulü fiziksel cihaz performans ölçümü/optimizasyonu nedeniyle devam ediyor. P4 henüz başlatılmadı; sahne yöneticisinin sonraki üretim/stüdyo geçişleri bu aşamada uygulanmış sayılmaz.

@@ -1,0 +1,29 @@
+{
+  "date": "2026-10-01",
+  "svgSource": {
+    "path": "public/assets/brand/zy-reklam-wordmark.svg",
+    "bytes": 8340,
+    "sha256": "11ffcb567b413dc48d0d8a6539c4c981683ff4b89f5a4e6b149e154884985439",
+    "gitBlobSha": "63de4b4cfe6c9d15ef8962ed511309365b10ed43"
+  },
+  "externalModelBytes": 0,
+  "externalTextureBytes": 0,
+  "externalEnvironmentBytes": 0,
+  "geometryAndEnvironment": "Generated locally from SVG and RoomEnvironment; GPU resident textures are not network transfers.",
+  "sceneAssetBudgetBytes": 3000000,
+  "sceneSourceBytes": 8340,
+  "assetBudgetPassed": true,
+  "chunks": [
+    {
+      "path": "dist/assets/renderer-Matpv4fW.js",
+      "bytes": 604835,
+      "gzipBytes": 153272
+    },
+    {
+      "path": "dist/assets/index-CkxKmveN.js",
+      "bytes": 7235,
+      "gzipBytes": 3090
+    }
+  ],
+  "physicalGPUAcceptance": "Not measured; P3 remains in progress."
+}
