@@ -1,0 +1,58 @@
+{
+  "site": {
+    "name": "ZY REKLAM",
+    "url": "https://zyreklamdijital.com.tr/",
+    "city": "Muş",
+    "region": "Muş",
+    "country": "TR",
+    "phone": "+90 546 449 48 49"
+  },
+  "primaryKeywords": [
+    "Muş reklam",
+    "Muş reklam ajansı",
+    "Muş tabela",
+    "Muş tabela reklam",
+    "reklam ajansı",
+    "tabela",
+    "tabela imalatı",
+    "tabela montajı",
+    "ışıklı tabela",
+    "ışıksız tabela",
+    "kutu harf tabela",
+    "totem tabela",
+    "yönlendirme tabelası",
+    "dijital baskı",
+    "lazer kesim",
+    "promosyon ürünleri",
+    "kurumsal promosyon"
+  ],
+  "secondaryKeywords": [
+    "cephe tabelası",
+    "cephe giydirme",
+    "araç giydirme",
+    "cam giydirme",
+    "folyo baskı",
+    "vinil baskı",
+    "branda baskı",
+    "afiş baskı",
+    "roll up baskı",
+    "UV baskı",
+    "pleksi tabela",
+    "krom kutu harf",
+    "LED tabela",
+    "özel imalat",
+    "reklam ürünleri",
+    "kurumsal tabela"
+  ],
+  "localIntent": [
+    "Muş reklamcı",
+    "Muş reklam firması",
+    "Muş tabela firması",
+    "Muş dijital baskı",
+    "Muş lazer kesim",
+    "Muş promosyon",
+    "Muş kutu harf tabela",
+    "Muş totem tabela"
+  ],
+  "usageRule": "Anahtar kelimeleri doğal Türkçe cümlelerde, sayfa konusu ile gerçekten ilgili olduğu yerde kullan. Aynı kelimeyi gereksiz tekrar etme ve meta keywords etiketi oluşturma."
+}
