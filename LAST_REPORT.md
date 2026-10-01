@@ -16,17 +16,20 @@ Güncel AGENTS.md, mimari v1.4 ve roadmap v1.3 tamamen okundu. Uzak main başlan
 
 ## Değişen dosyalar
 
-public/qa/scene-performance.html, performance.css, performance.js, sampler.js; tests/scene.test.mjs; docs/P3_DEVICE_MEASUREMENT.md, P3_ACCEPTANCE.md; ARCHITECTURE.md, ROADMAP.md, README.md, LAST_REPORT.md; docs/evidence/P2_VERIFICATION.json, P3_VERIFICATION.json, P3_DEVICE_TOOL_SAMPLE.json ve P3_DEVICE_TOOL_VERIFICATION.json.
+public/qa/scene-performance.html, performance.css, performance.js, sampler.js; tests/scene.test.mjs; docs/P3_DEVICE_MEASUREMENT.md, P3_ACCEPTANCE.md; ARCHITECTURE.md, ROADMAP.md, README.md, LAST_REPORT.md; docs/evidence/P2_VERIFICATION.json, P3_VERIFICATION.json, P3_DEVICE_TOOL_SAMPLE.json, P3_DEVICE_TOOL_VERIFICATION.json ve P3_DEVICE_TOOL_CI_VERIFICATION.json.
 
 ## Doğrulama ve sınırlar
 
-- TypeScript/production build ve QA JS sözdizimi başarılı. 19/19 yerel gerçek tarayıcı testi geçti: mevcut 16 regresyon + üç ölçüm aracı kontrolü.
+- TypeScript/production build ve QA JS sözdizimi başarılı. 19/19 yerel test geçti: 18 tarayıcı kontrolü ve bir kalite politikası kontrolü; mevcut 16 regresyon + üç ölçüm aracı kontrolü.
 - Mobil 360 px/DPR2 üç örnek ve indirilen JSON doğrulandı; pencere kareleri toplamı örnek toplamıyla eşleşti. Rapor upload'ı yapılmadı.
 - Hareket azaltma/açık kullanıcı tercihi, iptal, resize ve kontrollü gizli sekme olayı geçersiz ölçüm olarak doğrulandı. Gerçek WEBGL_lose_context kaybında rapor üretilmedi.
 - 360/1440 px QA ekranları incelendi; yatay taşma yok. Yeni örnek JSON açıkça headless yazılımsal GPU/emülasyon olarak etiketlidir; fiziksel cihaz kabulü değildir.
 - Ana JS/renderer paketleri değişmedi; ertelenen 500 KB paket uyarısı sürer. Özgün SVG blobu 63de4b4cfe6c9d15ef8962ed511309365b10ed43 ve AGENTS blobu korundu.
 - Cloudflare önizleme URL'si erişilebilir commit status/check kayıtlarından doğrulanmadı. Deployment uç noktası bağlayıcıda desteklenmedi; yayın başarılı denmedi. Ana domain/DNS/hosting değiştirilmedi.
 - P3.6a tamamlandı; gerçek donanım/manual kabul, Lighthouse/P8 ve P4 çalışmaları henüz yapılmadı.
+
+- Uzak kayıt fabf49aa43c3c59879010e4c530e81e8812e2cb9 main üzerinde tekrar doğrulandı: 15 dosyanın blob kimliği ve altı ana dosyanın tam içeriği eşleşti; özgün SVG korundu.
+- GitHub Actions 36863650753 / job 110373703375 başarıyla tamamlandı. Loglar yeniden okundu: npm ci/build/tarayıcı kurulumu ve 19/19 test başarılı, 0 fail; üç yeni QA testi geçti. Artifact 11163287388 kaydedildi. Kanıt: docs/evidence/P3_DEVICE_TOOL_CI_VERIFICATION.json.
 
 ## Sıradaki tek iş
 

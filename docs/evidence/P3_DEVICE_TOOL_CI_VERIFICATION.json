@@ -1,0 +1,24 @@
+{
+  "stage": "P3.6a",
+  "commit": "fabf49aa43c3c59879010e4c530e81e8812e2cb9",
+  "runId": 36863650753,
+  "jobId": 110373703375,
+  "url": "https://github.com/akinarslan/zy_reklam/actions/runs/36863650753",
+  "verifiedAt": "2026-10-01T12:46:32.291477+00:00",
+  "status": "completed",
+  "conclusion": "success",
+  "tests": 19,
+  "pass": 19,
+  "fail": 0,
+  "artifactId": 11163287388,
+  "checks": [
+    "npm ci",
+    "production build",
+    "Playwright browser install",
+    "three-sample JSON download and mobile layout",
+    "explicit reduced-motion choice and cancellation/resize/hidden invalidation",
+    "real WebGL context loss produces no successful report"
+  ],
+  "logVerification": "Job log reread; 19 tests, 19 pass, 0 fail and all three new QA tests confirmed.",
+  "physicalAcceptance": "Open; this CI run uses a headless software GPU."
+}
