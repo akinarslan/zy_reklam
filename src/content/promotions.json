@@ -1,0 +1,440 @@
+{
+  "categories": [
+    {
+      "id": "tekstil-giyim",
+      "title": "Tekstil ve Giyim Ürünleri",
+      "description": "Markanızı günlük hayata taşıyan giyim ve tekstil seçenekleri.",
+      "examples": "Polo tişört · Şapka · Kurumsal tekstil",
+      "cover": "tekstil-giyim",
+      "href": "/promosyonlar/tekstil-giyim/"
+    },
+    {
+      "id": "ofis-kirtasiye",
+      "title": "Ofis ve Kırtasiye Malzemeleri",
+      "description": "Masa başında, toplantıda ve her yeni fikirde markanızla birlikte.",
+      "examples": "Ajanda · Kalem · Organizer",
+      "cover": "kutulu-ajanda-kalem",
+      "href": "/promosyonlar/ofis-kirtasiye/"
+    },
+    {
+      "id": "yasam-mutfak-seyahat",
+      "title": "Yaşam, Mutfak ve Seyahat Gereçleri",
+      "description": "Günün her anında kullanılabilecek kişiselleştirilmiş ürün seçenekleri.",
+      "examples": "Kupa · Termos · Günlük kullanım",
+      "cover": "baskili-kupa",
+      "href": "/promosyonlar/yasam-mutfak-seyahat/"
+    },
+    {
+      "id": "vip-ekolojik-setler",
+      "title": "VIP ve Doğa Dostu (Ekolojik) Özel Setler",
+      "description": "Özel hediye kutuları ve bez çanta, kese seçenekleri bir arada.",
+      "examples": "VIP kutular · Bez çanta · Bez kese",
+      "cover": "termoslu-vip-set",
+      "href": "/promosyonlar/vip-ekolojik-setler/"
+    }
+  ],
+  "photos": [
+    {
+      "id": "siyah-ajanda-kalem",
+      "title": "Siyah ajanda ve kalem seti",
+      "alt": "Kutuda siyah kapaklı ajanda ve metal kalem",
+      "category": "ofis-kirtasiye",
+      "section": null,
+      "sourceFile": "8562_3.png",
+      "sourceSHA256": "aab8b352781a3b3425f835ca02453d964e1b529badfae1685b15bd1245cffc9c",
+      "sourceWidth": 1000,
+      "sourceHeight": 1000,
+      "variants": [
+        {
+          "src": "/assets/promotions/siyah-ajanda-kalem-480.webp",
+          "width": 480,
+          "height": 480,
+          "bytes": 30794,
+          "sha256": "86a3d1b7257bc41fc4679802a26807889625c160491072cc820d0abc6603315f"
+        },
+        {
+          "src": "/assets/promotions/siyah-ajanda-kalem-960.webp",
+          "width": 960,
+          "height": 960,
+          "bytes": 125860,
+          "sha256": "f6cd8d5fde93348056a49aea8dac4906227290f040d979f1611d410027513315"
+        }
+      ],
+      "alsoIn": []
+    },
+    {
+      "id": "yesil-ajanda-kalem",
+      "title": "Yeşil ajanda ve kalem seti",
+      "alt": "Yeşil kutu içinde ajanda ve kalem",
+      "category": "ofis-kirtasiye",
+      "section": null,
+      "sourceFile": "indir (1).jpg",
+      "sourceSHA256": "aa3b2bf6e82992c2e9a1ff7912d7076390b9a21df82aee8be3760bc427422978",
+      "sourceWidth": 528,
+      "sourceHeight": 527,
+      "variants": [
+        {
+          "src": "/assets/promotions/yesil-ajanda-kalem-480.webp",
+          "width": 480,
+          "height": 479,
+          "bytes": 23796,
+          "sha256": "5d75bbb465dadc69309d6c0e0d3abd84676bfab7cf32c4e72e943a004edef06a"
+        },
+        {
+          "src": "/assets/promotions/yesil-ajanda-kalem-960.webp",
+          "width": 528,
+          "height": 527,
+          "bytes": 28792,
+          "sha256": "a83ce26deb078a31f5fb06768a44dc568621da2e2d1e510fde5d116b2ebeac99"
+        }
+      ],
+      "alsoIn": []
+    },
+    {
+      "id": "mavi-organizer",
+      "title": "Mavi organizer",
+      "alt": "Telefon ve kart bölmeli mavi organizer",
+      "category": "ofis-kirtasiye",
+      "section": null,
+      "sourceFile": "indir.jpg",
+      "sourceSHA256": "cd6a08d16df756a459c25de680d682759a7c0a0b4bef72438d6bc5f0aff4e937",
+      "sourceWidth": 554,
+      "sourceHeight": 554,
+      "variants": [
+        {
+          "src": "/assets/promotions/mavi-organizer-480.webp",
+          "width": 480,
+          "height": 480,
+          "bytes": 59560,
+          "sha256": "609a69f67cab30aa532d408dceb643a56c6600174a21dde0e402324dd5c193f4"
+        },
+        {
+          "src": "/assets/promotions/mavi-organizer-960.webp",
+          "width": 554,
+          "height": 554,
+          "bytes": 71766,
+          "sha256": "7f201caf244261e1024820088e06cd8afbda8177a035c10dcafbe8cd23131121"
+        }
+      ],
+      "alsoIn": []
+    },
+    {
+      "id": "kutulu-ajanda-kalem",
+      "title": "Kutulu ajanda ve kalem",
+      "alt": "Siyah kutuda ajanda ve kalem seti",
+      "category": "ofis-kirtasiye",
+      "section": null,
+      "sourceFile": "toptan-ajanda-defter-ve-kalem-seti.jpg",
+      "sourceSHA256": "7fae6b52ae4551c7ece66e262bb3ede9dec41e1eb49a5957c152874a077aa25c",
+      "sourceWidth": 1000,
+      "sourceHeight": 1000,
+      "variants": [
+        {
+          "src": "/assets/promotions/kutulu-ajanda-kalem-480.webp",
+          "width": 480,
+          "height": 480,
+          "bytes": 10136,
+          "sha256": "9acc4f7ca535597003bed0e359d2ae1bcdc2439a4a8fece3591080a532529130"
+        },
+        {
+          "src": "/assets/promotions/kutulu-ajanda-kalem-960.webp",
+          "width": 960,
+          "height": 960,
+          "bytes": 36888,
+          "sha256": "7143e341e5be0a93aab35a1302aaa79c39a6bac8fc04175ebc48242faf112496"
+        }
+      ],
+      "alsoIn": []
+    },
+    {
+      "id": "bez-canta",
+      "title": "Bez çantalar",
+      "alt": "Farklı baskı örnekleriyle bez çantalar",
+      "category": "vip-ekolojik-setler",
+      "section": "eco",
+      "sourceFile": "ham-bez-canta2.jpg",
+      "sourceSHA256": "9722cee6b65d936ef96b2573589aab2b474e6157280667ef47c98df824ae354a",
+      "sourceWidth": 1000,
+      "sourceHeight": 1000,
+      "variants": [
+        {
+          "src": "/assets/promotions/bez-canta-480.webp",
+          "width": 480,
+          "height": 480,
+          "bytes": 13046,
+          "sha256": "17592921f3c5bf1fd569e93e136d30f91257ce8716f5287856f09cc80d5f6daa"
+        },
+        {
+          "src": "/assets/promotions/bez-canta-960.webp",
+          "width": 960,
+          "height": 960,
+          "bytes": 45120,
+          "sha256": "47a911a45abe7ab549ca72ce4daeadf6f5ca27b74eb1c7b5c3b9c657c38a47d9"
+        }
+      ],
+      "alsoIn": [
+        "tekstil-giyim"
+      ]
+    },
+    {
+      "id": "bez-kese",
+      "title": "Baskılı bez keseler",
+      "alt": "Büzgülü ve baskılı bez kese örnekleri",
+      "category": "vip-ekolojik-setler",
+      "section": "eco",
+      "sourceFile": "kese2.jpg",
+      "sourceSHA256": "08cc0c6bc6b21f841e458136a3646921ea71ccd68de453833f9ac144549f96ce",
+      "sourceWidth": 1000,
+      "sourceHeight": 1000,
+      "variants": [
+        {
+          "src": "/assets/promotions/bez-kese-480.webp",
+          "width": 480,
+          "height": 480,
+          "bytes": 14394,
+          "sha256": "cc4374a3b2f54fb37d95c7e0f4ad459d5eecf2f7bc1623a39a8d0bd622bec0c9"
+        },
+        {
+          "src": "/assets/promotions/bez-kese-960.webp",
+          "width": 960,
+          "height": 960,
+          "bytes": 34498,
+          "sha256": "e23c8c68b4cd59b7061b3883b7195b0570cd6af5bac9a4a4a691b0ee5b4b85ca"
+        }
+      ],
+      "alsoIn": [
+        "tekstil-giyim"
+      ]
+    },
+    {
+      "id": "tekstil-giyim",
+      "title": "Polo tişört ve şapka",
+      "alt": "Lacivert polo tişörtler ve baskılı şapkalar",
+      "category": "tekstil-giyim",
+      "section": null,
+      "sourceFile": "promosyon_tekstil.jpg",
+      "sourceSHA256": "88bbc647e0335c5b7298138669a206bf857201c5916ee6018e4fddfd83b51f77",
+      "sourceWidth": 1200,
+      "sourceHeight": 896,
+      "variants": [
+        {
+          "src": "/assets/promotions/tekstil-giyim-480.webp",
+          "width": 480,
+          "height": 358,
+          "bytes": 18898,
+          "sha256": "de563a8af97704aa7030a7990ae7acdacdac4672568d1bb7e1708448054a3f47"
+        },
+        {
+          "src": "/assets/promotions/tekstil-giyim-960.webp",
+          "width": 960,
+          "height": 717,
+          "bytes": 51246,
+          "sha256": "b52167d51f25a516dcf27d53acce8be7dddfbe335ce6e7b8ff294e3ddd6774b8"
+        }
+      ],
+      "alsoIn": []
+    },
+    {
+      "id": "kisiye-ozel-vip",
+      "title": "Kişiye özel VIP set",
+      "alt": "Kutuda defter, kalem ve anahtarlık içeren VIP set",
+      "category": "vip-ekolojik-setler",
+      "section": "vip",
+      "sourceFile": "kisiye-ozel-vip-set.png",
+      "sourceSHA256": "cc1179d0e06f13414d274d2ce64fbb0e55c2a88644eb2dbbf449e70eb9ce5d88",
+      "sourceWidth": 1122,
+      "sourceHeight": 1402,
+      "variants": [
+        {
+          "src": "/assets/promotions/kisiye-ozel-vip-480.webp",
+          "width": 480,
+          "height": 600,
+          "bytes": 23694,
+          "sha256": "b5eac81740e09fff7e3dc1485a335f5db12721dd214956d8aeefd0b016678528"
+        },
+        {
+          "src": "/assets/promotions/kisiye-ozel-vip-960.webp",
+          "width": 960,
+          "height": 1200,
+          "bytes": 85812,
+          "sha256": "be6715c0c63bbdcc669ada5efaf35729aeb2b79169768848a9652b484ca276c4"
+        }
+      ],
+      "alsoIn": []
+    },
+    {
+      "id": "termoslu-vip-set",
+      "title": "Termoslu VIP set",
+      "alt": "Termos, defter, kalem ve aksesuarlarla kutulu hediye seti",
+      "category": "vip-ekolojik-setler",
+      "section": "vip",
+      "sourceFile": "vip-hediyelik-set-34411-48242.jpg",
+      "sourceSHA256": "a65b34f1fb4eab0dd813523bce680c958cfa78913cf9f8d564e102c523d1804c",
+      "sourceWidth": 1400,
+      "sourceHeight": 1400,
+      "variants": [
+        {
+          "src": "/assets/promotions/termoslu-vip-set-480.webp",
+          "width": 480,
+          "height": 480,
+          "bytes": 19184,
+          "sha256": "4ce440ca7bff535ab19ed18db935b7e2e2446616f49f109aedeb4a706771b471"
+        },
+        {
+          "src": "/assets/promotions/termoslu-vip-set-960.webp",
+          "width": 960,
+          "height": 960,
+          "bytes": 49094,
+          "sha256": "3c7493ad8b92322b1dbe157ae41ffdbc1fc03d88456016c8c436b8b0c5aea47e"
+        }
+      ],
+      "alsoIn": [
+        "yasam-mutfak-seyahat"
+      ]
+    },
+    {
+      "id": "teknoloji-hediye-seti",
+      "title": "Teknoloji hediye seti",
+      "alt": "Siyah kutuda termos ve teknoloji aksesuarları",
+      "category": "vip-ekolojik-setler",
+      "section": "vip",
+      "sourceFile": "asdka.jpg",
+      "sourceSHA256": "422b83c1cbc0146539136e9a553d1bff8c78e184c26edcacb2f05c0c3b5fb349",
+      "sourceWidth": 1001,
+      "sourceHeight": 1001,
+      "variants": [
+        {
+          "src": "/assets/promotions/teknoloji-hediye-seti-480.webp",
+          "width": 480,
+          "height": 480,
+          "bytes": 15958,
+          "sha256": "4954dd91fa1e63aac9335e6df7949a503f290f4db3361ce6d4258608d0609c0c"
+        },
+        {
+          "src": "/assets/promotions/teknoloji-hediye-seti-960.webp",
+          "width": 960,
+          "height": 960,
+          "bytes": 46440,
+          "sha256": "ebb493f697407c2a6f77aaea050025d84f489197a50b23f62ebfe6bd4a595f56"
+        }
+      ],
+      "alsoIn": []
+    },
+    {
+      "id": "kurumsal-hediye-seti",
+      "title": "Kurumsal hediye seti",
+      "alt": "Kutuda ajanda, kalemler, anahtarlık ve aksesuarlar",
+      "category": "vip-ekolojik-setler",
+      "section": "vip",
+      "sourceFile": "hediyelik-set-34403-67661.jpg",
+      "sourceSHA256": "540189455b250000f45d7c9540115eb646ef547f4a924dbcc090fb83dda35033",
+      "sourceWidth": 1400,
+      "sourceHeight": 1400,
+      "variants": [
+        {
+          "src": "/assets/promotions/kurumsal-hediye-seti-480.webp",
+          "width": 480,
+          "height": 480,
+          "bytes": 17944,
+          "sha256": "2aac9e214fa093c65aa8a5df35245dae9938dd86b23f1b33ebef3f8f3f39b6a8"
+        },
+        {
+          "src": "/assets/promotions/kurumsal-hediye-seti-960.webp",
+          "width": 960,
+          "height": 960,
+          "bytes": 44940,
+          "sha256": "df8d67da809c65ce637fd7b4aa935f45ad372eba57d38975b65c8e688ead63ae"
+        }
+      ],
+      "alsoIn": []
+    },
+    {
+      "id": "kisisel-termos-seti",
+      "title": "Kişiye özel termoslu set",
+      "alt": "Kişiselleştirme örnekleriyle termos ve anahtarlıklı hediye kutusu",
+      "category": "vip-ekolojik-setler",
+      "section": "vip",
+      "sourceFile": "kisiye-ozel-cuzdan-termos-anahtarlik-seti.jpg",
+      "sourceSHA256": "3dec72e60b09457761942d06a74efe2739e6b2da779ffafdf7105fd5f0323249",
+      "sourceWidth": 1024,
+      "sourceHeight": 1024,
+      "variants": [
+        {
+          "src": "/assets/promotions/kisisel-termos-seti-480.webp",
+          "width": 480,
+          "height": 480,
+          "bytes": 21128,
+          "sha256": "30bfe6e25a3e76f59595831c6d615f335942a4dfd69f692866ab90d2da09a7c6"
+        },
+        {
+          "src": "/assets/promotions/kisisel-termos-seti-960.webp",
+          "width": 960,
+          "height": 960,
+          "bytes": 51602,
+          "sha256": "502fcd93162e048de7349668191ff94bfc0f2733e65c79ed9f4d03847b6b23eb"
+        }
+      ],
+      "alsoIn": [
+        "yasam-mutfak-seyahat"
+      ]
+    },
+    {
+      "id": "baskili-kupa",
+      "title": "Kişiye özel kupa",
+      "alt": "Çiçekli tasarım ve isim baskılı beyaz kupa",
+      "category": "yasam-mutfak-seyahat",
+      "section": null,
+      "sourceFile": "kisiye-ozel-premium-hediye-kutusu-dereceli-termos-kupa-bardak-ayicik-anahtarlik-seti-kcm61056645-d88411f5-f555-47ab-ac3e-b04e6fa679b1.jpg",
+      "sourceSHA256": "14c1c9cf04dc30cf72524dc17831382a691838a64b69fc45d564663c88e1b980",
+      "sourceWidth": 582,
+      "sourceHeight": 640,
+      "variants": [
+        {
+          "src": "/assets/promotions/baskili-kupa-480.webp",
+          "width": 480,
+          "height": 528,
+          "bytes": 13066,
+          "sha256": "220159e59c8742e828df2d15347a99877ecad393c0d9a6513b32235e91dd7eef"
+        },
+        {
+          "src": "/assets/promotions/baskili-kupa-960.webp",
+          "width": 582,
+          "height": 640,
+          "bytes": 16922,
+          "sha256": "bd12c65ca01836aed9b7e6691d7b91843ba356f774d38058937b34058efd328c"
+        }
+      ],
+      "alsoIn": []
+    },
+    {
+      "id": "premium-hediye-seti",
+      "title": "Premium hediye seti",
+      "alt": "İsim baskılı defter, kupa, termos, kalem ve anahtarlık seti",
+      "category": "vip-ekolojik-setler",
+      "section": "vip",
+      "sourceFile": "isme-ozel-premium-tasarim-dereceli-celik-termos-kupa-bardak-defter-kalem-anahtarlik-erkek-kadin-hediye-seti-kcm63451941-ae87b43a-5516-44e9-8970-5856b9daa1cc.jpeg",
+      "sourceSHA256": "bc84e644293149ae073960175224c7310d94b6798bdf795ac31273c34d98cb7c",
+      "sourceWidth": 1300,
+      "sourceHeight": 1430,
+      "variants": [
+        {
+          "src": "/assets/promotions/premium-hediye-seti-480.webp",
+          "width": 480,
+          "height": 528,
+          "bytes": 26004,
+          "sha256": "3e7302dc2e39c14ce0d38bdc4f9134117db089dd6ea8a54443c7d4a640dcb20e"
+        },
+        {
+          "src": "/assets/promotions/premium-hediye-seti-960.webp",
+          "width": 960,
+          "height": 1056,
+          "bytes": 64774,
+          "sha256": "0e99a5315291031cd34d8cf42959078301ff53537c0845ef6671b6cbe9883b7f"
+        }
+      ],
+      "alsoIn": [
+        "yasam-mutfak-seyahat"
+      ]
+    }
+  ]
+}

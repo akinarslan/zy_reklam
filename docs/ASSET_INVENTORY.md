@@ -47,3 +47,7 @@ Kaynak PDF, ekran görüntüsündeki yatay yazıya ek olarak geometrik amblem i�
 Fontun ticari kullanım koşulu kaydedilmiştir; kaynakta mevcut kullanımı ve kullanıcının font talimatı geliştirme kararıdır. Bu envanter bir satın alma belgesi veya hak onayı üretmez.
 
 P3 kaynak bütünlüğü: özgün SVG değişmedi; sekiz path ve iki iç boşluk renderer geometrisinde doğrulandı. Harici GLB/HDR/texture eklenmedi. docs/evidence/P3_BUDGET.json kimlik ve boyut kanıtını içerir.
+
+## 2026-10-01 — Promosyon katalog görselleri
+
+Kullanıcının sağladığı 14 görsel açılıp dört ana kategoriye ayrıldı; 28 responsive WebP türevi hazırlandı. Dosya/fotoğraf eşlemesi ve içerik sınırı [PROMOTION_ASSETS.md](PROMOTION_ASSETS.md), kaynak SHA-256 ve gerçek türev ölçüleri src/content/promotions.json içindedir. Bunlar P2.7 katalog varlıklarıdır; P1.5/P5 gerçek müşteri projesi kabulünü kapatmaz. Kaynak logo/font/legacy varlıkları korundu.

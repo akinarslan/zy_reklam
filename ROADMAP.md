@@ -1,6 +1,6 @@
 # ZY Reklam — Yol Haritası
 
-**Sürüm:** 1.5 · **Başlangıç:** 2026-10-01
+**Sürüm:** 1.6 · **Başlangıç:** 2026-10-01
 
 **Kaynak:** [ARCHITECTURE.md](ARCHITECTURE.md) · **Zorunlu kontrol:** [AGENTS.md](AGENTS.md)
 
@@ -9,6 +9,8 @@
 **Son tamamlanan aşama:** P2 — Ön yüz ve içerik temeli.
 
 **Aktif aşama:** P3 — Gerçek 3D açılış uygulandı; performans kapanışı devam ediyor.
+
+**Kullanıcı önceliği:** P2.7 — Promosyonlar mega menüsü ve dört bağımsız kategori sayfası. Bu iş P3 renderer’ına bağlı değildir; P3/P4 kabul sırası korunur.
 
 P1 kaynak, logo, font ve iletişim incelemesi yapıldı; gerçek proje bilgileri/fotoğrafları doğrulanmadığı için P1.5 açık kalır. Planın engel yönetimi uyarınca bağımsız P2 temeli tamamlandı. Vite/TypeScript sayfası, statik SVG poster, mobil menü, hareket tercihi ve temel WhatsApp iletişim akışı çalışıyor. Gerçek 3D açılış şimdi uygulanmıştır. Üretim animasyonları, galeri, stüdyo ve upload henüz uygulanmadı.
 
@@ -65,6 +67,8 @@ Süreler takvim taahhüdü değildir. P1 sonrası logo kalitesi, gerçek görsel
 - [x] P2.4 Statik amblem/poster, 3D yükleme yedeği, hareket azaltma tercihi ve mobil etkileşim temelini kur.
 - [x] P2.5 SEO metadata/favicon/canonical/robots/sitemap başlangıcını envantere göre koru veya hazırla.
 - [x] P2.6 Değişikliğe uygun test/CI kontrollerini ekle; sırlar, build, bağımlılık ve upload dosyalarını Git dışında tut.
+
+- [x] P2.7 Kullanıcının dört promosyon kategorisini fotoğraflı mega menü ve ayrı statik sayfalara bağla; görsel eşleşmesi, mobil/klavye/JS kapalı gezinme ve doğrudan URL kabulünü doğrula.
 
 **Kabul:** 360, 768 ve 1440 px genişliklerde yatay taşma yoktur. Başlık masaüstünde 45 pt, mobilde okunaklıdır. CTA ve temel iletişim 3D’den bağımsız çalışır. Klavye odakları görünür; build ve seçilen statik analiz kontrolleri geçer. CI mevcut değilse başarı iddia edilmez; kurulan kontrollerin gerçek çıktısı kaydedilir.
 
@@ -247,3 +251,16 @@ Sıradaki tek iş:
 - Cloudflare: erişilebilir commit status/check kayıtlarında önizleme URL’si yok; yayın başarı iddiası yok. P3.6b tamamlandı, P3.6 fiziksel kabulü ve P4 açık kalır. Sıradaki tek iş: fiziksel masaüstü/orta seviye mobil üç 10 saniyelik ölçüm ve gerçek dokunma/scroll/görsel kontrolüyle P3 kabulünü kapatmak.
 
 - Uzak kayıt 179f83131fb7124e1c1db3daf03ccefce35426f0 main üzerinde tekrar doğrulandı: 16 dosyanın Git blob kimliği ve altı ana dosyanın tam içeriği eşleşti; özgün SVG ve AGENTS blobları korundu. GitHub Actions 36868279358 / job 110389203272 başarıyla tamamlandı. Loglar yeniden okundu: npm ci/build/tarayıcı kurulumu ve 19/19 test başarılı, 0 fail; yeni üçgen/çizim bütçesi kontrolü geçti. Artifact 11166510096 kaydedildi. Kanıt: docs/evidence/P3_BATCH_CI_VERIFICATION.json.
+
+### 2026-10-01 — P2.7 promosyon mega menüsü ve kategori sayfaları
+
+- Talimat: dört promosyon kategorisini Promosyonlar mega menüsüne koy; her birini ayrı sayfaya bağla ve gönderilen görselleri sınıflandır. Güncel AGENTS.md, mimari v1.6 ve roadmap v1.5 tamamen okundu. Uzak main başlangıcı 99ab6c45d5085bcd6cf7619bb21484104d235a9b; yedi ana yerel dosya uzak bloblarla eşleşti. Yerel Git commit içermez; kayıt GitHub bağlayıcısıyla yönetilir.
+- Kapsam revizyonu: kullanıcının açık yeni önceliği P2.7 bağımsız DOM/gezinti/katalog işidir. P3 fiziksel GPU kabulü ve P4–P9 aşama sırası korunur; ürün katalog görselleri P1.5/P5 gerçek müşteri projesi kabulü değildir.
+- İçerik: 14 görsel açılıp fotoğraf içeriğine göre dört ana kategoriye ayrıldı. Bez çanta/kese ve termoslu setlerin ilgili ikinci kategoride de görünmesi kaydedildi. Uzun hediye-seti dosya adına sahip görsel yalnızca kupa olduğundan yaşam kategorisine alındı. VIP sayfasında altı özel set ve iki bez ürün ayrı bölümdür. Eşleşme: docs/PROMOTION_ASSETS.md.
+- Uygulama: native details/summary, dört fotoğraflı mega menü kartı ve dört ayrı /promosyonlar/<kategori>/ statik sayfası. Fare hover, dokunma, klavye/ArrowDown, Escape odak sırası, dış tıklama ve JS kapalı gezinme desteklenir. Ana sayfa promosyon bölümüne aynı kategori kartları eklenir.
+- Yapı: JSON içerik kaynağı ve build/dev öncesi ortak HTML üretimi; Vite beş HTML girişini derler. Canonical/metadata/sitemap, breadcrumb, diğer kategorilere ve doğrulanmış WhatsApp numarasına ürün bilgisi bağlantıları hazırdır. Kategori sayfaları 3D paketi indirmez.
+- Varlıklar: 28 WebP / 1.061.356 bayt; kaynaklar değiştirilmedi. Gerçek en/boy, alt, responsive srcset/sizes ve lazy load uygulanır; contain ürünleri kesmez.
+- Kanıt: TypeScript/production build ve 23/23 yerel test başarılı (22 tarayıcı kontrolü, bir kalite politikası). Dört yeni kabul kontrolü: masaüstü hover/klavye/Escape/dış tıklama/link, mobil dokunma/kategori/Escape, 360/768/1440 px dört doğrudan sayfa/SEO/tüm fotoğraflar/3D indirmeme ve JS kapalı gezinme/WhatsApp/sitemap. Menü ile ofis/VIP sayfasının masaüstü/mobil görüntüleri incelendi. Kanıt: P2_PROMOTIONS_VERIFICATION.json.
+- Düzeltme: native odak aktarımı sırasında erken microtask kapanması dokunma/Tab hedefini gizliyordu; kontrol sonraki macrotask’e alındı ve regresyon testinde geçti. Ana nav stilleri breadcrumb’dan ayrılır; alt bölüm lazy görselleri ilk viewport testiyle karıştırılmaz.
+- Mimari v1.7 / A10, roadmap v1.6. P2.7 tamamlandı; P3.6 fiziksel kabulü açık. Main JS 8.162 bayt, Node gzip 3.377; renderer öncekiyle aynı 606.055 / 155.041. Vite 500 KB uyarısı sürer. Canlı DNS/hosting değiştirilmedi.
+- Sıradaki tek plan işi: tanımlı fiziksel masaüstü ve orta seviye mobil ölçümü/manual kontrollerle P3.6 kabulünü kapatmak.

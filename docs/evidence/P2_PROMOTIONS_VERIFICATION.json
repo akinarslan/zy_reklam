@@ -1,0 +1,106 @@
+{
+  "date": "2026-10-01T13:40:52.782Z",
+  "stage": "P2.7",
+  "browser": "153.0.8010.0",
+  "method": "Built multi-page production preview; viewport emulation is not physical device validation.",
+  "checks": [
+    {
+      "check": "desktop-disclosure-keyboard-hover-outside",
+      "links": 4,
+      "passed": true
+    },
+    {
+      "check": "mobile-touch-navigation-nested-escape",
+      "width": 360,
+      "passed": true
+    },
+    {
+      "check": "direct-category-production",
+      "category": "tekstil-giyim",
+      "width": 360,
+      "photos": 3,
+      "passed": true
+    },
+    {
+      "check": "direct-category-production",
+      "category": "ofis-kirtasiye",
+      "width": 360,
+      "photos": 4,
+      "passed": true
+    },
+    {
+      "check": "direct-category-production",
+      "category": "yasam-mutfak-seyahat",
+      "width": 360,
+      "photos": 4,
+      "passed": true
+    },
+    {
+      "check": "direct-category-production",
+      "category": "vip-ekolojik-setler",
+      "width": 360,
+      "photos": 8,
+      "passed": true
+    },
+    {
+      "check": "direct-category-production",
+      "category": "tekstil-giyim",
+      "width": 768,
+      "photos": 3,
+      "passed": true
+    },
+    {
+      "check": "direct-category-production",
+      "category": "ofis-kirtasiye",
+      "width": 768,
+      "photos": 4,
+      "passed": true
+    },
+    {
+      "check": "direct-category-production",
+      "category": "yasam-mutfak-seyahat",
+      "width": 768,
+      "photos": 4,
+      "passed": true
+    },
+    {
+      "check": "direct-category-production",
+      "category": "vip-ekolojik-setler",
+      "width": 768,
+      "photos": 8,
+      "passed": true
+    },
+    {
+      "check": "direct-category-production",
+      "category": "tekstil-giyim",
+      "width": 1440,
+      "photos": 3,
+      "passed": true
+    },
+    {
+      "check": "direct-category-production",
+      "category": "ofis-kirtasiye",
+      "width": 1440,
+      "photos": 4,
+      "passed": true
+    },
+    {
+      "check": "direct-category-production",
+      "category": "yasam-mutfak-seyahat",
+      "width": 1440,
+      "photos": 4,
+      "passed": true
+    },
+    {
+      "check": "direct-category-production",
+      "category": "vip-ekolojik-setler",
+      "width": 1440,
+      "photos": 8,
+      "passed": true
+    },
+    {
+      "check": "no-js-static-links-whatsapp-sitemap",
+      "passed": true
+    }
+  ]
+}

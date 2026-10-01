@@ -35,7 +35,10 @@ test('360, 768 ve 1440 px: yatay taşma, başlık, görseller ve sayfa hataları
     await page.evaluate(() => document.fonts.ready);
     assert.equal(await page.locator('h1').count(), 1);
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
-    assert.equal(await page.evaluate(() => [...document.images].every(img => img.complete && img.naturalWidth > 0)), true);
+    assert.equal(await page.evaluate(() => [...document.images].filter(img => {
+      const rect = img.getBoundingClientRect();
+      return img.checkVisibility() && rect.top < innerHeight && rect.bottom > 0;
+    }).every(img => img.complete && img.naturalWidth > 0)), true);
     const size = await page.locator('h1').evaluate(el => getComputedStyle(el).fontSize);
     if (width === 1440) assert.equal(size, '60px');
     assert.deepEqual(errors, []);

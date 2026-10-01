@@ -2,35 +2,35 @@
 
 **Tarih:** 2026-10-01
 
-**Talimat:** “devam et”. **Aşama/iş:** P3.6b ortak logo katmanları tamamlandı; P3.6 fiziksel kabulü açık.
+**Talimat:** Dört promosyon kategorisini fotoğraflı mega menüye yerleştirme, ayrı sayfalara bağlama ve 14 görseli sınıflandırma. **Aşama/iş:** P2.7 tamamlandı; P3.6 fiziksel kabulü açık.
 
-Güncel AGENTS.md, mimari v1.5 ve roadmap v1.4 tamamen okundu. Uzak main başlangıcı a02713a2526270382175780361ca5828ef7a1be3 ve önceki Verify başarısı doğrulandı. Yerel Git commit içermez; uzak kayıt GitHub bağlayıcısıyla yönetilir.
+Güncel AGENTS.md, mimari v1.6 ve roadmap v1.5 tamamen okundu. Uzak main başlangıcı 99ab6c45d5085bcd6cf7619bb21484104d235a9b; yedi ana yerel dosyanın blob kimliği uzakla eşleşti. Yerel Git commit içermez; uzak kayıt GitHub bağlayıcısıyla yönetilir. Kullanıcı önceliği mimari v1.7 / A10 ve roadmap v1.6 içine kaydedildi.
 
 ## Yapılanlar
 
-- Özgün SVG’den üretilen 12 logo mesh’i aynı derinlik/malzeme düzeniyle dört ortak katmana alındı. Çok malzemeli katmanların aynı materyal grupları birleştirildi.
-- Ana sahne çizim çağrısı 27 → 13 (%51,9 azalma); gölge yenilemesi başına ek çağrı 22 → 8 (%63,6 azalma). Bu ayrıştırma, gerçek WebGL2 çağrı toplamı ile render/gölge sayaçlarından hesaplandı ve 12 örneğin tamamında birebir doğrulandı.
-- Aynı başlangıç açısındaki masaüstü ve mobil canvas PNG’leri RGBA piksel düzeyinde önceki build ile aynıdır; görüntüler ayrıca incelendi. Özgün sekiz kontur, R/A içindeki iki boşluk, katman derinlikleri, malzemeler ve 4.882 ana sahne üçgeni korundu. Gölge yenilenen render’da sayaç 9.714 üçgen ve 21 toplam çağrı gösterebilir; bu ana sahne ile gölge işinin toplamıdır.
-- Renderer gerçek son render çizim çağrısını DOM teşhis sayacında verir; gölge çizilen karede bu sayaç gölge işini de içerir.
-- Karşılaştırma aracı iki build’de gerçek WebGL2 çağrılarını sayar, örnekleri dönüşümlü alır ve ayrı çıktı adı kullanabilir. Eski gölge karşılaştırması değiştirilmedi.
-- Mimari v1.6, roadmap v1.5, kaynak bütçesi ve kabul kaydı güncellendi. P3.6b tamamlandı; P3 ve P4 teslim sırası korundu.
+- Promosyonlar altında dört fotoğraflı mega menü kartı oluşturuldu: Tekstil ve Giyim; Ofis ve Kırtasiye; Yaşam, Mutfak ve Seyahat; VIP ve Doğa Dostu (Ekolojik) Özel Setler.
+- Ayrı adresler: /promosyonlar/tekstil-giyim/, /promosyonlar/ofis-kirtasiye/, /promosyonlar/yasam-mutfak-seyahat/, /promosyonlar/vip-ekolojik-setler/.
+- 14 fotoğraf açılıp içeriklerine göre sınıflandırıldı; adından farklı olarak tek kupa gösteren dosya yaşam kategorisine alındı. Bez çanta ve keseler ekolojik bölümünde, altı kutulu set VIP bölümünde; ilgili ürünler ikinci uygun kategoride de görünür. Tam dosya eşlemesi docs/PROMOTION_ASSETS.md içinde.
+- Ana sayfa promosyon bölümüne dört kategori kartı eklendi. Alt sayfalarda ürün galerisi, diğer kategoriler, içerik yolu, ana sayfa iletişim ve ürün adıyla WhatsApp bilgi bağlantıları bulunur.
+- Native disclosure fare hover, klavye, dokunma ve JavaScript kapalı gezinmeyi destekler. Escape önce alt menüye, sonra mobil ana menüye uygun odak dönüşü sağlar.
+- 28 WebP / 1.061.356 bayt; 480 ve en çok 960 px, büyütme yok. Alt metin, en/boy, responsive kaynaklar, lazy load ve kesmeyen contain yerleşimi kullanıldı. Kaynaklar değiştirilmedi.
+- JSON içerik kaynağı ve ortak HTML üretimi eklendi. Build beş gerçek HTML girişini derler; dört kategori sayfasında SEO/canonical/Open Graph ve sitemap hazırdır. Kategori sayfaları Three.js indirmez.
 
 ## Değişen dosyalar
 
-src/scene/logo.ts, renderer.ts; scripts/compare-scene.mjs; tests/scene.test.mjs; ARCHITECTURE.md, ROADMAP.md, README.md, LAST_REPORT.md; docs/P3_ACCEPTANCE.md; docs/evidence/P3_BUDGET.json, P3_BATCH_COMPARISON.json, P3_BATCH_VISUAL_VERIFICATION.json, P2_VERIFICATION.json, P3_VERIFICATION.json, P3_DEVICE_TOOL_SAMPLE.json ve P3_DEVICE_TOOL_VERIFICATION.json ve P3_BATCH_CI_VERIFICATION.json.
+index.html; package.json; vite.config.ts; scripts/generate-promotions.mjs; src/content/promotions.json; src/sections/navigation.ts; src/styles/main.css ve promotions.css; promosyonlar altındaki dört index.html; public/assets/promotions altındaki 28 WebP ve public/sitemap.xml; tests/browser.test.mjs ve promotions.test.mjs; ARCHITECTURE.md, ROADMAP.md, README.md, LAST_REPORT.md; docs/ASSET_INVENTORY.md, PROMOTION_ASSETS.md ve güncel P2/P3/araç test kanıtları ile kaynak bütçesi.
 
 ## Doğrulama ve sınırlar
 
-- TypeScript/production build ve karşılaştırma aracı sözdizimi başarılı. 19/19 yerel test geçti: 18 tarayıcı ve bir kalite politikası kontrolü. Ana sahne üçgen bütçesi ve 13 çizim çağrısı iki viewport’ta doğrulandı; form, dokunma, hareket tercihi, kaynak temizliği ve hata yedekleri geçti.
-- İlk çalıştırmada test beklentisi gölgeli toplam üçgen sayısıyla karıştı (9.714); önceki idle kanıtı tekrar okunup 4.882 olarak düzeltildi. Temiz tekrar 19/19 geçti.
-- Masaüstü yazılımsal ortanca 38,6 → 35,5 FPS; mobil emülasyon 48,9 → 49,3 FPS. Aralıklar örtüşür; bu çalışma tutarlı FPS artışı göstermedi. Fiziksel cihaz performans kabulü açık kalır. Üç çift/profil ve ham kayıtlar P3_BATCH_COMPARISON.json içindedir. Sayaç ayrıştırması her örnekte birebir eşleşti; sayaçsız eski baseline için güvenli dönüş ayrıca doğrulandı.
-- Canvas PNG’leri aynı süreçte eşit viewport/DPR ve başlangıç açısıyla alındı; masaüstü/mobil piksel farkı sıfır ve görsel inceleme geçti. Aktif pozlar piksel eşitliği iddiasına dahil değildir.
-- Ertelenen renderer 606.055 ham / 155.041 Node gzip bayt (+967 / +337); ana JS 7.235 bayt. Vite 500 KB paket uyarısı sürer; kaynak varlık bütçesi altında olmak fiziksel FPS kabulü değildir.
-- Özgün SVG 8.340 bayt; SHA-256 11ffcb567b413dc48d0d8a6539c4c981683ff4b89f5a4e6b149e154884985439. Logo/font/legacy kaynakları değiştirilmedi.
-- Cloudflare önizleme URL’si erişilebilir status/check kayıtlarında bulunmadı. Yayın tamamlandı iddiası yok; ana domain/DNS/hosting değiştirilmedi.
-- P3.6 fiziksel cihaz kabulü, P4 ve Lighthouse/P8 açık.
-- Uzak kayıt 179f83131fb7124e1c1db3daf03ccefce35426f0 main üzerinde tekrar doğrulandı: 16 dosyanın Git blob kimliği ve altı ana dosyanın tam içeriği eşleşti; özgün SVG ve AGENTS blobları korundu. GitHub Actions 36868279358 / job 110389203272 başarıyla tamamlandı. Loglar yeniden okundu: npm ci/build/tarayıcı kurulumu ve 19/19 test başarılı, 0 fail; yeni üçgen/çizim bütçesi kontrolü geçti. Artifact 11166510096 kaydedildi. Kanıt: docs/evidence/P3_BATCH_CI_VERIFICATION.json.
+- TypeScript/production build ve 23/23 test geçti: 22 tarayıcı kontrolü, bir kalite politikası. Önceki 19 regresyon ve dört promosyon kabul kontrolü başarılıdır.
+- Dört doğrudan URL, doğru H1/canonical, tüm fotoğrafların decode edilmesi, 360/768/1440 px taşmama, 3D paket indirmeme, gerçek dokunma ve klavye/Escape odak dönüşleri denetlendi.
+- JS kapalı kategori geçişi, statik içerik, sitemap adresleri ve ürün adı içeren doğru kodlanmış WhatsApp metni geçti. Testlerde gerçek mesaj gönderilmedi.
+- İlk denemelerde odak erken kapandığı için Tab/dokunma aksadı; native odak aktarımından sonraki macrotask kontrolüyle düzeltildi. Test sunucusu için tarayıcının yasak port listesindeki 4190 yerine 4191 kullanıldı. Son temiz tekrar 23/23 geçti.
+- Masaüstü/mobil mega menü ve ofis/VIP kategori ekranları incelendi. Fotoğraflar dosya adlarıyla tahmin edilmedi; görsel içerik eşlemesi kaynak hash’leriyle kayıtlıdır.
+- Main JS 8.162 ham / 3.377 Node gzip bayt; renderer 606.055 / 155.041 bayt ile değişmedi. 500 KB Vite uyarısı sürer. Güncel bütçe P3_BUDGET.json içindedir.
+- Bu katalog ürün görselleri P1.5/P5 gerçek müşteri projesi kabulünü kapatmaz. P3 fiziksel GPU kabulü ve P4–P9 açık kalır. Canlı DNS/hosting değişikliği yapılmadı.
+- Uzak kayıt ve CI sonucu doğrulama sonrası rapora eklenecek.
 
 ## Sıradaki tek iş
 
-Cloudflare önizlemesinde tanımlı fiziksel masaüstü ve orta seviye mobilde üç 10 saniyelik örneği ve gerçek dokunma/scroll/görsel kontrolleri kaydedip P3 kabulünü kapatmak. Önizleme bağlantısı henüz verilmedi.
+Tanımlı fiziksel masaüstü ve orta seviye mobilde üç 10 saniyelik ölçüm ve gerçek dokunma/scroll/görsel kontrollerle P3.6 kabulünü kapatmak.

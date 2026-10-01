@@ -1,6 +1,6 @@
 # ZY Reklam — Mimari
 
-**Sürüm:** 1.6 · **Tarih:** 2026-10-01 · **Durum:** P3 gerçek 3D ve güvenli yollar uygulandı; fiziksel cihaz performans kabulü açık
+**Sürüm:** 1.7 · **Tarih:** 2026-10-01 · **Durum:** P3 gerçek 3D ve güvenli yollar uygulandı; fiziksel cihaz performans kabulü açık
 
 **İlgili belgeler:** [Yol haritası](ROADMAP.md) · [Çalışma kuralları](AGENTS.md)
 
@@ -28,6 +28,8 @@ Temel yolculuk: **İşi anla → Gerçek projeleri gör → Tabela fikrini dene 
 Ana başlık **“Projenize özel çözümler üretiyoruz.”** Açılış eylemleri **“Projelerimizi Gör”** ve **“Teklif Al”**. Stüdyo eylemi **“Bu tasarım için teklif al”**; seçilen tasarım teklif formuna taşınır.
 
 İlk sürüm kapsamı: bütün bölümler, bir kaliteli 3D açılış, üretim animasyonu, işlevsel tabela stüdyosu, WhatsApp metin aktarımı ve P7’de güvenli görsel yükleme bağlantısı. Stüdyo gerçek üretim teklifi veya fiyat garantisi vermez; “Temsili önizleme” açıklaması bulunur.
+
+Promosyon gezinmesi: “Promosyonlar” altında fotoğraflı dört kart; her kart kendine ait statik kategori URL’sine gider. Kategori adları ve adresleri docs/PROMOTION_ASSETS.md içindedir. Kullanıcının 1 Ekim talimatıyla P2.7 bağımsız ön yüz işi olarak önceliklendirildi. Bu sayfalar gerçek müşteri projesi galerisi değildir.
 
 İlk sürüm dışı: ödeme/sepet, otomatik fiyatlandırma, müşteri hesabı, yönetici paneli, CRM, otomatik WhatsApp gönderimi, canlı üretim takibi ve yapay zekâyla üretim görseli oluşturma. Bunlar yeni kullanıcı talimatı olmadan eklenmez.
 
@@ -238,6 +240,7 @@ Görsel kanıtlar: açılış, üretim, galeri, stüdyo, form ve footer için se
 | A07 | Gerçek görsel yükleme için ayrı API/özel depo | Tasarım kabul; sağlayıcı bekliyor | Link ile dosya eklemenin farkı; P7 tamamlama |
 | A08 | Mevcut domain/hosting korunarak entegrasyon | P1 doğrulaması bekliyor | Çalışan yayının gereksiz değişmemesi |
 | A09 | Her talimatta mimari ve roadmap kontrolü | Kabul | Kullanıcının plan takibi isteği; AGENTS.md ile kalıcı kural |
+| A10 | Promosyonlar altında dört fotoğraflı kategori ve ayrı statik sayfa | Kullanıcı talimatıyla uygulandı | P2.7; 3D’den bağımsız gezinme ve katalog içeriği |
 
 Mimari değişiklikte sürüm, tarih, ilgili karar ve etkilenen roadmap işi güncellenir. Yeni kullanıcı talimatıyla değişen kapsam eski kabul ölçütlerine gizlenmez.
 
@@ -287,3 +290,17 @@ Ana sahne çizim çağrısı 27 → 13 (%51,9 azalma); gölge yenilemesi başın
 Aynı başlangıç açısındaki masaüstü ve mobil canvas PNG’leri RGBA piksel düzeyinde önceki build ile aynıdır; görüntüler ayrıca incelendi. Özgün sekiz kontur, R/A içindeki iki boşluk, katman derinlikleri, malzemeler ve 4.882 ana sahne üçgeni korundu. Gölge yenilenen render’da sayaç 9.714 üçgen ve 21 toplam çağrı gösterebilir; bu ana sahne ile gölge işinin toplamıdır.
 
 19/19 yerel test geçti. Masaüstü yazılımsal ortanca 38,6 → 35,5 FPS; mobil emülasyon 48,9 → 49,3 FPS. Aralıklar örtüşür; bu çalışma tutarlı FPS artışı göstermedi. Fiziksel cihaz performans kabulü açık kalır. Ertelenen renderer 606.055 bayt ham / 155.041 bayt Node gzip; önceki sürüme göre +967 ham / +337 gzip bayt. Ana JS 7.235 bayt; 500 KB Vite uyarısı sürer. Kanıtlar P3_BATCH_COMPARISON.json, P3_BATCH_VISUAL_VERIFICATION.json ve güncel P3_VERIFICATION.json içinde. A02/A03, kalite ve yaşam döngüsü ile P3/P4 teslim sırası korunur.
+
+### 2026-10-01 — v1.7 promosyon mega menüsü ve çok sayfalı katalog (P2.7 / A10)
+
+Kullanıcının açık yeni talimatıyla dört promosyon kategorisi, görsel mega menü ve dört ayrı sayfa eklendi. P2.7, P3 renderer’ına bağımlı değildir; P3 fiziksel cihaz kabulü ve P4–P9 teslim sırası korunur. P1.5/P5 gerçek proje fotoğrafları ayrı kabul konusudur.
+
+İçerik kaynağı src/content/promotions.json; kategori alanları id/title/description/examples/cover/href, görsel alanları id/title/alt/category/alsoIn/section/sourceFile/sourceSHA256/variants’tır. Katalog ürünleri ortak kaynak görsellerinden türetilir; fiyat, stok, malzeme sertifikası veya sahte proje bilgisi eklenmedi. VIP ve bez ürünler aynı kategori sayfasında iki DOM bölümüdür.
+
+scripts/generate-promotions.mjs build/dev öncesinde dört statik HTML sayfasını, ortak menüyü, ana sayfa kategori kartlarını ve sitemap’i üretir. Vite rolldownOptions.input beş HTML girişini derler. Header/footer ana sayfadan ortak üretilir; alt sayfalarda ana bölüm bağlantıları /#... biçimindedir. Başlık, meta description/canonical/Open Graph, ürün içerikleri ve iletişim linkleri ilk HTML’dedir; route fallback veya JavaScript render beklemez.
+
+src/sections/navigation.ts native details/summary disclosure’ını fare hover, klavye ve mobil dokunma ile destekler. Escape önce alt menüyü kapatıp summary’ye, sonra mobil ana menüyü kapatıp Menü düğmesine odak verir. Dış tıklama, Tab ile çıkış ve breakpoint değişimi kapanır. Odak kontrolü native blur/focus aktarımı bittikten sonraki macrotask’te yapılır; aksi takdirde dokunma/Tab hedefi erken gizlenebilir. Listener ve zamanlayıcılar cleanup ile kaldırılır. HTML native disclosure JavaScript kapalıyken de çalışır; breadcrumb nav stilleri ana gezinmeden ayrıdır.
+
+28 WebP türevi en çok 480/960 genişliktedir, küçük kaynaklar büyütülmez. Galeri/menü lazy load, hero eager; srcset/sizes, alt ve gerçek en/boy kullanılır. CSS contain ürünleri kesmez. Kategori sayfasında sahne hedefi yoktur; ortak ana modülün hero guard’ı 3D renderer indirmez. WhatsApp linkleri doğrulanmış numarayla ürün adı içeren metni hazırlar; mesaj kullanıcı tarafından gönderilir.
+
+Kabul kanıtı docs/evidence/P2_PROMOTIONS_VERIFICATION.json ve docs/PROMOTION_ASSETS.md içinde kayıtlıdır. TypeScript/production build ve 23/23 yerel test geçti; dört yeni kontrol tüm kategori URL’lerini, fotoğrafları, 360/768/1440 px düzeni, klavye/dokunma/JS kapalı gezinmeyi doğruladı. Ertelenen renderer paketi değişmedi; 500 KB uyarısı ve fiziksel P3 kabulü açık kalır.

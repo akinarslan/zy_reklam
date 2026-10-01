@@ -22,13 +22,17 @@ Linux CI için `npx playwright install --with-deps chromium` kullanılır. Kurul
 
 P3 testleri derlenmiş `dist/` üzerinde çalışır; testten önce `npm run build` gerekir.
 
+## Promosyon sayfaları
+
+Promosyonlar menüsünde dört fotoğraflı kategori bulunur; her biri `/promosyonlar/<kategori>/` adresinde ayrı statik sayfadır. [Fotoğraf eşlemesi ve sayfa adresleri](docs/PROMOTION_ASSETS.md). İçerik kaynağı `src/content/promotions.json`; ortak HTML üretimi `npm run generate:promotions` ile yapılır ve dev/build öncesinde otomatik çalışır.
+
 ## Cihaz performans ölçümü
 
 Önizleme adresinde `/qa/scene-performance.html` yolunu açın. Araç üç ölçüm yapar ve kullanıcı eylemiyle JSON raporu indirir. Cihaz modeli/OS/güç koşulunu doldurun; fiziksel kabul için üç adet 10 saniyelik örneği kullanın. [Ölçüm yöntemi ve kabul kaydı](docs/P3_DEVICE_MEASUREMENT.md). Bu araç fiziksel donanımı veya P3 kabulünü otomatik doğrulamaz.
 
 ## Güncel durum
 
-P2 temeli tamamlandı: responsive sayfa, özgün SVG logo, Citadel başlık (masaüstü 45 pt), zümrüt footer, mobil menü, hareket azaltma tercihi ve temel WhatsApp formu. TypeScript/build ve 19 test geçti. Hero, özgün SVG konturlarından gerçek 3D tabela gösterir; masaüstü fare dönüşü ve mobil yatay sürükleme desteklenir. WebGL/yükleme/context hatasında ve hareket azaltma tercihinde statik poster kullanılır. Logo aynı görünümü koruyan dört ortak katmanda çizilir; ana sahne çizim çağrısı 27’den 13’e indi. P3 fiziksel cihaz performans kabulü henüz kapanmadı.
+P2 temeli tamamlandı: responsive sayfa, özgün SVG logo, Citadel başlık (masaüstü 45 pt), zümrüt footer, mobil menü, hareket azaltma tercihi ve temel WhatsApp formu. TypeScript/build ve 23 test geçti. Hero, özgün SVG konturlarından gerçek 3D tabela gösterir; masaüstü fare dönüşü ve mobil yatay sürükleme desteklenir. WebGL/yükleme/context hatasında ve hareket azaltma tercihinde statik poster kullanılır. Logo aynı görünümü koruyan dört ortak katmanda çizilir; ana sahne çizim çağrısı 27’den 13’e indi. P3 fiziksel cihaz performans kabulü henüz kapanmadı.
 
 P1.5 için gerçek proje fotoğrafları ve bilgilerinin doğrulanması bekliyor. Galeri, üretim animasyonları, tasarım stüdyosu ve görsel yükleme henüz uygulanmadı. WhatsApp formu mesajı hazırlar; ziyaretçi WhatsApp içinde kendisi gönderir.
 

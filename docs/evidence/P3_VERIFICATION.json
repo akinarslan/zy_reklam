@@ -1,6 +1,6 @@
 {
   "stage": "P3",
-  "date": "2026-10-01T13:19:00.644Z",
+  "date": "2026-10-01T13:41:34.868Z",
   "browser": "153.0.8010.0",
   "renderer": "headless Chromium / ANGLE SwiftShader (software GPU)",
   "deviceCaveat": "Viewport emulation is not a physical mobile GPU measurement.",
@@ -50,21 +50,21 @@
     {
       "check": "mouse-bounds-cta-visibility-idle",
       "angles": {
-        "yaw": 0.22856589038666464,
-        "pitch": 0.1489359421215572
+        "yaw": 0.21503028886697692,
+        "pitch": 0.14509403582646113
       },
       "passed": true
     },
     {
       "check": "real-touch-horizontal-drag-vertical-scroll",
-      "yaw": 0.254255257180909,
+      "yaw": 0.25072993224018497,
       "passed": true
     },
     {
       "check": "bounded-shadow-refresh-final-pose-idle",
-      "elapsedMs": 1291.7000000022351,
-      "shadowUpdates": 9,
-      "frames": 25,
+      "elapsedMs": 1213.0000000014902,
+      "shadowUpdates": 10,
+      "frames": 28,
       "passed": true
     },
     {
@@ -115,11 +115,11 @@
         "dpr": 1,
         "cpu": 1
       },
-      "elapsedMs": 4511.80000000149,
-      "renderedFrames": 155,
+      "elapsedMs": 4527.100000000745,
+      "renderedFrames": 168,
       "state": "ready",
       "quality": "high",
-      "fps": 34.35435967905244,
+      "fps": 37.109849572567946,
       "physicalDevice": false,
       "passed": true
     },
@@ -131,11 +131,11 @@
         "dpr": 2,
         "cpu": 4
       },
-      "elapsedMs": 4512.7,
-      "renderedFrames": 195,
+      "elapsedMs": 4514.100000002235,
+      "renderedFrames": 234,
       "state": "ready",
       "quality": "high",
-      "fps": 43.21138121302103,
+      "fps": 51.83757559643875,
       "physicalDevice": false,
       "passed": true
     },
@@ -156,9 +156,9 @@
   ],
   "chunks": [
     {
-      "file": "index-B08bO30v.js",
-      "bytes": 7235,
-      "gzipBytes": 3090
+      "file": "main-DQlHnKPf.js",
+      "bytes": 8162,
+      "gzipBytes": 3377
     },
     {
       "file": "renderer-CNVdVZvx.js",

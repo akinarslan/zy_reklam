@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-01T13:22:26.925786+00:00",
+  "date": "2026-10-01T13:41:52.894Z",
   "svgSource": {
     "path": "public/assets/brand/zy-reklam-wordmark.svg",
     "bytes": 8340,
@@ -15,9 +15,9 @@
   "assetBudgetPassed": true,
   "chunks": [
     {
-      "path": "dist/assets/index-B08bO30v.js",
-      "bytes": 7235,
-      "gzipBytes": 3090
+      "path": "dist/assets/main-DQlHnKPf.js",
+      "bytes": 8162,
+      "gzipBytes": 3377
     },
     {
       "path": "dist/assets/renderer-CNVdVZvx.js",
