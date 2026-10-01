@@ -1,6 +1,6 @@
 {
   "stage": "P3",
-  "date": "2026-10-01T13:41:34.868Z",
+  "date": "2026-10-01T14:36:50.032Z",
   "browser": "153.0.8010.0",
   "renderer": "headless Chromium / ANGLE SwiftShader (software GPU)",
   "deviceCaveat": "Viewport emulation is not a physical mobile GPU measurement.",
@@ -50,21 +50,21 @@
     {
       "check": "mouse-bounds-cta-visibility-idle",
       "angles": {
-        "yaw": 0.21503028886697692,
-        "pitch": 0.14509403582646113
+        "yaw": 0.22856589038666467,
+        "pitch": 0.1489359421215572
       },
       "passed": true
     },
     {
       "check": "real-touch-horizontal-drag-vertical-scroll",
-      "yaw": 0.25072993224018497,
+      "yaw": 0.24734194172041302,
       "passed": true
     },
     {
       "check": "bounded-shadow-refresh-final-pose-idle",
-      "elapsedMs": 1213.0000000014902,
+      "elapsedMs": 1260.79999999851,
       "shadowUpdates": 10,
-      "frames": 28,
+      "frames": 25,
       "passed": true
     },
     {
@@ -115,11 +115,11 @@
         "dpr": 1,
         "cpu": 1
       },
-      "elapsedMs": 4527.100000000745,
-      "renderedFrames": 168,
+      "elapsedMs": 4511.800000002235,
+      "renderedFrames": 166,
       "state": "ready",
       "quality": "high",
-      "fps": 37.109849572567946,
+      "fps": 36.79241101110816,
       "physicalDevice": false,
       "passed": true
     },
@@ -131,11 +131,11 @@
         "dpr": 2,
         "cpu": 4
       },
-      "elapsedMs": 4514.100000002235,
+      "elapsedMs": 4516.399999999255,
       "renderedFrames": 234,
       "state": "ready",
       "quality": "high",
-      "fps": 51.83757559643875,
+      "fps": 51.81117704367164,
       "physicalDevice": false,
       "passed": true
     },
@@ -156,9 +156,9 @@
   ],
   "chunks": [
     {
-      "file": "main-DQlHnKPf.js",
-      "bytes": 8162,
-      "gzipBytes": 3377
+      "file": "main-B-VVOhzv.js",
+      "bytes": 8539,
+      "gzipBytes": 3479
     },
     {
       "file": "renderer-CNVdVZvx.js",

@@ -1,6 +1,6 @@
 # ZY Reklam — Yol Haritası
 
-**Sürüm:** 1.6 · **Başlangıç:** 2026-10-01
+**Sürüm:** 1.7 · **Başlangıç:** 2026-10-01
 
 **Kaynak:** [ARCHITECTURE.md](ARCHITECTURE.md) · **Zorunlu kontrol:** [AGENTS.md](AGENTS.md)
 
@@ -10,7 +10,7 @@
 
 **Aktif aşama:** P3 — Gerçek 3D açılış uygulandı; performans kapanışı devam ediyor.
 
-**Kullanıcı önceliği:** P2.7 — Promosyonlar mega menüsü ve dört bağımsız kategori sayfası. Bu iş P3 renderer’ına bağlı değildir; P3/P4 kabul sırası korunur.
+**Kullanıcı önceliği:** P2.8 — Projeler mega menüsü ve beş bağımsız tasarım/uygulama örneği sayfası. P2.7 promosyon menüsü korunur. Bu iş P3 renderer’ına bağlı değildir; P3/P4 kabul sırası korunur.
 
 P1 kaynak, logo, font ve iletişim incelemesi yapıldı; gerçek proje bilgileri/fotoğrafları doğrulanmadığı için P1.5 açık kalır. Planın engel yönetimi uyarınca bağımsız P2 temeli tamamlandı. Vite/TypeScript sayfası, statik SVG poster, mobil menü, hareket tercihi ve temel WhatsApp iletişim akışı çalışıyor. Gerçek 3D açılış şimdi uygulanmıştır. Üretim animasyonları, galeri, stüdyo ve upload henüz uygulanmadı.
 
@@ -69,6 +69,8 @@ Süreler takvim taahhüdü değildir. P1 sonrası logo kalitesi, gerçek görsel
 - [x] P2.6 Değişikliğe uygun test/CI kontrollerini ekle; sırlar, build, bağımlılık ve upload dosyalarını Git dışında tut.
 
 - [x] P2.7 Kullanıcının dört promosyon kategorisini fotoğraflı mega menü ve ayrı statik sayfalara bağla; görsel eşleşmesi, mobil/klavye/JS kapalı gezinme ve doğrudan URL kabulünü doğrula.
+
+- [x] P2.8 Beş proje kategorisini fotoğraflı mega menüye ve ayrı örnek sayfalarına bağla; gönderilen fotoğraf/video içeriklerini sınıflandır, erişim ve video oynatmayı doğrula.
 
 **Kabul:** 360, 768 ve 1440 px genişliklerde yatay taşma yoktur. Başlık masaüstünde 45 pt, mobilde okunaklıdır. CTA ve temel iletişim 3D’den bağımsız çalışır. Klavye odakları görünür; build ve seçilen statik analiz kontrolleri geçer. CI mevcut değilse başarı iddia edilmez; kurulan kontrollerin gerçek çıktısı kaydedilir.
 
@@ -283,3 +285,13 @@ Sıradaki tek iş:
 - Web aracı hedefi açamadı; shell isteği 403 verdi. Canlı tarayıcı gözlemi başarılıdır; shell 403 sitesi kapalı/bot engeli diye yorumlanmadı.
 - Cloudflare resmi Workers Builds belgeleri repo bağlantısı, production branch, build ve deploy adımlarını doğruluyor. Hesap/panel erişimi mevcut değil; ayar veya DNS değiştirilmedi. Uygulama/mimari değişmedi; P3.6 ve aşama kapıları korunur.
 - Sıradaki tek iş: zy-reklam Worker’ın Settings > Builds ekranında bağlı repo/dal ve son build/deployment commit’ini kontrol edip otomatik yayın eşleşmesini düzeltmek.
+
+### 2026-10-01 — P2.8 projeler mega menüsü / örnek koleksiyonu
+
+- Talimat: Kullanıcı promosyon yayınının düzeldiğini bildirdi; beş kategorili Projeler mega menüsü, ayrı bağlantılar ve yüklenen fotoğraf/video sınıflandırması istedi. AGENTS.md, mimari v1.7, roadmap v1.6 tamamen okundu; uzak main 0be8bf7b3ff802c6130d321e34e13becf06403bd. Yerel Git commit içermez.
+- Kullanıcı önceliği bağımsız P2.8; P3 fiziksel kabulü ve P4–P9 teslim kapıları korunur. 19 fotoğraf, bir 14,72 sn dijital totem videosu görsel olarak incelendi. Kategori dağılımı Tabela 2, Totem 2+video, Lazer Kesim 5, Dijital Baskı 5, Özel Üretim 5. Tam eşleme docs/PROJECT_ASSETS.md.
+- Uygulama: fotoğraflı beş kart, beş /projeler/<kategori>/ sayfası, ana sayfa kategori kartları, büyük görsel bağlantıları, diğer kategoriler, ortak gezinme ve sitemap. Video kullanıcı başlatmalı controls/playsinline/preload=none; ilk yükte MP4 isteği yok. Referans içerik başka markaları içerir; ZY müşteri projesi olarak sunulmaz.
+- Kanıt: TypeScript/production build başarılı; 26/26 yerel test, 0 fail. Önceki 23 regresyon ve üç yeni proje kontrolü geçti: 360/768/1440 menü/klavye/dokunma/karşılıklı kapanma; beş doğrudan URL/görseller/SEO/taşma/3D indirmeme/video gerçekten oynatma; JS kapalı iki koleksiyon geçişi. Masaüstü ve mobil menü görüntüleri incelendi.
+- İlk kontrolde bir WebP türevi boş bulundu; yeniden kodlandı, tüm 38 WebP decode ile doğrulandı, temiz test tekrarı başarılı. 38 WebP + video/poster toplam 4.480.675 bayt; her şey ilk yükte indirilmez. Kaynak fotoğraflar değiştirilmedi.
+- Mimari v1.8 / A11 ve roadmap v1.7. P2.8 tamamlandı. P1.5/P5 gerçek müşteri sahipliği/bilgisi ve P3.6 fiziksel ölçüm açık. Canlı Cloudflare otomatik dağıtım sonucu GitHub kayıt sonrası ayrıca kontrol edilecek; başarı önceden iddia edilmez.
+- Sıradaki tek iş: yeni Projeler menüsünün Workers önizlemesinde yayınlandığını ve beş kategori bağlantısının çalıştığını doğrulamak.

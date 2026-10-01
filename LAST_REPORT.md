@@ -2,23 +2,29 @@
 
 **Tarih:** 2026-10-01
 
-**Talimat / iş:** Kullanıcının verdiği Cloudflare Workers önizlemesinin GitHub değişikliklerini alıp almadığını kontrol etme; P2.7 canlı görünürlük, P9.1 yayın teşhisi.
+**Talimat / iş:** Projeler menüsünü promosyon menüsü gibi fotoğraflı mega menüye dönüştürme; Tabela, Totem, Lazer Kesim, Dijital Baskı, Özel Üretim için ayrı bağlantılar ve yüklenen fotoğraf/video sınıflandırması. **P2.8 tamamlandı.**
 
-AGENTS.md, mimari v1.7 ve roadmap v1.6 okundu; uzak main 86bd58bbafcaa11d5e12d4a266db378ff96b9328 kontrol edildi. Mimari ve uygulama kodu değişmedi.
+AGENTS.md, mimari v1.7 ve roadmap v1.6 tamamen okundu. Uzak başlangıç main 0be8bf7b3ff802c6130d321e34e13becf06403bd; yerel Git commit içermez. Kullanıcı önceliği mimari v1.8 / A11 ve roadmap v1.7 içine kaydedildi; P3.6 fiziksel kabulü ve diğer aşama kapıları korunur.
 
-## Doğrulanmış sonuç
+## Yapılanlar
 
-- https://zy-reklam.akinarslanceng.workers.dev/#promosyonlar Cloud Browser’da açıldı. Promosyonlar bağlantısına tıklanıp güncel erişim ağacı ve canlı gezinme HTML’i incelendi.
-- Canlı gezinmede Promosyonlar basit #promosyonlar bağlantısıdır; fotoğraflı dört kategorili mega menü yoktur. Bölümde önceki üç maddeli promosyon metni vardır. GitHub’da hazırlanan güncel menü bu adreste sunulmuyor.
-- Canlı paketler: /assets/index-BxE0oBOY.js ve /assets/index-Dq4TeZOt.css. Bu gözlem kullanıcının bildirimiyle uyumludur; yerel önizleme başarıları canlı yayın başarısı değildir.
-- Güncel main kontrolünde GitHub Actions verify başarılı; Cloudflare check veya status görünmüyor. Otomatik entegrasyonun kapalı olduğu kesinleştirilmedi. Yanlış repo/dal, başarısız build, eski aktif deployment veya tetikleme sorunu panel/log kontrolünü gerektirir.
-- Web aracı hedefi açamadı; shell isteği 403 verdi. Canlı tarayıcı gözlemi başarılıdır; bu diğer erişim hataları site arızası olarak yorumlanmadı.
-- Cloudflare resmi Workers Builds/Git integration/Build branches belgeleri incelendi. Otomatik yayın bağlı repo ve production branch için build ve deploy işlemlerinin başarıyla çalışmasına bağlıdır.
+- Beş fotoğraflı mega menü kartı ve beş ayrı statik sayfa: /projeler/tabela/, /projeler/totem/, /projeler/lazer-kesim/, /projeler/dijital-baski/, /projeler/ozel-uretim/.
+- 19 fotoğraf içerikleri incelenerek ayrıldı: Tabela 2; Totem 2; Lazer Kesim 5; Dijital Baskı 5; Özel Üretim 5. Bir dijital totem videosu Totem sayfasına alındı. Eşleme docs/PROJECT_ASSETS.md; kaynak hash ve gerçek türev ölçüleri src/content/projects.json içinde.
+- Ana sayfada aynı beş kategori kartı; alt sayfalarda galeri, büyük görsel bağlantısı, diğer kategoriler, içerik yolu ve iletişim bağlantısı bulunur. Metadata/canonical/Open Graph/sitemap ilk HTML'dedir; on HTML girişli production build.
+- Fotoğraflar üçüncü taraf marka/örnekleri içerdiği için tasarım ve uygulama örnekleri olarak etiketlendi; ZY REKLAM tarafından tamamlanmış müşteri projeleri olarak sunulmadı. Kesim yöntemi veya malzeme fotoğraftan kesinleştirilmedi. P1.5/P5 gerçek müşteri bilgisi kabulü açık kalır.
+- 38 responsive/lazy WebP ile H.264 540×960, sessiz 14,72 sn video ve poster hazır. Toplam 4.480.675 bayt; video preload=none / controls / playsinline ile kullanıcı tarafından başlatılır, otomatik oynatılmaz. Kaynaklar değiştirilmedi.
+- Ortak navigation adaptörü iki menüyü yönetir; birini açınca diğeri kapanır. Hover, dokunma, klavye/ArrowDown, Escape odak dönüşü ve JavaScript kapalı gezinme korunur.
 
-## Dosyalar ve sınır
+## Doğrulama
 
-ROADMAP.md ile LAST_REPORT.md güncellendi. Uygulama değişmediği için build/test yeniden çalıştırılmadı; bu talimat için gerçek canlı gezinme kontrolü yapıldı. Cloudflare hesap ayarları ve build logları erişilebilir değil; DNS veya hosting değişikliği yapılmadı. P3.6 fiziksel kabulü açık kalır.
+TypeScript/production build başarılı; temiz yerel tam test tekrarı **26/26 geçti, 0 fail**. Önceki 23 regresyon ve üç yeni kabul: 360/768/1440 px iki mega menü; beş doğrudan URL/görsel/SEO/taşma/3D indirmeme; gerçek video oynatma, başlangıçta MP4 isteği olmaması ve JS kapalı koleksiyonlar arası gezinme. Masaüstü ve mobil menü görüntüleri incelendi.
+
+İlk denemede bir küçük WebP boş bulunup yeniden kodlandı; bütün türevler tekrar decode edildi. Vite ertelenmiş renderer için 500 KB uyarısı sürer; 3D kodu değiştirilmedi. FPS saha kabulü yapılmış sayılmaz. Kanıt docs/evidence/P2_PROJECTS_VERIFICATION.json ve güncel regresyon JSON'larıdır.
+
+## Değişen dosyalar
+
+index.html; package.json; vite.config.ts; scripts/generate-projects.mjs; src/content/projects.json; src/sections/navigation.ts; src/styles/main.css ve projects.css; beş projeler index.html, ortak menüsü güncellenmiş dört promosyon index.html; 40 medya dosyası; public/sitemap.xml; tests/projects.test.mjs; mimari/roadmap/README/rapor/varlık eşleme belgeleri ve test kanıtları.
 
 ## Sıradaki tek iş
 
-Cloudflare’da Workers & Pages > zy-reklam > Settings > Builds ekranındaki bağlı depo/dal ve son build/deployment commit’ini kontrol etmek. Beklenen kaynak akinarslan/zy_reklam, production branch main, build npm run build ve derlenmiş statik yayın dizini dist’tir. Panel görülmeden deploy komutu veya mevcut yapılandırma hakkında kesin hüküm verilmez.
+GitHub kaydından sonra yeni Projeler mega menüsünün Cloudflare Workers önizlemesinde yayınlandığını ve beş kategori bağlantısının çalıştığını doğrulamak. Canlı yayın başarısı önceden iddia edilmez; diğer cihaz/aşama kabulleri açık kalır.

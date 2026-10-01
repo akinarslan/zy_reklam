@@ -1,0 +1,85 @@
+{
+  "date": "2026-10-01T14:36:07.683Z",
+  "stage": "P2.8",
+  "checks": [
+    {
+      "check": "dual-menu",
+      "width": 360,
+      "passed": true
+    },
+    {
+      "check": "dual-menu",
+      "width": 768,
+      "passed": true
+    },
+    {
+      "check": "dual-menu",
+      "width": 1440,
+      "passed": true
+    },
+    {
+      "check": "direct-page",
+      "category": "tabela",
+      "width": 360,
+      "passed": true
+    },
+    {
+      "check": "direct-page",
+      "category": "totem",
+      "width": 360,
+      "passed": true
+    },
+    {
+      "check": "direct-page",
+      "category": "lazer-kesim",
+      "width": 360,
+      "passed": true
+    },
+    {
+      "check": "direct-page",
+      "category": "dijital-baski",
+      "width": 360,
+      "passed": true
+    },
+    {
+      "check": "direct-page",
+      "category": "ozel-uretim",
+      "width": 360,
+      "passed": true
+    },
+    {
+      "check": "direct-page",
+      "category": "tabela",
+      "width": 1440,
+      "passed": true
+    },
+    {
+      "check": "direct-page",
+      "category": "totem",
+      "width": 1440,
+      "passed": true
+    },
+    {
+      "check": "direct-page",
+      "category": "lazer-kesim",
+      "width": 1440,
+      "passed": true
+    },
+    {
+      "check": "direct-page",
+      "category": "dijital-baski",
+      "width": 1440,
+      "passed": true
+    },
+    {
+      "check": "direct-page",
+      "category": "ozel-uretim",
+      "width": 1440,
+      "passed": true
+    },
+    {
+      "check": "no-js-cross-collection",
+      "passed": true
+    }
+  ]
+}

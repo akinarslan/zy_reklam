@@ -5,7 +5,7 @@ const pages = ['tekstil-giyim', 'ofis-kirtasiye', 'yasam-mutfak-seyahat', 'vip-e
 export default defineConfig({
   build: {
     rolldownOptions: {
-      input: [fileURLToPath(new URL('./index.html', import.meta.url)), ...pages.map(id => fileURLToPath(new URL(`./promosyonlar/${id}/index.html`, import.meta.url)))],
+      input: [fileURLToPath(new URL('./index.html', import.meta.url)), ...pages.map(id => fileURLToPath(new URL(`./promosyonlar/${id}/index.html`, import.meta.url))), ...['tabela', 'totem', 'lazer-kesim', 'dijital-baski', 'ozel-uretim'].map(id => fileURLToPath(new URL(`./projeler/${id}/index.html`, import.meta.url)))],
     },
   },
 });

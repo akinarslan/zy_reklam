@@ -1,6 +1,6 @@
 # ZY Reklam — Mimari
 
-**Sürüm:** 1.7 · **Tarih:** 2026-10-01 · **Durum:** P3 gerçek 3D ve güvenli yollar uygulandı; fiziksel cihaz performans kabulü açık
+**Sürüm:** 1.8 · **Tarih:** 2026-10-01 · **Durum:** P3 gerçek 3D ve güvenli yollar uygulandı; fiziksel cihaz performans kabulü açık
 
 **İlgili belgeler:** [Yol haritası](ROADMAP.md) · [Çalışma kuralları](AGENTS.md)
 
@@ -30,6 +30,8 @@ Ana başlık **“Projenize özel çözümler üretiyoruz.”** Açılış eylem
 İlk sürüm kapsamı: bütün bölümler, bir kaliteli 3D açılış, üretim animasyonu, işlevsel tabela stüdyosu, WhatsApp metin aktarımı ve P7’de güvenli görsel yükleme bağlantısı. Stüdyo gerçek üretim teklifi veya fiyat garantisi vermez; “Temsili önizleme” açıklaması bulunur.
 
 Promosyon gezinmesi: “Promosyonlar” altında fotoğraflı dört kart; her kart kendine ait statik kategori URL’sine gider. Kategori adları ve adresleri docs/PROMOTION_ASSETS.md içindedir. Kullanıcının 1 Ekim talimatıyla P2.7 bağımsız ön yüz işi olarak önceliklendirildi. Bu sayfalar gerçek müşteri projesi galerisi değildir.
+
+Proje gezinmesi: Tabela, Totem, Lazer Kesim, Dijital Baskı ve Özel Üretim için beş fotoğraflı mega menü kartı ve /projeler/<kategori>/ statik sayfaları. P2.8 kullanıcı önceliğidir; yüklenen medya tasarım/uygulama örnekleri olarak etiketlenir.
 
 İlk sürüm dışı: ödeme/sepet, otomatik fiyatlandırma, müşteri hesabı, yönetici paneli, CRM, otomatik WhatsApp gönderimi, canlı üretim takibi ve yapay zekâyla üretim görseli oluşturma. Bunlar yeni kullanıcı talimatı olmadan eklenmez.
 
@@ -240,6 +242,7 @@ Görsel kanıtlar: açılış, üretim, galeri, stüdyo, form ve footer için se
 | A07 | Gerçek görsel yükleme için ayrı API/özel depo | Tasarım kabul; sağlayıcı bekliyor | Link ile dosya eklemenin farkı; P7 tamamlama |
 | A08 | Mevcut domain/hosting korunarak entegrasyon | P1 doğrulaması bekliyor | Çalışan yayının gereksiz değişmemesi |
 | A09 | Her talimatta mimari ve roadmap kontrolü | Kabul | Kullanıcının plan takibi isteği; AGENTS.md ile kalıcı kural |
+| A11 | Projeler altında beş örnek kategori; kontrollü video | Kullanıcı talimatıyla uygulandı | P2.8, müşteri projesi sahipliği varsayılmaz |
 | A10 | Promosyonlar altında dört fotoğraflı kategori ve ayrı statik sayfa | Kullanıcı talimatıyla uygulandı | P2.7; 3D’den bağımsız gezinme ve katalog içeriği |
 
 Mimari değişiklikte sürüm, tarih, ilgili karar ve etkilenen roadmap işi güncellenir. Yeni kullanıcı talimatıyla değişen kapsam eski kabul ölçütlerine gizlenmez.
@@ -304,3 +307,11 @@ src/sections/navigation.ts native details/summary disclosure’ını fare hover,
 28 WebP türevi en çok 480/960 genişliktedir, küçük kaynaklar büyütülmez. Galeri/menü lazy load, hero eager; srcset/sizes, alt ve gerçek en/boy kullanılır. CSS contain ürünleri kesmez. Kategori sayfasında sahne hedefi yoktur; ortak ana modülün hero guard’ı 3D renderer indirmez. WhatsApp linkleri doğrulanmış numarayla ürün adı içeren metni hazırlar; mesaj kullanıcı tarafından gönderilir.
 
 Kabul kanıtı docs/evidence/P2_PROMOTIONS_VERIFICATION.json ve docs/PROMOTION_ASSETS.md içinde kayıtlıdır. TypeScript/production build ve 23/23 yerel test geçti; dört yeni kontrol tüm kategori URL’lerini, fotoğrafları, 360/768/1440 px düzeni, klavye/dokunma/JS kapalı gezinmeyi doğruladı. Ertelenen renderer paketi değişmedi; 500 KB uyarısı ve fiziksel P3 kabulü açık kalır.
+
+### 2026-10-01 — v1.8 projeler mega menüsü (P2.8 / A11)
+
+JSON kaynak src/content/projects.json; 19 fotoğraf ve bir dijital totem videosu içeriklerine göre sınıflandırıldı. Kategori, görsel, video ve kaynak SHA-256 bilgileri ayrı tutulur. scripts/generate-projects.mjs önce ortak ana menüyü günceller, promosyon üreticisini çağırır ve beş proje sayfasını üretir; böylece iki koleksiyon aynı başlığı kullanır. npm run generate:pages / build on gerçek HTML girişini ve birleşik sitemap’i üretir.
+
+Gezinme adaptörü iki disclosure’ı birlikte yönetir; birini açmak diğerini kapatır. Native summary, dokunma, hover, ArrowDown, Escape odak dönüşü ve JS kapalı kategori geçişleri korunur. Türetilmiş fotoğraflar lazy/responsive; büyük görsel ayrı bağlantıdan açılır. Video H.264/540×960, ses çıkarılmış, faststart; poster, controls/playsinline/preload=none ile açık kullanıcı eyleminde oynar. Menüde video yüklenmez.
+
+Görseller tasarım ve uygulama örnekleridir; gerçek ZY müşteri işleri veya doğrulanmış lazer kesim tekniği iddiası yoktur. P1.5/P5 gerçek müşteri bilgisi kabulü açık, P3 fiziksel GPU kabulü ve sonraki aşamaların kapıları korunur. 26/26 yerel test geçti; üç yeni kabul iki menü etkileşimi, beş doğrudan sayfa/görsel/video/SEO ve JS kapalı koleksiyon geçişidir.

@@ -1,0 +1,441 @@
+{
+  "categories": [
+    {
+      "id": "tabela",
+      "title": "Tabela",
+      "cover": "ornek-02",
+      "description": "Cephe ve asma tabela fikirlerini farklı biçim ve malzeme yaklaşımlarıyla keşfedin.",
+      "examples": "Cephe · Asma tabela",
+      "href": "/projeler/tabela/"
+    },
+    {
+      "id": "totem",
+      "title": "Totem",
+      "cover": "ornek-16",
+      "description": "Yönlendirme ve dijital ekranlı totem örneklerini inceleyin.",
+      "examples": "Yönlendirme · Dijital totem",
+      "href": "/projeler/totem/"
+    },
+    {
+      "id": "lazer-kesim",
+      "title": "Lazer Kesim",
+      "cover": "ornek-01",
+      "description": "Desenli panolar, silüetler ve ışıklı dekoratif tasarım fikirleri.",
+      "examples": "Desen · Silüet · Dekor",
+      "href": "/projeler/lazer-kesim/"
+    },
+    {
+      "id": "dijital-baski",
+      "title": "Dijital Baskı",
+      "cover": "ornek-14",
+      "description": "Roll-up, reklam bayrağı ve görsel baskı için tasarım ve üretim örnekleri.",
+      "examples": "Roll-up · Bayrak · Görsel",
+      "href": "/projeler/dijital-baski/"
+    },
+    {
+      "id": "ozel-uretim",
+      "title": "Özel Üretim",
+      "cover": "ornek-08",
+      "description": "Mekâna özel dekorasyon, ışıklandırma ve özgün uygulama fikirleri.",
+      "examples": "Dekorasyon · Mekân tasarımı",
+      "href": "/projeler/ozel-uretim/"
+    }
+  ],
+  "photos": [
+    {
+      "id": "ornek-01",
+      "category": "lazer-kesim",
+      "title": "Işıklı ağaç desenli duvar panoları",
+      "alt": "Işıklı ağaç desenli duvar panoları",
+      "sourceFile": "174f1e43d33fc5e8e6f569e77f203e80(1).jpg",
+      "sourceSHA256": "e07780a3c66b7e12d79a536896db72dc3092b962958959380706623c84138bc2",
+      "variants": [
+        {
+          "src": "/assets/project-examples/ornek-01-480.webp",
+          "width": 480,
+          "height": 853
+        },
+        {
+          "src": "/assets/project-examples/ornek-01-960.webp",
+          "width": 736,
+          "height": 1308
+        }
+      ]
+    },
+    {
+      "id": "ornek-02",
+      "category": "tabela",
+      "title": "Çaydanlık biçimli asma tabela",
+      "alt": "Çaydanlık biçimli asma tabela",
+      "sourceFile": "4c0289ef0eb66e2c50e9d73f7c865d3f.jpg",
+      "sourceSHA256": "daaf44a4d2c48be286785bd71a120c34c6761a854ebeddb32c5b5b692dfac177",
+      "variants": [
+        {
+          "src": "/assets/project-examples/ornek-02-480.webp",
+          "width": 480,
+          "height": 801
+        },
+        {
+          "src": "/assets/project-examples/ornek-02-960.webp",
+          "width": 694,
+          "height": 1158
+        }
+      ]
+    },
+    {
+      "id": "ornek-03",
+      "category": "ozel-uretim",
+      "title": "Yeşil bitkilerle iç mekân dekorasyonu",
+      "alt": "Yeşil bitkilerle iç mekân dekorasyonu",
+      "sourceFile": "4e95480cd5c6e6b477bd0198d970ffcd.jpg",
+      "sourceSHA256": "86e6308ef658f37af3686f7b6eb1fa178abc5a03f3f7a06d62fda2dd6b7b3dca",
+      "variants": [
+        {
+          "src": "/assets/project-examples/ornek-03-480.webp",
+          "width": 480,
+          "height": 853
+        },
+        {
+          "src": "/assets/project-examples/ornek-03-960.webp",
+          "width": 736,
+          "height": 1308
+        }
+      ]
+    },
+    {
+      "id": "ornek-04",
+      "category": "tabela",
+      "title": "Rulo biçimli yaratıcı asma tabela",
+      "alt": "Rulo biçimli yaratıcı asma tabela",
+      "sourceFile": "559c9c205639220ca53e8aed4660dc81.jpg",
+      "sourceSHA256": "787a1ff56bc8d08a7a2ad1c6a4375959eedf6f343c2a006a88556042f15f3585",
+      "variants": [
+        {
+          "src": "/assets/project-examples/ornek-04-480.webp",
+          "width": 480,
+          "height": 640
+        },
+        {
+          "src": "/assets/project-examples/ornek-04-960.webp",
+          "width": 500,
+          "height": 667
+        }
+      ]
+    },
+    {
+      "id": "ornek-05",
+      "category": "lazer-kesim",
+      "title": "Kâbe silüetli ışıklı duvar dekoru",
+      "alt": "Kâbe silüetli ışıklı duvar dekoru",
+      "sourceFile": "5c6abee1bc31f47fc87abd0f0dc0075f(1).jpg",
+      "sourceSHA256": "ff93e2a9d186d0fb32d97b565f65b065ff40788e7cfbc6d9c7d8026fc0a08eef",
+      "variants": [
+        {
+          "src": "/assets/project-examples/ornek-05-480.webp",
+          "width": 480,
+          "height": 480
+        },
+        {
+          "src": "/assets/project-examples/ornek-05-960.webp",
+          "width": 960,
+          "height": 960
+        }
+      ]
+    },
+    {
+      "id": "ornek-06",
+      "category": "dijital-baski",
+      "title": "Roll-up baskı ve tanıtım panoları",
+      "alt": "Roll-up baskı ve tanıtım panoları",
+      "sourceFile": "6057234bae11354d243205ac5a023a4d(1).jpg",
+      "sourceSHA256": "a8ad005a2f3786e7098b91c889a754e52ac3e4060e8cc2aaedf480b1cb9ffa26",
+      "variants": [
+        {
+          "src": "/assets/project-examples/ornek-06-480.webp",
+          "width": 480,
+          "height": 853
+        },
+        {
+          "src": "/assets/project-examples/ornek-06-960.webp",
+          "width": 540,
+          "height": 960
+        }
+      ]
+    },
+    {
+      "id": "ornek-07",
+      "category": "dijital-baski",
+      "title": "Direk üzerinde sarı reklam bayrakları",
+      "alt": "Direk üzerinde sarı reklam bayrakları",
+      "sourceFile": "6587fc26d03e38282004f23ca5987e7f(1).jpg",
+      "sourceSHA256": "f3f43d32fb5dff6eb137b80293c0d433790f9818214399479b83064b5165fdac",
+      "variants": [
+        {
+          "src": "/assets/project-examples/ornek-07-480.webp",
+          "width": 480,
+          "height": 600
+        },
+        {
+          "src": "/assets/project-examples/ornek-07-960.webp",
+          "width": 960,
+          "height": 1200
+        }
+      ]
+    },
+    {
+      "id": "ornek-08",
+      "category": "ozel-uretim",
+      "title": "Dikey bitki panolu dış cephe dekoru",
+      "alt": "Dikey bitki panolu dış cephe dekoru",
+      "sourceFile": "7ca2fca5c7d2413aca557e9f18ab8000.jpg",
+      "sourceSHA256": "8c4ccded4715873d64ff1cfbe1a93ea77cbebe9fe655155e2a4397ae47e1014e",
+      "variants": [
+        {
+          "src": "/assets/project-examples/ornek-08-480.webp",
+          "width": 480,
+          "height": 960
+        },
+        {
+          "src": "/assets/project-examples/ornek-08-960.webp",
+          "width": 564,
+          "height": 1128
+        }
+      ]
+    },
+    {
+      "id": "ornek-09",
+      "category": "ozel-uretim",
+      "title": "Göz biçimli dekoratif duvar objesi",
+      "alt": "Göz biçimli dekoratif duvar objesi",
+      "sourceFile": "81f75f5a6f35323d19805599d0acd3a5(1).jpg",
+      "sourceSHA256": "38da811a8a7a0a7a047ffea666c309e10f2b6224bd78bc7678dadaac38b83710",
+      "variants": [
+        {
+          "src": "/assets/project-examples/ornek-09-480.webp",
+          "width": 480,
+          "height": 600
+        },
+        {
+          "src": "/assets/project-examples/ornek-09-960.webp",
+          "width": 960,
+          "height": 1200
+        }
+      ]
+    },
+    {
+      "id": "ornek-10",
+      "category": "lazer-kesim",
+      "title": "Cami silüetli ışıklı duvar panosu",
+      "alt": "Cami silüetli ışıklı duvar panosu",
+      "sourceFile": "8f4a2a2c524df5e828900352559a66d6(1).jpg",
+      "sourceSHA256": "c24a405c263c103de33e40234db3d6c8f258a58d480a501b62fc3c6a7fc4abfd",
+      "variants": [
+        {
+          "src": "/assets/project-examples/ornek-10-480.webp",
+          "width": 480,
+          "height": 462
+        },
+        {
+          "src": "/assets/project-examples/ornek-10-960.webp",
+          "width": 736,
+          "height": 709
+        }
+      ]
+    },
+    {
+      "id": "ornek-11",
+      "category": "lazer-kesim",
+      "title": "Bina silüetli ışıklı dekoratif pano",
+      "alt": "Bina silüetli ışıklı dekoratif pano",
+      "sourceFile": "9c3cbb0995b125cddf176d8937e34174(1).jpg",
+      "sourceSHA256": "11a18054d60924fa4e3a2e3b6c72c12fdc5283afce1dfe421fce0103ac580d5b",
+      "variants": [
+        {
+          "src": "/assets/project-examples/ornek-11-480.webp",
+          "width": 480,
+          "height": 640
+        },
+        {
+          "src": "/assets/project-examples/ornek-11-960.webp",
+          "width": 564,
+          "height": 752
+        }
+      ]
+    },
+    {
+      "id": "ornek-12",
+      "category": "ozel-uretim",
+      "title": "Işıklandırılmış ahşap geçiş alanı",
+      "alt": "Işıklandırılmış ahşap geçiş alanı",
+      "sourceFile": "a7b5d5aea9b4d8d8b87035c2fd1058fe.jpg",
+      "sourceSHA256": "8267960f81f3ce009208f3df4faaa410621c62a9975fc7ac514885cf1fdf445c",
+      "variants": [
+        {
+          "src": "/assets/project-examples/ornek-12-480.webp",
+          "width": 480,
+          "height": 640
+        },
+        {
+          "src": "/assets/project-examples/ornek-12-960.webp",
+          "width": 736,
+          "height": 981
+        }
+      ]
+    },
+    {
+      "id": "ornek-13",
+      "category": "dijital-baski",
+      "title": "Renkli otomobil illüstrasyonu",
+      "alt": "Renkli otomobil illüstrasyonu",
+      "sourceFile": "b235ae3a26d2820728478434adc500fc(1).jpg",
+      "sourceSHA256": "fe57b27073d1e56adcd95cc3379b5d0c0cc68b75e2c6bbe05a2d42ff54ba07f8",
+      "variants": [
+        {
+          "src": "/assets/project-examples/ornek-13-480.webp",
+          "width": 480,
+          "height": 960
+        },
+        {
+          "src": "/assets/project-examples/ornek-13-960.webp",
+          "width": 736,
+          "height": 1472
+        }
+      ]
+    },
+    {
+      "id": "ornek-14",
+      "category": "dijital-baski",
+      "title": "Geniş format dijital baskı makinesi",
+      "alt": "Geniş format dijital baskı makinesi",
+      "sourceFile": "bd2434a114570369602b3a160e4b4873(1).jpg",
+      "sourceSHA256": "6d6c096234abe3eb1ab26594fd46298b1175a2ce6f19485d5f0a4eaefa4d7bc8",
+      "variants": [
+        {
+          "src": "/assets/project-examples/ornek-14-480.webp",
+          "width": 480,
+          "height": 480
+        },
+        {
+          "src": "/assets/project-examples/ornek-14-960.webp",
+          "width": 800,
+          "height": 800
+        }
+      ]
+    },
+    {
+      "id": "ornek-15",
+      "category": "dijital-baski",
+      "title": "Renkli evler illüstrasyonu",
+      "alt": "Renkli evler illüstrasyonu",
+      "sourceFile": "cb472d569c3214bd36ae00a3a0f00fbc(1).jpg",
+      "sourceSHA256": "d8e108f9ec32d284b4014d83a7afb8cd749689417477f73c61349e17521dc61b",
+      "variants": [
+        {
+          "src": "/assets/project-examples/ornek-15-480.webp",
+          "width": 480,
+          "height": 960
+        },
+        {
+          "src": "/assets/project-examples/ornek-15-960.webp",
+          "width": 640,
+          "height": 1280
+        }
+      ]
+    },
+    {
+      "id": "ornek-16",
+      "category": "totem",
+      "title": "Dikey yönlendirme totemi",
+      "alt": "Dikey yönlendirme totemi",
+      "sourceFile": "d324968a776cc3fd47f6b0af974a180a.jpg",
+      "sourceSHA256": "5c945e3a0b0f4bd099d46de07fbb4ae8d59444083cfccf2654a437a6a3a32ce7",
+      "variants": [
+        {
+          "src": "/assets/project-examples/ornek-16-480.webp",
+          "width": 480,
+          "height": 720
+        },
+        {
+          "src": "/assets/project-examples/ornek-16-960.webp",
+          "width": 600,
+          "height": 900
+        }
+      ]
+    },
+    {
+      "id": "ornek-17",
+      "category": "ozel-uretim",
+      "title": "Renkli modüllerle bahçe dekorasyonu",
+      "alt": "Renkli modüllerle bahçe dekorasyonu",
+      "sourceFile": "e2580d717b36f4fa5dbeec2e8cd55420.jpg",
+      "sourceSHA256": "941b86afd277329aac5c36e595ef46f9c4e7cdee66144a7a03538e68215d0fcc",
+      "variants": [
+        {
+          "src": "/assets/project-examples/ornek-17-480.webp",
+          "width": 480,
+          "height": 690
+        },
+        {
+          "src": "/assets/project-examples/ornek-17-960.webp",
+          "width": 648,
+          "height": 932
+        }
+      ]
+    },
+    {
+      "id": "ornek-18",
+      "category": "lazer-kesim",
+      "title": "Kaligrafi biçimli ışıklı duvar objesi",
+      "alt": "Kaligrafi biçimli ışıklı duvar objesi",
+      "sourceFile": "ee6890c9fdc542bd8bf320aa01cf6b58(1).jpg",
+      "sourceSHA256": "5e8551de4b4e7db58f573d33beb780eb89386a35405ae4384785a4d336640acf",
+      "variants": [
+        {
+          "src": "/assets/project-examples/ornek-18-480.webp",
+          "width": 480,
+          "height": 722
+        },
+        {
+          "src": "/assets/project-examples/ornek-18-960.webp",
+          "width": 735,
+          "height": 1105
+        }
+      ]
+    },
+    {
+      "id": "ornek-19",
+      "category": "totem",
+      "title": "Ahşap görünümlü çok yönlü yönlendirme totemi",
+      "alt": "Ahşap görünümlü çok yönlü yönlendirme totemi",
+      "sourceFile": "eecf1295444aa4124838ced948b67031.jpg",
+      "sourceSHA256": "68ece5a1a1257ed35e36f30155ebec643e4f9d2c3964e53d5986761ffa95e7ed",
+      "variants": [
+        {
+          "src": "/assets/project-examples/ornek-19-480.webp",
+          "width": 480,
+          "height": 596
+        },
+        {
+          "src": "/assets/project-examples/ornek-19-960.webp",
+          "width": 886,
+          "height": 1100
+        }
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "id": "dijital-totem",
+      "category": "totem",
+      "title": "Dijital ekranlı totem örneği",
+      "src": "/assets/project-examples/dijital-totem.mp4",
+      "poster": "/assets/project-examples/dijital-totem-poster.webp",
+      "width": 540,
+      "height": 960,
+      "durationSeconds": 14.72,
+      "sourceFile": "indirpin.com.tr_fe0bb3eda3cece275f1e6b43940d4869(1).mp4",
+      "sourceSHA256": "968bc4ff4f7c91e40125e38a963815749432a084f26844c90d28f52fbe1038c3"
+    }
+  ],
+  "disclaimer": "Bu görseller tasarım ve uygulama örnekleridir; ZY REKLAM tarafından tamamlanmış müşteri projeleri olarak sunulmaz."
+}

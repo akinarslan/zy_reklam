@@ -49,3 +49,7 @@ P1.5 için gerçek proje fotoğrafları ve bilgilerinin doğrulanması bekliyor.
 - [Masaüstü 3D önizlemesi](docs/evidence/p3-hero-1440.jpg) ve [mobil önizleme](docs/evidence/p3-hero-360.jpg).
 
 `legacy/` eski kaynakların değişmeden alınan arşividir; yeni uygulamanın giriş noktası kökteki index.html'dir. Fontun kaynak kullanım koşulları varlık envanterinde kayıtlıdır. Mevcut DNS ve hosting bu çalışmada değiştirilmedi; canlı geçiş P9 kapsamındadır.
+
+## Projeler örnek koleksiyonu
+
+Beş fotoğraflı Projeler kategorisi /projeler/tabela/, /projeler/totem/, /projeler/lazer-kesim/, /projeler/dijital-baski/ ve /projeler/ozel-uretim/ adreslerindedir. 19 görsel ve bir video kullanıcı tarafından sağlanan tasarım/uygulama örnekleridir; ZY müşteri referansı değildir. Eşleme docs/PROJECT_ASSETS.md; kaynak src/content/projects.json. `npm run generate:pages` iki mega menüyü ve dokuz kategori sayfasını birlikte üretir. Video otomatik oynatılmaz.

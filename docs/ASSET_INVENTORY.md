@@ -51,3 +51,7 @@ P3 kaynak bütünlüğü: özgün SVG değişmedi; sekiz path ve iki iç boşluk
 ## 2026-10-01 — Promosyon katalog görselleri
 
 Kullanıcının sağladığı 14 görsel açılıp dört ana kategoriye ayrıldı; 28 responsive WebP türevi hazırlandı. Dosya/fotoğraf eşlemesi ve içerik sınırı [PROMOTION_ASSETS.md](PROMOTION_ASSETS.md), kaynak SHA-256 ve gerçek türev ölçüleri src/content/promotions.json içindedir. Bunlar P2.7 katalog varlıklarıdır; P1.5/P5 gerçek müşteri projesi kabulünü kapatmaz. Kaynak logo/font/legacy varlıkları korundu.
+
+## 2026-10-01 — Proje örnekleri
+
+19 fotoğraf ve bir video kullanıcı tarafından örnek kategoriler için sağlandı. Görsel inceleme/eşleme docs/PROJECT_ASSETS.md, kaynak hash ve ölçüler src/content/projects.json içinde. Üçüncü taraf marka/filigran içerikleri müşteri referansı olarak sunulmaz; mevcut işaretler silinmedi. 38 WebP ve video/poster public/assets/project-examples altında; kaynak dosyalar değiştirilmedi.
