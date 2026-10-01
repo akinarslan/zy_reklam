@@ -18,7 +18,30 @@ jobs:
             if curl -fsSL --max-time 20 "$URL" -o live.html; then
               echo "Fetched $(wc -c < live.html) bytes"
               if grep -q 'data-project-menu' live.html && grep -q 'project-mega' live.html; then
-                echo "PASS: Projects mega menu is live."
+                echo "PASS: Projects mega menu HTML is live."
+
+                CSS_PATH=$(grep -oE 'href="[^"]+\.css"' live.html | head -1 | cut -d'"' -f2 || true)
+                JS_PATH=$(grep -oE 'src="[^"]+\.js"' live.html | head -1 | cut -d'"' -f2 || true)
+
+                if [ -n "$CSS_PATH" ]; then
+                  curl -fsSL --max-time 20 "${URL%/}$CSS_PATH" -o live.css
+                  grep -q 'promo-mega' live.css
+                  grep -q 'project-menu-grid' live.css
+                  echo "PASS: mega-menu CSS is live."
+                else
+                  echo "FAIL: no built CSS asset found."
+                  exit 1
+                fi
+
+                if [ -n "$JS_PATH" ]; then
+                  curl -fsSL --max-time 20 "${URL%/}$JS_PATH" -o live.js
+                  grep -q 'data-project-menu' live.js
+                  echo "PASS: project-menu JS is live."
+                else
+                  echo "FAIL: no built JS asset found."
+                  exit 1
+                fi
+
                 exit 0
               fi
               echo "Mega menu markers not present yet."
@@ -27,6 +50,4 @@ jobs:
             sleep 10
           done
           echo "FAIL: Projects mega menu not found on live Worker."
-          echo "Navigation excerpt:"
-          grep -o '<nav id="main-nav"[^>]*>.*</nav>' live.html | head -c 3000 || true
           exit 1
