@@ -4,6 +4,7 @@ import { join } from 'node:path';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const { categories, photos } = JSON.parse(await readFile(join(root, 'src/content/promotions.json'), 'utf8'));
+const { pageMeta } = JSON.parse(await readFile(join(root, 'src/content/seo.json'), 'utf8'));
 const esc = value => String(value).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
 const image = (photo, sizes, priority = false) => {
   const small = photo.variants[0], large = photo.variants[1];
@@ -25,14 +26,16 @@ for (const category of categories) {
   const items = photos.filter(p => p.category === category.id || p.alsoIn?.includes(category.id));
   const cover = photos.find(p => p.id === category.cover);
   const canonical = `https://zyreklamdijital.com.tr${category.href}`;
+  const meta = pageMeta.promotions[category.id] || { title: `${category.title} | ZY REKLAM`, description: `${category.description} ZY REKLAM promosyon çözümleri.`, keywords: [] };
+  const serviceJson = JSON.stringify({"@context":"https://schema.org","@type":"Service","name":category.title,"serviceType":meta.keywords?.[0]||category.title,"description":meta.description,"provider":{"@type":"LocalBusiness","name":"ZY REKLAM","url":"https://zyreklamdijital.com.tr/","telephone":"+905464494849"},"areaServed":{"@type":"AdministrativeArea","name":"Muş"},"url":canonical});
   const pageHeader = header.replace(`href="${category.href}"`, `href="${category.href}" aria-current="page"`);
   const collections = category.id === 'vip-ekolojik-setler'
     ? gallery(items.filter(p => p.section === 'vip'), 'VIP özel setler', 'vip-title') + gallery(items.filter(p => p.section === 'eco'), 'Bez çantalar ve keseler', 'eco-title')
     : gallery(items, 'Ürün seçenekleri', 'collection-title');
   const html = `<!doctype html>
 <html lang="tr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>${esc(category.title)} | ZY REKLAM</title><meta name="description" content="${esc(category.description)} ZY REKLAM promosyon çözümleri."><meta name="theme-color" content="#04130f"><link rel="canonical" href="${canonical}">
-<meta property="og:type" content="website"><meta property="og:locale" content="tr_TR"><meta property="og:title" content="${esc(category.title)} | ZY REKLAM"><meta property="og:description" content="${esc(category.description)}"><meta property="og:url" content="${canonical}"><meta property="og:image" content="https://zyreklamdijital.com.tr${cover.variants[1].src}"><meta property="og:image:alt" content="${esc(cover.alt)}">
+<title>${esc(meta.title)}</title><meta name="description" content="${esc(meta.description)}"><meta name="theme-color" content="#04130f"><link rel="canonical" href="${canonical}">
+<meta property="og:type" content="website"><meta property="og:locale" content="tr_TR"><meta property="og:title" content="${esc(meta.title)}"><meta property="og:description" content="${esc(meta.description)}"><meta property="og:url" content="${canonical}"><meta property="og:image" content="https://zyreklamdijital.com.tr${cover.variants[1].src}"><meta property="og:image:alt" content="${esc(cover.alt)}"><script type="application/ld+json">${serviceJson}</script>
 <link rel="icon" type="image/svg+xml" href="/assets/brand/favicon.svg"><link rel="stylesheet" href="/src/styles/main.css"><script type="module" src="/src/main.ts"></script></head>
 <body class="promo-page"><a class="skip-link" href="#main-content">İçeriğe geç</a>${pageHeader}
 <main id="main-content"><section class="promo-category-hero"><div class="shell"><nav class="promo-breadcrumb" aria-label="İçerik yolu"><a href="/">Ana sayfa</a><span aria-hidden="true">/</span><a href="/#promosyonlar">Promosyonlar</a></nav><div class="promo-category-intro"><div><p class="eyebrow">PROMOSYON KOLEKSİYONU</p><h1>${esc(category.title)}</h1><p class="body-copy">${esc(category.description)}</p><a class="button" href="/#iletisim">Baskı ve adet seçeneklerini konuşalım <span aria-hidden="true">↗</span></a></div><div class="promo-category-cover">${image(cover, '(max-width: 767px) 90vw, 440px', true)}</div></div></div></section>
