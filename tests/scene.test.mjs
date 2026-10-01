@@ -266,3 +266,85 @@ test('Sabit masaüstü ve mobil emülasyon profillerinde etkileşim FPS örnekle
     await page.close();
   }
 });
+
+test('Cihaz ölçüm ekranı: üç gerçek çizim örneği ve indirilen JSON; mobil taşma yok', async () => {
+  const page = await browser.newPage({ viewport: { width: 360, height: 800 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true });
+  const writes = [];
+  page.on('request', request => { if (!['GET', 'HEAD'].includes(request.method())) writes.push(request.url()); });
+  await page.goto(`${base}/qa/scene-performance.html`);
+  assert.equal(await page.locator('#scene').getAttribute('src'), null, 'no scene loads before explicit measurement');
+  await page.locator('#device-kind').selectOption('mobile');
+  await page.locator('#environment').selectOption('emulated');
+  await page.locator('#device-model').fill('Chromium software QA');
+  await page.locator('#device-os').fill('Linux — viewport emulation');
+  await page.locator('#sample-duration').selectOption('3000');
+  assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
+  await page.locator('#start').click();
+  await page.waitForFunction(() => !document.querySelector('#result').hidden, null, { timeout: 45000 });
+  const downloaded = page.waitForEvent('download');
+  await page.locator('#download').click();
+  const file = await downloaded;
+  const evidence = JSON.parse(await readFile(await file.path(), 'utf8'));
+  assert.equal(evidence.samples.length, 3);
+  assert.equal(evidence.viewport.width, 360);
+  assert.equal(evidence.context.environmentClaim, 'emulated');
+  assert.match(evidence.acceptance, /Pending review/);
+  for (const sample of evidence.samples) {
+    assert.ok(sample.renderedFrames > 0);
+    assert.ok(sample.elapsedMs >= 3000);
+    assert.equal(sample.windows.reduce((sum, window) => sum + window.frames, 0), sample.renderedFrames);
+    assert.ok(sample.qualityTransitions.length > 0);
+  }
+  assert.ok(evidence.medianFPS > 0);
+  assert.deepEqual(writes, [], 'measurement report is not uploaded');
+  assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
+  await writeFile('docs/evidence/P3_DEVICE_TOOL_SAMPLE.json', JSON.stringify({ ...evidence, testEnvironment: 'Headless software GPU; not a physical-device acceptance report.' }, null, 2) + '\n');
+  checks.push({ check: 'device-tool-three-samples-json-no-upload-mobile-layout', samples: evidence.samples.length, passed: true });
+  await page.close();
+});
+
+test('Cihaz ölçümü: hareket tercihi korunur; kullanıcı iptali, resize ve gizli sekme geçersiz sayılır', async () => {
+  const page = await browser.newPage({ reducedMotion: 'reduce', viewport: { width: 1440, height: 900 } });
+  await page.goto(`${base}/qa/scene-performance.html`);
+  await page.locator('#device-model').fill('Chromium test');
+  await page.locator('#device-os').fill('Linux test');
+  await page.locator('#start').click();
+  await page.waitForFunction(() => document.querySelector('#status').textContent.includes('Hareket azaltma etkin'));
+  assert.equal(await page.frameLocator('#scene').locator('canvas').count(), 0);
+  assert.equal(await page.locator('#result').isVisible(), false);
+  await page.locator('#enable-motion').click();
+  await page.waitForFunction(() => document.querySelector('#progress').textContent.includes('Ölçüm 1/3'));
+  await page.locator('#stop').click();
+  await page.waitForFunction(() => document.querySelector('#status').textContent.includes('kullanıcı tarafından durduruldu'));
+  assert.equal(await page.locator('#download').isVisible(), false);
+  await page.locator('#start').click();
+  await page.waitForFunction(() => !document.querySelector('#running').hidden);
+  await page.setViewportSize({ width: 1200, height: 800 });
+  await page.waitForFunction(() => document.querySelector('#status').textContent.includes('Ekran boyutu değişti'));
+  assert.equal(await page.locator('#download').isVisible(), false);
+  await page.locator('#start').click();
+  await page.waitForFunction(() => !document.querySelector('#running').hidden);
+  await page.evaluate(() => {
+    Object.defineProperty(document, 'hidden', { configurable: true, value: true });
+    document.dispatchEvent(new Event('visibilitychange'));
+  });
+  await page.waitForFunction(() => document.querySelector('#status').textContent.includes('Sekme gizlendi'));
+  assert.equal(await page.locator('#download').isVisible(), false);
+  checks.push({ check: 'device-tool-reduced-explicit-opt-in-stop-resize-hidden-invalidation', method: 'headless browser; hidden event controlled simulation', passed: true });
+  await page.close();
+});
+
+test('Cihaz ölçümü sırasında gerçek WebGL context kaybı başarılı rapor üretmez', async () => {
+  const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+  await page.goto(`${base}/qa/scene-performance.html`);
+  await page.locator('#device-model').fill('Chromium software QA');
+  await page.locator('#device-os').fill('Linux');
+  await page.locator('#start').click();
+  await page.waitForFunction(() => document.querySelector('#progress').textContent.includes('Ölçüm 1/3'));
+  await page.frameLocator('#scene').locator('canvas').evaluate(canvas => canvas.getContext('webgl2').getExtension('WEBGL_lose_context').loseContext());
+  await page.waitForFunction(() => document.querySelector('#status').textContent.includes('fallback'));
+  assert.equal(await page.locator('#download').isVisible(), false);
+  assert.equal(await page.frameLocator('#scene').locator('canvas').count(), 0);
+  checks.push({ check: 'device-tool-real-context-loss-no-success-report', passed: true });
+  await page.close();
+});

@@ -4,7 +4,7 @@
 
 Özgün sekiz SVG konturu gerçek ekstrüzyondur; ZY beyaz pleksi/LED/kasa, REKLAM altın metal. R ve A içindeki iki boşluk korunur. Sahne görünürken yüklenir, dönüş yerleşince render durur. Formlar canvas dışında kalır.
 
-16 yerel test başarılıdır; P3 testleri production build preview kullanır. WebGL kapalı/paket hatası/context kaybı, azaltılmış harekette paket indirmeme, yükleme/tercih yarışı, yatay dokunma/dikey scroll ve temizleme denetlendi. BFCache/sekme olayları kontrollü simülasyonla denetlendi.
+19 yerel test başarılıdır; P3 testleri production build preview kullanır. WebGL kapalı/paket hatası/context kaybı, azaltılmış harekette paket indirmeme, yükleme/tercih yarışı, yatay dokunma/dikey scroll ve temizleme denetlendi. BFCache/sekme olayları kontrollü simülasyonla denetlendi.
 
 ## Ölçüm profilleri
 
@@ -54,3 +54,7 @@ node scripts/compare-scene.mjs /absolute/path/to/baseline-dist BASELINE_COMMIT
 ```
 
 Araç standart Playwright Chromium kullanır; gerekirse ZY_CHROMIUM_PATH ile kurulu tarayıcı seçilir. 4198 portunda yalnızca localhost üzerinden iki build'i sırayla sunar ve JSON kaydını günceller. Önce/sonra çiftleri aynı viewport/DPR/CPU profiliyle çalışır. Fiziksel cihaz kabulü ayrıca yukarıdaki cihaz bilgileriyle kaydedilmelidir.
+
+## Cihaz ölçüm aracı
+
+P3.6a aracı `/qa/scene-performance.html` yolunda hazırdır; kullanıcının cihazında üç aktif örneği ve kalite/FPS pencerelerini kaydeder, raporu yalnızca açık indirme eylemiyle verir. Varsayılan üç 10 saniyelik örnek ve cihaz/manual kontrol yöntemi docs/P3_DEVICE_MEASUREMENT.md içindedir. P3_DEVICE_TOOL_SAMPLE.json üç hızlı yazılımsal QA örneğidir; yukarıdaki fiziksel cihaz satırları hâlâ ölçülmedi.

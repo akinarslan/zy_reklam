@@ -1,0 +1,149 @@
+{
+  "schemaVersion": 1,
+  "stage": "P3.6",
+  "measuredAt": "2026-10-01T12:41:26.829Z",
+  "origin": "http://127.0.0.1:4187",
+  "buildScripts": [
+    "/assets/index-BxE0oBOY.js"
+  ],
+  "context": {
+    "kind": "mobile",
+    "environmentClaim": "emulated",
+    "model": "Chromium software QA",
+    "os": "Linux — viewport emulation",
+    "powerMode": "unknown"
+  },
+  "deviceEvidence": "User-supplied context; physical hardware is not automatically verified.",
+  "browser": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.8010.0 Safari/537.36",
+  "gpuRenderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+  "viewport": {
+    "width": 360,
+    "height": 800,
+    "dpr": 2
+  },
+  "sceneViewport": {
+    "x": 24,
+    "y": 317.28125,
+    "width": 312,
+    "height": 260,
+    "top": 317.28125,
+    "right": 336,
+    "bottom": 577.28125,
+    "left": 24
+  },
+  "method": "Three active synthetic mouse-input samples on the production page; 1-second warm-up before each. Renderer-call counters, not presented GPU frames. No CPU throttling applied by this tool.",
+  "sampleDurationMs": 3000,
+  "samples": [
+    {
+      "elapsedMs": 3015.2999999970198,
+      "renderedFrames": 181,
+      "shadowUpdates": 57,
+      "averageFPS": 60.02719464072526,
+      "windows": [
+        {
+          "elapsedMs": 1015.2999999970198,
+          "durationMs": 1015.2999999970198,
+          "frames": 61,
+          "fps": 60.08076430629278,
+          "quality": "high"
+        },
+        {
+          "elapsedMs": 2015.2999999970198,
+          "durationMs": 1000,
+          "frames": 60,
+          "fps": 60,
+          "quality": "high"
+        },
+        {
+          "elapsedMs": 3015.2999999970198,
+          "durationMs": 1000,
+          "frames": 60,
+          "fps": 60,
+          "quality": "high"
+        }
+      ],
+      "qualityTransitions": [
+        {
+          "elapsedMs": 15.399999997019677,
+          "quality": "high"
+        }
+      ],
+      "finalState": "ready"
+    },
+    {
+      "elapsedMs": 3015.6000000000004,
+      "renderedFrames": 181,
+      "shadowUpdates": 57,
+      "averageFPS": 60.02122297386921,
+      "windows": [
+        {
+          "elapsedMs": 1015.6999999999998,
+          "durationMs": 1015.6999999999998,
+          "frames": 61,
+          "fps": 60.05710347543567,
+          "quality": "high"
+        },
+        {
+          "elapsedMs": 2015.6999999999998,
+          "durationMs": 1000,
+          "frames": 60,
+          "fps": 60,
+          "quality": "high"
+        },
+        {
+          "elapsedMs": 3015.6000000000004,
+          "durationMs": 999.9000000000005,
+          "frames": 60,
+          "fps": 60.00600060005997,
+          "quality": "high"
+        }
+      ],
+      "qualityTransitions": [
+        {
+          "elapsedMs": 15.699999999999818,
+          "quality": "high"
+        }
+      ],
+      "finalState": "ready"
+    },
+    {
+      "elapsedMs": 3015.699999998509,
+      "renderedFrames": 181,
+      "shadowUpdates": 59,
+      "averageFPS": 60.01923268232566,
+      "windows": [
+        {
+          "elapsedMs": 1015.7999999985095,
+          "durationMs": 1015.7999999985095,
+          "frames": 61,
+          "fps": 60.05119117945413,
+          "quality": "high"
+        },
+        {
+          "elapsedMs": 2015.7999999985095,
+          "durationMs": 1000,
+          "frames": 60,
+          "fps": 60,
+          "quality": "high"
+        },
+        {
+          "elapsedMs": 3015.699999998509,
+          "durationMs": 999.8999999999996,
+          "frames": 60,
+          "fps": 60.00600060006003,
+          "quality": "high"
+        }
+      ],
+      "qualityTransitions": [
+        {
+          "elapsedMs": 15.79999999850952,
+          "quality": "high"
+        }
+      ],
+      "finalState": "ready"
+    }
+  ],
+  "medianFPS": 60.02122297386921,
+  "acceptance": "Pending review of hardware profile, sample duration and manual touch/scroll/visual checks; no automatic P3 pass.",
+  "testEnvironment": "Headless software GPU; not a physical-device acceptance report."
+}

@@ -1,6 +1,6 @@
 {
   "stage": "P3",
-  "date": "2026-10-01T12:18:54.723Z",
+  "date": "2026-10-01T12:41:30.566Z",
   "browser": "153.0.8010.0",
   "renderer": "headless Chromium / ANGLE SwiftShader (software GPU)",
   "deviceCaveat": "Viewport emulation is not a physical mobile GPU measurement.",
@@ -48,19 +48,19 @@
     {
       "check": "mouse-bounds-cta-visibility-idle",
       "angles": {
-        "yaw": 0.24022312070530824,
-        "pitch": 0.15224469692491333
+        "yaw": 0.2285222740906832,
+        "pitch": 0.14892356219726224
       },
       "passed": true
     },
     {
       "check": "real-touch-horizontal-drag-vertical-scroll",
-      "yaw": 0.2506943423969432,
+      "yaw": 0.25309115487181044,
       "passed": true
     },
     {
       "check": "bounded-shadow-refresh-final-pose-idle",
-      "elapsedMs": 1437.40000000149,
+      "elapsedMs": 1290.6999999977647,
       "shadowUpdates": 10,
       "frames": 26,
       "passed": true
@@ -113,11 +113,11 @@
         "dpr": 1,
         "cpu": 1
       },
-      "elapsedMs": 4529.099999999255,
-      "renderedFrames": 178,
+      "elapsedMs": 4506.800000000745,
+      "renderedFrames": 173,
       "state": "ready",
       "quality": "high",
-      "fps": 39.30140646045115,
+      "fps": 38.38643827105072,
       "physicalDevice": false,
       "passed": true
     },
@@ -129,12 +129,26 @@
         "dpr": 2,
         "cpu": 4
       },
-      "elapsedMs": 4509.600000002235,
-      "renderedFrames": 234,
+      "elapsedMs": 4511.09999999851,
+      "renderedFrames": 236,
       "state": "ready",
       "quality": "high",
-      "fps": 51.88930282062356,
+      "fps": 52.315399791642385,
       "physicalDevice": false,
+      "passed": true
+    },
+    {
+      "check": "device-tool-three-samples-json-no-upload-mobile-layout",
+      "samples": 3,
+      "passed": true
+    },
+    {
+      "check": "device-tool-reduced-explicit-opt-in-stop-resize-hidden-invalidation",
+      "method": "headless browser; hidden event controlled simulation",
+      "passed": true
+    },
+    {
+      "check": "device-tool-real-context-loss-no-success-report",
       "passed": true
     }
   ],

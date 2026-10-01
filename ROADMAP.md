@@ -1,6 +1,6 @@
 # ZY Reklam — Yol Haritası
 
-**Sürüm:** 1.3 · **Başlangıç:** 2026-10-01
+**Sürüm:** 1.4 · **Başlangıç:** 2026-10-01
 
 **Kaynak:** [ARCHITECTURE.md](ARCHITECTURE.md) · **Zorunlu kontrol:** [AGENTS.md](AGENTS.md)
 
@@ -75,6 +75,7 @@ Süreler takvim taahhüdü değildir. P1 sonrası logo kalitesi, gerçek görsel
 - [x] P3.3 Masaüstü sınırlı fare dönüşünü ve mobil sürüklemeyi uygula; dikey scroll’u koru.
 - [x] P3.4 Ertelenmiş 3D yükleme, kalite düşürme, görünmezken durma ve kaynak temizliğini uygula.
 - [x] P3.5 WebGL yokluğu, context kaybı ve hareket azaltma yollarını doğrula.
+- [x] P3.6a Fiziksel cihazda kullanılabilecek ayrı ölçüm aracını, ham JSON çıktısını ve iptal/hata kontrollerini hazırla. Bu, fiziksel kabulü kapatmaz.
 - [ ] P3.6 Aşama kabulündeki fiziksel masaüstü/orta seviye mobil FPS hedeflerini ölç; gerekiyorsa sonraki aşamadan önce optimize et. Yazılımsal emülasyon ölçümü tek başına bu kabulü kapatmaz.
 
 **Kabul:** Amblem özgün kaynakla eşleşir; yaklaşık yazı logosu kullanılmaz. İlk içerik 3D’yi beklemez. CTA üzerine canvas binmez. Model/texture/env başlangıç 3 MB hedefinde ölçülür. Tanımlı masaüstü ve mobil cihazlarda kare hızı kaydedilir; bütçe aşılıyorsa sonraki aşamadan önce optimize edilir veya hedef revizyonu gerekçelendirilir.
@@ -222,3 +223,12 @@ Sıradaki tek iş:
 - P3.6 ve P3 kabulü açık; P4 başlatılmadı. Sıradaki tek iş: fiziksel masaüstü ve orta seviye mobil ölçümünü tamamlayıp P3 kabulünü kapatmak.
 
 - Uzak kayıt: 410f4dfc6215ef1308839ad6063bc5a997a47ed3 main üzerinde yeniden okundu; 12 dosyanın Git blob kimliği ve altı ana dosyanın tam içeriği eşleşti. Özgün SVG blobu korundu. GitHub Actions 36861229725 / job 110365655795 başarılı; loglarda 16 test / 16 pass / 0 fail doğrulandı. CI kanıtı P3_PERFORMANCE_CI_VERIFICATION.json içinde.
+
+### 2026-10-01 — P3.6a cihaz ölçüm ekranı
+
+- Talimat: “tamamdır sen projeye devam et istersen”; güncel AGENTS.md, mimari v1.4 ve roadmap v1.3 tamamen okundu. Uzak main başlangıcı b9cd730e0825b17187806de6dee1c95e15c07463; yerel Git commit içermez. Ana belgeler uzakla eşleşti; önceki teslimin GitHub Verify kontrolü başarılıdır.
+- Cloudflare: erişilebilir commit status/check kayıtlarında önizleme URL'si yok. Deployment uç noktası bağlayıcı tarafından desteklenmedi; yayın tamamlandı iddiası yapılmadı.
+- P3.6a: bağımsız /qa/scene-performance.html aracı, üç aktif örnek, 1 saniye atılan ısınma, FPS pencereleri, kalite/geometri/build/cihaz bağlamı ve açık JSON indirme eklendi. Ana sayfa paketleri değişmedi; araç menü/sitemap dışındadır.
+- Kanıt: TypeScript/build, QA JS sözdizimi ve 19/19 gerçek tarayıcı test başarılı. Mobil üç örnek/JSON, hiçbir rapor upload'ı olmaması, 360/1440 px araç düzeni, hareket tercihi/açık kullanıcı tercihi, iptal/resize/gizli sekme ve gerçek context kaybında başarılı rapor üretmeme doğrulandı. Ekran görüntüleri incelendi.
+- Dosyalar: public/qa dört dosya, tests/scene.test.mjs, docs/P3_DEVICE_MEASUREMENT.md ve kanıt/plan belgeleri. Kaynak logo/font/legacy ve müşteri akışı korundu.
+- Mimari v1.5, roadmap v1.4; P3.6a hazır, P3.6 fiziksel ölçüm bekliyor. Yazılımsal QA JSON'u fiziksel sonuç değildir. P4 başlamadı. Sıradaki tek iş: Cloudflare önizlemesinde tanımlı fiziksel bilgisayar ve orta seviye mobil için üç 10 saniyelik örneği/manual kontrolleri kaydedip P3 kabulünü kapatmak.

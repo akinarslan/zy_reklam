@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>ZY Reklam · Cihaz performans kontrolü</title>
+  <link rel="stylesheet" href="./performance.css">
+  <script type="module" src="./performance.js"></script>
+</head>
+<body>
+  <iframe id="scene" title="Ölçülen ZY Reklam açılış sahnesi" hidden></iframe>
+  <main id="panel">
+    <p class="eyebrow">ZY REKLAM · P3.6</p>
+    <h1>Cihaz performans kontrolü</h1>
+    <p>Bilgisayarınızda veya telefonunuzda 3D tabelayı üç kez ölçün. Ölçüm sırasında sekmeyi açık tutun; ekranı çevirmeyin veya boyutunu değiştirmeyin.</p>
+    <form id="measurement-form">
+      <div class="fields">
+        <label>Cihaz türü<select id="device-kind"><option value="desktop">Bilgisayar</option><option value="mobile">Telefon / tablet</option></select></label>
+        <label>Çalışma ortamı<select id="environment"><option value="unknown">Belirtilmedi</option><option value="physical">Gerçek cihaz (kullanıcı beyanı)</option><option value="emulated">Emülasyon / yazılımsal GPU</option></select></label>
+        <label>Cihaz modeli<input id="device-model" required maxlength="120" placeholder="Örn. Samsung Galaxy A54"></label>
+        <label>İşletim sistemi ve sürümü<input id="device-os" required maxlength="120" placeholder="Örn. Android 15"></label>
+        <label>Güç modu<select id="power-mode"><option value="unknown">Bilmiyorum</option><option value="normal">Normal</option><option value="saving">Güç tasarrufu</option><option value="plugged-in">Şarja bağlı</option></select></label>
+        <label>Örnek süresi<select id="sample-duration"><option value="10000">3 × 10 saniye</option><option value="3000">3 × 3 saniye — hızlı kontrol</option></select></label>
+      </div>
+      <button id="start" type="submit">Ölçümü başlat</button>
+    </form>
+    <p id="status" role="status" aria-live="polite">Ölçüm henüz başlamadı.</p>
+    <button id="enable-motion" type="button" hidden>3D hareketini aç ve ölç</button>
+    <section id="result" hidden aria-labelledby="result-title">
+      <h2 id="result-title">Ölçüm sonucu</h2>
+      <p id="summary"></p>
+      <p>Bu kayıt render çağrılarını sayar; ekranda sunulan GPU kareleri veya kullanıcı deneyimi garantisi değildir. Cihaz sınıfı, tarayıcı ve manuel hareket kontrolleriyle birlikte değerlendirilir.</p>
+      <button id="download" type="button">JSON raporunu indir</button>
+    </section>
+    <p class="note">Hareket azaltma tercihi değiştirilmez. Etkinse ölçüm durur; sahnedeki “Hareket azaltıldı” düğmesiyle tercihinizi kendiniz değiştirebilirsiniz. Rapor yalnızca indir düğmesine basınca cihazınıza kaydedilir; sunucuya gönderilmez.</p>
+    <a href="/">Siteyi aç →</a>
+    <noscript>Ölçüm için JavaScript gereklidir. Ana siteye yukarıdaki bağlantıdan erişebilirsiniz.</noscript>
+  </main>
+  <aside id="running" hidden>
+    <span id="progress" role="status">Sahne hazırlanıyor…</span>
+    <button id="stop" type="button">Durdur</button>
+  </aside>
+</body>
+</html>

@@ -1,0 +1,47 @@
+{
+  "date": "2026-10-01",
+  "stage": "P3.6a",
+  "runtimeFiles": [
+    {
+      "path": "public/qa/scene-performance.html",
+      "bytes": 3216,
+      "sha256": "e91377f72bfb1a65471b0189af6a23e7d76affc6f6c1b948551d1c89c5593a65"
+    },
+    {
+      "path": "public/qa/performance.css",
+      "bytes": 1648,
+      "sha256": "06f5ea30b86d3286a193a01cc796051a05b6204d158fc3ebd01ec235f53d5c0a"
+    },
+    {
+      "path": "public/qa/performance.js",
+      "bytes": 6517,
+      "sha256": "d4366e072d0330fe40c93ef3f04a42f91daab17aa2c9924dd1d4d3e60fe0e0e1"
+    },
+    {
+      "path": "public/qa/sampler.js",
+      "bytes": 2821,
+      "sha256": "e474baade8aaf3c78589be8a9e998fdbddeec40818a842c62ef0acdadd14b76b"
+    }
+  ],
+  "initialPageImpact": "QA files are not loaded by the homepage; main and renderer chunk names/bytes unchanged.",
+  "localTests": {
+    "total": 19,
+    "pass": 19,
+    "fail": 0
+  },
+  "visualChecks": [
+    {
+      "width": 360,
+      "overflow": false,
+      "screenshotReviewed": true
+    },
+    {
+      "width": 1440,
+      "overflow": false,
+      "screenshotReviewed": true
+    }
+  ],
+  "deviceSample": "P3_DEVICE_TOOL_SAMPLE.json (software GPU, not physical acceptance)",
+  "previewURL": "Not verified from accessible repository status/check records.",
+  "physicalAcceptance": "Open; three physical 10-second samples and manual checks required."
+}

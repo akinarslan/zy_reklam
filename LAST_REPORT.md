@@ -2,27 +2,32 @@
 
 **Tarih:** 2026-10-01
 
-**Talimat:** “devam et”. **Aşama/iş:** P3.6 performans optimizasyonu; fiziksel cihaz kabulü açık.
+**Talimat:** “tamamdır sen projeye devam et istersen”. **Aşama/iş:** P3.6a ölçüm aracı hazır; P3.6 fiziksel cihaz kabulü açık.
 
-Güncel AGENTS.md, mimari v1.3 ve roadmap v1.2 kontrol edildi. Uzak main başlangıcı 1153c07bb58ef9ee7b641cea9eb5d278de2d16d1 doğrulandı. Yerel Git commit içermez; uzak kayıt GitHub bağlayıcısıyla yönetilir.
+Güncel AGENTS.md, mimari v1.4 ve roadmap v1.3 tamamen okundu. Uzak main başlangıcı b9cd730e0825b17187806de6dee1c95e15c07463 doğrulandı; önceki Verify kontrolü başarılı. Yerel Git commit içermez; uzak kayıt GitHub bağlayıcısıyla yönetilir.
 
 ## Yapılanlar
 
-Hareket sırasında her karede çizilen gölge haritası en fazla 20 Hz güncellenir. Aradaki kareler önbelleği kullanır; son poz gölgeye mutlaka aktarılır. Aynı poz/idle durumda gereksiz gölge çizimi yapılmaz. Ana sahnenin RAF hızı, özgün logo geometrisi ve materyaller korundu.
+- /qa/scene-performance.html altında ayrı, responsive cihaz ölçüm ekranı hazırlandı. Kullanıcı başlatınca üretim sayfasını aynı origin/full viewport iframe'inde açar; ayrı model veya ikinci renderer kurulmaz. Ana sayfa QA kodunu yüklemez; araç menü/sitemap dışında ve noindex/nofollow'dur.
+- Üç aktif örnek, örnek başına 1 saniye atılan ısınma, yaklaşık bir saniyelik FPS pencereleri ve kalite geçişleri kaydedilir. Varsayılan üç adet 10 saniyedir; üç adet 3 saniye hızlı kontrol içindir.
+- Cihaz/OS/güç bağlamı kullanıcı tarafından girilir. User-agent, varsa GPU renderer, viewport/DPR ve build script yolları kayda eklenir. Fiziksel donanım veya kabul otomatik doğrulanmaz.
+- Hareket azaltma korunur; kullanıcı ayrı açık düğmeyle 3D'yi açabilir. İptal, resize, sekme gizlenmesi ve context/fallback hataları başarılı rapor üretmez. Sonuç sadece açık indirme eylemiyle JSON olarak kaydedilir; upload veya kalıcı tarayıcı deposu yoktur.
+- Fiziksel ölçüm yöntemi/kabul tablosu, mimari v1.5 ve roadmap v1.4 güncellendi. P3.6a hazır; fiziksel P3.6 ve P4 kutuları açık tutuldu.
 
-Değişen dosyalar: src/scene/renderer.ts, tests/scene.test.mjs, scripts/compare-scene.mjs; ARCHITECTURE.md, ROADMAP.md, README.md, LAST_REPORT.md, docs/P3_ACCEPTANCE.md; docs/evidence/P2_VERIFICATION.json, P3_VERIFICATION.json, P3_BUDGET.json, P3_PERFORMANCE_COMPARISON.json ve P3_PERFORMANCE_CI_VERIFICATION.json. Önceki GitHub önizleme JPEG'leri korundu; yeni yerel viewport görüntüleri ayrıca incelendi.
+## Değişen dosyalar
 
-## Doğrulama
+public/qa/scene-performance.html, performance.css, performance.js, sampler.js; tests/scene.test.mjs; docs/P3_DEVICE_MEASUREMENT.md, P3_ACCEPTANCE.md; ARCHITECTURE.md, ROADMAP.md, README.md, LAST_REPORT.md; docs/evidence/P2_VERIFICATION.json, P3_VERIFICATION.json, P3_DEVICE_TOOL_SAMPLE.json ve P3_DEVICE_TOOL_VERIFICATION.json.
 
-- TypeScript ve production build başarılı; 16/16 yerel test geçti. Yeni WebGL testi gölge çizim sınırını, son poz eşleşmesini ve idle durmasını doğruladı: 26 ana çizim / 10 gölge güncellemesi.
-- Menü, iletişim, hareket azaltma, fallback, context kaybı, mobil dokunma/scroll ve kaynak temizliği regresyonları geçti. Masaüstü ve mobil viewport görüntüleri incelendi.
-- Aynı Chromium 153/ANGLE SwiftShader sürecinde üç dönüşümlü önce/sonra çifti ölçüldü. Masaüstü ortanca 36,6 → 38,2 FPS; mobil emülasyon ortanca 51,2 → 52,3 FPS. Aralıklar örtüşür; cihaz garantisi veya yaklaşık 60 FPS hedefinin karşılandığı iddia edilmez. Ham kayıt karşılaştırma JSON'undadır.
-- SVG 8.340 bayt; harici model/texture/env transferi sıfır. Renderer JS 605.088 bayt ham / 154.704 bayt Node gzip. Vite 500 KB uyarısı sürer; eşiği değiştirilmedi.
-- Mimari v1.4 / roadmap v1.3 güncellendi. P3.6 açık tutuldu; P4 başlatılmadı. Lighthouse/P8 ve fiziksel cihaz testleri çalıştırılmadı.
+## Doğrulama ve sınırlar
 
-- Uzak kayıt commit’i 410f4dfc6215ef1308839ad6063bc5a997a47ed3 main üzerinde doğrulandı. 12 dosyanın blob kimliği ve altı ana dosyanın tam içeriği eşleşti; özgün SVG blobu korundu.
-- GitHub Actions 36861229725 / job 110365655795 başarıyla tamamlandı. Loglar yeniden okundu: npm ci/build/tarayıcı kurulumu ve 16/16 test başarılı, 0 fail. Artifact 11161358935 kaydedildi. Kanıt: docs/evidence/P3_PERFORMANCE_CI_VERIFICATION.json.
+- TypeScript/production build ve QA JS sözdizimi başarılı. 19/19 yerel gerçek tarayıcı testi geçti: mevcut 16 regresyon + üç ölçüm aracı kontrolü.
+- Mobil 360 px/DPR2 üç örnek ve indirilen JSON doğrulandı; pencere kareleri toplamı örnek toplamıyla eşleşti. Rapor upload'ı yapılmadı.
+- Hareket azaltma/açık kullanıcı tercihi, iptal, resize ve kontrollü gizli sekme olayı geçersiz ölçüm olarak doğrulandı. Gerçek WEBGL_lose_context kaybında rapor üretilmedi.
+- 360/1440 px QA ekranları incelendi; yatay taşma yok. Yeni örnek JSON açıkça headless yazılımsal GPU/emülasyon olarak etiketlidir; fiziksel cihaz kabulü değildir.
+- Ana JS/renderer paketleri değişmedi; ertelenen 500 KB paket uyarısı sürer. Özgün SVG blobu 63de4b4cfe6c9d15ef8962ed511309365b10ed43 ve AGENTS blobu korundu.
+- Cloudflare önizleme URL'si erişilebilir commit status/check kayıtlarından doğrulanmadı. Deployment uç noktası bağlayıcıda desteklenmedi; yayın başarılı denmedi. Ana domain/DNS/hosting değiştirilmedi.
+- P3.6a tamamlandı; gerçek donanım/manual kabul, Lighthouse/P8 ve P4 çalışmaları henüz yapılmadı.
 
 ## Sıradaki tek iş
 
-Fiziksel masaüstü ve orta seviye mobilde aktif etkileşim FPS ölçümünü kaydedip P3 kabulünü kapatmak. P1.5 gerçek proje içeriği bekliyor. Canlı yayın, DNS ve hosting değiştirilmedi.
+Cloudflare önizlemesinde tanımlı fiziksel bilgisayar ve orta seviye telefondan üç 10 saniyelik örneği ve gerçek dokunma/scroll/görsel kontrolleri alarak P3 kabulünü kapatmak. Önizleme bağlantısı kullanıcıdan alınarak ayrıca doğrulanacak.
