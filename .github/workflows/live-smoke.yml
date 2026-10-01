@@ -1,0 +1,32 @@
+name: Live Worker Smoke
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  live:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify live Worker serves Projects mega menu
+        shell: bash
+        run: |
+          set -euo pipefail
+          URL="https://zy-reklam.akinarslanceng.workers.dev/"
+          for attempt in $(seq 1 24); do
+            echo "Attempt $attempt/24"
+            if curl -fsSL --max-time 20 "$URL" -o live.html; then
+              echo "Fetched $(wc -c < live.html) bytes"
+              if grep -q 'data-project-menu' live.html && grep -q 'project-mega' live.html; then
+                echo "PASS: Projects mega menu is live."
+                exit 0
+              fi
+              echo "Mega menu markers not present yet."
+              grep -o '<title>[^<]*</title>' live.html | head -1 || true
+            fi
+            sleep 10
+          done
+          echo "FAIL: Projects mega menu not found on live Worker."
+          echo "Navigation excerpt:"
+          grep -o '<nav id="main-nav"[^>]*>.*</nav>' live.html | head -c 3000 || true
+          exit 1
