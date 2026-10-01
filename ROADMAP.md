@@ -8,9 +8,9 @@
 
 **Son tamamlanan aşama:** P0 — Planlama belgelerinin kaydı.
 
-**Sıradaki uygulama aşaması:** P1 — Mevcut site ve varlık envanteri.
+**Aktif aşama:** P1 — Mevcut site ve varlık envanteri; logo referansı alındı.
 
-Depo başlangıçta boştur. Kod, 3D model, logo/font dosyaları ve canlı yayın henüz bu yol haritasıyla teslim edilmemiştir. Belge hazırlama, uygulama geliştirmesinin başlaması anlamına gelmez.
+Depo başlangıçta boştur. Kullanıcının gönderdiği raster logo referansı alınmıştır; kod, 3D model, vektör logo, fontlar ve canlı yayın henüz teslim edilmemiştir. Logo envanteri 3D uygulamanın başladığı anlamına gelmez.
 
 Durumlar: `bekliyor`, `devam ediyor`, `engelli`, `tamamlandı`. İş kutuları yalnızca kabul kanıtı üretildikten sonra işaretlenir. Bu dosya her kullanıcı talimatından önce okunur ve iş bitiminde güncellenir.
 
@@ -19,7 +19,7 @@ Durumlar: `bekliyor`, `devam ediyor`, `engelli`, `tamamlandı`. İş kutuları y
 | Aşama | Çıktı | Bağımlılık | Durum |
 | --- | --- | --- | --- |
 | P0 | Mimari, roadmap ve çalışma kuralları | Kullanıcının tasarım yönü | Tamamlandı |
-| P1 | Mevcut site, varlık, SEO ve yayın envanteri | P0 | Bekliyor |
+| P1 | Mevcut site, varlık, SEO ve yayın envanteri | P0 | Devam ediyor |
 | P2 | Ön yüz temeli, mobil düzen, içerik ve güvenli yedek | P1 | Bekliyor |
 | P3 | Özgün ZY ile 3D açılış | P2 + doğrulanmış logo | Bekliyor |
 | P4 | Üretim anlatımı ve hizmet etkileşimleri | P3 | Bekliyor |
@@ -46,6 +46,7 @@ Süreler takvim taahhüdü değildir. P1 sonrası logo kalitesi, gerçek görsel
 
 - [ ] P1.1 Mevcut site kaynaklarını depoya al veya doğrulanmış erişilebilir kaynağı kaydet; çalışma ağacını ve başlangıç commit’ini koru.
 - [ ] P1.2 Logo, PDF/vektör kaynak, fontlar ve görselleri `docs/ASSET_INVENTORY.md` içine dosya/kaynak/kullanım hakkı/eksik durumu ile yaz.
+- [x] P1.2a Kullanıcının gönderdiği tam yazı logosunu değişmeden referans olarak kaydet; özelliklerini envantere yaz. P1.2’nin diğer varlıkları tamamlanmadı.
 - [ ] P1.3 ZY ambleminin onaylı vektörünü ve statik posterini hazırla; kaynakla oran/kontur karşılaştırmasını kaydet.
 - [ ] P1.4 Citadel of Blackrose fontunun Türkçe glifleri ve kullanım koşullarını denetle; 45 pt masaüstü başlık şartını kaydet.
 - [ ] P1.5 Gerçek hizmetler, WhatsApp numarası, iletişim, sosyal bağlantılar ve proje bilgilerini doğrula.
@@ -167,3 +168,14 @@ Sıradaki tek iş:
 - Durum: P0 tamamlandı. Uygulama testi/build çalıştırılmadı; uygulama kodu henüz yok. Bu kayıt doğrulama sonrası durum güncellemesidir.
 - Mimari sınırı: mevcut site ve varlıklar görülmeden uygulanmış teknoloji veya çalışan 3D iddiası yok.
 - Sıradaki tek iş: P1 — mevcut site kaynaklarını ve özgün varlıkları envantere alma.
+
+### 2026-10-01 — Kullanıcının logo referansı
+
+- Talimat: “logo bu”; eklenen PNG projenin logo referansıdır.
+- Başta okunan belgeler: AGENTS.md, mimari v1.0 ve roadmap v1.0; GitHub main commit’i `14d6e29a0c32e3e663cf2a1a5e143205a1c01e50` doğrulandı. Yerel dosyalar önceki kaydın çalışma kopyalarıdır; yerel Git ağacında başlangıç commit’i yoktur, uzak kayıt GitHub araçlarıyla yönetilir.
+- Aşama/iş: P1.2a tamamlandı; P1.2 kısmi, P1.3 bekliyor; P1 devam ediyor.
+- Dosyalar: `public/assets/brand/zy-reklam-reference.png`, `docs/ASSET_INVENTORY.md`, ARCHITECTURE.md, ROADMAP.md, README.md, LAST_REPORT.md.
+- Kanıt: dosya açıldı; beyaz ZY, altın REKLAM, koyu zümrüt–siyah zemin görüldü. PNG 266 × 72 px, RGBA, 14.832 bayt; kaynak kopyası byte düzeyinde korunmuştur. SHA-256 envanterde kayıtlıdır.
+- Mimari revizyonu: v1.1 / A05; tam yatay logo ve materyal eşlemesi netleştirildi. Aşama sırası ve kapsam korunuyor.
+- Sınır: raster referans vektör/3D üretim kabulü değildir; uygulama kodu yok, build/test çalıştırılmadı.
+- Sıradaki tek iş: P1.1 — mevcut site kaynaklarını envantere almak; vektör logo kaynağı P1.3’te ayrıca doğrulanacak.

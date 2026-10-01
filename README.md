@@ -11,9 +11,9 @@ ZY Reklam’ın özgün kimliğini; etkileşimli 3D tabela, gerçek üretim işl
 
 ## Güncel durum
 
-1 Ekim 2026 tarihinde GitHub deposunun boş olduğu doğrulandı. Bu ilk teslimat planlama belgeleridir. Mevcut sitenin kaynak kodu, özgün ZY amblemi, fontlar ve proje görselleri henüz bu depoda değildir. Uygulama geliştirmesi başlamamıştır.
+1 Ekim 2026 tarihinde GitHub deposunun boş olduğu doğrulandı. Bu ilk teslimat planlama belgeleridir. Kullanıcının [beyaz ZY + altın REKLAM logo referansı](public/assets/brand/zy-reklam-reference.png) ve [varlık envanteri](docs/ASSET_INVENTORY.md) eklendi. Mevcut site kaynakları, vektör logo, fontlar ve proje görselleri henüz bu depoda değildir. Uygulama geliştirmesi başlamamıştır.
 
-Sıradaki iş **P1 — Mevcut site ve varlık envanteri**. Geliştirmeye başlamadan önce `AGENTS.md`, `ARCHITECTURE.md` ve `ROADMAP.md` okunmalıdır.
+Aktif aşama **P1 — Mevcut site ve varlık envanteri**; logo referansı alındı. Sıradaki iş mevcut site kaynaklarını envantere almaktır. Geliştirmeye başlamadan önce `AGENTS.md`, `ARCHITECTURE.md` ve `ROADMAP.md` okunmalıdır.
 
 ## Çalışma ilkesi
 

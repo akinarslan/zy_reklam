@@ -1,6 +1,6 @@
 # ZY Reklam — Mimari
 
-**Sürüm:** 1.0 · **Tarih:** 2026-10-01 · **Durum:** Ürün ve mimari başlangıç planı
+**Sürüm:** 1.1 · **Tarih:** 2026-10-01 · **Durum:** Ürün ve mimari başlangıç planı; logo referansı alındı
 
 **İlgili belgeler:** [Yol haritası](ROADMAP.md) · [Çalışma kuralları](AGENTS.md)
 
@@ -8,7 +8,7 @@
 
 ZY Reklam web sitesi bir **dijital üretim atölyesi** olarak tasarlanacaktır. Ziyaretçi üretim kabiliyetini görür, gerçek işleri inceler, kendi tabela fikrini dener ve anlaşılır bir teklif talebi oluşturur.
 
-GitHub deposu `akinarslan/zy_reklam`, 1 Ekim 2026 tarihinde boş olarak doğrulanmıştır. Bu mimari uygulanmış bir sistemi anlatmaz. Mevcut canlı site kodu, hosting yöntemi, iletişim verileri ve varlık dosyaları P1’de incelenecektir. Önceki konuşmalarda geçen logo ve font dosyaları bu depoda mevcut kabul edilmez.
+GitHub deposu `akinarslan/zy_reklam`, 1 Ekim 2026 tarihinde boş olarak doğrulanmıştır. Bu mimari uygulanmış bir sistemi anlatmaz. Mevcut canlı site kodu, hosting yöntemi, iletişim verileri ve varlık dosyaları P1’de incelenecektir. Kullanıcının aynı gün belirlediği logo PNG’si `public/assets/brand/zy-reklam-reference.png` yoluna alınmıştır. Vektör logo ve önceki konuşmalarda geçen font/PDF dosyaları doğrulanmadan depoda mevcut kabul edilmez.
 
 Temel yolculuk: **İşi anla → Gerçek projeleri gör → Tabela fikrini dene → Teklif talebini hazırla → WhatsApp’ta gönder.**
 
@@ -34,7 +34,8 @@ Ana başlık **“Projenize özel çözümler üretiyoruz.”** Açılış eylem
 ## 3. Görsel kimlik
 
 - Ana ortam: koyu zümrüt ve siyah; vurgu: beyaz ışık ve ölçülü altın metal.
-- Özgün ZY ambleminin oranları ve konturları korunur. Kaynaktan onaylı vektör çıkarılmadan geometrik logo üretimine geçilmez. İlk yüklemede aynı amblemin statik sürümü gösterilir.
+- Kullanıcının belirlediği logo **beyaz “ZY” + altın “REKLAM”** yazısının tamamıdır; koyu zümrüt–siyah zeminde yatay bir işarettir. Kaynak: [logo referansı](public/assets/brand/zy-reklam-reference.png), 266 × 72 px PNG. Harflerin özgün kesimleri, aralıkları ve bütün logonun oranları korunur; yalnızca “ZY” kullanmak veya benzer fontla yeniden yazmak varsayılan değildir.
+- 3D sahnede beyaz “ZY” ışıklı pleksi, altın “REKLAM” metal yüzey olarak görselleştirilir. Orijinal ekran görüntüsü değişmeden saklanır. Küçük raster dosya büyük açılış sahnesinin hazır üretim varlığı veya onaylı vektörü sayılmaz; vektör/kontur doğrulaması P1.3’te yapılır. Kaynaktan doğrulanmış vektör çıkarılmadan geometrik logo üretimine geçilmez. İlk yüklemede aynı logonun statik sürümü gösterilir.
 - Citadel of Blackrose açılış başlığında kullanılır. Masaüstü başlangıç ölçüsü **45 pt = 60 CSS px**; mobilde taşmayı önleyen ölçek kullanılır. Gövde ve form metinlerinde okunaklı bir font seçilir.
 - Fontların Türkçe `İ ı Ş ş Ğ ğ Ç ç Ö ö Ü ü` desteği ve web kullanımı P1’de denetlenir. Eksik glif veya kullanım hakkı sorunu varsa başlık fontu kararı belgelenir; sessiz font değişikliği yapılmaz.
 - Footer koyu zümrüt; `@yakinyazilim` beyaz ve hizalı tutulur. Bağlantının gerçek hedefi envanterden alınır.
@@ -232,10 +233,14 @@ Görsel kanıtlar: açılış, üretim, galeri, stüdyo, form ve footer için se
 | A02 | Bir kaliteli açılış sahnesi; sınırlı ek animasyon | Kabul | Etki, okunabilirlik ve performans |
 | A03 | DOM içerik/forma öncelik; 3D bağımsız ve yedekli | Kabul | Erişim ve teklif akışının devamlılığı |
 | A04 | Vite/TypeScript/Three.js başlangıç önerisi | P1 doğrulaması bekliyor | Mevcut kaynak yapısı görülmeden zorunlu migrasyon yok |
-| A05 | Özgün amblem, Citadel başlık, masaüstü 45 pt | Varlık doğrulaması bekliyor | Kimlik korunur; lisans/glif/kaynak kontrolü |
+| A05 | Beyaz ZY + altın REKLAM tam logo; Citadel başlık, masaüstü 45 pt | Raster referans alındı; vektör/font bekliyor | Kullanıcının PNG’si görsel olarak incelendi; konturlar/font ayrıca doğrulanacak |
 | A06 | WhatsApp metin talebi; otomatik gönderim/fiyat yok | Kabul | İlk sürümün satış akışı |
 | A07 | Gerçek görsel yükleme için ayrı API/özel depo | Tasarım kabul; sağlayıcı bekliyor | Link ile dosya eklemenin farkı; P7 tamamlama |
 | A08 | Mevcut domain/hosting korunarak entegrasyon | P1 doğrulaması bekliyor | Çalışan yayının gereksiz değişmemesi |
 | A09 | Her talimatta mimari ve roadmap kontrolü | Kabul | Kullanıcının plan takibi isteği; AGENTS.md ile kalıcı kural |
 
 Mimari değişiklikte sürüm, tarih, ilgili karar ve etkilenen roadmap işi güncellenir. Yeni kullanıcı talimatıyla değişen kapsam eski kabul ölçütlerine gizlenmez.
+
+### 2026-10-01 — v1.1 logo kaynak açıklaması
+
+“logo bu” talimatıyla tam yatay yazı logosu referans olarak alındı. Beyaz/altın materyal eşlemesi netleştirildi. Etkilenen işler P1.2, P1.3 ve P3.1–P3.2. Aşama sırası ve ürün kapsamı değişmedi; 3D veya vektör henüz üretilmedi.

@@ -2,30 +2,30 @@
 
 **Tarih:** 2026-10-01
 
-**İş:** ZY Reklam dijital üretim atölyesi için mimari, yol haritası ve plan kontrol kuralları.
+**Talimat:** “logo bu”; eklenen PNG’yi ZY Reklam’ın özgün logo referansı olarak kullan.
 
-**Aşama:** P0 — Planlama, tamamlandı.
+**Aşama/iş:** P1.2a tamamlandı; P1.2 kısmi, P1 devam ediyor.
 
 ## Yapılanlar
 
-- `ARCHITECTURE.md`: ürün kapsamı, görsel kimlik, DOM/3D ayrımı, stüdyo/teklif verileri, WhatsApp davranışı, güvenli görsel yükleme, kalite hedefleri ve karar kaydı.
-- `ROADMAP.md`: P0–P9 sırası, bağımlılıklar, kontrol listeleri, kabul ölçütleri ve ilerleme günlüğü.
-- `AGENTS.md`: her talimat öncesi güncel mimari/roadmap okuma; aşamaya eşleme; iş sonunda durum, kanıt ve rapor güncelleme.
-- `README.md`: belge giriş noktası ve mevcut durum.
-- `LAST_REPORT.md`: bundan sonraki işlerde üzerine yazılacak son rapor.
+- Güncel AGENTS.md, mimari v1.0 ve roadmap v1.0 okundu; uzak main commit’i doğrulandı.
+- Ekli logo incelendi: beyaz ZY, altın REKLAM, koyu zümrüt–siyah zemin.
+- PNG değişmeden `public/assets/brand/zy-reklam-reference.png` yoluna kopyalandı; `docs/ASSET_INVENTORY.md` oluşturuldu.
+- Mimari v1.1 / A05: tam yatay logo ve doğru 3D materyal eşlemesi netleştirildi.
+- ROADMAP.md: P1 aktif oldu; yalnızca P1.2a tamamlandı işaretlendi. README.md güncellendi.
+- Bu rapor önceki LAST_REPORT.md üzerine yazıldı; aynı rapor terminalde gösterilir.
 
 ## Doğrulama
 
-- GitHub deposuna okuma/yazma erişimi doğrulandı.
-- Başlangıç deposunun boş olduğu API yanıtlarıyla doğrulandı.
-- Belgeler yeni plan olarak yazıldı; uygulanmış kod veya tamamlanmış uygulama gibi sunulmadı.
-- Uygulama testi/build çalıştırılmadı: depoda uygulama kodu yoktur.
-- Beş belge `main` dalına kaydedildi; GitHub’dan yeniden okunan içerikler hazırlanan dosyalarla birebir eşleşti.
-- Plan commit’i: `012491bdc8f3bfa57c5bc8afb301769293dcbb67`. Yol haritası ve bu rapor, doğrulama sonrası durum güncellemesiyle birlikte kaydedilir.
-- Yerel UTF-8 okuma, belge bağlantıları, P0–P9 kapsamı ve mimari/roadmap kontrol kuralı doğrulandı.
+- Görsel kontrol ve PNG decode başarılı: 266 × 72 px, RGBA, 14.832 bayt.
+- SHA-256: `22655b453807bcb1c35c60f1d62304af4e78092199e4ada6dc59b00286715d8b`.
+- Kaynak dosya byte düzeyinde korunmuştur; Git blob kimliği envanterdedir.
+- GitHub kaydı sonrası uzak metin dosyaları ve logo blob kimliği tekrar okunarak doğrulanır; sonuç son kullanıcı yanıtında bildirilir.
+- Uygulama testi/build çalıştırılmadı: uygulama kodu yoktur.
+- Aşama sırası ve ürün kapsamı korunmuştur; canlı site değiştirilmedi.
 
-## Sınırlar ve sıradaki iş
+## Sınır ve sıradaki iş
 
-Mevcut site kaynakları, özgün logo, fontlar, gerçek fotoğraflar ve yayın ortamı bu depoda değildir. Canlı site değiştirilmedi.
+Küçük raster görsel referanstır. Vektör, büyük sahne varlığı ve 3D model henüz hazırlanmadı.
 
-**Sıradaki iş:** P1 — mevcut site ve varlık envanteri. Teknoloji/yayın sağlayıcısı P1’de doğrulanacak; 3D açılış P3’te, stüdyo/WhatsApp P6’da, gerçek görsel yükleme P7’de tamamlanacak.
+**Sıradaki iş:** P1.1 — mevcut site kaynaklarını envantere almak.
