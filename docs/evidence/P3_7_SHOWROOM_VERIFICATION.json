@@ -1,0 +1,27 @@
+{
+  "date": "2026-10-01T18:28:23.677Z",
+  "browser": "153.0.8010.0",
+  "renderer": "ANGLE SwiftShader; viewport emulation, not a physical GPU",
+  "checks": [
+    {
+      "check": "geometry, independent pointer/touch, idle/offscreen, overflow",
+      "width": 1440,
+      "passed": true,
+      "triangles": "34374"
+    },
+    {
+      "check": "geometry, independent pointer/touch, idle/offscreen, overflow",
+      "width": 360,
+      "passed": true,
+      "triangles": "34374"
+    },
+    {
+      "check": "reduced motion with real 3D and fixed pose",
+      "passed": true
+    },
+    {
+      "check": "lazy loading, module failure and context-loss fallback",
+      "passed": true
+    }
+  ]
+}

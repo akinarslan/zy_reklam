@@ -59,3 +59,9 @@ Kullanıcının sağladığı 14 görsel açılıp dört ana kategoriye ayrıld�
 ## 2026-10-01 — Ek proje medyası
 
 Altı fotoğraf (ilk beş Tabela, sonuncu Totem) ve yazili_su.mp4 (Özel Üretim) kullanıcı talimatıyla eklendi. Dosya eşleşmeleri docs/PROJECT_ASSETS.md; kaynak SHA-256 ve türev ölçüleri src/content/projects.json içinde. 12 WebP ve video/poster; kaynaklar değişmedi, sahiplik/gerçek ZY müşteri referansı doğrulaması yapılmadı.
+
+## 2026-10-01 — Bağımsız 3D Vitrin
+
+P3.7 modelleri bu proje için kodla üretildi; fotoğraf yapıştırılan düzlem veya üçüncü taraf müşteri referansı kullanılmadı. `public/assets/showroom/letter-outlines.json` gerçek font konturlarından türetilmiş SVG yollarıdır; SVGLoader + bevel/extrusion ile fiziksel ön/yan yüzler üretir. ZY REKLAM/totem için DejaVu Sans Bold; DAHA İLERİYE için Nimbus Sans Narrow Regular kullanıldı. Türkçe İ/Ü/Ş dahil kaynak glifler doğrulandı. Font yazılımları dağıtılmadı; türetilmiş konturlar ve ilgili DejaVu/URW lisans bildirimleri `FONT_NOTICES.txt` ile kaydedildi. Hero’nun özgün logo/font varlıkları aynı kaldı.
+
+`static-desktop.webp` ve `static-mobile.webp` yeni gerçek WebGL sahnesinin hareketsiz ekran görüntüleridir; Three.js yüklenemediğinde veya context kaybında aynı ürün düzenini gösterir. Her üç ürün temsili ürün tasarımı olarak etiketlenir; gerçek üretim/müşteri sahipliği kabulü değildir.

@@ -1,6 +1,6 @@
 # ZY Reklam — Yol Haritası
 
-**Sürüm:** 1.8 · **Başlangıç:** 2026-10-01
+**Sürüm:** 1.9 · **Başlangıç:** 2026-10-01
 
 **Kaynak:** [ARCHITECTURE.md](ARCHITECTURE.md) · **Zorunlu kontrol:** [AGENTS.md](AGENTS.md)
 
@@ -10,7 +10,7 @@
 
 **Aktif aşama:** P3 — Gerçek 3D açılış uygulandı; performans kapanışı devam ediyor.
 
-**Kullanıcı önceliği:** P2.9 — Ana sayfada sabit WhatsApp bilgi alma butonu. P2.7/P2.8 menüleri ve örnek sayfaları korunur; bağımsız iletişim düzenlemesi P3/P4 kabul sırasını değiştirmez.
+**Kullanıcı önceliği:** P3.7 — Hero’ya dokunmadan bağımsız 3D Vitrin. Kullanıcının açık önceliği fiziksel P3.6 kapanışı beklenirken uygulanır; diğer aşamalar tamamlanmış sayılmaz.
 
 P1 kaynak, logo, font ve iletişim incelemesi yapıldı; gerçek proje bilgileri/fotoğrafları doğrulanmadığı için P1.5 açık kalır. Planın engel yönetimi uyarınca bağımsız P2 temeli tamamlandı. Vite/TypeScript sayfası, statik SVG poster, mobil menü, hareket tercihi ve temel WhatsApp iletişim akışı çalışıyor. Gerçek 3D açılış şimdi uygulanmıştır. Üretim animasyonları, galeri, stüdyo ve upload henüz uygulanmadı.
 
@@ -86,6 +86,8 @@ Süreler takvim taahhüdü değildir. P1 sonrası logo kalitesi, gerçek görsel
 - [x] P3.6a Fiziksel cihazda kullanılabilecek ayrı ölçüm aracını, ham JSON çıktısını ve iptal/hata kontrollerini hazırla. Bu, fiziksel kabulü kapatmaz.
 - [x] P3.6b Aynı malzeme/derinlikteki logo katmanlarını birleştir; görünümü ve gerçek çizim çağrısı azalmasını doğrula. Fiziksel kabul ayrı kalır.
 - [ ] P3.6 Aşama kabulündeki fiziksel masaüstü/orta seviye mobil FPS hedeflerini ölç; gerekiyorsa sonraki aşamadan önce optimize et. Yazılımsal emülasyon ölçümü tek başına bu kabulü kapatmaz.
+
+- [x] P3.7 Bağımsız 3D Vitrin: iki farklı kutu harf tabela/asimetrik totem; obje bazlı etkileşim, lazy/reduced/mobile/fallback ve korunan hero kanıtı. **Tamamlandı; fiziksel GPU kabulü P3.6 kapsamında açık.**
 
 **Kabul:** Amblem özgün kaynakla eşleşir; yaklaşık yazı logosu kullanılmaz. İlk içerik 3D’yi beklemez. CTA üzerine canvas binmez. Model/texture/env başlangıç 3 MB hedefinde ölçülür. Tanımlı masaüstü ve mobil cihazlarda kare hızı kaydedilir; bütçe aşılıyorsa sonraki aşamadan önce optimize edilir veya hedef revizyonu gerekçelendirilir.
 
@@ -323,3 +325,13 @@ Sıradaki tek iş:
 - Canlı yayın sonucu kayıt sonrası ayrıca kontrol edilir; önceden başarı iddia edilmez. Sıradaki tek iş: canlı ana sayfada WhatsApp butonu ve bağlantısını doğrulamak.
 
 - Uzak kayıt dfd04686bd6c22ea46713f592f8ee47bf8c43e77 doğrulandı: yedi dosyanın blob kimliği ve tam içerikleri eşleşti. Canlı https://zyreklamdijital.com.tr/ açıldı ve bir kez yenilendi; yeni .whatsapp-float henüz yok. Kod/kayıt tamamlandı, Cloudflare yayın görünürlüğü bekliyor. GitHub Verify sürüyor; mega menü smoke başarısı WhatsApp yayın kanıtı sayılmaz.
+
+### 2026-10-01 — P3.7 bağımsız 3D Vitrin / Showroom
+
+- Kullanıcı hero ve ilk 3D tabelanın aynen korunmasını istedi. Yeni bölüm hero’nun hemen ardından, hizmetlerden önce eklendi. Korunan dosyaların SHA-256 kimlikleri ve showroom bloğu çıkarıldığında ana sayfanın birebir aynı kaldığı P3_7_PRESERVATION.json ile doğrulandı.
+- Gerçek bevel/extrusion harfler: DejaVu Sans Bold ile ZY REKLAM, Nimbus Sans Narrow ile DAHA İLERİYE. Üç boyutlu panel/çerçeve, metal ön/yan yüzler ve gölgeler. Asimetrik totem; dört fiziksel yönlendirme kutusu ve sıcak amber kanal.
+- Ürün başına raycast + 18 px yaklaşma alanı; sınırlı tilt/öne gelme ve ışık. Idle float yok; idle/offscreen/hidden RAF durur. Dokunma 900 ms, klavye düğmeleri, reduced-motion sabit 3D; lazy import 180 px yaklaşma alanıyla. Hero ürün sahnesi görünürken showroom döngüsü durur; kaynaklara bağımsız sahiplik mimari A12’de açıklandı.
+- Yükleme/WebGL/context kaybında aynı gerçek sahnenin masaüstü/mobil WebP yedeği. Yeni bağımlılık yok. Ürünler temsili olarak etiketlendi; P1.5/P5 müşteri sahipliği kabulü kapanmadı.
+- npm run build / TypeScript ve mevcut 26 + yeni 3 = 29 test başarılı. 360/768/1440 px yatay taşma yok; vitrin 360/1440 görüntüleri incelendi. P3_7_SHOWROOM_VERIFICATION.json ve dört ekran görüntüsü. Yazılım GPU/emülasyon fiziksel mobil performans kabulü değildir.
+- Vite ortak Three/SVGLoader chunk’ı ~600 KB / gzip ~154 KB için boyut uyarısı verir; dinamik yükleme korunur. Domain/Cloudflare, menüler ve WhatsApp değişmedi. LAST_REPORT.md üzerine yazıldı ve terminalde gösterildi.
+- Kayıt hedefi GitHub main. Canlı Cloudflare yayını bu yerel/üretim preview kabulünün parçası değildir; sonraki tek iş canlı yeni bölümün görünürlüğünü doğrulamaktır.

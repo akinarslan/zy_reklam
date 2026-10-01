@@ -1,6 +1,6 @@
 # ZY Reklam — Mimari
 
-**Sürüm:** 1.9 · **Tarih:** 2026-10-01 · **Durum:** P3 gerçek 3D ve güvenli yollar uygulandı; fiziksel cihaz performans kabulü açık
+**Sürüm:** 1.10 · **Tarih:** 2026-10-01 · **Durum:** P3 gerçek 3D ve güvenli yollar uygulandı; fiziksel cihaz performans kabulü açık
 
 **İlgili belgeler:** [Yol haritası](ROADMAP.md) · [Çalışma kuralları](AGENTS.md)
 
@@ -319,3 +319,9 @@ Görseller tasarım ve uygulama örnekleridir; gerçek ZY müşteri işleri veya
 ### 2026-10-01 — v1.9 proje medya genişletmesi (P2.8 / A11)
 
 Video içerik kaydı isteğe bağlı description alanı içerir; üretici açıklamayı HTML-escape ederek gösterir. Varsayılan açıklama kategori bağımsızdır, video sayısı clips.length ile üretilir. Su ile yazı/desen oluşturan fıskiye Özel Üretim kategorisinde kullanıcı başlatmalı video olarak sunulur. Altı yeni fotoğrafla toplam 25 fotoğraf ve iki video vardır. Fotoğraf/video lazy yükleme ve tek renderer sınırı korunur.
+
+### 2026-10-01 — A12 bağımsız 3D Vitrin (P3.7)
+
+Kullanıcının açık kapsam revizyonu: hero ve hizmetler arasında bağımsız showroom; iki ekstrüzyon kutu harf tabela ve asimetrik totem. src/showroom modülü mevcut hero koduna dokunmadan lazy import ile yüklenir. Showroom kendi renderer/kaynaklarına sahiptir; iki canvas ayrıdır. Hero ürün alanı görünürken showroom RAF durdurulur; aynı anda iki sahnenin etkileşim döngüsü işletilmez. Bellekte iki context bulunabilmesi, özgün tek renderer hedefinin bu talimata özel açık revizyonudur.
+
+Showroom reduced-motion durumunda 3D olarak çizilir, poz/tilt sabit kalır. Idle/offscreen/hidden döngü yok; obje bazlı proximity, dokunma ve klavye ışık tepkisi. Yükleme/WebGL/context hatasında aynı gerçek 3D kompozisyonun responsive WebP yedeği. Ürün tasarımları temsili olarak belirtilir; tamamlanmış müşteri işi iddiası yok. P3.6 fiziksel cihaz kabulü açık kalır.

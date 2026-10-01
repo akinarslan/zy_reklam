@@ -1,3 +1,4 @@
+@import './showroom.css';
 @import './promotions.css';
 @import './projects.css';
 @import './whatsapp.css';
@@ -18,5 +19,3 @@ html[data-motion=reduced]{scroll-behavior:auto}html[data-motion=reduced] *,html[
 .scene-mount canvas:active{cursor:grabbing}
 .object-caption{gap:12px;line-height:1.6}
 .object-caption [data-scene-hint]{text-align:right;letter-spacing:1px}
-
-

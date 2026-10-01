@@ -1,0 +1,29 @@
+{
+  "baselineCommit": "72d2dcb0cf15ad670f2bb132410b5dbf87ec30dc",
+  "checks": {
+    "src/scene/renderer.ts": true,
+    "src/scene/hero.ts": true,
+    "src/scene/quality.ts": true,
+    "src/scene/logo.ts": true,
+    "src/sections/navigation.ts": true,
+    "src/quote/contact.ts": true,
+    "src/styles/whatsapp.css": true,
+    "src/styles/projects.css": true,
+    "src/styles/promotions.css": true,
+    "wrangler.jsonc": true,
+    "hero HTML": true,
+    "only showroom HTML inserted": true
+  },
+  "hashes": {
+    "src/scene/renderer.ts": "17808cdc44c94c9c054ca54f43facb81d661fe2303c2415b5d9933c8173c5454",
+    "src/scene/hero.ts": "8779874db9e858052c128b4ae8d785f27c60aa376a725d09836eab903bf69646",
+    "src/scene/quality.ts": "b2d6ed2a02318e7085cb54a50dce986deb5251492bb12adbcb98aef3c3baddbd",
+    "src/scene/logo.ts": "f00fa2900eed9bd496bc2c7a568f89c4a494579ea5a458456db19891f3b69b47",
+    "src/sections/navigation.ts": "da956df8abbfa4ab9b5e34ccff3129abbcdcef508f24aa86ddd210509f429665",
+    "src/quote/contact.ts": "13e0ed7ed72bf3e82c2daeb4185b8c423bac4d2d88f54e8503486d00d0dbc252",
+    "src/styles/whatsapp.css": "5b9d65a739fb5d3c44e0b28cfd6f944b59730f10839c1b1beb7fe09acf915a32",
+    "src/styles/projects.css": "d3a90242720f58b8556891aa5f3a13204401ac6edee90da5ecd7ee7392da1b93",
+    "src/styles/promotions.css": "e3129001866024de1e7b0901e41820c5caa5e6d4bb8e11851130f5ee7552ec39",
+    "wrangler.jsonc": "fc618bb6ce9f4432d1ea3f1fa60b78822ae57abab8519568e9632d4d9cee9338"
+  }
+}
