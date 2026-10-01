@@ -1,14 +1,13 @@
 # ZY Reklam — Son Rapor
 
-Talimat: İlk beş görseli Tabela, son görseli Totem, su fıskiyesi videosunu uygun proje kategorisine ekle.
-Aşama: P2.8 medya genişletmesi; mimari v1.9/A11, roadmap v1.7 ile uyumlu.
+Talimat: Ana sayfaya sağ altta sabit WhatsApp ikonu ve hazır bilgi alma mesajı ekle.
+Aşama: P2.9. Mimari v1.9/A06 korundu; roadmap v1.8 güncellendi.
 
-- Tabela: beş yeni görsel; toplam yedi. Totem: bir yeni görsel; toplam üç fotoğraf ve mevcut video. Özel Üretim: suyla yazı/desen oluşturan fıskiye videosu. Yeni görseller galeri başında.
-- 12 WebP türevi, 540×960/14,51 saniye sessiz H.264 video ve poster. Kaynak dosyalar değiştirilmedi. Video kullanıcı başlatmalı; ilk yükte MP4 indirilmez.
-- Değişenler: projects.json, sayfa üreticisi, üç kategori HTML sayfası, proje testleri/kanıtı, mimari/yol haritası/envanter/medya eşlemesi ve 14 medya varlığı.
-- Doğrulama: TypeScript/build başarılı; üç proje tarayıcı testi geçti, sıfır hata. 360/1440 px tüm görseller, SEO/URL, iki menü, JS kapalı gezinme ve iki videonun gerçek oynatılması kontrol edildi. Tam 26 test bu işte yeniden çalıştırılmadı.
-- Kullanıcı önceki mega menünün canlıya ulaştığını doğruladı. Bu yeni medya sürümünün Cloudflare yayını henüz doğrulanmadı; GitHub kaydı ardından kontrol edilir.
-- Uzak başlangıç: d3c1cbc9534b8076f73fd63b4b4248efb19ecc5a. Başka oturumdaki Wrangler/workflow değişiklikleri korunur. P3 fiziksel GPU kabulü ve P1.5/P5 gerçek müşteri sahipliği kabulü açık.
-- Sıradaki tek iş: yeni içeriklerin Workers önizlemesinde yayınlandığını doğrulamak.
-
-Uzak kayıt: 4542806f8c9ae88ac2626f8a9bd972747501f8ea; 26 dosya blob kimliği ve beş uygulama dosyası tam metin ile yeniden doğrulandı. GitHub npm ci/build başarılı, CI devam ediyor. Cloudflare canlı kontrolünde yeni medya henüz gelmedi; eski içerik görülüyor. Güncelleme kayıtlı, canlı yayın kabulü bekliyor.
+- Buton metni: “Merhaba ZY Reklam, bilgi almak istiyorum.”
+- Doğrulanmış numara: +90 546 449 48 49. Direkt wa.me linki; yeni sekme/noopener/noreferrer. Mesaj kullanıcı tarafından gönderilir.
+- Yeşil dairesel WhatsApp ikonu sağ altta 56/58 px sabit görünür; mobil güvenli alan, klavye odağı ve footer boşluğu vardır. JavaScript olmadan çalışır. Yalnız ana sayfaya eklendi.
+- Dosyalar: index.html, src/styles/main.css, src/styles/whatsapp.css, docs/evidence/P2_VERIFICATION.json, P2_WHATSAPP_VERIFICATION.json, ROADMAP.md ve bu rapor.
+- Doğrulama: TypeScript/build ve altı P2 regresyon testi geçti. Üretim preview’da üç ekran genişliği × JS açık/kapalı altı ek kontrol geçti. Link aktivasyonu QA adresine yakalandı; gerçek mesaj gönderilmedi. Metin, numara, sabit konum, klavye, taşma ve footer içeriği kontrol edildi; mobil görüntü incelendi. Tam test paketi tekrar çalıştırılmadı.
+- Uzak başlangıç: 6e702bebb7c74b8b5e1fcb60a142d2f2de3c5628. Uzak Wrangler/workflow değişiklikleri ve medya korunur. DNS değişmedi.
+- Canlı yayın kontrolü GitHub kaydı ardından yapılır; bu rapor yerel kabul kanıtıdır. P3 fiziksel GPU kabulü açık.
+- Sıradaki tek iş: canlı ana sayfadaki yeni WhatsApp butonunu doğrulamak.

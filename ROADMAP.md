@@ -1,6 +1,6 @@
 # ZY Reklam — Yol Haritası
 
-**Sürüm:** 1.7 · **Başlangıç:** 2026-10-01
+**Sürüm:** 1.8 · **Başlangıç:** 2026-10-01
 
 **Kaynak:** [ARCHITECTURE.md](ARCHITECTURE.md) · **Zorunlu kontrol:** [AGENTS.md](AGENTS.md)
 
@@ -10,7 +10,7 @@
 
 **Aktif aşama:** P3 — Gerçek 3D açılış uygulandı; performans kapanışı devam ediyor.
 
-**Kullanıcı önceliği:** P2.8 — Projeler mega menüsü ve beş bağımsız tasarım/uygulama örneği sayfası. P2.7 promosyon menüsü korunur. Bu iş P3 renderer’ına bağlı değildir; P3/P4 kabul sırası korunur.
+**Kullanıcı önceliği:** P2.9 — Ana sayfada sabit WhatsApp bilgi alma butonu. P2.7/P2.8 menüleri ve örnek sayfaları korunur; bağımsız iletişim düzenlemesi P3/P4 kabul sırasını değiştirmez.
 
 P1 kaynak, logo, font ve iletişim incelemesi yapıldı; gerçek proje bilgileri/fotoğrafları doğrulanmadığı için P1.5 açık kalır. Planın engel yönetimi uyarınca bağımsız P2 temeli tamamlandı. Vite/TypeScript sayfası, statik SVG poster, mobil menü, hareket tercihi ve temel WhatsApp iletişim akışı çalışıyor. Gerçek 3D açılış şimdi uygulanmıştır. Üretim animasyonları, galeri, stüdyo ve upload henüz uygulanmadı.
 
@@ -71,6 +71,8 @@ Süreler takvim taahhüdü değildir. P1 sonrası logo kalitesi, gerçek görsel
 - [x] P2.7 Kullanıcının dört promosyon kategorisini fotoğraflı mega menü ve ayrı statik sayfalara bağla; görsel eşleşmesi, mobil/klavye/JS kapalı gezinme ve doğrudan URL kabulünü doğrula.
 
 - [x] P2.8 Beş proje kategorisini fotoğraflı mega menüye ve ayrı örnek sayfalarına bağla; gönderilen fotoğraf/video içeriklerini sınıflandır, erişim ve video oynatmayı doğrula.
+
+- [x] P2.9 Ana sayfanın sağ altında erişilebilir, JS kapalıyken de çalışan WhatsApp butonu; hazır bilgi alma mesajı, güvenli yeni sekme ve mobil güvenli boşluk.
 
 **Kabul:** 360, 768 ve 1440 px genişliklerde yatay taşma yoktur. Başlık masaüstünde 45 pt, mobilde okunaklıdır. CTA ve temel iletişim 3D’den bağımsız çalışır. Klavye odakları görünür; build ve seçilen statik analiz kontrolleri geçer. CI mevcut değilse başarı iddia edilmez; kurulan kontrollerin gerçek çıktısı kaydedilir.
 
@@ -309,3 +311,13 @@ Sıradaki tek iş:
 - GitHub kaydı sonrası yeni içeriklerin canlı yayını ayrıca doğrulanır. Sıradaki tek iş: Workers önizlemesinde yeni medya yayınının kontrolü.
 
 - Uzak kayıt doğrulandı: 4542806f8c9ae88ac2626f8a9bd972747501f8ea; 26 değişen dosyanın blob kimliği ve beş uygulama dosyasının tam içeriği eşleşti. GitHub Verify npm ci/build başarılı, tarayıcı kurulumu sürüyor; tam CI başarı iddiası yok. Canlı Worker ilk kontrolde eski Tabela (2 görsel) ve Özel Üretim (video yok) sürümünü sunuyordu; bir yenilemede de yeni medya henüz görünmedi. GitHub mega menü smoke sonucu bu yeni medya için yayın kanıtı sayılmadı.
+
+### 2026-10-01 — P2.9 sabit WhatsApp butonu
+
+- Talimat: Ana sayfanın altında floating WhatsApp ikonu; hazır metin “Merhaba ZY Reklam, bilgi almak istiyorum.”
+- AGENTS.md, mimari v1.9 ve roadmap v1.7 tamamen okundu; uzak main 6e702bebb7c74b8b5e1fcb60a142d2f2de3c5628. index/CSS/mimari/roadmap uzak içerikleri yerelle eşleşti. Yerel commit yok; kullanıcı/başka oturum değişiklikleri korunur.
+- Ana sayfanın footer sonrasında doğrudan wa.me/905464494849 bağlantısı; URL kodlu metin, target=_blank/noopener/noreferrer ve erişilebilir ad. 56/58 px sağ alt sabit ikon, safe-area ve klavye odak görünümü. Footer altında boşluk imza/telif içeriğinin örtülmesini önler. Alt kategori sayfalarına ikon eklenmedi.
+- Mimari değişmedi; v1.9/A06 ile uyumlu. JS, yeni bağımlılık, otomatik gönderim veya sohbet API’si eklenmedi. Roadmap v1.8; P3 fiziksel kabulü ve P4–P9 kapıları korunur.
+- Kabul: TypeScript/production build ve altı mevcut P2 testi başarılı. Üretim preview’da 360/768/1440 px × JS açık/kapalı altı ek kontrol geçti: doğru numara/metin, güvenli yeni sekme, gerçek link aktivasyonu (QA cevabına yönlendirilmiş, gerçek mesaj gönderilmedi), klavye odak, kaydırmada sabit konum, yatay taşma/ikon örtüşmesi yok ve footer imzası görünür. Mobil ekran incelendi. Kanıt P2_WHATSAPP_VERIFICATION.json. Tam test paketi bu işte tekrar çalıştırılmadı.
+- Dosyalar: index.html, src/styles/main.css, yeni whatsapp.css, P2/P2_WHATSAPP kanıt JSON’ları, ROADMAP.md, LAST_REPORT.md.
+- Canlı yayın sonucu kayıt sonrası ayrıca kontrol edilir; önceden başarı iddia edilmez. Sıradaki tek iş: canlı ana sayfada WhatsApp butonu ve bağlantısını doğrulamak.

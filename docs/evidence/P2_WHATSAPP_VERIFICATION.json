@@ -1,0 +1,43 @@
+{
+  "date": "2026-10-01T16:19:30.388Z",
+  "stage": "P2.9",
+  "externalNavigation": "Intercepted QA response; no real WhatsApp message sent",
+  "checks": [
+    {
+      "width": 360,
+      "javaScriptEnabled": true,
+      "message": "Merhaba ZY Reklam, bilgi almak istiyorum.",
+      "passed": true
+    },
+    {
+      "width": 360,
+      "javaScriptEnabled": false,
+      "message": "Merhaba ZY Reklam, bilgi almak istiyorum.",
+      "passed": true
+    },
+    {
+      "width": 768,
+      "javaScriptEnabled": true,
+      "message": "Merhaba ZY Reklam, bilgi almak istiyorum.",
+      "passed": true
+    },
+    {
+      "width": 768,
+      "javaScriptEnabled": false,
+      "message": "Merhaba ZY Reklam, bilgi almak istiyorum.",
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "javaScriptEnabled": true,
+      "message": "Merhaba ZY Reklam, bilgi almak istiyorum.",
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "javaScriptEnabled": false,
+      "message": "Merhaba ZY Reklam, bilgi almak istiyorum.",
+      "passed": true
+    }
+  ]
+}
