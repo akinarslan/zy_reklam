@@ -28,3 +28,9 @@ index.html; package.json; vite.config.ts; scripts/generate-projects.mjs; src/con
 ## Sıradaki tek iş
 
 GitHub kaydından sonra yeni Projeler mega menüsünün Cloudflare Workers önizlemesinde yayınlandığını ve beş kategori bağlantısının çalıştığını doğrulamak. Canlı yayın başarısı önceden iddia edilmez; diğer cihaz/aşama kabulleri açık kalır.
+
+## Uzak kayıt ve canlı kontrol
+
+Uygulama commit’i f1b63733417776c17fff32118e6e1e5a4913b0dc main üzerinde yeniden okundu: 71 değişen dosyanın Git blob kimliği ve yedi ana dosyanın tam içeriği eşleşti. GitHub Actions 36878091598 / job 110422601064 üzerinde npm ci ve production build başarılı; son kontrolde npm test devam ediyordu, uzak test başarı iddiası yapılmaz.
+
+Kayıttan sonra Workers önizlemesi açılıp bir kez yeniden yüklendi. Promosyonlar disclosure mevcut; Projeler hâlâ önceki #projeler bağlantısı, yeni proje kartları yok. Yeni Cloudflare yayını doğrulanmadı. En son GitHub commit’i için Cloudflare build tetikleme/Retry sonucu gerekir; hesap ayarlarına/loglarına erişim yok.

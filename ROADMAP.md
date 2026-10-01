@@ -295,3 +295,6 @@ Sıradaki tek iş:
 - İlk kontrolde bir WebP türevi boş bulundu; yeniden kodlandı, tüm 38 WebP decode ile doğrulandı, temiz test tekrarı başarılı. 38 WebP + video/poster toplam 4.480.675 bayt; her şey ilk yükte indirilmez. Kaynak fotoğraflar değiştirilmedi.
 - Mimari v1.8 / A11 ve roadmap v1.7. P2.8 tamamlandı. P1.5/P5 gerçek müşteri sahipliği/bilgisi ve P3.6 fiziksel ölçüm açık. Canlı Cloudflare otomatik dağıtım sonucu GitHub kayıt sonrası ayrıca kontrol edilecek; başarı önceden iddia edilmez.
 - Sıradaki tek iş: yeni Projeler menüsünün Workers önizlemesinde yayınlandığını ve beş kategori bağlantısının çalıştığını doğrulamak.
+
+- Uzak kayıt: uygulama commit’i f1b63733417776c17fff32118e6e1e5a4913b0dc; 71 değişen blob ve yedi ana dosyanın tam içeriği yeniden okunup eşleştirildi. GitHub Actions 36878091598 / job 110422601064: npm ci/build başarılı, son kontrolde test devam ediyor; CI başarı iddiası yok.
+- Canlı kontrol: Workers adresi yeni kayıttan sonra açıldı ve bir kez yeniden yüklendi. Promosyon menüsü mevcut; Projeler eski #projeler bağlantısı. P2.8 yeni canlı yayını doğrulanmadı; en güncel commit için Cloudflare build/Retry kontrolü gerekir.
