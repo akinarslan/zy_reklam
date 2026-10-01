@@ -20,7 +20,8 @@
 - Görsel kontrol ve PNG decode başarılı: 266 × 72 px, RGBA, 14.832 bayt.
 - SHA-256: `22655b453807bcb1c35c60f1d62304af4e78092199e4ada6dc59b00286715d8b`.
 - Kaynak dosya byte düzeyinde korunmuştur; Git blob kimliği envanterdedir.
-- GitHub kaydı sonrası uzak metin dosyaları ve logo blob kimliği tekrar okunarak doğrulanır; sonuç son kullanıcı yanıtında bildirilir.
+- GitHub main dalına kayıt tamamlandı; beş metin belgesi tekrar okundu ve birebir karşılaştırıldı. PNG base64 içeriği ve blob SHA’sı kaynakla eşleşti.
+- Doğrulanan varlık/plan commit’i: `763c7b161dc2131d47f8e7f23aa12217fdac1ce1`.
 - Uygulama testi/build çalıştırılmadı: uygulama kodu yoktur.
 - Aşama sırası ve ürün kapsamı korunmuştur; canlı site değiştirilmedi.
 
