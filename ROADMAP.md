@@ -6,7 +6,7 @@
 
 ## 1. Güncel durum
 
-**Aktif aşama:** P0 — Planlama belgelerinin kaydı.
+**Son tamamlanan aşama:** P0 — Planlama belgelerinin kaydı.
 
 **Sıradaki uygulama aşaması:** P1 — Mevcut site ve varlık envanteri.
 
@@ -18,7 +18,7 @@ Durumlar: `bekliyor`, `devam ediyor`, `engelli`, `tamamlandı`. İş kutuları y
 
 | Aşama | Çıktı | Bağımlılık | Durum |
 | --- | --- | --- | --- |
-| P0 | Mimari, roadmap ve çalışma kuralları | Kullanıcının tasarım yönü | Devam ediyor |
+| P0 | Mimari, roadmap ve çalışma kuralları | Kullanıcının tasarım yönü | Tamamlandı |
 | P1 | Mevcut site, varlık, SEO ve yayın envanteri | P0 | Bekliyor |
 | P2 | Ön yüz temeli, mobil düzen, içerik ve güvenli yedek | P1 | Bekliyor |
 | P3 | Özgün ZY ile 3D açılış | P2 + doğrulanmış logo | Bekliyor |
@@ -35,10 +35,10 @@ Süreler takvim taahhüdü değildir. P1 sonrası logo kalitesi, gerçek görsel
 
 ## 3. P0 — Planlama ve kalıcı çalışma disiplini
 
-- [ ] P0.1 Mimari ve kapsam `ARCHITECTURE.md` içinde kaydedildi.
-- [ ] P0.2 Aşamalar, bağımlılıklar ve kabul ölçütleri bu dosyada kaydedildi.
-- [ ] P0.3 Her talimatta plan kontrolü `AGENTS.md` ile tanımlandı.
-- [ ] P0.4 Belgeler GitHub `main` dalında yeniden okunarak doğrulandı.
+- [x] P0.1 Mimari ve kapsam `ARCHITECTURE.md` içinde kaydedildi.
+- [x] P0.2 Aşamalar, bağımlılıklar ve kabul ölçütleri bu dosyada kaydedildi.
+- [x] P0.3 Her talimatta plan kontrolü `AGENTS.md` ile tanımlandı.
+- [x] P0.4 Belgeler GitHub `main` dalında yeniden okunarak doğrulandı.
 
 **Kabul:** Belgeler birbirine bağlanır, uygulanan/plandaki işler ayrıdır, mevcut canlı site veya kod değişmez. Uzak kaydın kanıtı bulunur.
 
@@ -163,6 +163,7 @@ Sıradaki tek iş:
 - Aşama: P0.1–P0.4.
 - Başlangıç: GitHub bağlantısı depo erişimini doğruladı; contents API depo boş yanıtı, branches API boş liste verdi.
 - Belgeler: mimari v1.0, roadmap v1.0, `AGENTS.md`, `README.md`, `LAST_REPORT.md`.
-- Durum: belgeler hazırlanıyor; uzak kayıt sonrası P0 güncellenecek.
+- Kabul kanıtı: plan commit’i `012491bdc8f3bfa57c5bc8afb301769293dcbb67` `main` dalına kaydedildi; beş dosya GitHub’dan yeniden okundu ve hazırlanan içerikle birebir karşılaştırıldı. UTF-8, belge bağlantıları ve P0–P9 kapsamı kontrol edildi.
+- Durum: P0 tamamlandı. Uygulama testi/build çalıştırılmadı; uygulama kodu henüz yok. Bu kayıt doğrulama sonrası durum güncellemesidir.
 - Mimari sınırı: mevcut site ve varlıklar görülmeden uygulanmış teknoloji veya çalışan 3D iddiası yok.
 - Sıradaki tek iş: P1 — mevcut site kaynaklarını ve özgün varlıkları envantere alma.

@@ -4,7 +4,7 @@
 
 **İş:** ZY Reklam dijital üretim atölyesi için mimari, yol haritası ve plan kontrol kuralları.
 
-**Aşama:** P0 — Planlama.
+**Aşama:** P0 — Planlama, tamamlandı.
 
 ## Yapılanlar
 
@@ -20,7 +20,9 @@
 - Başlangıç deposunun boş olduğu API yanıtlarıyla doğrulandı.
 - Belgeler yeni plan olarak yazıldı; uygulanmış kod veya tamamlanmış uygulama gibi sunulmadı.
 - Uygulama testi/build çalıştırılmadı: depoda uygulama kodu yoktur.
-- Uzak kayıt henüz tamamlanmadı; kayıt sonrası doğrulama sonucu güncellenecek.
+- Beş belge `main` dalına kaydedildi; GitHub’dan yeniden okunan içerikler hazırlanan dosyalarla birebir eşleşti.
+- Plan commit’i: `012491bdc8f3bfa57c5bc8afb301769293dcbb67`. Yol haritası ve bu rapor, doğrulama sonrası durum güncellemesiyle birlikte kaydedilir.
+- Yerel UTF-8 okuma, belge bağlantıları, P0–P9 kapsamı ve mimari/roadmap kontrol kuralı doğrulandı.
 
 ## Sınırlar ve sıradaki iş
 
