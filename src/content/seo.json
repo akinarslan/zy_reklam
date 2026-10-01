@@ -54,5 +54,120 @@
     "Muş kutu harf tabela",
     "Muş totem tabela"
   ],
-  "usageRule": "Anahtar kelimeleri doğal Türkçe cümlelerde, sayfa konusu ile gerçekten ilgili olduğu yerde kullan. Aynı kelimeyi gereksiz tekrar etme ve meta keywords etiketi oluşturma."
+  "usageRule": "Anahtar kelimeleri doğal Türkçe cümlelerde, sayfa konusu ile gerçekten ilgili olduğu yerde kullan. Aynı kelimeyi gereksiz tekrar etme ve meta keywords etiketi oluşturma.",
+  "pageMeta": {
+    "projects": {
+      "tabela": {
+        "title": "Muş Tabela, Işıklı Tabela ve Kutu Harf | ZY REKLAM",
+        "description": "Muş’ta ışıklı tabela, ışıksız tabela, kutu harf, cephe ve asma tabela çözümleri. ZY REKLAM tabela imalatı ve montajı.",
+        "keywords": [
+          "Muş tabela",
+          "ışıklı tabela",
+          "ışıksız tabela",
+          "kutu harf tabela",
+          "cephe tabelası",
+          "asma tabela",
+          "tabela imalatı",
+          "tabela montajı"
+        ]
+      },
+      "totem": {
+        "title": "Muş Totem Tabela ve Yönlendirme Totemi | ZY REKLAM",
+        "description": "Muş’ta totem tabela, yönlendirme totemi ve dijital ekranlı totem çözümleri. Tasarım, imalat ve uygulama ZY REKLAM.",
+        "keywords": [
+          "Muş totem tabela",
+          "totem tabela",
+          "yönlendirme tabelası",
+          "dijital totem",
+          "reklam totemi"
+        ]
+      },
+      "lazer-kesim": {
+        "title": "Muş Lazer Kesim ve Dekoratif Kesim | ZY REKLAM",
+        "description": "Muş’ta lazer kesim; dekoratif pano, silüet, pleksi, metal ve özel üretim parçaları için hassas kesim çözümleri.",
+        "keywords": [
+          "Muş lazer kesim",
+          "lazer kesim",
+          "dekoratif lazer kesim",
+          "pleksi kesim",
+          "metal kesim",
+          "özel kesim"
+        ]
+      },
+      "dijital-baski": {
+        "title": "Muş Dijital Baskı, Folyo ve Branda Baskı | ZY REKLAM",
+        "description": "Muş’ta dijital baskı, folyo baskı, vinil ve branda baskı, afiş, roll-up ve reklam görselleri için üretim çözümleri.",
+        "keywords": [
+          "Muş dijital baskı",
+          "dijital baskı",
+          "folyo baskı",
+          "vinil baskı",
+          "branda baskı",
+          "afiş baskı",
+          "roll up baskı"
+        ]
+      },
+      "ozel-uretim": {
+        "title": "Muş Özel İmalat ve Reklam Uygulamaları | ZY REKLAM",
+        "description": "Muş’ta projeye özel reklam imalatı, cephe uygulamaları, dekorasyon, ışıklandırma ve özel üretim çözümleri.",
+        "keywords": [
+          "Muş özel imalat",
+          "özel imalat",
+          "reklam imalatı",
+          "cephe giydirme",
+          "özel reklam uygulamaları",
+          "kurumsal tabela"
+        ]
+      }
+    },
+    "promotions": {
+      "tekstil-giyim": {
+        "title": "Muş Promosyon Tekstil ve Kurumsal Giyim | ZY REKLAM",
+        "description": "Muş’ta baskılı tişört, polo, şapka ve kurumsal tekstil promosyon ürünleri. Logo baskılı tekstil çözümleri ZY REKLAM’da.",
+        "keywords": [
+          "Muş promosyon",
+          "promosyon tekstil",
+          "baskılı tişört",
+          "polo tişört baskı",
+          "şapka baskı",
+          "kurumsal giyim"
+        ]
+      },
+      "ofis-kirtasiye": {
+        "title": "Muş Promosyon Kalem, Ajanda ve Ofis Ürünleri | ZY REKLAM",
+        "description": "Muş’ta logo baskılı kalem, ajanda, organizer ve kurumsal ofis promosyon ürünleri. Firmalara özel promosyon çözümleri.",
+        "keywords": [
+          "Muş promosyon",
+          "promosyon kalem",
+          "promosyon ajanda",
+          "kurumsal promosyon",
+          "ofis promosyon ürünleri"
+        ]
+      },
+      "yasam-mutfak-seyahat": {
+        "title": "Muş Promosyon Kupa, Termos ve Yaşam Ürünleri | ZY REKLAM",
+        "description": "Muş’ta baskılı kupa, termos ve kişiselleştirilmiş yaşam, mutfak ve seyahat promosyon ürünleri.",
+        "keywords": [
+          "Muş promosyon",
+          "promosyon kupa",
+          "promosyon termos",
+          "baskılı kupa",
+          "kurumsal hediye",
+          "kişiselleştirilmiş ürün"
+        ]
+      },
+      "vip-ekolojik-setler": {
+        "title": "Muş VIP Promosyon Setleri ve Ekolojik Ürünler | ZY REKLAM",
+        "description": "Muş’ta VIP promosyon kutuları, özel hediye setleri, bez çanta ve ekolojik promosyon ürünleri. Kurumsal markalara özel çözümler.",
+        "keywords": [
+          "Muş promosyon",
+          "VIP promosyon seti",
+          "kurumsal hediye seti",
+          "bez çanta baskı",
+          "ekolojik promosyon",
+          "özel promosyon kutusu"
+        ]
+      }
+    }
+  }
 }
