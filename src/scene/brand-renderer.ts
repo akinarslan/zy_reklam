@@ -1,18 +1,19 @@
 import {
   ACESFilmicToneMapping,
-  AdditiveBlending,
   AmbientLight,
+  BoxGeometry,
   CanvasTexture,
   Color,
   DirectionalLight,
   Group,
   MathUtils,
   Mesh,
-  MeshBasicMaterial,
   MeshStandardMaterial,
   PerspectiveCamera,
   PlaneGeometry,
+  PointLight,
   Scene,
+  ShadowMaterial,
   SRGBColorSpace,
   WebGLRenderer,
   type Material,
@@ -23,37 +24,87 @@ export interface BrandShowcaseRenderer {
   dispose(): void;
 }
 
-interface LetterRig {
-  group: Group;
-  front: MeshStandardMaterial;
-  glow: MeshBasicMaterial;
-  baseX: number;
-  normalizedX: number;
-  phase: number;
-}
-
-const CHARACTERS = ['Z', 'Y', 'R', 'E', 'K', 'L', 'A', 'M'] as const;
-const COLORS = ['#f4b942', '#2dd4bf', '#ff4fa3', '#8b5cf6', '#3b82f6', '#84cc16', '#ff7849', '#22d3ee'] as const;
-const WIDTHS: Record<string, number> = { Z: 1.05, Y: 1.05, R: 1.02, E: .92, K: 1.02, L: .82, A: 1.08, M: 1.28 };
-
-function createGlyphTexture(character: string): CanvasTexture {
+function createSignTexture(): CanvasTexture {
   const canvas = document.createElement('canvas');
-  canvas.width = 320;
-  canvas.height = 380;
-  const context = canvas.getContext('2d');
-  if (!context) throw new Error('Canvas 2D kullanılamıyor.');
+  canvas.width = 1200;
+  canvas.height = 360;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) throw new Error('Canvas 2D kullanılamıyor.');
 
-  context.clearRect(0, 0, canvas.width, canvas.height);
-  context.fillStyle = '#ffffff';
-  context.textAlign = 'center';
-  context.textBaseline = 'middle';
-  context.font = '900 270px "Arial Black", Arial, Helvetica, sans-serif';
-  context.fillText(character, canvas.width / 2, canvas.height / 2 + 10);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+
+  ctx.font = '900 230px Arial, Helvetica, sans-serif';
+  ctx.fillStyle = '#f4f0e6';
+  ctx.fillText('ZY', 330, 185);
+
+  ctx.font = '700 150px Arial, Helvetica, sans-serif';
+  ctx.fillStyle = '#d7b45b';
+  ctx.fillText('REKLAM', 790, 190);
 
   const texture = new CanvasTexture(canvas);
   texture.colorSpace = SRGBColorSpace;
   texture.needsUpdate = true;
   return texture;
+}
+
+function createTotemTexture(): CanvasTexture {
+  const canvas = document.createElement('canvas');
+  canvas.width = 540;
+  canvas.height = 960;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) throw new Error('Canvas 2D kullanılamıyor.');
+
+  ctx.fillStyle = '#06150f';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+  gradient.addColorStop(0, '#0d3022');
+  gradient.addColorStop(.55, '#06150f');
+  gradient.addColorStop(1, '#020907');
+  ctx.fillStyle = gradient;
+  ctx.fillRect(20, 20, canvas.width - 40, canvas.height - 40);
+
+  ctx.strokeStyle = '#b99a4e';
+  ctx.lineWidth = 5;
+  ctx.strokeRect(34, 34, canvas.width - 68, canvas.height - 68);
+
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.font = '900 168px Arial, Helvetica, sans-serif';
+  ctx.fillStyle = '#f2eee3';
+  ctx.fillText('ZY', canvas.width / 2, 365);
+
+  ctx.font = '700 76px Arial, Helvetica, sans-serif';
+  ctx.fillStyle = '#d7b45b';
+  ctx.fillText('REKLAM', canvas.width / 2, 520);
+
+  ctx.font = '600 28px Arial, Helvetica, sans-serif';
+  ctx.fillStyle = '#8fa99a';
+  ctx.fillText('FİKİRDEN UYGULAMAYA', canvas.width / 2, 665);
+
+  const texture = new CanvasTexture(canvas);
+  texture.colorSpace = SRGBColorSpace;
+  texture.needsUpdate = true;
+  return texture;
+}
+
+function addFrame(group: Group, width: number, height: number, depth: number, material: MeshStandardMaterial): void {
+  const thickness = .12;
+  const horizontal = new BoxGeometry(width + thickness * 2, thickness, depth);
+  const vertical = new BoxGeometry(thickness, height, depth);
+
+  for (const y of [-height / 2 - thickness / 2, height / 2 + thickness / 2]) {
+    const bar = new Mesh(horizontal.clone(), material);
+    bar.position.set(0, y, 0);
+    group.add(bar);
+  }
+  for (const x of [-width / 2 - thickness / 2, width / 2 + thickness / 2]) {
+    const bar = new Mesh(vertical.clone(), material);
+    bar.position.set(x, 0, 0);
+    group.add(bar);
+  }
 }
 
 export function createBrandShowcaseRenderer(stage: HTMLElement, mount: HTMLElement): BrandShowcaseRenderer {
@@ -64,99 +115,109 @@ export function createBrandShowcaseRenderer(stage: HTMLElement, mount: HTMLEleme
   const renderer = new WebGLRenderer({ canvas, context: gl, alpha: true, antialias: true });
   renderer.setClearColor(0x000000, 0);
   renderer.toneMapping = ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.35;
+  renderer.toneMappingExposure = 1.28;
+  renderer.shadowMap.enabled = true;
 
   const scene = new Scene();
-  const root = new Group();
-  scene.add(root);
+  const camera = new PerspectiveCamera(35, 1, .1, 50);
+  camera.position.set(0, .35, 11.6);
+  camera.lookAt(.25, 0, 0);
 
-  const camera = new PerspectiveCamera(34, 1, .1, 40);
-  camera.position.set(0, .15, 9);
-  camera.lookAt(0, 0, 0);
-
-  scene.add(new AmbientLight('#b7d6ca', 1.15));
-  const key = new DirectionalLight('#fff2c9', 2.8);
-  key.position.set(-3, 5, 7);
+  scene.add(new AmbientLight('#9bb6aa', 1.15));
+  const key = new DirectionalLight('#fff0c2', 2.4);
+  key.position.set(-4, 6, 7);
+  key.castShadow = true;
   scene.add(key);
-  const rim = new DirectionalLight('#70d7c0', 2.15);
-  rim.position.set(4, 1, -2);
+  const rim = new DirectionalLight('#6aa88f', 1.6);
+  rim.position.set(5, 2, -2);
   scene.add(rim);
 
-  const rigs: LetterRig[] = [];
-  const textures: CanvasTexture[] = [];
-  const totalWidth = CHARACTERS.reduce((sum, char) => sum + WIDTHS[char], 0) + .15 * (CHARACTERS.length - 1) + .55;
-  let cursor = -totalWidth / 2;
-
-  CHARACTERS.forEach((character, index) => {
-    const width = WIDTHS[character];
-    const centerX = cursor + width / 2;
-    cursor += width + .15 + (index === 1 ? .55 : 0);
-
-    const texture = createGlyphTexture(character);
-    textures.push(texture);
-
-    const geometry = new PlaneGeometry(width, 1.7);
-    const group = new Group();
-    group.position.set(centerX, 0, -2.5);
-
-    // Several alpha-cut glyph planes create a lightweight volumetric edge without
-    // loading another font/geometry asset.
-    for (let layer = 0; layer < 5; layer++) {
-      const depth = -.18 + layer * .036;
-      const sideMaterial = new MeshBasicMaterial({
-        map: texture,
-        color: new Color(COLORS[index]).multiplyScalar(.22 + layer * .035),
-        transparent: true,
-        alphaTest: .08,
-        opacity: .95,
-        depthWrite: true,
-      });
-      const side = new Mesh(geometry.clone(), sideMaterial);
-      side.position.z = depth;
-      group.add(side);
-    }
-
-    const frontMaterial = new MeshStandardMaterial({
-      map: texture,
-      color: COLORS[index],
-      emissive: new Color(COLORS[index]),
-      emissiveIntensity: .72,
-      metalness: .22,
-      roughness: .22,
-      transparent: true,
-      alphaTest: .08,
-      depthWrite: true,
-    });
-    const front = new Mesh(geometry.clone(), frontMaterial);
-    front.position.z = .015;
-    group.add(front);
-
-    const glowMaterial = new MeshBasicMaterial({
-      map: texture,
-      color: COLORS[index],
-      transparent: true,
-      opacity: .15,
-      blending: AdditiveBlending,
-      depthWrite: false,
-      depthTest: false,
-    });
-    const glow = new Mesh(geometry.clone(), glowMaterial);
-    glow.position.z = .055;
-    glow.scale.set(1.09, 1.09, 1);
-    group.add(glow);
-
-    group.rotation.y = MathUtils.degToRad((index - 3.5) * -1.2);
-    root.add(group);
-    rigs.push({
-      group,
-      front: frontMaterial,
-      glow: glowMaterial,
-      baseX: centerX,
-      normalizedX: (index + .5) / CHARACTERS.length,
-      phase: index * .72,
-    });
+  const metal = new MeshStandardMaterial({
+    color: '#a78d55',
+    metalness: .92,
+    roughness: .24,
+  });
+  const darkMetal = new MeshStandardMaterial({
+    color: '#16231d',
+    metalness: .68,
+    roughness: .38,
+  });
+  const panelMaterial = new MeshStandardMaterial({
+    color: '#071a13',
+    metalness: .42,
+    roughness: .34,
   });
 
+  const signTexture = createSignTexture();
+  const totemTexture = createTotemTexture();
+
+  const signGroup = new Group();
+  signGroup.position.set(-1.45, .05, 0);
+  scene.add(signGroup);
+
+  const signPanel = new Mesh(new BoxGeometry(5.75, 2.05, .34), panelMaterial);
+  signPanel.castShadow = true;
+  signPanel.receiveShadow = true;
+  signGroup.add(signPanel);
+  addFrame(signGroup, 5.75, 2.05, .42, metal);
+
+  const signFaceMaterial = new MeshStandardMaterial({
+    map: signTexture,
+    color: '#ffffff',
+    emissive: new Color('#d8b45b'),
+    emissiveIntensity: .14,
+    metalness: .06,
+    roughness: .28,
+    transparent: true,
+  });
+  const signFace = new Mesh(new PlaneGeometry(5.15, 1.42), signFaceMaterial);
+  signFace.position.z = .19;
+  signGroup.add(signFace);
+
+  const signGlow = new PointLight('#e2c16b', .35, 5.8, 2);
+  signGlow.position.set(0, 0, 1.2);
+  signGroup.add(signGlow);
+
+  const totemGroup = new Group();
+  totemGroup.position.set(3.22, -.28, .05);
+  scene.add(totemGroup);
+
+  const totemBody = new Mesh(new BoxGeometry(1.62, 3.65, .46), darkMetal);
+  totemBody.castShadow = true;
+  totemBody.receiveShadow = true;
+  totemGroup.add(totemBody);
+
+  const totemScreenMaterial = new MeshStandardMaterial({
+    map: totemTexture,
+    color: '#ffffff',
+    emissive: new Color('#c9aa55'),
+    emissiveIntensity: .025,
+    metalness: .06,
+    roughness: .32,
+  });
+  const totemScreen = new Mesh(new PlaneGeometry(1.38, 3.24), totemScreenMaterial);
+  totemScreen.position.z = .235;
+  totemGroup.add(totemScreen);
+
+  addFrame(totemGroup, 1.62, 3.65, .52, metal);
+
+  const base = new Mesh(new BoxGeometry(2.05, .18, 1.12), darkMetal);
+  base.position.y = -1.98;
+  base.castShadow = true;
+  base.receiveShadow = true;
+  totemGroup.add(base);
+
+  const totemGlow = new PointLight('#d9b55a', 0, 4.5, 2);
+  totemGlow.position.set(0, .2, 1);
+  totemGroup.add(totemGlow);
+
+  const floor = new Mesh(new PlaneGeometry(15, 8), new ShadowMaterial({ opacity: .20 }));
+  floor.rotation.x = -Math.PI / 2;
+  floor.position.y = -2.18;
+  floor.receiveShadow = true;
+  scene.add(floor);
+
+  stage.dataset.showcaseObjects = 'sign,totem';
   canvas.setAttribute('aria-hidden', 'true');
   canvas.style.touchAction = 'pan-y';
   mount.replaceChildren(canvas);
@@ -164,76 +225,121 @@ export function createBrandShowcaseRenderer(stage: HTMLElement, mount: HTMLEleme
   let visible = false;
   let disposed = false;
   let frame = 0;
+  let pointerActive = false;
   let pointerX = .5;
   let pointerY = .5;
-  let pointerActive = false;
-  let startTime = performance.now();
+  let previous = performance.now();
+
+  let signTargetY = 0;
+  let signTargetX = 0;
+  let signTargetZ = 0;
+  let signGlowTarget = .35;
+  let signEmissionTarget = .14;
+
+  let totemTargetY = 0;
+  let totemTargetX = 0;
+  let totemTargetZ = .05;
+  let totemGlowTarget = 0;
+  let totemEmissionTarget = .025;
+
   const abort = new AbortController();
   const options = { signal: abort.signal };
   const resizeObserver = new ResizeObserver(() => resize());
 
-  const resize = () => {
-    if (disposed) return;
-    const { width, height } = stage.getBoundingClientRect();
-    if (!width || !height) return;
-    renderer.setPixelRatio(Math.min(devicePixelRatio, width < 700 ? 1.1 : 1.35));
-    renderer.setSize(width, height, false);
-    camera.aspect = width / height;
-    camera.position.z = width < 700 ? 11.4 : 9;
-    camera.updateProjectionMatrix();
+  const setTargets = () => {
+    if (!pointerActive) {
+      signTargetY = 0;
+      signTargetX = 0;
+      signTargetZ = 0;
+      signGlowTarget = .35;
+      signEmissionTarget = .14;
+
+      totemTargetY = 0;
+      totemTargetX = 0;
+      totemTargetZ = .05;
+      totemGlowTarget = 0;
+      totemEmissionTarget = .025;
+      return;
+    }
+
+    const signDx = pointerX - .34;
+    const signDy = pointerY - .5;
+    const signDistance = Math.hypot(signDx * 1.25, signDy);
+    const signNear = 1 - MathUtils.clamp(signDistance / .48, 0, 1);
+
+    signTargetY = MathUtils.clamp(signDx * .30, -.11, .11) * signNear;
+    signTargetX = MathUtils.clamp(-signDy * .20, -.07, .07) * signNear;
+    signTargetZ = signNear * .12;
+    signGlowTarget = .35 + signNear * 2.45;
+    signEmissionTarget = .14 + signNear * 1.15;
+
+    const totemDx = pointerX - .80;
+    const totemDy = pointerY - .5;
+    const totemDistance = Math.hypot(totemDx * 1.4, totemDy);
+    const totemNear = 1 - MathUtils.clamp(totemDistance / .34, 0, 1);
+
+    // Totem only moves partially: enough to feel interactive, never like a toy.
+    totemTargetY = MathUtils.clamp(totemDx * .42, -.14, .14) * totemNear;
+    totemTargetX = MathUtils.clamp(-totemDy * .22, -.07, .07) * totemNear;
+    totemTargetZ = .05 + totemNear * .18;
+    totemGlowTarget = totemNear * 3.0;
+    totemEmissionTarget = .025 + totemNear * 1.6;
   };
 
-  const easeOut = (value: number) => 1 - Math.pow(1 - value, 3);
+  const unsettled = () =>
+    Math.abs(signGroup.rotation.y - signTargetY) > .0004 ||
+    Math.abs(signGroup.rotation.x - signTargetX) > .0004 ||
+    Math.abs(signGroup.position.z - signTargetZ) > .0004 ||
+    Math.abs(signGlow.intensity - signGlowTarget) > .01 ||
+    Math.abs(signFaceMaterial.emissiveIntensity - signEmissionTarget) > .01 ||
+    Math.abs(totemGroup.rotation.y - totemTargetY) > .0004 ||
+    Math.abs(totemGroup.rotation.x - totemTargetX) > .0004 ||
+    Math.abs(totemGroup.position.z - totemTargetZ) > .0004 ||
+    Math.abs(totemGlow.intensity - totemGlowTarget) > .01 ||
+    Math.abs(totemScreenMaterial.emissiveIntensity - totemEmissionTarget) > .01;
+
+  const render = () => renderer.render(scene, camera);
 
   const tick = (now: number) => {
     frame = 0;
     if (disposed || !visible || document.hidden) return;
 
-    const elapsed = now - startTime;
-    const px = pointerActive ? pointerX : .5;
-    const py = pointerActive ? pointerY : .5;
-    const targetRootY = (px - .5) * .22;
-    const targetRootX = -(py - .5) * .10;
-    root.rotation.y += (targetRootY - root.rotation.y) * .075;
-    root.rotation.x += (targetRootX - root.rotation.x) * .075;
+    const delta = Math.min((now - previous) / 1000, .05);
+    previous = now;
+    const smoothing = 1 - Math.exp(-10 * delta);
 
-    rigs.forEach((rig, index) => {
-      const intro = easeOut(MathUtils.clamp((elapsed - index * 85) / 620, 0, 1));
-      const distance = Math.abs(px - rig.normalizedX) + Math.abs(py - .5) * .42;
-      const proximity = pointerActive ? 1 - MathUtils.clamp(distance / .29, 0, 1) : 0;
-      const floatY = Math.sin(now * .00115 + rig.phase) * .055;
-      const targetZ = proximity * .46;
-      const targetScale = 1 + proximity * .085;
+    signGroup.rotation.y += (signTargetY - signGroup.rotation.y) * smoothing;
+    signGroup.rotation.x += (signTargetX - signGroup.rotation.x) * smoothing;
+    signGroup.position.z += (signTargetZ - signGroup.position.z) * smoothing;
+    signGlow.intensity += (signGlowTarget - signGlow.intensity) * smoothing;
+    signFaceMaterial.emissiveIntensity += (signEmissionTarget - signFaceMaterial.emissiveIntensity) * smoothing;
 
-      rig.group.position.x = rig.baseX;
-      rig.group.position.y += (floatY - rig.group.position.y) * .08;
-      rig.group.position.z = MathUtils.lerp(-2.5, targetZ, intro);
-      const introScale = MathUtils.lerp(.72, targetScale, intro);
-      const currentScale = rig.group.scale.x + (introScale - rig.group.scale.x) * .12;
-      rig.group.scale.setScalar(currentScale);
-      rig.group.rotation.z = Math.sin(now * .00075 + rig.phase) * .012;
-      rig.front.emissiveIntensity += ((.72 + proximity * 2.4) - rig.front.emissiveIntensity) * .12;
-      rig.glow.opacity += ((.14 + proximity * .42) - rig.glow.opacity) * .12;
-    });
+    totemGroup.rotation.y += (totemTargetY - totemGroup.rotation.y) * smoothing;
+    totemGroup.rotation.x += (totemTargetX - totemGroup.rotation.x) * smoothing;
+    totemGroup.position.z += (totemTargetZ - totemGroup.position.z) * smoothing;
+    totemGlow.intensity += (totemGlowTarget - totemGlow.intensity) * smoothing;
+    totemScreenMaterial.emissiveIntensity += (totemEmissionTarget - totemScreenMaterial.emissiveIntensity) * smoothing;
 
-    renderer.render(scene, camera);
-    frame = requestAnimationFrame(tick);
+    render();
+    if (unsettled()) frame = requestAnimationFrame(tick);
   };
 
   const wake = () => {
     if (disposed || !visible || document.hidden || frame) return;
+    previous = performance.now();
     frame = requestAnimationFrame(tick);
   };
 
-  const setVisible = (next: boolean) => {
-    visible = next;
-    cancelAnimationFrame(frame);
-    frame = 0;
-    if (next && !document.hidden) {
-      startTime = performance.now();
-      resize();
-      wake();
-    }
+  const resize = () => {
+    if (disposed) return;
+    const { width, height } = stage.getBoundingClientRect();
+    if (!width || !height) return;
+    renderer.setPixelRatio(Math.min(devicePixelRatio, width < 700 ? 1.05 : 1.35));
+    renderer.setSize(width, height, false);
+    camera.aspect = width / height;
+    camera.position.z = width < 700 ? 14.8 : width < 1050 ? 12.6 : 11.6;
+    camera.updateProjectionMatrix();
+    render();
   };
 
   const updatePointer = (event: PointerEvent) => {
@@ -242,24 +348,30 @@ export function createBrandShowcaseRenderer(stage: HTMLElement, mount: HTMLEleme
     pointerX = MathUtils.clamp((event.clientX - bounds.left) / bounds.width, 0, 1);
     pointerY = MathUtils.clamp((event.clientY - bounds.top) / bounds.height, 0, 1);
     pointerActive = true;
+    setTargets();
     wake();
   };
+
   const leave = (event: PointerEvent) => {
-    if (event.pointerType === 'mouse') {
-      pointerActive = false;
-      wake();
-    }
+    if (event.pointerType !== 'mouse') return;
+    pointerActive = false;
+    setTargets();
+    wake();
   };
-  const visibility = () => {
+
+  const setVisible = (next: boolean) => {
+    visible = next;
     cancelAnimationFrame(frame);
     frame = 0;
-    if (!document.hidden) wake();
+    if (next && !document.hidden) {
+      resize();
+      render();
+    }
   };
 
   canvas.addEventListener('pointermove', updatePointer, options);
   canvas.addEventListener('pointerdown', updatePointer, options);
   canvas.addEventListener('pointerleave', leave, options);
-  document.addEventListener('visibilitychange', visibility, options);
   resizeObserver.observe(stage);
 
   const dispose = () => {
@@ -268,19 +380,23 @@ export function createBrandShowcaseRenderer(stage: HTMLElement, mount: HTMLEleme
     cancelAnimationFrame(frame);
     abort.abort();
     resizeObserver.disconnect();
-    root.traverse(object => {
+
+    scene.traverse(object => {
       if (object instanceof Mesh) {
         object.geometry.dispose();
         const materials = Array.isArray(object.material) ? object.material : [object.material];
         materials.forEach((material: Material) => material.dispose());
       }
     });
-    textures.forEach(texture => texture.dispose());
+
+    signTexture.dispose();
+    totemTexture.dispose();
     renderer.dispose();
     renderer.forceContextLoss();
     canvas.remove();
   };
 
   resize();
+  render();
   return { setVisible, dispose };
 }
