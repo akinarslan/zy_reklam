@@ -1,6 +1,6 @@
 {
   "stage": "P3",
-  "date": "2026-10-01T12:41:30.566Z",
+  "date": "2026-10-01T13:19:00.644Z",
   "browser": "153.0.8010.0",
   "renderer": "headless Chromium / ANGLE SwiftShader (software GPU)",
   "deviceCaveat": "Viewport emulation is not a physical mobile GPU measurement.",
@@ -23,6 +23,7 @@
       "rotationY": "-0.12",
       "rotationX": "0.05",
       "triangles": "4882",
+      "drawCalls": "13",
       "passed": true
     },
     {
@@ -43,26 +44,27 @@
       "rotationY": "-0.12",
       "rotationX": "0.05",
       "triangles": "4882",
+      "drawCalls": "13",
       "passed": true
     },
     {
       "check": "mouse-bounds-cta-visibility-idle",
       "angles": {
-        "yaw": 0.2285222740906832,
-        "pitch": 0.14892356219726224
+        "yaw": 0.22856589038666464,
+        "pitch": 0.1489359421215572
       },
       "passed": true
     },
     {
       "check": "real-touch-horizontal-drag-vertical-scroll",
-      "yaw": 0.25309115487181044,
+      "yaw": 0.254255257180909,
       "passed": true
     },
     {
       "check": "bounded-shadow-refresh-final-pose-idle",
-      "elapsedMs": 1290.6999999977647,
-      "shadowUpdates": 10,
-      "frames": 26,
+      "elapsedMs": 1291.7000000022351,
+      "shadowUpdates": 9,
+      "frames": 25,
       "passed": true
     },
     {
@@ -113,11 +115,11 @@
         "dpr": 1,
         "cpu": 1
       },
-      "elapsedMs": 4506.800000000745,
-      "renderedFrames": 173,
+      "elapsedMs": 4511.80000000149,
+      "renderedFrames": 155,
       "state": "ready",
       "quality": "high",
-      "fps": 38.38643827105072,
+      "fps": 34.35435967905244,
       "physicalDevice": false,
       "passed": true
     },
@@ -129,11 +131,11 @@
         "dpr": 2,
         "cpu": 4
       },
-      "elapsedMs": 4511.09999999851,
-      "renderedFrames": 236,
+      "elapsedMs": 4512.7,
+      "renderedFrames": 195,
       "state": "ready",
       "quality": "high",
-      "fps": 52.315399791642385,
+      "fps": 43.21138121302103,
       "physicalDevice": false,
       "passed": true
     },
@@ -154,14 +156,14 @@
   ],
   "chunks": [
     {
-      "file": "index-BxE0oBOY.js",
+      "file": "index-B08bO30v.js",
       "bytes": 7235,
-      "gzipBytes": 3091
+      "gzipBytes": 3090
     },
     {
-      "file": "renderer-TVqBJN-a.js",
-      "bytes": 605088,
-      "gzipBytes": 154704
+      "file": "renderer-CNVdVZvx.js",
+      "bytes": 606055,
+      "gzipBytes": 155041
     }
   ]
 }

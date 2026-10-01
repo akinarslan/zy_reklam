@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
   "stage": "P3.6",
-  "measuredAt": "2026-10-01T12:41:26.829Z",
+  "measuredAt": "2026-10-01T13:18:56.238Z",
   "origin": "http://127.0.0.1:4187",
   "buildScripts": [
-    "/assets/index-BxE0oBOY.js"
+    "/assets/index-B08bO30v.js"
   ],
   "context": {
     "kind": "mobile",
@@ -35,63 +35,27 @@
   "sampleDurationMs": 3000,
   "samples": [
     {
-      "elapsedMs": 3015.2999999970198,
+      "elapsedMs": 3011.5000000022355,
       "renderedFrames": 181,
-      "shadowUpdates": 57,
-      "averageFPS": 60.02719464072526,
+      "shadowUpdates": 56,
+      "averageFPS": 60.10293873480513,
       "windows": [
         {
-          "elapsedMs": 1015.2999999970198,
-          "durationMs": 1015.2999999970198,
+          "elapsedMs": 1011.600000002235,
+          "durationMs": 1011.600000002235,
           "frames": 61,
-          "fps": 60.08076430629278,
+          "fps": 60.30051403703562,
           "quality": "high"
         },
         {
-          "elapsedMs": 2015.2999999970198,
+          "elapsedMs": 2011.600000002235,
           "durationMs": 1000,
           "frames": 60,
           "fps": 60,
           "quality": "high"
         },
         {
-          "elapsedMs": 3015.2999999970198,
-          "durationMs": 1000,
-          "frames": 60,
-          "fps": 60,
-          "quality": "high"
-        }
-      ],
-      "qualityTransitions": [
-        {
-          "elapsedMs": 15.399999997019677,
-          "quality": "high"
-        }
-      ],
-      "finalState": "ready"
-    },
-    {
-      "elapsedMs": 3015.6000000000004,
-      "renderedFrames": 181,
-      "shadowUpdates": 57,
-      "averageFPS": 60.02122297386921,
-      "windows": [
-        {
-          "elapsedMs": 1015.6999999999998,
-          "durationMs": 1015.6999999999998,
-          "frames": 61,
-          "fps": 60.05710347543567,
-          "quality": "high"
-        },
-        {
-          "elapsedMs": 2015.6999999999998,
-          "durationMs": 1000,
-          "frames": 60,
-          "fps": 60,
-          "quality": "high"
-        },
-        {
-          "elapsedMs": 3015.6000000000004,
+          "elapsedMs": 3011.5000000022355,
           "durationMs": 999.9000000000005,
           "frames": 60,
           "fps": 60.00600060005997,
@@ -100,50 +64,86 @@
       ],
       "qualityTransitions": [
         {
-          "elapsedMs": 15.699999999999818,
+          "elapsedMs": 11.60000000223522,
           "quality": "high"
         }
       ],
       "finalState": "ready"
     },
     {
-      "elapsedMs": 3015.699999998509,
-      "renderedFrames": 181,
-      "shadowUpdates": 59,
-      "averageFPS": 60.01923268232566,
+      "elapsedMs": 3015.5000000029795,
+      "renderedFrames": 160,
+      "shadowUpdates": 54,
+      "averageFPS": 53.05919416343622,
       "windows": [
         {
-          "elapsedMs": 1015.7999999985095,
-          "durationMs": 1015.7999999985095,
-          "frames": 61,
-          "fps": 60.05119117945413,
+          "elapsedMs": 1015.5000000029804,
+          "durationMs": 1015.5000000029804,
+          "frames": 57,
+          "fps": 56.129985228786516,
           "quality": "high"
         },
         {
-          "elapsedMs": 2015.7999999985095,
+          "elapsedMs": 2015.5000000029804,
           "durationMs": 1000,
-          "frames": 60,
-          "fps": 60,
+          "frames": 52,
+          "fps": 52,
           "quality": "high"
         },
         {
-          "elapsedMs": 3015.699999998509,
-          "durationMs": 999.8999999999996,
-          "frames": 60,
-          "fps": 60.00600060006003,
+          "elapsedMs": 3015.5000000029795,
+          "durationMs": 999.9999999999991,
+          "frames": 51,
+          "fps": 51.00000000000005,
           "quality": "high"
         }
       ],
       "qualityTransitions": [
         {
-          "elapsedMs": 15.79999999850952,
+          "elapsedMs": 15.600000002979868,
+          "quality": "high"
+        }
+      ],
+      "finalState": "ready"
+    },
+    {
+      "elapsedMs": 3014.7000000007447,
+      "renderedFrames": 162,
+      "shadowUpdates": 54,
+      "averageFPS": 53.736690217918856,
+      "windows": [
+        {
+          "elapsedMs": 1014.8000000007451,
+          "durationMs": 1014.8000000007451,
+          "frames": 52,
+          "fps": 51.24162396527574,
+          "quality": "high"
+        },
+        {
+          "elapsedMs": 2014.800000000745,
+          "durationMs": 1000,
+          "frames": 54,
+          "fps": 54,
+          "quality": "high"
+        },
+        {
+          "elapsedMs": 3014.7000000007447,
+          "durationMs": 999.8999999999996,
+          "frames": 56,
+          "fps": 56.005600560056024,
+          "quality": "high"
+        }
+      ],
+      "qualityTransitions": [
+        {
+          "elapsedMs": 31.60000000074433,
           "quality": "high"
         }
       ],
       "finalState": "ready"
     }
   ],
-  "medianFPS": 60.02122297386921,
+  "medianFPS": 53.736690217918856,
   "acceptance": "Pending review of hardware profile, sample duration and manual touch/scroll/visual checks; no automatic P3 pass.",
   "testEnvironment": "Headless software GPU; not a physical-device acceptance report."
 }

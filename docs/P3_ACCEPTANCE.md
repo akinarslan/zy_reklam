@@ -32,7 +32,7 @@ Yalnızca bu çalışma ortamında geçici Chromium paketinin Vulkan loader/Swif
 
 ## Kaynak bütçesi
 
-SVG 8.340 bayt; geometri ve çevre cihazda üretilir. Harici model/texture/env transferi yoktur. Ertelenen renderer JS 605.088 bayt ham / 154.704 bayt Node gzip ölçümü; ana JS 7.235 bayt hamdır. 3 MB sahne varlık hedefi altında olmak JS çalıştırma maliyetini veya fiziksel FPS hedefini otomatik karşılamaz. Vite 500 KB chunk uyarısı kaydedilmiştir.
+SVG 8.340 bayt; geometri ve çevre cihazda üretilir. Harici model/texture/env transferi yoktur. Ertelenen renderer JS 606.055 bayt ham / 155.041 bayt Node gzip ölçümü; ana JS 7.235 bayt hamdır. 3 MB sahne varlık hedefi altında olmak JS çalıştırma maliyetini veya fiziksel FPS hedefini otomatik karşılamaz. Vite 500 KB chunk uyarısı kaydedilmiştir.
 
 ## P3.6 optimizasyon karşılaştırması
 
@@ -58,3 +58,26 @@ Araç standart Playwright Chromium kullanır; gerekirse ZY_CHROMIUM_PATH ile kur
 ## Cihaz ölçüm aracı
 
 P3.6a aracı `/qa/scene-performance.html` yolunda hazırdır; kullanıcının cihazında üç aktif örneği ve kalite/FPS pencerelerini kaydeder, raporu yalnızca açık indirme eylemiyle verir. Varsayılan üç 10 saniyelik örnek ve cihaz/manual kontrol yöntemi docs/P3_DEVICE_MEASUREMENT.md içindedir. P3_DEVICE_TOOL_SAMPLE.json üç hızlı yazılımsal QA örneğidir; yukarıdaki fiziksel cihaz satırları hâlâ ölçülmedi.
+
+## P3.6b ortak logo katmanı karşılaştırması
+
+Ana sahne çizim çağrısı 27 → 13 (%51,9 azalma); gölge yenilemesi başına ek çağrı 22 → 8 (%63,6 azalma). Bu ayrıştırma, gerçek WebGL2 çağrı toplamı ile render/gölge sayaçlarından hesaplandı ve 12 örneğin tamamında birebir doğrulandı.
+
+Aynı başlangıç açısındaki masaüstü ve mobil canvas PNG’leri RGBA piksel düzeyinde önceki build ile aynıdır; görüntüler ayrıca incelendi. Özgün sekiz kontur, R/A içindeki iki boşluk, katman derinlikleri, malzemeler ve 4.882 ana sahne üçgeni korundu. Gölge yenilenen render’da sayaç 9.714 üçgen ve 21 toplam çağrı gösterebilir; bu ana sahne ile gölge işinin toplamıdır.
+
+| Profil | Önce ortanca (aralık), FPS | Sonra ortanca (aralık), FPS |
+| --- | --- | --- |
+| 1440 × 900 / DPR1 / CPU1 | 38,6 (32,9–40,7) | 35,5 (35,4–39,3) |
+| 360 × 900 / DPR2 / CPU4 | 48,9 (48,8–59,5) | 49,3 (49,2–57,1) |
+
+Masaüstü yazılımsal ortanca 38,6 → 35,5 FPS; mobil emülasyon 48,9 → 49,3 FPS. Aralıklar örtüşür; bu çalışma tutarlı FPS artışı göstermedi. Fiziksel cihaz performans kabulü açık kalır. Başlangıç commit’i a02713a2526270382175780361ca5828ef7a1be3; aynı Chromium 153/SwiftShader sürecinde her profilde üç dönüşümlü önce/sonra çifti, örnek başına 4,5 saniye hareket ve iki tarafta aynı WebGL çağrı sayacı kullanıldı. Örnekler, gölge/render/GL çağrıları ve ayrıştırma P3_BATCH_COMPARISON.json içindedir. 19/19 yerel test geçti.
+
+Yeni build’in aynı konturları ve görünümü koruması P3_BATCH_VISUAL_VERIFICATION.json içinde kayıtlıdır; görsel karşılaştırma yalnızca başlangıç pozudur, hareket/dokunma ve hata yolları production tarayıcı testleriyle doğrulandı. Paket farkı +967 ham / +337 Node gzip bayt; 500 KB uyarısı korunur.
+
+Eski gölge ölçümünü korumak için yeni çıktı adıyla çalıştırın:
+
+```sh
+node scripts/compare-scene.mjs /absolute/path/to/baseline-dist BASELINE_COMMIT P3_BATCH_COMPARISON.json
+```
+
+Son render sayacı gölge işini de içerebilir; ayrıştırılan ana sahne çizimi ile karıştırılmamalıdır. Eski build’de gölge sayacı yoksa ham GL toplamı/FPS yine kaydedilir, ayrıştırma yapılmaz.

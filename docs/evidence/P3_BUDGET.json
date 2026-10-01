@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-01T12:18:54.723Z",
+  "date": "2026-10-01T13:22:26.925786+00:00",
   "svgSource": {
     "path": "public/assets/brand/zy-reklam-wordmark.svg",
     "bytes": 8340,
@@ -15,16 +15,23 @@
   "assetBudgetPassed": true,
   "chunks": [
     {
-      "path": "dist/assets/index-BxE0oBOY.js",
+      "path": "dist/assets/index-B08bO30v.js",
       "bytes": 7235,
-      "gzipBytes": 3091
+      "gzipBytes": 3090
     },
     {
-      "path": "dist/assets/renderer-TVqBJN-a.js",
-      "bytes": 605088,
-      "gzipBytes": 154704
+      "path": "dist/assets/renderer-CNVdVZvx.js",
+      "bytes": 606055,
+      "gzipBytes": 155041
     }
   ],
   "physicalGPUAcceptance": "Not measured; P3 remains in progress.",
-  "compressionMethod": "Node zlib.gzipSync, same method for all current chunks"
+  "compressionMethod": "Node zlib.gzipSync, same method for all current chunks",
+  "batchDrawCalls": {
+    "mainBefore": 27,
+    "mainAfter": 13,
+    "extraShadowBefore": 22,
+    "extraShadowAfter": 8,
+    "evidence": "P3_BATCH_COMPARISON.json"
+  }
 }

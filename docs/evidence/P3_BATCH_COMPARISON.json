@@ -1,0 +1,285 @@
+{
+  "date": "2026-10-01T13:20:12.776Z",
+  "baselineCommit": "a02713a2526270382175780361ca5828ef7a1be3",
+  "browser": "153.0.8010.0",
+  "gpu": "ANGLE SwiftShader / software GPU",
+  "method": "Three alternating before/after pairs per profile, 4.5 seconds active interaction per sample; same process/browser. FPS counts actual renderer calls. Identical WebGL2 draw-method instrumentation counts main and shadow draw submissions in both variants; initialization excluded. lastRenderDrawCalls and triangles include shadow work when the final frame refreshes shadows.",
+  "physicalDevice": false,
+  "acceptance": "Physical desktop/mobile acceptance remains open; software comparison is not a device guarantee.",
+  "medians": [
+    {
+      "profile": "desktop-software",
+      "variant": "before",
+      "medianFPS": 38.604898828528235,
+      "minFPS": 32.883773635195965,
+      "maxFPS": 40.65669399210301
+    },
+    {
+      "profile": "desktop-software",
+      "variant": "after",
+      "medianFPS": 35.46256483000133,
+      "minFPS": 35.42723025486633,
+      "maxFPS": 39.25395311703
+    },
+    {
+      "profile": "mobile-software-emulation",
+      "variant": "before",
+      "medianFPS": 48.85523306166863,
+      "minFPS": 48.77724319887613,
+      "maxFPS": 59.46041888533902
+    },
+    {
+      "profile": "mobile-software-emulation",
+      "variant": "after",
+      "medianFPS": 49.327852460821354,
+      "minFPS": 49.20648993705929,
+      "maxFPS": 57.09588554166169
+    }
+  ],
+  "samples": [
+    {
+      "profile": {
+        "name": "desktop-software",
+        "width": 1440,
+        "dpr": 1,
+        "cpu": 1
+      },
+      "variant": "before",
+      "repetition": 1,
+      "elapsedMs": 4507.2000000014905,
+      "renderedFrames": 174,
+      "shadowUpdates": 76,
+      "glDrawCalls": 6370,
+      "triangles": 9714,
+      "state": "ready",
+      "quality": "high",
+      "fps": 38.604898828528235,
+      "lastRenderDrawCalls": null
+    },
+    {
+      "profile": {
+        "name": "desktop-software",
+        "width": 1440,
+        "dpr": 1,
+        "cpu": 1
+      },
+      "variant": "after",
+      "repetition": 1,
+      "elapsedMs": 4509.1,
+      "renderedFrames": 177,
+      "shadowUpdates": 77,
+      "glDrawCalls": 2917,
+      "triangles": 9714,
+      "state": "ready",
+      "quality": "high",
+      "fps": 39.25395311703,
+      "lastRenderDrawCalls": 21
+    },
+    {
+      "profile": {
+        "name": "desktop-software",
+        "width": 1440,
+        "dpr": 1,
+        "cpu": 1
+      },
+      "variant": "before",
+      "repetition": 2,
+      "elapsedMs": 4525.69999999851,
+      "renderedFrames": 184,
+      "shadowUpdates": 68,
+      "glDrawCalls": 6464,
+      "triangles": 4882,
+      "state": "ready",
+      "quality": "high",
+      "fps": 40.65669399210301,
+      "lastRenderDrawCalls": null
+    },
+    {
+      "profile": {
+        "name": "desktop-software",
+        "width": 1440,
+        "dpr": 1,
+        "cpu": 1
+      },
+      "variant": "after",
+      "repetition": 2,
+      "elapsedMs": 4511.8,
+      "renderedFrames": 160,
+      "shadowUpdates": 63,
+      "glDrawCalls": 2584,
+      "triangles": 9714,
+      "state": "ready",
+      "quality": "high",
+      "fps": 35.46256483000133,
+      "lastRenderDrawCalls": 21
+    },
+    {
+      "profile": {
+        "name": "desktop-software",
+        "width": 1440,
+        "dpr": 1,
+        "cpu": 1
+      },
+      "variant": "before",
+      "repetition": 3,
+      "elapsedMs": 4500.700000002235,
+      "renderedFrames": 148,
+      "shadowUpdates": 59,
+      "glDrawCalls": 5294,
+      "triangles": 9714,
+      "state": "ready",
+      "quality": "high",
+      "fps": 32.883773635195965,
+      "lastRenderDrawCalls": null
+    },
+    {
+      "profile": {
+        "name": "desktop-software",
+        "width": 1440,
+        "dpr": 1,
+        "cpu": 1
+      },
+      "variant": "after",
+      "repetition": 3,
+      "elapsedMs": 4516.2999999985095,
+      "renderedFrames": 160,
+      "shadowUpdates": 63,
+      "glDrawCalls": 2584,
+      "triangles": 4882,
+      "state": "ready",
+      "quality": "high",
+      "fps": 35.42723025486633,
+      "lastRenderDrawCalls": 13
+    },
+    {
+      "profile": {
+        "name": "mobile-software-emulation",
+        "width": 360,
+        "dpr": 2,
+        "cpu": 4
+      },
+      "variant": "before",
+      "repetition": 1,
+      "elapsedMs": 4507.2,
+      "renderedFrames": 268,
+      "shadowUpdates": 85,
+      "glDrawCalls": 9106,
+      "triangles": 9714,
+      "state": "ready",
+      "quality": "high",
+      "fps": 59.46041888533902,
+      "lastRenderDrawCalls": null
+    },
+    {
+      "profile": {
+        "name": "mobile-software-emulation",
+        "width": 360,
+        "dpr": 2,
+        "cpu": 4
+      },
+      "variant": "after",
+      "repetition": 1,
+      "elapsedMs": 4501.199999997765,
+      "renderedFrames": 257,
+      "shadowUpdates": 84,
+      "glDrawCalls": 4013,
+      "triangles": 9714,
+      "state": "ready",
+      "quality": "high",
+      "fps": 57.09588554166169,
+      "lastRenderDrawCalls": 21
+    },
+    {
+      "profile": {
+        "name": "mobile-software-emulation",
+        "width": 360,
+        "dpr": 2,
+        "cpu": 4
+      },
+      "variant": "before",
+      "repetition": 2,
+      "elapsedMs": 4510.300000002235,
+      "renderedFrames": 220,
+      "shadowUpdates": 74,
+      "glDrawCalls": 7568,
+      "triangles": 4882,
+      "state": "ready",
+      "quality": "high",
+      "fps": 48.77724319887613,
+      "lastRenderDrawCalls": null
+    },
+    {
+      "profile": {
+        "name": "mobile-software-emulation",
+        "width": 360,
+        "dpr": 2,
+        "cpu": 4
+      },
+      "variant": "after",
+      "repetition": 2,
+      "elapsedMs": 4511.599999999255,
+      "renderedFrames": 222,
+      "shadowUpdates": 71,
+      "glDrawCalls": 3454,
+      "triangles": 9714,
+      "state": "ready",
+      "quality": "high",
+      "fps": 49.20648993705929,
+      "lastRenderDrawCalls": 21
+    },
+    {
+      "profile": {
+        "name": "mobile-software-emulation",
+        "width": 360,
+        "dpr": 2,
+        "cpu": 4
+      },
+      "variant": "before",
+      "repetition": 3,
+      "elapsedMs": 4503.1,
+      "renderedFrames": 220,
+      "shadowUpdates": 72,
+      "glDrawCalls": 7524,
+      "triangles": 4882,
+      "state": "ready",
+      "quality": "high",
+      "fps": 48.85523306166863,
+      "lastRenderDrawCalls": null
+    },
+    {
+      "profile": {
+        "name": "mobile-software-emulation",
+        "width": 360,
+        "dpr": 2,
+        "cpu": 4
+      },
+      "variant": "after",
+      "repetition": 3,
+      "elapsedMs": 4500.50000000149,
+      "renderedFrames": 222,
+      "shadowUpdates": 74,
+      "glDrawCalls": 3478,
+      "triangles": 4882,
+      "state": "ready",
+      "quality": "high",
+      "fps": 49.327852460821354,
+      "lastRenderDrawCalls": 13
+    }
+  ],
+  "drawCalls": [
+    {
+      "variant": "before",
+      "mainPassDrawCalls": 27,
+      "extraDrawCallsPerShadowUpdate": 22,
+      "exactMatchSamples": 6,
+      "method": "Solve two independent measured frame/shadow/GL totals, round to integer draw submissions, then verify all variant samples exactly."
+    },
+    {
+      "variant": "after",
+      "mainPassDrawCalls": 13,
+      "extraDrawCallsPerShadowUpdate": 8,
+      "exactMatchSamples": 6,
+      "method": "Solve two independent measured frame/shadow/GL totals, round to integer draw submissions, then verify all variant samples exactly."
+    }
+  ]
+}

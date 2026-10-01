@@ -1,0 +1,40 @@
+{
+  "date": "2026-10-01T13:20:13.620585+00:00",
+  "baselineCommit": "a02713a2526270382175780361ca5828ef7a1be3",
+  "method": "Canvas-only PNG screenshots in the same Chromium 153 / ANGLE SwiftShader process; identical viewport/DPR, initial idle pose, 500ms wait, no CPU throttling at capture. PIL RGBA pixel comparison and manual review.",
+  "scope": "Initial pose only; active interaction and holes also covered by production browser tests. Physical device acceptance remains open.",
+  "samples": [
+    {
+      "profile": "desktop-software",
+      "canvasPixels": [
+        611,
+        371
+      ],
+      "meanAbsoluteDifferenceRGBA": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "identicalPixels": true,
+      "beforePNG_SHA256": "2af516c44032067118d21f756f915458cf58da9cdc01bf3420147d0f108ac985",
+      "afterPNG_SHA256": "2af516c44032067118d21f756f915458cf58da9cdc01bf3420147d0f108ac985"
+    },
+    {
+      "profile": "mobile-software-emulation",
+      "canvasPixels": [
+        624,
+        522
+      ],
+      "meanAbsoluteDifferenceRGBA": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "identicalPixels": true,
+      "beforePNG_SHA256": "737c8a0c44e229437047899bb65eaaa681f86b47a21fdf4e7187f34a1fdbc8ef",
+      "afterPNG_SHA256": "737c8a0c44e229437047899bb65eaaa681f86b47a21fdf4e7187f34a1fdbc8ef"
+    }
+  ]
+}

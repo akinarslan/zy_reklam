@@ -1,6 +1,6 @@
 # ZY Reklam — Mimari
 
-**Sürüm:** 1.5 · **Tarih:** 2026-10-01 · **Durum:** P3 gerçek 3D ve güvenli yollar uygulandı; fiziksel cihaz performans kabulü açık
+**Sürüm:** 1.6 · **Tarih:** 2026-10-01 · **Durum:** P3 gerçek 3D ve güvenli yollar uygulandı; fiziksel cihaz performans kabulü açık
 
 **İlgili belgeler:** [Yol haritası](ROADMAP.md) · [Çalışma kuralları](AGENTS.md)
 
@@ -277,3 +277,13 @@ Hareket sırasında 512 px gölge haritası en fazla 20 Hz güncellenir; aradaki
 Üç aktif örnek, örnek başına 1 saniye atılan ısınma, render çağrısı sayaçları, bir saniyelik FPS pencereleri ve kalite geçişleri kaydedilir. Varsayılan örnek 10 saniyedir; 3 saniye hızlı araç kontrolüdür. Cihaz/OS/güç bilgisi kullanıcı beyanıdır; user-agent/GPU bilgisi fiziksel ortamı otomatik doğrulamaz. Sonuç açık kullanıcı eylemiyle JSON indirilir; upload, analytics ve kalıcı tarayıcı depolaması yoktur.
 
 Sekme gizlenmesi/resize/iptal/context veya sahne hatası sonuç geçersiz sayılır. Hareket azaltma sessizce değiştirilmez; kullanıcı ayrı düğmeyle açabilir. P3.6 fiziksel kabulü ile gerçek hareket/scroll/görsel kontrolü ayrıca incelenir; araç otomatik PASS üretmez. 19 yerel testin ve araç ekranlarının kanıtları P3_VERIFICATION.json, P3_DEVICE_TOOL_SAMPLE.json ve docs/P3_DEVICE_MEASUREMENT.md içinde kayıtlıdır. P3/P4 sırası ve FPS hedefleri korunur.
+
+### 2026-10-01 — v1.6 ortak logo katmanları (P3.6)
+
+Beyaz ZY’nin üç katmanı ve altın REKLAM aynı kaynak şekillerini kullanarak dört ortak mesh içinde üretilir; önceki 12 mesh’in malzemeleri ve derinlikleri değişmedi. ExtrudeGeometry tüm aynı katman şekillerini birlikte alır; çok malzemeli katmanlarda Three.js mergeGroups yalnızca aynı materyal gruplarını birleştirir. Kontur sadeleştirme yapılmadı.
+
+Ana sahne çizim çağrısı 27 → 13 (%51,9 azalma); gölge yenilemesi başına ek çağrı 22 → 8 (%63,6 azalma). Bu ayrıştırma, gerçek WebGL2 çağrı toplamı ile render/gölge sayaçlarından hesaplandı ve 12 örneğin tamamında birebir doğrulandı.
+
+Aynı başlangıç açısındaki masaüstü ve mobil canvas PNG’leri RGBA piksel düzeyinde önceki build ile aynıdır; görüntüler ayrıca incelendi. Özgün sekiz kontur, R/A içindeki iki boşluk, katman derinlikleri, malzemeler ve 4.882 ana sahne üçgeni korundu. Gölge yenilenen render’da sayaç 9.714 üçgen ve 21 toplam çağrı gösterebilir; bu ana sahne ile gölge işinin toplamıdır.
+
+19/19 yerel test geçti. Masaüstü yazılımsal ortanca 38,6 → 35,5 FPS; mobil emülasyon 48,9 → 49,3 FPS. Aralıklar örtüşür; bu çalışma tutarlı FPS artışı göstermedi. Fiziksel cihaz performans kabulü açık kalır. Ertelenen renderer 606.055 bayt ham / 155.041 bayt Node gzip; önceki sürüme göre +967 ham / +337 gzip bayt. Ana JS 7.235 bayt; 500 KB Vite uyarısı sürer. Kanıtlar P3_BATCH_COMPARISON.json, P3_BATCH_VISUAL_VERIFICATION.json ve güncel P3_VERIFICATION.json içinde. A02/A03, kalite ve yaşam döngüsü ile P3/P4 teslim sırası korunur.

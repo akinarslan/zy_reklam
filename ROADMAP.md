@@ -1,6 +1,6 @@
 # ZY Reklam — Yol Haritası
 
-**Sürüm:** 1.4 · **Başlangıç:** 2026-10-01
+**Sürüm:** 1.5 · **Başlangıç:** 2026-10-01
 
 **Kaynak:** [ARCHITECTURE.md](ARCHITECTURE.md) · **Zorunlu kontrol:** [AGENTS.md](AGENTS.md)
 
@@ -76,6 +76,7 @@ Süreler takvim taahhüdü değildir. P1 sonrası logo kalitesi, gerçek görsel
 - [x] P3.4 Ertelenmiş 3D yükleme, kalite düşürme, görünmezken durma ve kaynak temizliğini uygula.
 - [x] P3.5 WebGL yokluğu, context kaybı ve hareket azaltma yollarını doğrula.
 - [x] P3.6a Fiziksel cihazda kullanılabilecek ayrı ölçüm aracını, ham JSON çıktısını ve iptal/hata kontrollerini hazırla. Bu, fiziksel kabulü kapatmaz.
+- [x] P3.6b Aynı malzeme/derinlikteki logo katmanlarını birleştir; görünümü ve gerçek çizim çağrısı azalmasını doğrula. Fiziksel kabul ayrı kalır.
 - [ ] P3.6 Aşama kabulündeki fiziksel masaüstü/orta seviye mobil FPS hedeflerini ölç; gerekiyorsa sonraki aşamadan önce optimize et. Yazılımsal emülasyon ölçümü tek başına bu kabulü kapatmaz.
 
 **Kabul:** Amblem özgün kaynakla eşleşir; yaklaşık yazı logosu kullanılmaz. İlk içerik 3D’yi beklemez. CTA üzerine canvas binmez. Model/texture/env başlangıç 3 MB hedefinde ölçülür. Tanımlı masaüstü ve mobil cihazlarda kare hızı kaydedilir; bütçe aşılıyorsa sonraki aşamadan önce optimize edilir veya hedef revizyonu gerekçelendirilir.
@@ -234,3 +235,13 @@ Sıradaki tek iş:
 - Mimari v1.5, roadmap v1.4; P3.6a hazır, P3.6 fiziksel ölçüm bekliyor. Yazılımsal QA JSON'u fiziksel sonuç değildir. P4 başlamadı. Sıradaki tek iş: Cloudflare önizlemesinde tanımlı fiziksel bilgisayar ve orta seviye mobil için üç 10 saniyelik örneği/manual kontrolleri kaydedip P3 kabulünü kapatmak.
 
 - Uzak kayıt: fabf49aa43c3c59879010e4c530e81e8812e2cb9 main üzerinde yeniden okundu; 15 dosyanın blob kimliği ve altı ana dosyanın tam içeriği eşleşti. Özgün SVG korundu. GitHub Actions 36863650753 / job 110373703375 başarılı; loglar 19 test / 19 pass / 0 fail ve üç yeni araç kontrolünü doğruladı. CI kanıtı: P3_DEVICE_TOOL_CI_VERIFICATION.json.
+
+### 2026-10-01 — P3.6b ortak logo katmanları
+
+- Talimat: “devam et”; güncel AGENTS.md, mimari v1.5 ve roadmap v1.4 tamamen okundu. Uzak main başlangıcı a02713a2526270382175780361ca5828ef7a1be3; son Verify başarılı. Yerel Git commit içermez; uzak kayıt GitHub bağlayıcısıyla yönetilir.
+- Değişiklik: 12 logo mesh’i dört aynı malzeme/derinlik katmanında birleştirildi; materyal grupları birleştirildi. Ana sahne çizim çağrısı 27 → 13 (%51,9 azalma); gölge yenilemesi başına ek çağrı 22 → 8 (%63,6 azalma). Bu ayrıştırma, gerçek WebGL2 çağrı toplamı ile render/gölge sayaçlarından hesaplandı ve 12 örneğin tamamında birebir doğrulandı.
+- Görsel/geometri kanıtı: Aynı başlangıç açısındaki masaüstü ve mobil canvas PNG’leri RGBA piksel düzeyinde önceki build ile aynıdır; görüntüler ayrıca incelendi. Özgün sekiz kontur, R/A içindeki iki boşluk, katman derinlikleri, malzemeler ve 4.882 ana sahne üçgeni korundu. Gölge yenilenen render’da sayaç 9.714 üçgen ve 21 toplam çağrı gösterebilir; bu ana sahne ile gölge işinin toplamıdır.
+- Kanıt: TypeScript/production build, karşılaştırma aracı sözdizimi ve 19/19 yerel test başarılı. Sayaç ayrıştırması ve eski sayaçsız baseline için güvenli dönüş ayrıca doğrulandı. Yeni kanıt P3_BATCH_COMPARISON.json ve P3_BATCH_VISUAL_VERIFICATION.json; eski gölge karşılaştırması korunur.
+- Üç dönüşümlü önce/sonra çifti/profil: Masaüstü yazılımsal ortanca 38,6 → 35,5 FPS; mobil emülasyon 48,9 → 49,3 FPS. Aralıklar örtüşür; bu çalışma tutarlı FPS artışı göstermedi. Fiziksel cihaz performans kabulü açık kalır.
+- Bütçe: ertelenen renderer 606.055 ham / 155.041 Node gzip bayt; +967 / +337 bayt. Ana JS 7.235 bayt. Mimari v1.6, roadmap v1.5, kaynak bütçesi ve kabul kaydı güncellendi.
+- Cloudflare: erişilebilir commit status/check kayıtlarında önizleme URL’si yok; yayın başarı iddiası yok. P3.6b tamamlandı, P3.6 fiziksel kabulü ve P4 açık kalır. Sıradaki tek iş: fiziksel masaüstü/orta seviye mobil üç 10 saniyelik ölçüm ve gerçek dokunma/scroll/görsel kontrolüyle P3 kabulünü kapatmak.

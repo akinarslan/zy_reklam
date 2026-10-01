@@ -149,6 +149,7 @@ export function createHeroRenderer(stage: HTMLElement, mount: HTMLElement, svg: 
       stage.dataset.rotationY = String(sign.rotation.y);
       stage.dataset.rotationX = String(sign.rotation.x);
       stage.dataset.triangles = String(renderer!.info.render.triangles);
+      stage.dataset.drawCalls = String(renderer!.info.render.calls);
     };
     const resize = () => {
       if (disposed) return;

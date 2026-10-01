@@ -44,7 +44,8 @@ test('Üretim build’i: özgün konturlar ve delikler; masaüstü/mobil gerçek
     const details = await page.locator('[data-hero-stage]').evaluate(el => ({ ...el.dataset }));
     assert.equal(details.logoPaths, '8');
     assert.equal(Number(details.logoHoles), 2, 'R/A holes must stay open');
-    assert.ok(Number(details.triangles) > 0);
+    assert.equal(Number(details.triangles), 4882, 'batching must preserve the baseline main-pass triangle budget');
+    assert.ok(Number(details.drawCalls) > 0 && Number(details.drawCalls) <= 13, 'initial idle render must use at most 13 draw calls');
     assert.equal(await page.locator('[data-scene-mount] canvas').count(), 1);
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
     assert.deepEqual(errors, []);
