@@ -17,7 +17,7 @@ Güncel AGENTS.md, mimari v1.5 ve roadmap v1.4 tamamen okundu. Uzak main başlan
 
 ## Değişen dosyalar
 
-src/scene/logo.ts, renderer.ts; scripts/compare-scene.mjs; tests/scene.test.mjs; ARCHITECTURE.md, ROADMAP.md, README.md, LAST_REPORT.md; docs/P3_ACCEPTANCE.md; docs/evidence/P3_BUDGET.json, P3_BATCH_COMPARISON.json, P3_BATCH_VISUAL_VERIFICATION.json, P2_VERIFICATION.json, P3_VERIFICATION.json, P3_DEVICE_TOOL_SAMPLE.json ve P3_DEVICE_TOOL_VERIFICATION.json.
+src/scene/logo.ts, renderer.ts; scripts/compare-scene.mjs; tests/scene.test.mjs; ARCHITECTURE.md, ROADMAP.md, README.md, LAST_REPORT.md; docs/P3_ACCEPTANCE.md; docs/evidence/P3_BUDGET.json, P3_BATCH_COMPARISON.json, P3_BATCH_VISUAL_VERIFICATION.json, P2_VERIFICATION.json, P3_VERIFICATION.json, P3_DEVICE_TOOL_SAMPLE.json ve P3_DEVICE_TOOL_VERIFICATION.json ve P3_BATCH_CI_VERIFICATION.json.
 
 ## Doğrulama ve sınırlar
 
@@ -28,7 +28,8 @@ src/scene/logo.ts, renderer.ts; scripts/compare-scene.mjs; tests/scene.test.mjs;
 - Ertelenen renderer 606.055 ham / 155.041 Node gzip bayt (+967 / +337); ana JS 7.235 bayt. Vite 500 KB paket uyarısı sürer; kaynak varlık bütçesi altında olmak fiziksel FPS kabulü değildir.
 - Özgün SVG 8.340 bayt; SHA-256 11ffcb567b413dc48d0d8a6539c4c981683ff4b89f5a4e6b149e154884985439. Logo/font/legacy kaynakları değiştirilmedi.
 - Cloudflare önizleme URL’si erişilebilir status/check kayıtlarında bulunmadı. Yayın tamamlandı iddiası yok; ana domain/DNS/hosting değiştirilmedi.
-- P3.6 fiziksel cihaz kabulü, P4 ve Lighthouse/P8 açık. Uzak kayıt/CI doğrulaması sonraki kanıt güncellemesinde eklenecek.
+- P3.6 fiziksel cihaz kabulü, P4 ve Lighthouse/P8 açık.
+- Uzak kayıt 179f83131fb7124e1c1db3daf03ccefce35426f0 main üzerinde tekrar doğrulandı: 16 dosyanın Git blob kimliği ve altı ana dosyanın tam içeriği eşleşti; özgün SVG ve AGENTS blobları korundu. GitHub Actions 36868279358 / job 110389203272 başarıyla tamamlandı. Loglar yeniden okundu: npm ci/build/tarayıcı kurulumu ve 19/19 test başarılı, 0 fail; yeni üçgen/çizim bütçesi kontrolü geçti. Artifact 11166510096 kaydedildi. Kanıt: docs/evidence/P3_BATCH_CI_VERIFICATION.json.
 
 ## Sıradaki tek iş
 
