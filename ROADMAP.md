@@ -307,3 +307,5 @@ Sıradaki tek iş:
 - TypeScript/production build ve üç proje tarayıcı testi geçti; 360/1440 px tüm kategori görselleri decode, menüler/SEO/JS kapalı gezinme, iki videonun ilk yükte indirilmemesi ve gerçek oynatılması doğrulandı. P2_PROJECTS_VERIFICATION.json güncellendi. Tüm 26 test bu işte yeniden çalıştırılmadı.
 - Video açıklaması kategoriye göre JSON’dan üretilebilir; mimari v1.9. P3 fiziksel performans, P1.5/P5 sahiplik kabulü ve aşama kapıları değişmedi.
 - GitHub kaydı sonrası yeni içeriklerin canlı yayını ayrıca doğrulanır. Sıradaki tek iş: Workers önizlemesinde yeni medya yayınının kontrolü.
+
+- Uzak kayıt doğrulandı: 4542806f8c9ae88ac2626f8a9bd972747501f8ea; 26 değişen dosyanın blob kimliği ve beş uygulama dosyasının tam içeriği eşleşti. GitHub Verify npm ci/build başarılı, tarayıcı kurulumu sürüyor; tam CI başarı iddiası yok. Canlı Worker ilk kontrolde eski Tabela (2 görsel) ve Özel Üretim (video yok) sürümünü sunuyordu; bir yenilemede de yeni medya henüz görünmedi. GitHub mega menü smoke sonucu bu yeni medya için yayın kanıtı sayılmadı.

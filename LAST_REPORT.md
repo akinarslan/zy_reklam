@@ -10,3 +10,5 @@ Aşama: P2.8 medya genişletmesi; mimari v1.9/A11, roadmap v1.7 ile uyumlu.
 - Kullanıcı önceki mega menünün canlıya ulaştığını doğruladı. Bu yeni medya sürümünün Cloudflare yayını henüz doğrulanmadı; GitHub kaydı ardından kontrol edilir.
 - Uzak başlangıç: d3c1cbc9534b8076f73fd63b4b4248efb19ecc5a. Başka oturumdaki Wrangler/workflow değişiklikleri korunur. P3 fiziksel GPU kabulü ve P1.5/P5 gerçek müşteri sahipliği kabulü açık.
 - Sıradaki tek iş: yeni içeriklerin Workers önizlemesinde yayınlandığını doğrulamak.
+
+Uzak kayıt: 4542806f8c9ae88ac2626f8a9bd972747501f8ea; 26 dosya blob kimliği ve beş uygulama dosyası tam metin ile yeniden doğrulandı. GitHub npm ci/build başarılı, CI devam ediyor. Cloudflare canlı kontrolünde yeni medya henüz gelmedi; eski içerik görülüyor. Güncelleme kayıtlı, canlı yayın kabulü bekliyor.
