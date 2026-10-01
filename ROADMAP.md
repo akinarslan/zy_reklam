@@ -266,3 +266,11 @@ Sıradaki tek iş:
 - Sıradaki tek plan işi: tanımlı fiziksel masaüstü ve orta seviye mobil ölçümü/manual kontrollerle P3.6 kabulünü kapatmak.
 
 - Uzak kayıt 740e8c6c2b54155d99cf113f6331cfe9221b1ee5 main üzerinde yeniden okundu: 55 dosyanın blob kimliği ve yedi ana dosyanın tam içeriği eşleşti; diğer 73 dosya değişmedi. GitHub Actions 36871098814 / job 110398761411 başarılı tamamlandı. Loglar tekrar okundu: npm ci, beş HTML sayfası üretimi/build, tarayıcı kurulumu ve 23 test / 23 pass / 0 fail; dört yeni promosyon kontrolü doğrulandı. Artifact 11166564298 kaydedildi. Kanıt: docs/evidence/P2_PROMOTIONS_CI_VERIFICATION.json.
+
+### 2026-10-01 — P2.7 menü görünürlüğü / yayın teşhisi
+
+- Talimat: Kullanıcı Promosyonlar mega menüsünü baktığı sayfada göremiyor. Güncel AGENTS.md, mimari v1.7 ve roadmap v1.6 kontrol edildi. Uzak main 11b099f9d506b853f851385e1aa72244f0c7941f; index.html yeniden okundu ve data-promo-menu / dört kategori bağlantısı doğrulandı.
+- P2.7 uygulaması ile canlı görünürlük ayrı kabul edilir. Güncel production build üzerinde dört promosyon tarayıcı testi tekrar geçti: hover/klavye, mobil dokunma, dört doğrudan kategori sayfası ve JavaScript kapalı gezinme. Masaüstü mega menü ekranı yeniden incelendi. Uygulama kodunda yeni değişiklik gerektiren hata bulunmadı.
+- https://zyreklamdijital.com.tr/ sayfasının bu tarihte alınan web içeriğinde eski hero/CTA/promosyon başlıkları bulunuyor; proje kaynaklarındaki yeni içerikle eşleşmiyor. Bu fark yayın sürümünün eşleşmediğine işaret eder. Kullanıcının baktığı tam URL henüz bilinmiyor; o adresin canlı DOM kontrolü yapılmadı.
+- Main commit status kaydında yayımlama/Cloudflare önizleme bağlantısı yok (statuses=[]); bu tek başına hosting bulunmadığını kanıtlamaz. Önceki GitHub kayıt ve test başarısı canlı yayın başarısı olarak sunulmaz.
+- Mimari değişmedi; v1.7 / A10 korundu. P3.6 fiziksel kabulü ve sonraki aşamaların kapıları korunur. Kullanıcı önceliği: önce baktığı URL ve ona bağlı yayın hedefini belirleyip P2.7 canlı görünürlüğünü doğrulamak. DNS/hosting değişikliği yapılmadı.
