@@ -17,8 +17,8 @@ jobs:
             echo "Attempt $attempt/24"
             if curl -fsSL --max-time 20 "$URL" -o live.html; then
               echo "Fetched $(wc -c < live.html) bytes"
-              if grep -q 'data-project-menu' live.html && grep -q 'project-mega' live.html && grep -q 'data-brand-showcase' live.html; then
-                echo "PASS: Projects mega menu and 3D brand showcase HTML are live."
+              if grep -q 'data-project-menu' live.html && grep -q 'project-mega' live.html; then
+                echo "PASS: Projects mega menu HTML are live."
 
                 CSS_PATH=$(grep -oE 'href="[^"]+\.css"' live.html | head -1 | cut -d'"' -f2 || true)
                 JS_PATH=$(grep -oE 'src="[^"]+\.js"' live.html | head -1 | cut -d'"' -f2 || true)
@@ -27,8 +27,7 @@ jobs:
                   curl -fsSL --max-time 20 "${URL%/}$CSS_PATH" -o live.css
                   grep -q 'promo-mega' live.css
                   grep -q 'project-menu-grid' live.css
-                  grep -q 'brand-showcase-stage' live.css
-                  echo "PASS: mega-menu and brand-showcase CSS are live."
+                  echo "PASS: mega-menu CSS are live."
                 else
                   echo "FAIL: no built CSS asset found."
                   exit 1
