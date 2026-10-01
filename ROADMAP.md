@@ -321,3 +321,5 @@ Sıradaki tek iş:
 - Kabul: TypeScript/production build ve altı mevcut P2 testi başarılı. Üretim preview’da 360/768/1440 px × JS açık/kapalı altı ek kontrol geçti: doğru numara/metin, güvenli yeni sekme, gerçek link aktivasyonu (QA cevabına yönlendirilmiş, gerçek mesaj gönderilmedi), klavye odak, kaydırmada sabit konum, yatay taşma/ikon örtüşmesi yok ve footer imzası görünür. Mobil ekran incelendi. Kanıt P2_WHATSAPP_VERIFICATION.json. Tam test paketi bu işte tekrar çalıştırılmadı.
 - Dosyalar: index.html, src/styles/main.css, yeni whatsapp.css, P2/P2_WHATSAPP kanıt JSON’ları, ROADMAP.md, LAST_REPORT.md.
 - Canlı yayın sonucu kayıt sonrası ayrıca kontrol edilir; önceden başarı iddia edilmez. Sıradaki tek iş: canlı ana sayfada WhatsApp butonu ve bağlantısını doğrulamak.
+
+- Uzak kayıt dfd04686bd6c22ea46713f592f8ee47bf8c43e77 doğrulandı: yedi dosyanın blob kimliği ve tam içerikleri eşleşti. Canlı https://zyreklamdijital.com.tr/ açıldı ve bir kez yenilendi; yeni .whatsapp-float henüz yok. Kod/kayıt tamamlandı, Cloudflare yayın görünürlüğü bekliyor. GitHub Verify sürüyor; mega menü smoke başarısı WhatsApp yayın kanıtı sayılmaz.

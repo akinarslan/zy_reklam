@@ -11,3 +11,5 @@ Aşama: P2.9. Mimari v1.9/A06 korundu; roadmap v1.8 güncellendi.
 - Uzak başlangıç: 6e702bebb7c74b8b5e1fcb60a142d2f2de3c5628. Uzak Wrangler/workflow değişiklikleri ve medya korunur. DNS değişmedi.
 - Canlı yayın kontrolü GitHub kaydı ardından yapılır; bu rapor yerel kabul kanıtıdır. P3 fiziksel GPU kabulü açık.
 - Sıradaki tek iş: canlı ana sayfadaki yeni WhatsApp butonunu doğrulamak.
+
+Uzak kayıt dfd04686bd6c22ea46713f592f8ee47bf8c43e77 doğrulandı: yedi dosyanın blob kimliği ve tam içerikleri eşleşti. Canlı https://zyreklamdijital.com.tr/ açıldı ve bir kez yenilendi; yeni .whatsapp-float henüz yok. Kod/kayıt tamamlandı, Cloudflare yayın görünürlüğü bekliyor. GitHub Verify sürüyor; mega menü smoke başarısı WhatsApp yayın kanıtı sayılmaz.
