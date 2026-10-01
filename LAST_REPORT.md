@@ -29,7 +29,7 @@ src/scene/hero.ts, renderer.ts, logo.ts, quality.ts; src/main.ts, src/styles/mai
 - Sahne SVG kaynağı 8.340 bayt; dış model/texture/env transferi sıfır. Ertelenen renderer JS 604.835 bayt ham / 154.582 bayt Node gzip; ana JS 7.235 bayt ham. Model/texture/env 3 MB transfer hedefi altında.
 - Yazılımsal ANGLE SwiftShader etkileşim örneği: masaüstü ~37,3 FPS; CPU4 mobil görünüm ~51,4 FPS. Bunlar fiziksel GPU sonuçları değildir; masaüstü örnek yaklaşık 60 FPS hedefinin altındadır. Hedef karşılandı denmez. Fiziksel masaüstü/orta seviye mobil kabulü açık; P3 tamamlandı işaretlenmedi.
 - Masaüstü ve mobil JPEG ekran görüntüleri incelendi. Tam sayfa mobil software compositor görüntüsünde görülen tekrar eden capture tile’ları kullanıcı önizlemesi olarak kullanılmadı; gerçek viewport JPEG’leri kontrol edildi.
-- Önceki P2 GitHub Actions 36857500110 başarılı tamamlandı. Bu P3 değişikliğinin uzak CI sonucu ve GitHub kayıt doğrulaması kayıt sonrası eklenecektir. Lighthouse/P8/stüdyo/upload çalıştırılmadı; P4 başlamadı.
+- Önceki P2 GitHub Actions 36857500110 başarılı tamamlandı. P3 kayıt commit’i 21f8599ab48c3825176072b95999cc93ca9f171d main üzerinde yeniden doğrulandı. 21 değişen dosyanın blob kimliği eşleşti; mimari, roadmap, rapor, renderer ve test dosyasının tam metni yeniden okunup eşleştirildi. Kaynak SVG ve PNG blobları korundu. GitHub Actions 36859463847 / job 110359813173 başarıyla tamamlandı. Loglar yeniden okundu: 15 test, 15 pass, 0 fail; npm ci, build, tarayıcı kurulumu ve artifact kaydı başarılı. P3_CI_VERIFICATION.json doğrulama özeti kaydedildi. Lighthouse/P8/stüdyo/upload çalıştırılmadı; P4 başlamadı.
 
 ## Sıradaki tek iş
 

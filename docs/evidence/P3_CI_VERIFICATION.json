@@ -1,0 +1,23 @@
+{
+  "date": "2026-10-01",
+  "commit": "21f8599ab48c3825176072b95999cc93ca9f171d",
+  "runId": 36859463847,
+  "jobId": 110359813173,
+  "workflow": "Verify",
+  "conclusion": "success",
+  "tests": 15,
+  "passed": 15,
+  "failed": 0,
+  "artifactId": 11161165918,
+  "url": "https://github.com/akinarslan/zy_reklam/actions/runs/36859463847",
+  "scope": "CI software GPU checks; physical GPU acceptance remains open.",
+  "logSummary": [
+    "2026-10-01T12:06:29.0722197Z ✔ Üretim build’i: özgün konturlar ve delikler; masaüstü/mobil gerçek WebGL çizimi (8807.437986ms)",
+    "2026-10-01T12:06:34.4968497Z ✔ Mobil yatay sürükleme ve gerçek dokunmayla dikey sayfa kaydırma (5427.307996ms)",
+    "2026-10-01T12:06:41.2721008Z ✔ WebGL yokken, 3D dosyası hatasında ve context kaybında iletişim korunur (3366.419756ms)",
+    "2026-10-01T12:06:57.5781192Z ℹ tests 15",
+    "2026-10-01T12:06:57.5781925Z ℹ pass 15",
+    "2026-10-01T12:06:57.5782265Z ℹ fail 0",
+    "2026-10-01T12:06:57.5786634Z ℹ duration_ms 43440.509141"
+  ]
+}
