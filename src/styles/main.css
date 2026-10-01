@@ -19,3 +19,84 @@ html[data-motion=reduced]{scroll-behavior:auto}html[data-motion=reduced] *,html[
 .scene-mount canvas:active{cursor:grabbing}
 .object-caption{gap:12px;line-height:1.6}
 .object-caption [data-scene-hint]{text-align:right;letter-spacing:1px}
+
+
+/* NAV VITRIN EMPHASIS START */
+/* Navigation labels: two steps larger than the previous 12px desktop size. */
+#main-nav > a:not(.button),
+#main-nav > .promo-dropdown > summary {
+  font-size: 14px;
+}
+
+#main-nav .nav-vitrin-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  font-weight: 700;
+  letter-spacing: .025em;
+  color: #ead79a;
+  text-shadow:
+    0 1px 0 #6f5a2e,
+    0 2px 0 #47381b,
+    0 4px 8px rgba(0,0,0,.30),
+    0 0 10px rgba(217,181,90,.10);
+  transform: perspective(240px) translateZ(0);
+  transition:
+    color .2s ease,
+    text-shadow .2s ease,
+    transform .2s ease;
+}
+
+#main-nav .nav-vitrin-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 8px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(217,181,90,.78), transparent);
+  opacity: .48;
+  transform: scaleX(.72);
+  transition: opacity .2s ease, transform .2s ease;
+}
+
+#main-nav .nav-vitrin-link:is(:hover, :focus-visible) {
+  color: #fff0bd;
+  text-shadow:
+    0 1px 0 #806932,
+    0 2px 0 #51401e,
+    0 5px 10px rgba(0,0,0,.32),
+    0 0 14px rgba(217,181,90,.24);
+  transform: perspective(240px) translateY(-1px) translateZ(6px);
+}
+
+#main-nav .nav-vitrin-link:is(:hover, :focus-visible)::after {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+@media (max-width: 767px) {
+  #main-nav > a:not(.button),
+  #main-nav > .promo-dropdown > summary {
+    font-size: 16px;
+  }
+
+  #main-nav .nav-vitrin-link {
+    justify-content: flex-start;
+  }
+
+  #main-nav .nav-vitrin-link::after {
+    left: 15px;
+    right: auto;
+    width: 88px;
+    bottom: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #main-nav .nav-vitrin-link {
+    transition: none;
+    transform: none;
+  }
+}
+/* NAV VITRIN EMPHASIS END */
