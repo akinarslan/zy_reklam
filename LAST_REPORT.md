@@ -25,10 +25,10 @@ ARCHITECTURE.md, ROADMAP.md, README.md, LAST_REPORT.md; docs/ASSET_INVENTORY.md,
 - TypeScript ve `npm run build` başarılı. Son build: HTML 11,08 KB, CSS 13,95 KB, JS 3,89 KB; bu değerler public font/görsellerini içermez.
 - Chromium 153.0.8010.0 ile altı Playwright testi başarılı, sıfır hata. 360/768/1440 px genişliklerde yatay taşma yok; görseller yüklendi ve JS çalışma hatası görülmedi. Masaüstü başlık 60 CSS px = 45 pt.
 - Mobil menü, Escape/odak dönüşü, hareket azaltma, Türkçe/özel karakterli WhatsApp metni, boş girdi ve JavaScript kapalı iletişim yolu doğrulandı.
-- Üç ekran boyutunda tam sayfa görüntüsü üretildi; masaüstü ve mobil görsel kontrolü yapıldı. JSON kanıt depoya alınır; PNG’ler CI çıktısıdır, Git dışında tutulur.
+- Üç ekran boyutunda tam sayfa görüntüsü üretildi; masaüstü ve mobil görsel kontrolü yapıldı. JSON kanıt depoya alınır; PNG’ler yerel test çıktısıdır; CI’de de üretilir ve Git dışında tutulur.
 - Playwright CDN tarayıcı kurulumu bu ortamda bozuk ZIP ile başarısız oldu. Gerçek yerel Chromium yolu ile aynı test paketi 6/6 geçti; alternatif kurulum araçları repo dışında tutuldu.
-- Kaynak dosyaların 32 blob kimliği doğrulandı. GitHub kaydının son doğrulama sonucu bu rapora kayıt sonrasında eklenecektir.
-- CI tanımı eklendi; uzak CI sonucu henüz doğrulanmadı. Lighthouse/FPS, gerçek 3D, stüdyo, upload ve P8 kabulü çalıştırılmadı.
+- Kaynak dosyaların 32 blob kimliği doğrulandı. GitHub main üzerinde 00e642bcdc9e2517892ea6406deea796952f1a2d commit’i yeniden okundu. 62 değişen dosyanın Git blob kimliği yerel beklenen değerlerle eşleşti; mimari, roadmap, README, bu raporun ilk kaydı ve index.html tam içerikleri yeniden okunarak karşılaştırıldı. AGENTS.md ve özgün PNG blobları korundu. Raporun bu son doğrulama eki ayrı kayıtla güncellenir; kendi commit SHA’sı için döngü oluşturulmaz.
+- CI tanımı eklendi; GitHub Actions 36857500110 çalışması başladı, npm ci ve build başarılı. Tarayıcı kurulum/test adımları son gözlemde devam ediyordu; uzak test başarısı henüz iddia edilmez. Lighthouse/FPS, gerçek 3D, stüdyo, upload ve P8 kabulü çalıştırılmadı.
 
 ## Durum ve sıradaki iş
 

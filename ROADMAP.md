@@ -188,6 +188,7 @@ Sıradaki tek iş:
 - Dosyalar: legacy snapshot, SVG/PDF/font/SEO varlıkları; index.html, package/lockfile, tsconfig, src modülleri, tests/browser.test.mjs, doğrulama workflow’u ve proje belgeleri.
 - Kanıt: `npm run build` TypeScript ve Vite kontrollerini geçti. Yerel Chromium 153 ile altı Playwright testi geçti; 360/768/1440 px taşma yok, görseller yüklendi, JS hatası yok; masaüstü başlık 60 px = 45 pt. Menü/Escape/odak, hareket tercihi, Türkçe ve özel karakterli WhatsApp metni, boş girdi ve JavaScript kapalı iletişim yolu doğrulandı. Testler mesaj göndermedi.
 - Görsel kontrol: üç tam sayfa ekran görüntüsü üretildi; masaüstü ve mobil görüntüler incelendi. Yapılandırılmış kanıt: docs/evidence/P2_VERIFICATION.json. Ekran görüntüleri Git dışında; CI çalışma çıktısında üretilir.
+- Uzak kayıt kanıtı: main commit’i `00e642bcdc9e2517892ea6406deea796952f1a2d`; 62 değişen dosyanın blob kimliği ve beş ana dosyanın tam metni GitHub’dan yeniden okunup eşleştirildi. AGENTS.md ve kaynak PNG korundu.
 - Ortam: Playwright CDN ZIP indirmesi başarısız oldu; aynı test paketi `ZY_CHROMIUM_PATH` ile gerçek yerel Chromium üzerinden 6/6 geçti. CI tanımlandı; uzak çalışma sonucu bu yerel kanıtın yerine iddia edilmez.
 - Durum: P2 tamamlandı. P1.5 gerçek proje içeriği bekliyor; P1 bütünü tamamlanmadı. P3–P9 kutuları açık. Mevcut hero statik SVG tabela posteridir; 3D değildir.
 - Mimari revizyonu: v1.2 / A04 ve A05; framework eklemeden Vite/TypeScript, onaylı SVG konturları ve font/glif sınırları kaydedildi.
