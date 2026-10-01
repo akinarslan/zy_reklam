@@ -1,0 +1,44 @@
+{
+  "stage": "P2",
+  "date": "2026-10-01T11:42:23.155Z",
+  "results": [
+    {
+      "check": "responsive",
+      "width": 360,
+      "headingFontSize": "38px",
+      "passed": true
+    },
+    {
+      "check": "responsive",
+      "width": 768,
+      "headingFontSize": "42.24px",
+      "passed": true
+    },
+    {
+      "check": "responsive",
+      "width": 1440,
+      "headingFontSize": "60px",
+      "passed": true
+    },
+    {
+      "check": "mobile-navigation",
+      "passed": true
+    },
+    {
+      "check": "reduced-motion",
+      "passed": true
+    },
+    {
+      "check": "whatsapp-text-encoding",
+      "passed": true
+    },
+    {
+      "check": "blank-input-validation",
+      "passed": true
+    },
+    {
+      "check": "no-javascript-fallback",
+      "passed": true
+    }
+  ]
+}

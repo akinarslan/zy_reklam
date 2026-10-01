@@ -1,6 +1,6 @@
 # ZY Reklam — Mimari
 
-**Sürüm:** 1.1 · **Tarih:** 2026-10-01 · **Durum:** Ürün ve mimari başlangıç planı; logo referansı alındı
+**Sürüm:** 1.2 · **Tarih:** 2026-10-01 · **Durum:** P2 ön yüz temeli doğrulandı; P3 gerçek 3D bekliyor
 
 **İlgili belgeler:** [Yol haritası](ROADMAP.md) · [Çalışma kuralları](AGENTS.md)
 
@@ -8,7 +8,7 @@
 
 ZY Reklam web sitesi bir **dijital üretim atölyesi** olarak tasarlanacaktır. Ziyaretçi üretim kabiliyetini görür, gerçek işleri inceler, kendi tabela fikrini dener ve anlaşılır bir teklif talebi oluşturur.
 
-GitHub deposu `akinarslan/zy_reklam`, 1 Ekim 2026 tarihinde boş olarak doğrulanmıştır. Bu mimari uygulanmış bir sistemi anlatmaz. Mevcut canlı site kodu, hosting yöntemi, iletişim verileri ve varlık dosyaları P1’de incelenecektir. Kullanıcının aynı gün belirlediği logo PNG’si `public/assets/brand/zy-reklam-reference.png` yoluna alınmıştır. Vektör logo ve önceki konuşmalarda geçen font/PDF dosyaları doğrulanmadan depoda mevcut kabul edilmez.
+GitHub deposu `akinarslan/zy_reklam`, 1 Ekim 2026 tarihinde boş olarak doğrulanmıştır. Bu belge hedef mimariyi ve doğrulanmış uygulama durumunu ayrı tutar. P2 temeli uygulanmıştır; P3–P9 özellikleri hedeftir. Mevcut kod, iletişim ve varlıklar incelendi; canlı yayın erişimi henüz doğrulanmadı. Kullanıcının aynı gün belirlediği logo PNG’si `public/assets/brand/zy-reklam-reference.png` yoluna alınmıştır. Mevcut kaynaklar `akinarslan/adex-reklam-demo` deposunun `497677a411e8e229333152b7474a1d5f34eb6152` commit’inden `legacy/` altına değişmeden alındı. Yatay vektör logo ve Citadel WOFF dosyası public alana taşındı; önceki logo PDF’si okunup vektör içerdiği doğrulandı. Detaylar `docs/BASELINE.md` ve `docs/ASSET_INVENTORY.md` içindedir.
 
 Temel yolculuk: **İşi anla → Gerçek projeleri gör → Tabela fikrini dene → Teklif talebini hazırla → WhatsApp’ta gönder.**
 
@@ -19,7 +19,7 @@ Temel yolculuk: **İşi anla → Gerçek projeleri gör → Tabela fikrini dene 
 | 1 | Başlık ve gezinme | ZY kimliği; hizmet, proje, stüdyo ve iletişim bağlantıları | Hızlı yön bulma |
 | 2 | 3D açılış | Özgün ZY amblemi ışıklı pleksi ve metal tabela görünümünde; fareyle sınırlı dönüş | Üretim kalitesini hissettirme |
 | 3 | Üretim anlatımı | Metal kasa, LED, pleksi ve ön yüz kaydırmayla ayrılıp birleşir | Yapılan işi açıklama |
-| 4 | Hizmetler | Tabela/montaj, dijital baskı, lazer kesim, CNC ve UV; gerçek hizmet listesi P1’de doğrulanır | Talebi doğru işe yönlendirme |
+| 4 | Hizmetler | Doğrulanmış tabela/montaj, dijital baskı, lazer kesim ve promosyon; CNC/UV doğrulanmadı | Talebi doğru işe yönlendirme |
 | 5 | Gerçek projeler | Büyük fotoğraflar, tür filtreleri, mevcutsa önce/sonra | Güven ve kanıt |
 | 6 | Mini Tasarım Stüdyosu | İşletme adı, font, zemin, renk ve ışıklı/ışıksız seçenekleriyle önizleme | Somut bir müşteri fikri oluşturma |
 | 7 | Teklif al | İş türü, yaklaşık ölçü, adet, şehir, açıklama ve isteğe bağlı görsel | Eksiksiz talep hazırlama |
@@ -35,9 +35,9 @@ Ana başlık **“Projenize özel çözümler üretiyoruz.”** Açılış eylem
 
 - Ana ortam: koyu zümrüt ve siyah; vurgu: beyaz ışık ve ölçülü altın metal.
 - Kullanıcının belirlediği logo **beyaz “ZY” + altın “REKLAM”** yazısının tamamıdır; koyu zümrüt–siyah zeminde yatay bir işarettir. Kaynak: [logo referansı](public/assets/brand/zy-reklam-reference.png), 266 × 72 px PNG. Harflerin özgün kesimleri, aralıkları ve bütün logonun oranları korunur; yalnızca “ZY” kullanmak veya benzer fontla yeniden yazmak varsayılan değildir.
-- 3D sahnede beyaz “ZY” ışıklı pleksi, altın “REKLAM” metal yüzey olarak görselleştirilir. Orijinal ekran görüntüsü değişmeden saklanır. Küçük raster dosya büyük açılış sahnesinin hazır üretim varlığı veya onaylı vektörü sayılmaz; vektör/kontur doğrulaması P1.3’te yapılır. Kaynaktan doğrulanmış vektör çıkarılmadan geometrik logo üretimine geçilmez. İlk yüklemede aynı logonun statik sürümü gösterilir.
+- 3D sahnede beyaz “ZY” ışıklı pleksi, altın “REKLAM” metal yüzey olarak görselleştirilir. Orijinal ekran görüntüsü değişmeden saklanır. Küçük raster dosya referans olarak korunur. P1.3’te kaynak SVG’nin sekiz özgün path’i görsel olarak karşılaştırıldı; `public/assets/brand/zy-reklam-wordmark.svg` statik poster ve P3 kontur kaynağıdır. Benzer fontla yeniden yazılmaz. PDF’deki ek geometrik amblem, son yatay logo referansının yerine geçirilmez.
 - Citadel of Blackrose açılış başlığında kullanılır. Masaüstü başlangıç ölçüsü **45 pt = 60 CSS px**; mobilde taşmayı önleyen ölçek kullanılır. Gövde ve form metinlerinde okunaklı bir font seçilir.
-- Fontların Türkçe `İ ı Ş ş Ğ ğ Ç ç Ö ö Ü ü` desteği ve web kullanımı P1’de denetlenir. Eksik glif veya kullanım hakkı sorunu varsa başlık fontu kararı belgelenir; sessiz font değişikliği yapılmaz.
+- Citadel glifleri denetlendi: sabit başlığın bütün harfleri vardır; genel Türkçe sette `Ğ ğ İ Ş ş` eksiktir. Başlık Citadel olarak korunur; diğer içerik, menü ve form alanları Türkçe destekli Arial/Helvetica/sistem sans-serif kullanır. Arşiv kullanım metnindeki tek proje ödeme koşulu envanterde korunmuştur; belge satın alma kanıtı değildir.
 - Footer koyu zümrüt; `@yakinyazilim` beyaz ve hizalı tutulur. Bağlantının gerçek hedefi envanterden alınır.
 - Sekme ikonu gönderilen özgün logo ile oluşturulur; ikonun zemini siyah olur. Logo içeriğine gereksiz siyah dolgu uygulanmaz.
 - Gerçek proje görselleri baskın olur. Uydurma müşteri, referans, başarı sayısı veya proje bilgisi kullanılmaz.
@@ -49,7 +49,7 @@ Ana başlık **“Projenize özel çözümler üretiyoruz.”** Açılış eylem
 
 Önerilen yeni ön yüz: **Vite + TypeScript + semantik HTML/CSS + Three.js**. Arayüz, içerik ve formlar normal DOM’da kalır; Three.js yalnızca ürün görselleştirmesini yönetir. CSS, `IntersectionObserver` ve kontrollü `requestAnimationFrame` ile hareket yönetilir. Ek animasyon kütüphanesi varsayılan olarak eklenmez.
 
-Bu bir geçiş şartı değildir. P1’de mevcut kaynaklarda sürdürülebilir başka bir yapı görülürse onu koruyup aynı modül sınırlarını uygulamak tercih edilir. Stack değişikliği P1 karar kaydında gerekçelendirilir; paketin gerçekten desteklediği sürümler ve komutlar kod geldikten sonra doğrulanır, lockfile ile sabitlenir. Şu anda kurulmuş bağımlılık veya çalışan build yoktur.
+P1 kararı: mevcut statik HTML/CSS/DOM yaklaşımı korunur; Vite ve TypeScript geliştirme/build ve modül sınırları için eklenir. Arayüz framework’ü eklenmez. Vite 8.3.2, TypeScript 7.0.2, Playwright 1.62.1 ve npm lockfile kurulmuştur; `npm run build` tip kontrolüyle başarılıdır. Three.js P3’e kadar yüklenmez. Korunan başlangıç sürümü `legacy/` içinde kalır; build çıktısı `dist/` yalnızca yeni uygulamadır.
 
 ### 4.2 Katmanlar
 
@@ -232,8 +232,8 @@ Görsel kanıtlar: açılış, üretim, galeri, stüdyo, form ve footer için se
 | A01 | Dijital üretim atölyesi; zümrüt/siyah, beyaz/altın | Kabul | Kullanıcının istediği tasarım yönü |
 | A02 | Bir kaliteli açılış sahnesi; sınırlı ek animasyon | Kabul | Etki, okunabilirlik ve performans |
 | A03 | DOM içerik/forma öncelik; 3D bağımsız ve yedekli | Kabul | Erişim ve teklif akışının devamlılığı |
-| A04 | Vite/TypeScript/Three.js başlangıç önerisi | P1 doğrulaması bekliyor | Mevcut kaynak yapısı görülmeden zorunlu migrasyon yok |
-| A05 | Beyaz ZY + altın REKLAM tam logo; Citadel başlık, masaüstü 45 pt | Raster referans alındı; vektör/font bekliyor | Kullanıcının PNG’si görsel olarak incelendi; konturlar/font ayrıca doğrulanacak |
+| A04 | Mevcut DOM korunur; Vite/TypeScript modüler build, Three.js P3 | Kabul; temel build doğrulandı | Statik başlangıç arşivlendi; framework eklenmedi, sürümler/lockfile sabitlendi |
+| A05 | Tam yatay SVG logo; Citadel başlık 45 pt; gövde sistem fontu | Kabul; kaynak/glif incelemesi yapıldı | Orijinal SVG/PDF konturları mevcut; sabit başlık destekleniyor, diğer metinlerde Türkçe eksikleri önleniyor |
 | A06 | WhatsApp metin talebi; otomatik gönderim/fiyat yok | Kabul | İlk sürümün satış akışı |
 | A07 | Gerçek görsel yükleme için ayrı API/özel depo | Tasarım kabul; sağlayıcı bekliyor | Link ile dosya eklemenin farkı; P7 tamamlama |
 | A08 | Mevcut domain/hosting korunarak entegrasyon | P1 doğrulaması bekliyor | Çalışan yayının gereksiz değişmemesi |
@@ -244,3 +244,9 @@ Mimari değişiklikte sürüm, tarih, ilgili karar ve etkilenen roadmap işi gü
 ### 2026-10-01 — v1.1 logo kaynak açıklaması
 
 “logo bu” talimatıyla tam yatay yazı logosu referans olarak alındı. Beyaz/altın materyal eşlemesi netleştirildi. Etkilenen işler P1.2, P1.3 ve P3.1–P3.2. Aşama sırası ve ürün kapsamı değişmedi; 3D veya vektör henüz üretilmedi.
+
+### 2026-10-01 — v1.2 kaynak ve ön yüz kararı
+
+32 dosyalık başlangıç snapshot’ı, vektör logo, font ve iletişim envanteri alındı. P2 için mevcut DOM mantığı korunarak Vite/TypeScript kabul edildi. Gerçek proje fotoğrafları doğrulanmadığı için P1.5/P5 açık kalır; bu eksik bağımsız temel layout hazırlığını engellemez. CNC/UV mevcut içerikte doğrulanmadı ve hizmet listesine eklenmedi. Hosting yayın erişimi P9’da, upload sağlayıcısı P7’de kesinleşecek. P2’deki mevcut ad/mesaj formu eski iletişim davranışını korur; P6’daki ölçü/adet/stüdyo ve P7 upload henüz uygulanmış değildir.
+
+P2 kabul kanıtı: TypeScript/build başarılı, altı gerçek tarayıcı testi başarılı; 360/768/1440 px taşma ve JS kapalı iletişim yolu denetlendi. Ayrıntılar ROADMAP.md ve docs/evidence/P2_VERIFICATION.json içindedir. 3D/FPS/Lighthouse ve upload kabulü henüz yapılmadı.

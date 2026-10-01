@@ -1,16 +1,16 @@
 # ZY Reklam — Yol Haritası
 
-**Sürüm:** 1.0 · **Başlangıç:** 2026-10-01
+**Sürüm:** 1.1 · **Başlangıç:** 2026-10-01
 
 **Kaynak:** [ARCHITECTURE.md](ARCHITECTURE.md) · **Zorunlu kontrol:** [AGENTS.md](AGENTS.md)
 
 ## 1. Güncel durum
 
-**Son tamamlanan aşama:** P0 — Planlama belgelerinin kaydı.
+**Son tamamlanan aşama:** P2 — Ön yüz ve içerik temeli.
 
-**Aktif aşama:** P1 — Mevcut site ve varlık envanteri; logo referansı alındı.
+**Sıradaki uygulama aşaması:** P3 — Özgün yatay logo ile gerçek 3D açılış.
 
-Depo başlangıçta boştur. Kullanıcının gönderdiği raster logo referansı alınmıştır; kod, 3D model, vektör logo, fontlar ve canlı yayın henüz teslim edilmemiştir. Logo envanteri 3D uygulamanın başladığı anlamına gelmez.
+P1 kaynak, logo, font ve iletişim incelemesi yapıldı; gerçek proje bilgileri/fotoğrafları doğrulanmadığı için P1.5 açık kalır. Planın engel yönetimi uyarınca bağımsız P2 temeli tamamlandı. Vite/TypeScript sayfası, statik SVG poster, mobil menü, hareket tercihi ve temel WhatsApp iletişim akışı çalışıyor. 3D, üretim animasyonları, galeri, stüdyo ve upload henüz uygulanmadı.
 
 Durumlar: `bekliyor`, `devam ediyor`, `engelli`, `tamamlandı`. İş kutuları yalnızca kabul kanıtı üretildikten sonra işaretlenir. Bu dosya her kullanıcı talimatından önce okunur ve iş bitiminde güncellenir.
 
@@ -20,7 +20,7 @@ Durumlar: `bekliyor`, `devam ediyor`, `engelli`, `tamamlandı`. İş kutuları y
 | --- | --- | --- | --- |
 | P0 | Mimari, roadmap ve çalışma kuralları | Kullanıcının tasarım yönü | Tamamlandı |
 | P1 | Mevcut site, varlık, SEO ve yayın envanteri | P0 | Devam ediyor |
-| P2 | Ön yüz temeli, mobil düzen, içerik ve güvenli yedek | P1 | Bekliyor |
+| P2 | Ön yüz temeli, mobil düzen, içerik ve güvenli yedek | P1 geliştirme kaynakları; P1.5 proje içeriği açık | Tamamlandı |
 | P3 | Özgün ZY ile 3D açılış | P2 + doğrulanmış logo | Bekliyor |
 | P4 | Üretim anlatımı ve hizmet etkileşimleri | P3 | Bekliyor |
 | P5 | Gerçek proje galerisi | P2 + gerçek görseller; teslim sırası P4 sonrası | Bekliyor |
@@ -44,14 +44,14 @@ Süreler takvim taahhüdü değildir. P1 sonrası logo kalitesi, gerçek görsel
 
 ## 4. P1 — Mevcut site ve varlık envanteri
 
-- [ ] P1.1 Mevcut site kaynaklarını depoya al veya doğrulanmış erişilebilir kaynağı kaydet; çalışma ağacını ve başlangıç commit’ini koru.
-- [ ] P1.2 Logo, PDF/vektör kaynak, fontlar ve görselleri `docs/ASSET_INVENTORY.md` içine dosya/kaynak/kullanım hakkı/eksik durumu ile yaz.
-- [x] P1.2a Kullanıcının gönderdiği tam yazı logosunu değişmeden referans olarak kaydet; özelliklerini envantere yaz. P1.2’nin diğer varlıkları tamamlanmadı.
-- [ ] P1.3 ZY ambleminin onaylı vektörünü ve statik posterini hazırla; kaynakla oran/kontur karşılaştırmasını kaydet.
-- [ ] P1.4 Citadel of Blackrose fontunun Türkçe glifleri ve kullanım koşullarını denetle; 45 pt masaüstü başlık şartını kaydet.
-- [ ] P1.5 Gerçek hizmetler, WhatsApp numarası, iletişim, sosyal bağlantılar ve proje bilgilerini doğrula.
-- [ ] P1.6 Mevcut URL/SEO/favicon/domain-www/hosting/build durumunu `docs/BASELINE.md` içine kaydet.
-- [ ] P1.7 Ön yüz stack’i, mevcut yapıyı koruma/geçiş yöntemi, upload sağlayıcısı adayları ve ortam gereksinimlerini karar kaydına yaz.
+- [x] P1.1 Mevcut site kaynaklarını depoya al veya doğrulanmış erişilebilir kaynağı kaydet; çalışma ağacını ve başlangıç commit’ini koru.
+- [x] P1.2 Logo, PDF/vektör kaynak, fontlar ve görselleri `docs/ASSET_INVENTORY.md` içine dosya/kaynak/kullanım hakkı/eksik durumu ile yaz.
+- [x] P1.2a Kullanıcının gönderdiği tam yazı logosunu değişmeden referans olarak kaydet; özelliklerini envantere yaz. Kaynak dosyaları ve eksikler envantere kaydedildi.
+- [x] P1.3 ZY ambleminin onaylı vektörünü ve statik posterini hazırla; kaynakla oran/kontur karşılaştırmasını kaydet.
+- [x] P1.4 Citadel of Blackrose fontunun Türkçe glifleri ve kullanım koşullarını denetle; 45 pt masaüstü başlık şartını kaydet.
+- [ ] P1.5 Gerçek hizmetler, WhatsApp numarası, iletişim, sosyal bağlantılar ve proje bilgilerini doğrula. **Kısmi:** hizmet/iletişim doğrulandı; gerçek proje fotoğrafları ve proje bilgileri bekliyor.
+- [x] P1.6 Mevcut URL/SEO/favicon/domain-www/hosting/build durumunu `docs/BASELINE.md` içine kaydet.
+- [x] P1.7 Ön yüz stack’i, mevcut yapıyı koruma/geçiş yöntemi, upload sağlayıcısı adayları ve ortam gereksinimlerini karar kaydına yaz.
 
 **Kabul:** Geliştirme için gerekli kaynaklar bulunur; eksikler görünürdür. Logo/font/iletişim tahmin edilmez. P2 için çalıştırma ve build yöntemi seçilmiştir. Hosting sağlayıcısı doğrulanmadan yayın komutu yazılmaz.
 
@@ -59,12 +59,12 @@ Süreler takvim taahhüdü değildir. P1 sonrası logo kalitesi, gerçek görsel
 
 ## 5. P2 — Ön yüz ve içerik temeli
 
-- [ ] P2.1 P1 stack kararına göre yapı, paket/lockfile, TypeScript ve build düzenini kur.
-- [ ] P2.2 Tema tokenlarını, yerel fontları, responsive layout ve semantik bölümleri oluştur.
-- [ ] P2.3 Navbar, slogan, CTA, gerçek hizmet/iletişim içeriği ve zümrüt footer’ı uygula.
-- [ ] P2.4 Statik amblem/poster, 3D yükleme yedeği, hareket azaltma tercihi ve mobil etkileşim temelini kur.
-- [ ] P2.5 SEO metadata/favicon/canonical/robots/sitemap başlangıcını envantere göre koru veya hazırla.
-- [ ] P2.6 Değişikliğe uygun test/CI kontrollerini ekle; sırlar, build, bağımlılık ve upload dosyalarını Git dışında tut.
+- [x] P2.1 P1 stack kararına göre yapı, paket/lockfile, TypeScript ve build düzenini kur.
+- [x] P2.2 Tema tokenlarını, yerel fontları, responsive layout ve semantik bölümleri oluştur.
+- [x] P2.3 Navbar, slogan, CTA, gerçek hizmet/iletişim içeriği ve zümrüt footer’ı uygula.
+- [x] P2.4 Statik amblem/poster, 3D yükleme yedeği, hareket azaltma tercihi ve mobil etkileşim temelini kur.
+- [x] P2.5 SEO metadata/favicon/canonical/robots/sitemap başlangıcını envantere göre koru veya hazırla.
+- [x] P2.6 Değişikliğe uygun test/CI kontrollerini ekle; sırlar, build, bağımlılık ve upload dosyalarını Git dışında tut.
 
 **Kabul:** 360, 768 ve 1440 px genişliklerde yatay taşma yoktur. Başlık masaüstünde 45 pt, mobilde okunaklıdır. CTA ve temel iletişim 3D’den bağımsız çalışır. Klavye odakları görünür; build ve seçilen statik analiz kontrolleri geçer. CI mevcut değilse başarı iddia edilmez; kurulan kontrollerin gerçek çıktısı kaydedilir.
 
@@ -179,3 +179,16 @@ Sıradaki tek iş:
 - Mimari revizyonu: v1.1 / A05; tam yatay logo ve materyal eşlemesi netleştirildi. Aşama sırası ve kapsam korunuyor.
 - Sınır: raster referans vektör/3D üretim kabulü değildir; uygulama kodu yok, build/test çalıştırılmadı.
 - Sıradaki tek iş: P1.1 — mevcut site kaynaklarını envantere almak; vektör logo kaynağı P1.3’te ayrıca doğrulanacak.
+
+### 2026-10-01 — Kaynak incelemesi ve P2 temeli
+
+- Talimat: “devam et”; P1.1–P1.7 incelemesi ve bağımsız P2.1–P2.6 uygulaması.
+- Başta okunan belgeler: güncel AGENTS.md, mimari v1.1 ve roadmap v1.0. Uzak main başlangıcı `d066a2afc095367608d3932a75e62064c2755819`; yerel Git ağacı commit içermiyor, uzak kayıt GitHub bağlayıcısıyla yönetiliyor. Kullanıcı dosyaları silinmedi.
+- Kaynak: `akinarslan/adex-reklam-demo` / `497677a411e8e229333152b7474a1d5f34eb6152`; 32 dosya legacy altında değişmeden alındı; dosya kimlikleri manifestte.
+- Dosyalar: legacy snapshot, SVG/PDF/font/SEO varlıkları; index.html, package/lockfile, tsconfig, src modülleri, tests/browser.test.mjs, doğrulama workflow’u ve proje belgeleri.
+- Kanıt: `npm run build` TypeScript ve Vite kontrollerini geçti. Yerel Chromium 153 ile altı Playwright testi geçti; 360/768/1440 px taşma yok, görseller yüklendi, JS hatası yok; masaüstü başlık 60 px = 45 pt. Menü/Escape/odak, hareket tercihi, Türkçe ve özel karakterli WhatsApp metni, boş girdi ve JavaScript kapalı iletişim yolu doğrulandı. Testler mesaj göndermedi.
+- Görsel kontrol: üç tam sayfa ekran görüntüsü üretildi; masaüstü ve mobil görüntüler incelendi. Yapılandırılmış kanıt: docs/evidence/P2_VERIFICATION.json. Ekran görüntüleri Git dışında; CI çalışma çıktısında üretilir.
+- Ortam: Playwright CDN ZIP indirmesi başarısız oldu; aynı test paketi `ZY_CHROMIUM_PATH` ile gerçek yerel Chromium üzerinden 6/6 geçti. CI tanımlandı; uzak çalışma sonucu bu yerel kanıtın yerine iddia edilmez.
+- Durum: P2 tamamlandı. P1.5 gerçek proje içeriği bekliyor; P1 bütünü tamamlanmadı. P3–P9 kutuları açık. Mevcut hero statik SVG tabela posteridir; 3D değildir.
+- Mimari revizyonu: v1.2 / A04 ve A05; framework eklemeden Vite/TypeScript, onaylı SVG konturları ve font/glif sınırları kaydedildi.
+- Sıradaki tek iş: P3.1 — özgün yatay SVG konturlarını katmanlı tabela geometrisine dönüştürmek.

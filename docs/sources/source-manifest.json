@@ -1,0 +1,203 @@
+{
+  "sourceRepository": "akinarslan/adex-reklam-demo",
+  "sourceCommit": "497677a411e8e229333152b7474a1d5f34eb6152",
+  "excluded": [
+    "Thumbs.db",
+    "readme-images",
+    "README.md"
+  ],
+  "files": [
+    {
+      "path": "legacy/robots.txt",
+      "bytes": 76,
+      "sha256": "2dddb0350319c639df760887f0440e687f11152b9e9b295e953295cffe67acd3",
+      "gitBlobSha": "76ca0fe24ea4bf8b6a9dfe657e2f1a902c8ba877"
+    },
+    {
+      "path": "legacy/favicon.svg",
+      "bytes": 249,
+      "sha256": "42b0f8df07435e4a30147ac0154ac4f55842325b822cfcce1bae79085ae04b11",
+      "gitBlobSha": "f0d8293c32b3797645c045730ce272ea123ef98b"
+    },
+    {
+      "path": "legacy/index.html",
+      "bytes": 20744,
+      "sha256": "0f95fb8ddcc42dc32e5ec77e169ef072cb69266067a30e61fed18c2f012a640e",
+      "gitBlobSha": "14840f2fbe36d832333d894dcbbd7aa449916559"
+    },
+    {
+      "path": "legacy/index.txt",
+      "bytes": 4160,
+      "sha256": "f9dc1048a9f6092d3d0985d6c101976f22a03355c7f250fa301919334154718a",
+      "gitBlobSha": "0bf7b1bb10226567fe930c8c81e03f72185b1f74"
+    },
+    {
+      "path": "legacy/style-guide.md",
+      "bytes": 1941,
+      "sha256": "544f4be51103c146133d01d9888d270ad8b720eff3f6f564c26827e9eb035da2",
+      "gitBlobSha": "046c0a76a910570bc90987a2de8c8cce75147034"
+    },
+    {
+      "path": "legacy/sitemap.xml",
+      "bytes": 174,
+      "sha256": "f669ac099ed9549d7682f8e23c069bd52e04da829809bc3b44a41041fbd3d900",
+      "gitBlobSha": "f6f1d9c1dd1d9d723b7d2189e63a8dd5096bfb44"
+    },
+    {
+      "path": "legacy/LICENSE",
+      "bytes": 1061,
+      "sha256": "d9fcc92a9a08f924f93effecd3feacba0341578094876bbd69583523b53e2661",
+      "gitBlobSha": "d8763cc06f7cc7785c6ca622103b6f2d8a3a211b"
+    },
+    {
+      "path": "legacy/assets/js/script.js",
+      "bytes": 4225,
+      "sha256": "3a4030091ba9e144116cf5c88247649fa0afdb08a8a5020912c980a868b1c5c1",
+      "gitBlobSha": "ed967aa8fa15f9089aac3b51eaf8e2dfa4df333a"
+    },
+    {
+      "path": "legacy/assets/css/style.css",
+      "bytes": 34958,
+      "sha256": "cff1d0cc77b9789341adddd31afe0675be807f2f2141ddf8370c792a1fdbd8b6",
+      "gitBlobSha": "9abf7c45651156d765e66b42882cd43e63690937"
+    },
+    {
+      "path": "legacy/assets/fonts/citadel-of-blackrose.woff",
+      "bytes": 54524,
+      "sha256": "50d867c9537a74ae900c17ffe3f756bcb92881bed94f2bf0241278d6ee704675",
+      "gitBlobSha": "c1edf39093a1c07e4b39a681410d8b38e1e3df4d"
+    },
+    {
+      "path": "legacy/assets/fonts/citadel-of-blackrose-license.txt",
+      "bytes": 432,
+      "sha256": "2e7d6236b1a768b8e56e99a804213cf82d230b66ef6903b86f5f1d257a8df64d",
+      "gitBlobSha": "eb55970801e462e51b403e8e1409d239dd7146bf"
+    },
+    {
+      "path": "legacy/assets/fonts/big-larian-customs.woff",
+      "bytes": 54240,
+      "sha256": "37b5dcf70b2311a92d6452cf55f1a5e764eed3b21c6ef686d5c857be6cc37d53",
+      "gitBlobSha": "0368ea1ffdc0bf2b4beb8dbbc31caf3889387cf0"
+    },
+    {
+      "path": "legacy/assets/fonts/big-larian-customs-license.txt",
+      "bytes": 1306,
+      "sha256": "2ae7912f35cdde22a220558e93ee01f78dd684fe2a5bf6ceac0804d57aa1e8b6",
+      "gitBlobSha": "46067a802e6f630dfb76c9c41a913d8c7de18624"
+    },
+    {
+      "path": "legacy/assets/images/zy-reklam-apple-touch-icon.png",
+      "bytes": 6747,
+      "sha256": "cade450360de2fa9934b6eb73100e023b79a16ae3ef67f6dbde536a7037642b2",
+      "gitBlobSha": "e6f4cc196d529c0adf3b8a643b0a7e47b577bec8"
+    },
+    {
+      "path": "legacy/assets/images/zy-reklam-social.png",
+      "bytes": 30131,
+      "sha256": "f1bc5a9c332dd439d62e84c8940e35225aaa4af18f9204770af55439e8f09bbe",
+      "gitBlobSha": "e3a39aacb39edd64178dc15bc73d77a3a981be72"
+    },
+    {
+      "path": "legacy/assets/images/hero-bg.jpg",
+      "bytes": 5104,
+      "sha256": "bdf0c4a1c2c42dc8b484c8afcb144bf6b3402dc8ff9cc0d7f18c3523389ae47c",
+      "gitBlobSha": "02847ab642a7b1ba93cbfa9114fdc73c9335382d"
+    },
+    {
+      "path": "legacy/assets/images/blog-4.jpg",
+      "bytes": 27157,
+      "sha256": "f2601f9c01883ed1456e739e97b3699d00b54ca51b207215d17323b917ecbee5",
+      "gitBlobSha": "0743940e1f82f13cc23dd72d3293f3a295ba4f6f"
+    },
+    {
+      "path": "legacy/assets/images/logo-light.svg",
+      "bytes": 2482,
+      "sha256": "f343172c120b831bb3cfba024011fc8afaada878731b2286d84a471488ac38a4",
+      "gitBlobSha": "e7303afc33c1e49662d53f3166959d465f6d9229"
+    },
+    {
+      "path": "legacy/assets/images/blog-3.jpg",
+      "bytes": 52567,
+      "sha256": "a50d5aaf264ff0f6215349b8ceec442699b3a3456c9e283971331828b7746b6e",
+      "gitBlobSha": "567ce9d7dda03190e37133beb03c5e17a2efc2e0"
+    },
+    {
+      "path": "legacy/assets/images/stats-bg.jpg",
+      "bytes": 146761,
+      "sha256": "636b64e7f4f4820fd1f4f97f075719bafe9f7b71b87e7b9c22af1f5349ba70e4",
+      "gitBlobSha": "40dc71b9290e900c39a94596266f247ac4f94a85"
+    },
+    {
+      "path": "legacy/assets/images/zy-reklam-logo.svg",
+      "bytes": 30438,
+      "sha256": "fa05201a61db153fa449f347ea87cacbf5652770e3faa64ec20f58167582ba5c",
+      "gitBlobSha": "3a88e339d221a2a6b77620b1386d51eabf9a7813"
+    },
+    {
+      "path": "legacy/assets/images/about-banner.png",
+      "bytes": 19377,
+      "sha256": "9068871df67fa659eb7140bc1981bfffce0b9a039d184023c660edf70b55c8d3",
+      "gitBlobSha": "270375baa32ecf53d4fe7102490a1f5596572bb8"
+    },
+    {
+      "path": "legacy/assets/images/hero-slide-3.jpg",
+      "bytes": 35438,
+      "sha256": "7c476ff61669b53fbde245a0a8fb79865f4ff4ee5af7f5f099ba0efb7e23ba8b",
+      "gitBlobSha": "7f0b69719e446ae2030024492396acfe933420cf"
+    },
+    {
+      "path": "legacy/assets/images/zy-reklam-lockup.svg",
+      "bytes": 38582,
+      "sha256": "a76c6d620804cc502b330accea0843d4deb1d7f20659bfd1ab95f9cf8b8a6e26",
+      "gitBlobSha": "297bcaecd56f8f715199e6ca8a2981dd4ca68caf"
+    },
+    {
+      "path": "legacy/assets/images/hero-slide-2.jpg",
+      "bytes": 59413,
+      "sha256": "98302f516ad6a85e612c922841bce8fbd653214c48eae80941f62b9aabc037fa",
+      "gitBlobSha": "e79d7b91b8091f3f6daf2ad01618df158f21720c"
+    },
+    {
+      "path": "legacy/assets/images/blog-1.jpg",
+      "bytes": 36140,
+      "sha256": "53f1432320f50778c57261c6b4330e550be96b0e2f7f38036952cb2e536ecf96",
+      "gitBlobSha": "e069641436b1f36622a146073463ba084d4f10a9"
+    },
+    {
+      "path": "legacy/assets/images/zy-reklam-favicon.svg",
+      "bytes": 30484,
+      "sha256": "9ee695e23add1616c626402c5f07073b3cb802d4d65f7d7881d6b8902e684f71",
+      "gitBlobSha": "76173bb781b4270d71760fedad0c68beae75176c"
+    },
+    {
+      "path": "legacy/assets/images/blog-2.jpg",
+      "bytes": 52866,
+      "sha256": "8fcff1a580da8d2997a18fdc48936df87df870929a35bedd9dab2c4b7c9a0be4",
+      "gitBlobSha": "7726d24860dafaacca2dacd1ac6335fa4f698682"
+    },
+    {
+      "path": "legacy/assets/images/logo-dark.svg",
+      "bytes": 2486,
+      "sha256": "d577f7facb6da50003c853bea299a8a347c716687642e932125131c2c202ed4a",
+      "gitBlobSha": "6ad4e232a54e97764c0b7c3a406422179661a7f9"
+    },
+    {
+      "path": "legacy/assets/images/feature-banner.png",
+      "bytes": 20703,
+      "sha256": "ed25dd65b9f30fea6bc92abcbc5a40016706250e5b2a04ae9dd1aa93a70110bf",
+      "gitBlobSha": "77e03afed28ef5b7c0e6185820c270f1bc0779dc"
+    },
+    {
+      "path": "legacy/assets/images/zy-reklam-wordmark.svg",
+      "bytes": 8340,
+      "sha256": "11ffcb567b413dc48d0d8a6539c4c981683ff4b89f5a4e6b149e154884985439",
+      "gitBlobSha": "63de4b4cfe6c9d15ef8962ed511309365b10ed43"
+    },
+    {
+      "path": "legacy/assets/images/hero-slide-1.jpg",
+      "bytes": 35853,
+      "sha256": "9abf8338693db517a80a75d71a88c45bdbb89dcfe69b59668e2f108f312fe5e4",
+      "gitBlobSha": "ad46b07958485414ce52aedc548352868d7e399b"
+    }
+  ]
+}

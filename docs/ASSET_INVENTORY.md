@@ -1,6 +1,6 @@
 # ZY Reklam — Varlık Envanteri
 
-**Tarih:** 2026-10-01 · **Aşama:** P1.2 (kısmi)
+**Tarih:** 2026-10-01 · **Aşama:** P1.2 — envanter kaydı tamamlandı; gerçek proje varlıkları bekliyor
 
 | Alan | Değer |
 | --- | --- |
@@ -16,14 +16,32 @@
 
 3D materyal eşlemesi: beyaz ZY ışıklı pleksi; altın REKLAM metal. Harfler benzer fontla yeniden yazılmaz; kaynak konturları korunur. Zeminin kaldırılması, kontur çıkarımı veya yeni görsel üretimi bu işte yapılmadı.
 
-## Bekleyen varlıklar
+## Varlık durumları
 
 | Varlık | Durum | İş |
 | --- | --- | --- |
-| Mevcut site kaynakları | Henüz depoda yok | P1.1 |
-| Vektör/yüksek çözünürlüklü logo | Henüz incelenmedi; önceki PDF varsa okunup referansla karşılaştırılmalı | P1.3 |
-| Üretim için konturlar/statik poster | Henüz hazırlanmadı | P1.3 |
-| Citadel of Blackrose | Henüz depoya alınmadı; glif/kullanım kontrolü bekliyor | P1.4 |
-| Gerçek proje fotoğrafları | Henüz depoya alınmadı | P1.2 / P5 |
+| Mevcut site kaynakları | 32 dosya legacy altında; manifest doğrulandı | P1.1 tamamlandı |
+| Vektör ve PDF logo | Kaynak SVG ve kullanıcı PDF’si incelendi | P1.3 tamamlandı |
+| Statik poster / 3D kontur girdisi | Özgün SVG hazır; 3D geometri henüz yok | P1.3 tamamlandı, P3.1 bekliyor |
+| Citadel of Blackrose | WOFF, lisans metni ve glif kontrolü kaydedildi | P1.4 tamamlandı; ödeme belgesi yok |
+| Gerçek proje fotoğrafları | Müşteri işi oldukları doğrulanmadı | P1.5 / P5 bekliyor |
 
-P1.2a yalnızca verilen raster referansın kaydıdır. Diğer varlıklar alınmadan P1.2 ve P1 tamamlandı işaretlenmez.
+P1.2 envanter çalışması tamamlandı; eksik proje içeriği varmış gibi gösterilmez. P1 bütünü P1.5 nedeniyle açık kalır.
+
+## 2026-10-01 — Kaynak varlıklar ve font incelemesi
+
+| Varlık | Kaynak ve durum |
+| --- | --- |
+| Mevcut site | `legacy/` altında sabit commit’ten alınan 32 dosya; manifest ile doğrulandı |
+| Vektör tam yazı logosu | `public/assets/brand/zy-reklam-wordmark.svg`; mevcut repo SVG’si, 8 path, viewBox 197 373 629 88; beyaz ZY/altın REKLAM konturları görsel olarak referansla eşleşiyor |
+| Statik logo gösterimi | Aynı SVG poster olarak CSS zemin üzerinde kullanılır; ayrı raster büyütme yapılmaz |
+| PDF kaynak | `docs/sources/zy-logo-source.pdf`; önceki kullanıcı PDF’si değişmeden alındı; 1 sayfa, 17 vektör çizimi, 0 raster görüntü; render incelendi |
+| Citadel WOFF | `public/assets/fonts/citadel-of-blackrose.woff`; mevcut kaynak deposundan değişmeden alındı |
+| Font kullanım metni | `public/assets/fonts/citadel-of-blackrose-license.txt`; arşiv ve font metadata’sı tek proje için €2 ödeme koşulunu belirtiyor; ödeme belgesi bu envanterde yok |
+| Türkçe destek | Başlığın tüm glifleri mevcut; genel Türkçe sette Ğ, ğ, İ, Ş, ş eksik. Gövde/formlar Türkçe destekli sistem fontu kullanır; font sessizce değiştirilmedi |
+| Gerçek proje fotoğrafları | Henüz doğrulanmadı; legacy demo görselleri gerçek müşteri işi olarak yeni galeride kullanılmaz |
+| Sosyal / Apple ikon | Mevcut kaynak varlıkları public alana alındı; source SVG’den siyah zeminli tam yazı favicon’u hazırlandı |
+
+Kaynak PDF, ekran görüntüsündeki yatay yazıya ek olarak geometrik amblem içerir. Son verilen referans gereği yatay tam yazı logosu ana kimliktir; PDF’nin ek amblemi zorunlu açılış sahnesi olarak eklenmedi.
+
+Fontun ticari kullanım koşulu kaydedilmiştir; kaynakta mevcut kullanımı ve kullanıcının font talimatı geliştirme kararıdır. Bu envanter bir satın alma belgesi veya hak onayı üretmez.
