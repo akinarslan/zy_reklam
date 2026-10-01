@@ -32,6 +32,11 @@ export function createHeroRenderer(stage: HTMLElement, mount: HTMLElement, svg: 
   let startYaw = 0;
   let yaw = -.12;
   let pitch = .05;
+  let renderCount = 0;
+  let shadowCount = 0;
+  let shadowTime = -Infinity;
+  let shadowYaw = NaN;
+  let shadowPitch = NaN;
   const quality = new QualityMonitor();
   const abort = new AbortController();
   const camera = new PerspectiveCamera(35, 1, .1, 50);
@@ -126,11 +131,21 @@ export function createHeroRenderer(stage: HTMLElement, mount: HTMLElement, svg: 
     canvas.setAttribute('aria-hidden', 'true');
     mount.replaceChildren(canvas);
 
-    const render = () => {
+    const render = (now = performance.now(), settled = false) => {
       if (disposed || !visible || document.hidden) return;
-      renderer!.shadowMap.needsUpdate = quality.quality === 'high';
+      // Reuse the shadow map between updates; always capture the final pose.
+      const changed = shadowYaw !== sign.rotation.y || shadowPitch !== sign.rotation.x;
+      const updateShadow = quality.quality === 'high' && changed && (settled || now - shadowTime >= 50);
+      renderer!.shadowMap.needsUpdate = updateShadow;
       renderer!.render(scene, camera);
-      stage.dataset.renderCount = String(Number(stage.dataset.renderCount) + 1);
+      if (updateShadow) {
+        shadowTime = now;
+        shadowYaw = sign.rotation.y; shadowPitch = sign.rotation.x;
+        stage.dataset.shadowCount = String(++shadowCount);
+        stage.dataset.shadowRotationY = String(shadowYaw);
+        stage.dataset.shadowRotationX = String(shadowPitch);
+      }
+      stage.dataset.renderCount = String(++renderCount);
       stage.dataset.rotationY = String(sign.rotation.y);
       stage.dataset.rotationX = String(sign.rotation.x);
       stage.dataset.triangles = String(renderer!.info.render.triangles);
@@ -155,14 +170,14 @@ export function createHeroRenderer(stage: HTMLElement, mount: HTMLElement, svg: 
       const smoothing = 1 - Math.exp(-9 * delta);
       sign.rotation.y += (yaw - sign.rotation.y) * smoothing;
       sign.rotation.x += (pitch - sign.rotation.x) * smoothing;
-      try { render(); } catch { fallback('render-error'); return; }
+      const unsettled = Math.abs(yaw - sign.rotation.y) + Math.abs(pitch - sign.rotation.x) > .0002;
+      try { render(now, !unsettled); } catch { fallback('render-error'); return; }
       const update = quality.sample(now);
       if (update === 'lower') {
         stage.dataset.quality = 'low';
         renderer!.shadowMap.enabled = false;
         resize();
       } else if (update === 'poster') { fallback('slow-device'); return; }
-      const unsettled = Math.abs(yaw - sign.rotation.y) + Math.abs(pitch - sign.rotation.x) > .0002;
       if (unsettled && !disposed) frame = requestAnimationFrame(tick);
       else { quality.reset(); stage.dataset.renderLoop = 'idle'; }
     };

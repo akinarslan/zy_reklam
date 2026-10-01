@@ -1,0 +1,233 @@
+{
+  "date": "2026-10-01T12:20:06.980Z",
+  "baselineCommit": "1153c07bb58ef9ee7b641cea9eb5d278de2d16d1",
+  "browser": "153.0.8010.0",
+  "gpu": "ANGLE SwiftShader / software GPU",
+  "method": "Three alternating before/after pairs per profile, 4.5 seconds active interaction per sample; same process/browser. FPS counts actual renderer calls.",
+  "physicalDevice": false,
+  "acceptance": "Physical desktop/mobile acceptance remains open; software comparison is not a device guarantee.",
+  "medians": [
+    {
+      "profile": "desktop-software",
+      "variant": "before",
+      "medianFPS": 36.61621765565624,
+      "minFPS": 30.871052280909478,
+      "maxFPS": 36.9919149407648
+    },
+    {
+      "profile": "desktop-software",
+      "variant": "after",
+      "medianFPS": 38.221372858387255,
+      "minFPS": 35.72379515398953,
+      "maxFPS": 38.79491897404066
+    },
+    {
+      "profile": "mobile-software-emulation",
+      "variant": "before",
+      "medianFPS": 51.21837653267958,
+      "minFPS": 50.12254631365791,
+      "maxFPS": 52.37809885252989
+    },
+    {
+      "profile": "mobile-software-emulation",
+      "variant": "after",
+      "medianFPS": 52.25747879807798,
+      "minFPS": 51.08159729932971,
+      "maxFPS": 52.33976491459792
+    }
+  ],
+  "samples": [
+    {
+      "profile": {
+        "name": "desktop-software",
+        "width": 1440,
+        "dpr": 1,
+        "cpu": 1
+      },
+      "variant": "before",
+      "repetition": 1,
+      "elapsedMs": 4502.599999999255,
+      "renderedFrames": 139,
+      "shadowUpdates": null,
+      "state": "ready",
+      "quality": "high",
+      "fps": 30.871052280909478
+    },
+    {
+      "profile": {
+        "name": "desktop-software",
+        "width": 1440,
+        "dpr": 1,
+        "cpu": 1
+      },
+      "variant": "after",
+      "repetition": 1,
+      "elapsedMs": 4510.9,
+      "renderedFrames": 175,
+      "shadowUpdates": 67,
+      "state": "ready",
+      "quality": "high",
+      "fps": 38.79491897404066
+    },
+    {
+      "profile": {
+        "name": "desktop-software",
+        "width": 1440,
+        "dpr": 1,
+        "cpu": 1
+      },
+      "variant": "before",
+      "repetition": 2,
+      "elapsedMs": 4506.200000002235,
+      "renderedFrames": 165,
+      "shadowUpdates": null,
+      "state": "ready",
+      "quality": "high",
+      "fps": 36.61621765565624
+    },
+    {
+      "profile": {
+        "name": "desktop-software",
+        "width": 1440,
+        "dpr": 1,
+        "cpu": 1
+      },
+      "variant": "after",
+      "repetition": 2,
+      "elapsedMs": 4506.8,
+      "renderedFrames": 161,
+      "shadowUpdates": 66,
+      "state": "ready",
+      "quality": "high",
+      "fps": 35.72379515398953
+    },
+    {
+      "profile": {
+        "name": "desktop-software",
+        "width": 1440,
+        "dpr": 1,
+        "cpu": 1
+      },
+      "variant": "before",
+      "repetition": 3,
+      "elapsedMs": 4514.4999999977645,
+      "renderedFrames": 167,
+      "shadowUpdates": null,
+      "state": "ready",
+      "quality": "high",
+      "fps": 36.9919149407648
+    },
+    {
+      "profile": {
+        "name": "desktop-software",
+        "width": 1440,
+        "dpr": 1,
+        "cpu": 1
+      },
+      "variant": "after",
+      "repetition": 3,
+      "elapsedMs": 4500.099999999255,
+      "renderedFrames": 172,
+      "shadowUpdates": 68,
+      "state": "ready",
+      "quality": "high",
+      "fps": 38.221372858387255
+    },
+    {
+      "profile": {
+        "name": "mobile-software-emulation",
+        "width": 360,
+        "dpr": 2,
+        "cpu": 4
+      },
+      "variant": "before",
+      "repetition": 1,
+      "elapsedMs": 4528.90000000149,
+      "renderedFrames": 227,
+      "shadowUpdates": null,
+      "state": "ready",
+      "quality": "high",
+      "fps": 50.12254631365791
+    },
+    {
+      "profile": {
+        "name": "mobile-software-emulation",
+        "width": 360,
+        "dpr": 2,
+        "cpu": 4
+      },
+      "variant": "after",
+      "repetition": 1,
+      "elapsedMs": 4502.600000000745,
+      "renderedFrames": 230,
+      "shadowUpdates": 75,
+      "state": "ready",
+      "quality": "high",
+      "fps": 51.08159729932971
+    },
+    {
+      "profile": {
+        "name": "mobile-software-emulation",
+        "width": 360,
+        "dpr": 2,
+        "cpu": 4
+      },
+      "variant": "before",
+      "repetition": 2,
+      "elapsedMs": 4510.099999999255,
+      "renderedFrames": 231,
+      "shadowUpdates": null,
+      "state": "ready",
+      "quality": "high",
+      "fps": 51.21837653267958
+    },
+    {
+      "profile": {
+        "name": "mobile-software-emulation",
+        "width": 360,
+        "dpr": 2,
+        "cpu": 4
+      },
+      "variant": "after",
+      "repetition": 2,
+      "elapsedMs": 4516.1,
+      "renderedFrames": 236,
+      "shadowUpdates": 76,
+      "state": "ready",
+      "quality": "high",
+      "fps": 52.25747879807798
+    },
+    {
+      "profile": {
+        "name": "mobile-software-emulation",
+        "width": 360,
+        "dpr": 2,
+        "cpu": 4
+      },
+      "variant": "before",
+      "repetition": 3,
+      "elapsedMs": 4505.70000000298,
+      "renderedFrames": 236,
+      "shadowUpdates": null,
+      "state": "ready",
+      "quality": "high",
+      "fps": 52.37809885252989
+    },
+    {
+      "profile": {
+        "name": "mobile-software-emulation",
+        "width": 360,
+        "dpr": 2,
+        "cpu": 4
+      },
+      "variant": "after",
+      "repetition": 3,
+      "elapsedMs": 4509.00000000149,
+      "renderedFrames": 236,
+      "shadowUpdates": 77,
+      "state": "ready",
+      "quality": "high",
+      "fps": 52.33976491459792
+    }
+  ]
+}

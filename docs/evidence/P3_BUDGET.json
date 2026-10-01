@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-01",
+  "date": "2026-10-01T12:18:54.723Z",
   "svgSource": {
     "path": "public/assets/brand/zy-reklam-wordmark.svg",
     "bytes": 8340,
@@ -15,15 +15,16 @@
   "assetBudgetPassed": true,
   "chunks": [
     {
-      "path": "dist/assets/renderer-Matpv4fW.js",
-      "bytes": 604835,
-      "gzipBytes": 153272
+      "path": "dist/assets/index-BxE0oBOY.js",
+      "bytes": 7235,
+      "gzipBytes": 3091
     },
     {
-      "path": "dist/assets/index-CkxKmveN.js",
-      "bytes": 7235,
-      "gzipBytes": 3090
+      "path": "dist/assets/renderer-TVqBJN-a.js",
+      "bytes": 605088,
+      "gzipBytes": 154704
     }
   ],
-  "physicalGPUAcceptance": "Not measured; P3 remains in progress."
+  "physicalGPUAcceptance": "Not measured; P3 remains in progress.",
+  "compressionMethod": "Node zlib.gzipSync, same method for all current chunks"
 }

@@ -1,6 +1,6 @@
 # ZY Reklam — Mimari
 
-**Sürüm:** 1.3 · **Tarih:** 2026-10-01 · **Durum:** P3 gerçek 3D ve güvenli yollar uygulandı; fiziksel cihaz performans kabulü açık
+**Sürüm:** 1.4 · **Tarih:** 2026-10-01 · **Durum:** P3 gerçek 3D ve güvenli yollar uygulandı; fiziksel cihaz performans kabulü açık
 
 **İlgili belgeler:** [Yol haritası](ROADMAP.md) · [Çalışma kuralları](AGENTS.md)
 
@@ -230,7 +230,7 @@ Görsel kanıtlar: açılış, üretim, galeri, stüdyo, form ve footer için se
 | ID | Karar | Durum | Gerekçe / sonraki kontrol |
 | --- | --- | --- | --- |
 | A01 | Dijital üretim atölyesi; zümrüt/siyah, beyaz/altın | Kabul | Kullanıcının istediği tasarım yönü |
-| A02 | Bir kaliteli açılış sahnesi; sınırlı ek animasyon | Uygulandı; performans kabulü açık | 15 test geçti; fiziksel GPU ölçümleri henüz yok |
+| A02 | Bir kaliteli açılış sahnesi; sınırlı ek animasyon | Uygulandı; performans kabulü açık | 16 test geçti; gölge çizimi sınırlı; fiziksel GPU ölçümleri henüz yok |
 | A03 | DOM içerik/forma öncelik; 3D bağımsız ve yedekli | Uygulandı ve test edildi | WebGL/context/yükleme hataları ve hareket tercihi kontrolleri geçti |
 | A04 | Mevcut DOM korunur; Vite/TypeScript modüler build, Three.js P3 | Kabul; temel build doğrulandı | Statik başlangıç arşivlendi; framework eklenmedi, sürümler/lockfile sabitlendi |
 | A05 | Tam yatay SVG logo; Citadel başlık 45 pt; gövde sistem fontu | Kabul; kaynak/glif incelemesi yapıldı | Orijinal SVG/PDF konturları mevcut; sabit başlık destekleniyor, diğer metinlerde Türkçe eksikleri önleniyor |
@@ -263,3 +263,9 @@ P2 kabul kanıtı: TypeScript/build başarılı, altı gerçek tarayıcı testi 
 - Kaynak SVG 8.340 bayt; dış model/texture/env transferi sıfır; ertelenen JS 604.835 bayt ham / 154.582 bayt Node gzip ölçümü. Vite’ın 500 KB chunk uyarısı görünür biçimde kaydedildi; ilk JS’ye birleştirilmedi ve uyarı eşiği yükseltilmedi. Kabul kanıtları docs/evidence/P3_VERIFICATION.json ve P3_BUDGET.json içindedir.
 
 P3.1–P3.5 işlevleri doğrulandı; P3 aşama kabulü fiziksel cihaz performans ölçümü/optimizasyonu nedeniyle devam ediyor. P4 henüz başlatılmadı; sahne yöneticisinin sonraki üretim/stüdyo geçişleri bu aşamada uygulanmış sayılmaz.
+
+### 2026-10-01 — v1.4 gölge çizim bütçesi (P3.6)
+
+Hareket sırasında 512 px gölge haritası en fazla 20 Hz güncellenir; aradaki kareler mevcut haritayı kullanır. Dönüş yerleşen son karede değişen poz mutlaka gölgeye aktarılır; idle ve kamera boyutu değişiminde aynı poz için gereksiz gölge çizilmez. Görünür ana sahnenin RAF hızı sınırlandırılmadı; logo konturları, materyaller ve DPR sınırları korundu. A02/A03 ve aşama sırası değişmedi.
+
+16 yerel test geçti. Yeni production WebGL kontrolü hareket sırasında çizim sınırını, son poz/gölge eşleşmesini ve idle gölge durmasını doğrular. Üç eşleşmiş önce/sonra örneğinin ortanca FPS değerleri: masaüstü yazılımsal 36,6 → 38,2; CPU4 mobil emülasyon 51,2 → 52,3. Dağılımlar örtüşmektedir; kalıcı cihaz hızlanması veya yaklaşık 60 FPS kabulü iddia edilmez. Ham kayıt: docs/evidence/P3_PERFORMANCE_COMPARISON.json. Önceki v1.3 sayıları ilk teslimin tarihsel ölçümleridir; güncel paket boyutları P3_BUDGET.json içindedir. Fiziksel cihaz kabulü ve P3.6 açık; P4 başlamadı.

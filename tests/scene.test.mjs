@@ -112,6 +112,35 @@ test('Mobil yatay sürükleme ve gerçek dokunmayla dikey sayfa kaydırma', asyn
   await page.close();
 });
 
+test('Hareket sırasında gölge çizimi sınırlanır; son konum ve idle gölgesi korunur', async () => {
+  const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+  await ready(page);
+  const measurement = await page.evaluate(() => new Promise(resolve => {
+    const stage = document.querySelector('[data-hero-stage]');
+    const canvas = stage.querySelector('canvas');
+    const bounds = stage.getBoundingClientRect();
+    const started = performance.now();
+    const shadows = Number(stage.dataset.shadowCount);
+    const frames = Number(stage.dataset.renderCount);
+    const loop = now => {
+      canvas.dispatchEvent(new PointerEvent('pointermove', { pointerType: 'mouse', clientX: bounds.x + bounds.width * (.5 + .4 * Math.sin(now / 180)), clientY: bounds.y + bounds.height / 2 }));
+      if (now - started < 1200) requestAnimationFrame(loop);
+      else resolve({ elapsedMs: now - started, shadowUpdates: Number(stage.dataset.shadowCount) - shadows, frames: Number(stage.dataset.renderCount) - frames });
+    };
+    requestAnimationFrame(loop);
+  }));
+  assert.ok(measurement.shadowUpdates > 0);
+  assert.ok(measurement.shadowUpdates <= Math.ceil(measurement.elapsedMs / 50) + 1, 'shadow work is bounded to 20 Hz during movement');
+  await page.waitForFunction(() => document.querySelector('[data-hero-stage]').dataset.renderLoop === 'idle');
+  const final = await page.locator('[data-hero-stage]').evaluate(el => ({ ...el.dataset }));
+  assert.equal(final.shadowRotationY, final.rotationY);
+  assert.equal(final.shadowRotationX, final.rotationX);
+  await page.waitForTimeout(250);
+  assert.equal(await page.locator('[data-hero-stage]').getAttribute('data-shadow-count'), final.shadowCount);
+  checks.push({ check: 'bounded-shadow-refresh-final-pose-idle', ...measurement, passed: true });
+  await page.close();
+});
+
 test('Hareket azaltma: Three.js indirilmez; açık sahne kaynakları temizlenir', async () => {
   const page = await browser.newPage({ reducedMotion: 'reduce' });
   const rendererRequests = [];

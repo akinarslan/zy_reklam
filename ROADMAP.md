@@ -1,6 +1,6 @@
 # ZY Reklam — Yol Haritası
 
-**Sürüm:** 1.2 · **Başlangıç:** 2026-10-01
+**Sürüm:** 1.3 · **Başlangıç:** 2026-10-01
 
 **Kaynak:** [ARCHITECTURE.md](ARCHITECTURE.md) · **Zorunlu kontrol:** [AGENTS.md](AGENTS.md)
 
@@ -211,3 +211,12 @@ Sıradaki tek iş:
 - Uzak CI kanıtı: GitHub Actions 36859463847 / job 110359813173 başarıyla tamamlandı; npm ci, build, Playwright kurulumu ve 15/15 test geçti. Kanıt: docs/evidence/P3_CI_VERIFICATION.json.
 - Uzak kayıt kanıtı: main `21f8599ab48c3825176072b95999cc93ca9f171d`; 21 dosyanın Git blob kimliği doğrulandı. Mimari, roadmap, rapor, renderer ve test dosyası tekrar okunup tam içerik eşleştirildi. Özgün SVG/PNG blobları değişmedi.
 - Sıradaki tek iş: P3.6 — fiziksel cihaz profillerinde kare hızını doğrulayıp performans kabulünü kapatmak.
+
+### 2026-10-01 — P3.6 gölge maliyetini azaltma
+
+- Talimat: “devam et”; güncel AGENTS.md, mimari v1.3 ve roadmap v1.2 kontrol edildi. Uzak main başlangıcı 1153c07bb58ef9ee7b641cea9eb5d278de2d16d1 doğrulandı; yerel Git commit içermez, uzak kayıt bağlayıcı üzerinden yönetilir.
+- Değişiklik: gölge haritası hareket sırasında 20 Hz ile sınırlandı; son poz zorunlu güncellenir. Ana sahnenin kare hızı, logo konturları ve materyaller korundu.
+- Kanıt: TypeScript/build ve 16/16 yerel test başarılı. Yeni gerçek production WebGL testinde 26 çizimin 10'unda gölge güncellendi; son poz ve idle durma kontrolü geçti. Masaüstü/mobil viewport görüntüleri incelendi.
+- Üç dönüşümlü önce/sonra ölçümü: masaüstü yazılımsal ortanca 36,6 → 38,2 FPS; mobil emülasyon 51,2 → 52,3 FPS. Sonuç aralıkları örtüşür; fiziksel GPU başarısı iddia edilmez. Ham örnekler ve yöntem P3_PERFORMANCE_COMPARISON.json içinde; tekrar ölçüm aracı scripts/compare-scene.mjs.
+- Mimari v1.4, roadmap v1.3 ve kaynak bütçesi güncellendi. Logo/font/legacy, yayın ve iletişim bilgileri değiştirilmedi. Vite ertelenen paket için 500 KB uyarısı sürüyor.
+- P3.6 ve P3 kabulü açık; P4 başlatılmadı. Sıradaki tek iş: fiziksel masaüstü ve orta seviye mobil ölçümünü tamamlayıp P3 kabulünü kapatmak.
