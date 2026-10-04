@@ -1,0 +1,42 @@
+{
+  "date": "2026-10-04T11:55:21.185Z",
+  "environment": "Chromium / SwiftShader viewport emulation; not physical device acceptance",
+  "checks": [
+    {
+      "width": 1440,
+      "drag": true,
+      "keyboard": true,
+      "light": true,
+      "idle": true,
+      "offscreen": true,
+      "overflow": false
+    },
+    {
+      "width": 360,
+      "drag": true,
+      "keyboard": true,
+      "light": true,
+      "idle": true,
+      "offscreen": true,
+      "overflow": false
+    },
+    {
+      "reducedMotion": true,
+      "contextFallback": true
+    }
+  ],
+  "regression": {
+    "fullRun": {
+      "total": 34,
+      "passed": 31,
+      "failed": 3
+    },
+    "baselineFailuresConfirmed": true,
+    "updatedExpectationRerun": {
+      "total": 9,
+      "passed": 9,
+      "failed": 0
+    },
+    "singleFullGreenRun": false
+  }
+}

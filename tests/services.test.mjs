@@ -2,6 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 
+const escapeHTML = value => value.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#39;');
 const { groups } = JSON.parse(await readFile('src/content/services.json','utf8'));
 
 test('Hizmetler mega menüsü beş ana grubu içerir', async () => {
@@ -16,10 +17,10 @@ test('Hizmetler mega menüsü beş ana grubu içerir', async () => {
 test('Her hizmet grubu tek sayfada bütün alt hizmetleri içerir', async () => {
   for (const group of groups) {
     const html = await readFile(`hizmetler/${group.id}/index.html`,'utf8');
-    assert.ok(html.includes(`<h1>${group.title}</h1>`));
+    assert.ok(html.includes(`<h1>${escapeHTML(group.title)}</h1>`));
     for (const item of group.services) {
       assert.ok(html.includes(`id="${item[0]}"`), `${group.title}: ${item[1]}`);
-      assert.ok(html.includes(`<h2>${item[1]}</h2>`), `${group.title}: ${item[1]}`);
+      assert.ok(html.includes(`<h2>${escapeHTML(item[1])}</h2>`), `${group.title}: ${item[1]}`);
     }
   }
 });

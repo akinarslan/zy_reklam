@@ -1,6 +1,6 @@
 # ZY Reklam — Mimari
 
-**Sürüm:** 1.11 · **Tarih:** 2026-10-01 · **Durum:** P3 gerçek 3D ve güvenli yollar uygulandı; fiziksel cihaz performans kabulü açık
+**Sürüm:** 1.12 · **Tarih:** 2026-10-04 · **Durum:** P3 gerçek 3D ve güvenli yollar uygulandı; fiziksel cihaz performans kabulü açık
 
 **İlgili belgeler:** [Yol haritası](ROADMAP.md) · [Çalışma kuralları](AGENTS.md)
 
@@ -331,3 +331,11 @@ Showroom reduced-motion durumunda 3D olarak çizilir, poz/tilt sabit kalır. Idl
 Kullanıcının yeni görsel referansı özgün ZY wordmark harf stilini işaret eder. Vitrindeki ZY REKLAM, kaynak vektörün Z/Y/R/E/K/L/A/M konturlarından türetilir; diğer kelimeler aynı konturlar ile bu geometrik dile uyarlanmış D/H/I/F/G/S/T/U ve Türkçe işaretlerden oluşur. Bu showroom revizyonu önceki farklı-font şartını değiştirir; özgün hero/logo dosyalarına dokunulmaz. Her glifin gerçek ekstrüzyon krom kasası ve içe oturan ayrı ışıklı ön yüzü vardır.
 
 İki tabelada cam göbeği, kırmızı, mavi, turuncu ve beyazın kontrollü tonları harflere dağıtılır; seçilen ürün yaklaşma/dokunma/klavye ile aydınlanır. Idle kapalı, renk döngüsü/strobe yok. Totem amber kalır. Dört yön yazısı aynı cap-height ölçeğinde, üst ZY REKLAM yaklaşık %27 daha büyük; uzun kelimeyi küçültmek yerine kutu genişliği artırılır. Bağımsız/lazy/reduced-motion/idle/offscreen/context yedeği sözleşmesi korunur.
+
+### 2026-10-04 — A13 lightbox ve 360° araç (P3.7b)
+
+Kullanıcının açık yeni kapsamı: mevcut tabelalara ek tabela üretmeden lightbox ve döndürülebilen kaplamalı araç. Mevcut hero ve showroom modelleri korunur; showroom ardından aynı vitrin yolculuğunda bağımsız `src/showcase` adaptörü yer alır. Bir yeni renderer iki modeli birlikte çizer; 180 px yaklaşmada dinamik yüklenir. Render yalnızca açık kullanıcı etkileşimi/resize/görünürlük olaylarında tek kare olarak planlanır; sürekli döngü, otomatik dönüş veya atalet yoktur. Bellekte ek context bulunması A12'nin bu kapsam için açık genişletmesidir; görünmez/gizli sahne çizilmez.
+
+NOVA Coffee, bu iş için oluşturulmuş temsili marka konseptidir; ZY müşteri referansı olarak sunulmaz. Yeşil/krem/bakır kaplama ve kahve illüstrasyonu CanvasTexture ile yerelde üretilir; dış model, görsel veya font indirilmez. Araç bütün eksen çevresinde sınırsız yatay döner; pointer capture ve `touch-action:pan-y` ile dokunma/dikey kaydırma ayrılır. Klavye okları, sola/sağa ve başlangıç düğmeleri vardır. Lightbox emissive ön yüzü ayrı düğmeyle açılıp kapanır. Reduced-motion durumunda otomatik hareket yok; kullanıcı kontrollü tek kare dönüş korunur.
+
+Context/yükleme hatasında dispose ve responsive WebP poster; bütün ticari metin DOM'da kalır. Geometri, materyal, texture, environment, gölge, observer ve listener temizlenir. P3.6 fiziksel GPU kabulü açık kalır; bu iş P4–P9 kabulü değildir.

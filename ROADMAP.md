@@ -1,6 +1,6 @@
 # ZY Reklam — Yol Haritası
 
-**Sürüm:** 1.10 · **Başlangıç:** 2026-10-01
+**Sürüm:** 1.11 · **Başlangıç:** 2026-10-01
 
 **Kaynak:** [ARCHITECTURE.md](ARCHITECTURE.md) · **Zorunlu kontrol:** [AGENTS.md](AGENTS.md)
 
@@ -10,7 +10,7 @@
 
 **Aktif aşama:** P3 — Gerçek 3D açılış uygulandı; performans kapanışı devam ediyor.
 
-**Kullanıcı önceliği:** P3.7a — Vitrin harf stili, krom kasa ve kontrollü renkli yaklaşma ışığı. Kullanıcının açık önceliği fiziksel P3.6 kapanışı beklenirken uygulanır; diğer aşamalar tamamlanmış sayılmaz.
+**Kullanıcı önceliği:** P3.7b — Lightbox ve 360° araç giydirme vitrini. Kullanıcının açık önceliği fiziksel P3.6 kapanışı beklenirken uygulanır; diğer aşamalar tamamlanmış sayılmaz.
 
 P1 kaynak, logo, font ve iletişim incelemesi yapıldı; gerçek proje bilgileri/fotoğrafları doğrulanmadığı için P1.5 açık kalır. Planın engel yönetimi uyarınca bağımsız P2 temeli tamamlandı. Vite/TypeScript sayfası, statik SVG poster, mobil menü, hareket tercihi ve temel WhatsApp iletişim akışı çalışıyor. Gerçek 3D açılış şimdi uygulanmıştır. Üretim animasyonları, galeri, stüdyo ve upload henüz uygulanmadı.
 
@@ -92,6 +92,8 @@ Süreler takvim taahhüdü değildir. P1 sonrası logo kalitesi, gerçek görsel
 **Kabul:** Amblem özgün kaynakla eşleşir; yaklaşık yazı logosu kullanılmaz. İlk içerik 3D’yi beklemez. CTA üzerine canvas binmez. Model/texture/env başlangıç 3 MB hedefinde ölçülür. Tanımlı masaüstü ve mobil cihazlarda kare hızı kaydedilir; bütçe aşılıyorsa sonraki aşamadan önce optimize edilir veya hedef revizyonu gerekçelendirilir.
 
 - [x] P3.7a Referanstaki geometrik harf stili; krom çevre, beş kontrollü ışık rengi; eşit yön yazıları ve büyük ZY REKLAM. **Tamamlandı.**
+
+- [x] P3.7b Lightbox ve 360° araç: özgün temsili kaplama/görsel, sürükleme/klavye/ışık kontrolü, mobil ve context yedeği. **Tamamlandı; fiziksel cihaz kabulü P3.6 kapsamında açık.**
 
 ## 7. P4 — Üretim sahnesi ve hizmetler
 
@@ -346,3 +348,12 @@ Sıradaki tek iş:
 - npm run build / TypeScript ve tüm 29 test başarılı, 0 fail. Yeni kabul stil/krom/beş renk, eşit harf yüksekliği/büyük başlık ile genişletildi. 360/1440 vitrin ekranları ve iki tabela ışıklı görünümü incelendi; 360/768/1440 genel taşma kontrolleri geçti.
 - P3_7_STYLE_PRESERVATION.json: index/main/CSS, hero modülleri, navigation, WhatsApp ve Wrangler aynı. Modeller/renderer, kontur üretici/JSON, responsive yedekler, showroom testi, envanter/plan/rapor ve kabul kanıtları değişti. Mimari v1.11/A12; roadmap v1.10. LAST_REPORT.md üzerine yazıldı ve terminalde gösterildi.
 - GitHub main kayıt hedefidir; canlı Cloudflare yayını bu yerel kabulden çıkarılmaz. Sıradaki tek iş: canlı vitrinde yeni krom/renkli harflerin yayınlandığını doğrulamak.
+
+### 2026-10-04 — P3.7b lightbox ve 360° araç vitrini
+
+- Talimat: yeni tabela eklemeden kaliteli lightbox görseli ve çekici marka kaplamalı, döndürülebilen araç. Başlangıç main d0711029ebf1ce932e8fa860bef60f4d40a2f7eb; çalışma ağacı temizdi. AGENTS.md, mimari v1.11 ve roadmap v1.10 okundu.
+- Uygulama: mevcut vitrinin ardından lightbox ve teslimat aracı; özgün CanvasTexture NOVA Coffee konsepti, gerçek Three.js geometri, tam yatay dönüş, mouse/touch/klavye, reset ve ışık anahtarı. Sürekli hareket yok; lazy yükleme, idle/offscreen/hidden duruş, kaynak temizliği ve responsive WebP yedeği.
+- Kanıt: TypeScript/production build başarılı; yeni iki davranış testi geçti, 360/1440 gerçek WebGL ekranları incelendi. Tam pakette 34 test: 31 pass / 3 fail. Üç hata başlangıç sürümünde de var: eski hizmet menüsü linki, JSON-LD'nin script sayılması, HTML-escape başlık beklentisi. Bu test beklentileri düzeltildi; ilgili 9/9 test tekrar geçti. Böylece 34 testin tüm davranışları başarılı kontrollere sahip; tek koşuda 34/34 iddiası yok. P3.7b ve eski üç showroom testi tam koşuda geçti.
+- Koruma: hero ve önceki showroom modelleri/renderer/controller/CSS değişmedi. Menü, SEO, domain ve WhatsApp uygulaması değişmedi. Üretilen kategori/sitemap farkları bu commit'e dahil edilmedi.
+- Mimari v1.12 / A13: iki model bir yeni renderer paylaşır; olay başına çizim ve ek context açık kapsam revizyonudur. NOVA Coffee temsili konsept; müşteri işi iddiası yok. P3.6 fiziksel GPU kabulü ve P4–P9 aşamaları açık.
+- Sıradaki tek iş: canlı yayında yeni vitrinin görünürlüğünü ve sürükleme/ışık düğmelerini doğrulamak.

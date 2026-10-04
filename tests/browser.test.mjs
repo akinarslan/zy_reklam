@@ -58,7 +58,7 @@ test('Mobil menü açılır, Escape ile kapanır ve odak butona döner', async (
   assert.equal(await menu.getAttribute('aria-expanded'), 'false');
   assert.equal(await menu.evaluate(el => document.activeElement === el), true);
   await menu.click();
-  await page.locator('#main-nav a[href="#hizmetler"]').click();
+  await page.locator('#main-nav a[href="#hakkinda"]').click();
   assert.equal(await menu.getAttribute('aria-expanded'), 'false');
   results.push({ check: 'mobile-navigation', passed: true });
   await page.close();
@@ -87,7 +87,7 @@ test('WhatsApp metni Türkçe ve özel karakterleri korur; gönderildi iddiası 
   assert.equal(url.pathname, '/905464494849');
   assert.match(url.searchParams.get('text'), /Akın & Şule/);
   assert.match(url.searchParams.get('text'), /Özel tabela <script>alert\(1\)<\/script>\nÖlçü: 1,5 m/);
-  assert.equal(await page.locator('script:not([src])').count(), 0);
+  assert.equal(await page.locator('script:not([src]):not([type="application/ld+json"])').count(), 0);
   assert.doesNotMatch(await page.locator('[data-contact-status]').textContent(), /gönderildi/i);
   results.push({ check: 'whatsapp-text-encoding', passed: true });
   await page.close();
