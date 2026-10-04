@@ -6,4 +6,6 @@ Değişen dosyalar: index.html, src/showcase/controller.ts, src/styles/showcase.
 
 Doğrulama: TypeScript/production build başarılı, showcase 4/4 geçti. 360/1440 px kapat/tekrar aç, canvas kaldırma, düğme ve erişim durumları; mevcut dönüş/ışık/context/HTTP hata yolları kontrol edildi. Tam test paketi ve fiziksel performans ölçümü çalıştırılmadı. Mimari v1.13/A14 ile uyumlu; sözleşme değişmedi.
 
-Sıradaki tek iş: main kaydı sonrası canlı kapatma düğmesini doğrulamak.
+Uzak kayıt: 2226c7e2934b40a3d38b7babd64eea1cc801d664 main, yedi blob eşleşti. Cloudflare yayın başarılı; canlı HTTPS origin yanıtlarıyla Chromium aç/döndür/kapat kontrolü geçti. Kapatma sonrası fotoğraf ve sıfır canvas; JS hatası yok. Kanıt docs/evidence/P3_7C_CLOSE_LIVE.json. GitHub verify son kontrolde devam ediyordu.
+
+Sıradaki tek iş: P3.6 fiziksel cihaz performans kabulü.

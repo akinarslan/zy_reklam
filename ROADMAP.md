@@ -383,3 +383,5 @@ Sıradaki tek iş:
 - Kullanıcı kapatma düğmesinin eksik olduğunu bildirdi. Açma düğmesi model hazırken görünür ve etkin kalır; 360° görünümü kapat etiketine ve aria-expanded=true durumuna geçer. Kapatmada renderer/kaynaklar dispose edilir, fotoğraf geri gelir, yön düğmeleri devre dışı kalır; tekrar açılabilir.
 - Production build/TypeScript ve showcase 4/4 test başarılı. 360/1440 px kapat/klavyeyle tekrar aç/canvas temizliği ve mevcut dönüş/ışık/hata yolları geçti. Mimari v1.13/A14 sınırlarına uyuldu; modül/veri sözleşmesi değişmedi. Tam test paketi çalıştırılmadı.
 - Kayıt/yayın sonucu ayrıca doğrulanır. Sıradaki tek iş: canlıda kapatma düğmesini kontrol etmek.
+
+- 360° kapatma canlı doğrulaması: 2226c7e2934b40a3d38b7babd64eea1cc801d664 Cloudflare başarılı. Canlı Chromium aç/döndür/kapat geçti; poster, sıfır canvas ve JS hatası yok. Kanıt docs/evidence/P3_7C_CLOSE_LIVE.json. P3.6 fiziksel kabulü açık.
