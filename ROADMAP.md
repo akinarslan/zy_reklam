@@ -377,3 +377,9 @@ Sıradaki tek iş:
 - Sıradaki tek iş: canlı yeni lightbox ve Nissan viewer yayınının doğrulanması.
 
 - Uzak uygulama commit'i bf717d52cc4e2be2639c4870679ff020ffa92f08 main üzerinde 13 blob ile doğrulandı. Cloudflare Workers Builds ve live check başarılı. Canlı HTTPS origin'den bütün yanıtları ileten Chromium köprüsünde lightbox lit=true, Nissan başlangıç 2,6 → 3,1236 rad; JS hatası yok. Kanıt P3_7C_LIVE.json. GitHub verify son kontrolde sürüyordu; CI tam paket başarısı iddia edilmez. Sıradaki tek plan işi P3.6 fiziksel cihaz kabulüdür.
+
+### 2026-10-04 — P3.7c 360° görünümü kapatma düzeltmesi
+
+- Kullanıcı kapatma düğmesinin eksik olduğunu bildirdi. Açma düğmesi model hazırken görünür ve etkin kalır; 360° görünümü kapat etiketine ve aria-expanded=true durumuna geçer. Kapatmada renderer/kaynaklar dispose edilir, fotoğraf geri gelir, yön düğmeleri devre dışı kalır; tekrar açılabilir.
+- Production build/TypeScript ve showcase 4/4 test başarılı. 360/1440 px kapat/klavyeyle tekrar aç/canvas temizliği ve mevcut dönüş/ışık/hata yolları geçti. Mimari v1.13/A14 sınırlarına uyuldu; modül/veri sözleşmesi değişmedi. Tam test paketi çalıştırılmadı.
+- Kayıt/yayın sonucu ayrıca doğrulanır. Sıradaki tek iş: canlıda kapatma düğmesini kontrol etmek.

@@ -1,13 +1,9 @@
 # Son çalışma raporu
 
-P3.7c: sağlanan gerçek Nissan X-Trail T32 GLB entegre edildi. Fotoğrafı temel alan kırmızı/beyaz/siyah buyHome kaplaması uyarlandı. Kesintisiz 360° mouse/touch dönüşü, klavye okları/Home, sola/sağa/reset ve gerçek fotoğraf yedeği hazır. Lightbox gönderilen gerçek PNG ile belirgin hover/odak/dokunma ışık tepkisini korur.
+P3.7c düzeltmesi: eksik 360° görünümü kapat düğmesi eklendi. Mevcut açma düğmesi model açılınca kapanma eylemine dönüşür ve modelin üzerinde görünür kalır. Kapatınca canvas, renderer ve model kaynakları temizlenir; gerçek fotoğraf geri gelir. Tekrar açma ve klavye kullanımı korunur; aria-expanded durumuyla eşleşir.
 
-Dosyalar: index.html, src/showcase/controller.ts, yeni vehicle.ts, src/styles/showcase.css, public/assets/showcase/nissan-t32.glb, tests/showcase.test.mjs, docs/NISSAN_MODEL.md, docs/evidence/P3_7C_REAL_REFERENCES.json, ARCHITECTURE.md, ROADMAP.md, LAST_REPORT.md. Önceki taslaktaki iki kaynak fotoğraf main kaydına dahil edildi. Hero/ilk showroom korunur.
+Değişen dosyalar: index.html, src/showcase/controller.ts, src/styles/showcase.css, tests/showcase.test.mjs, docs/evidence/P3_7C_REAL_REFERENCES.json, ROADMAP.md, LAST_REPORT.md.
 
-Doğrulama: TypeScript/production build başarılı; showcase 4/4 ve genel sayfa/önceki showroom 9/9 başarılı. Masaüstü/mobil, mouse/touch, tam 360° ötesi dönüş, klavye/reset, ışık, idle/offscreen duruş, reduced-motion/JS kapalı, context/HTTP hatası yedeği kontrol edildi. Son 1440/360 px model ekranları incelendi. Tam paket ve fiziksel GPU ölçümü yapılmadı; P3.6 açık. Vite'ın mevcut 500 KB ortak Three chunk uyarısı sürer.
+Doğrulama: TypeScript/production build başarılı, showcase 4/4 geçti. 360/1440 px kapat/tekrar aç, canvas kaldırma, düğme ve erişim durumları; mevcut dönüş/ışık/context/HTTP hata yolları kontrol edildi. Tam test paketi ve fiziksel performans ölçümü çalıştırılmadı. Mimari v1.13/A14 ile uyumlu; sözleşme değişmedi.
 
-Model 4.110.300 bayt ve açık kullanıcı eyleminde yüklenir; ilk sayfayı bekletmez. Kaynak CC BY 4.0; görünür atıf eklendi. Kaplama fotoğraftan uyarlanmıştır; birebir fotoğraf texture eşleşmesi iddiası yok.
-
-Uzak kayıt: bf717d52cc4e2be2639c4870679ff020ffa92f08 main üzerinde; 13 blob yeniden okunarak doğrulandı. Cloudflare Workers Builds ve live check başarılı. Canlı origin yanıtlarıyla çalışan Chromium köprüsünde gerçek araç yüklendi/döndü, lightbox aydınlandı; JS hatası yok. Kanıt docs/evidence/P3_7C_LIVE.json. GitHub verify son kontrolde sürüyordu.
-
-Sıradaki tek iş: P3.6 fiziksel cihaz performans kabulü.
+Sıradaki tek iş: main kaydı sonrası canlı kapatma düğmesini doğrulamak.
