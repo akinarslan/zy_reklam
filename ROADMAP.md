@@ -357,3 +357,5 @@ Sıradaki tek iş:
 - Koruma: hero ve önceki showroom modelleri/renderer/controller/CSS değişmedi. Menü, SEO, domain ve WhatsApp uygulaması değişmedi. Üretilen kategori/sitemap farkları bu commit'e dahil edilmedi.
 - Mimari v1.12 / A13: iki model bir yeni renderer paylaşır; olay başına çizim ve ek context açık kapsam revizyonudur. NOVA Coffee temsili konsept; müşteri işi iddiası yok. P3.6 fiziksel GPU kabulü ve P4–P9 aşamaları açık.
 - Sıradaki tek iş: canlı yayında yeni vitrinin görünürlüğünü ve sürükleme/ışık düğmelerini doğrulamak.
+
+- Uzak uygulama kaydı 44ec239ef9a88555b45d9662f888711ddd27105c main üzerinde doğrulandı; 17 blob eşleşti. Cloudflare Workers Builds başarılı. Canlı HTTPS içeriğinde yeni bölüm var. Chromium'da tüm yanıtları canlı origin'den ileten yerel HTTP köprüsüyle gerçek 3D, dönüş ve ışık düğmesi başarılı; JS hatası yok. GitHub Verify son kontrolde sürüyordu. Canlı yayın kontrolü tamamlandı; sıradaki tek plan işi P3.6 fiziksel cihaz kabulüdür.

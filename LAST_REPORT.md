@@ -17,7 +17,7 @@ index.html; src/main.ts; src/styles/main.css; src/styles/showcase.css; src/showc
 - Test ortamı Chromium / ANGLE SwiftShader ve mobil viewport emülasyonu. Fiziksel GPU/FPS kabulü yapılmadı; P3.6 açık.
 
 ## Kayıt ve yayın
-GitHub kayıt/yayın kontrolü sonraki adımdır. Canlı Cloudflare dağıtımı henüz doğrulanmadı. Gerçek commit SHA oluşmadan raporlanmaz.
+GitHub main uygulama commit’i: 44ec239ef9a88555b45d9662f888711ddd27105c. 17 dosyanın uzak Git blob kimliği yeniden okunarak doğrulandı. Cloudflare Workers Builds başarılı. Canlı HTTPS sayfasında yeni bölüm bulundu; canlı origin yanıtlarını ileten yerel HTTP köprüsü üzerinden Chromium gerçek WebGL, araç dönüşü ve ışık düğmesi test edildi: angle 0.0735987755982988, light false, JavaScript hatası yok. Bu köprü fiziksel cihaz ölçümü değildir. GitHub Verify son kontrolde devam ediyordu.
 
 ## Sıradaki tek iş
-Canlı sayfada yeni vitrinin yayınlandığını ve araç/ışık kontrollerini doğrulamak.
+P3.6 kapsamında fiziksel masaüstü ve orta seviye mobil performans kabulünü tamamlamak.
