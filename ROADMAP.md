@@ -392,3 +392,5 @@ Sıradaki tek iş:
 - Başta AGENTS, mimari v1.13 ve roadmap v1.12 okundu; mimari v1.14/A15 kullanıcı kapsam revizyonunu kaydeder. Hero, önceki showroom ve eşzamanlı hizmet içerikleri korunur.
 - Kabul: production build/TypeScript ve fotoğraf/lightbox tarayıcı testleri 2/2 geçti; 360/1440 px, klavye/hover, JS kapalı ve reduced-motion kontrol edildi. P3.6 fiziksel GPU kabulü açık.
 - Sıradaki tek iş: sadeleştirilmiş vitrini canlı yayında doğrulamak.
+
+- Uzak uygulama d664d44248c9be9ba5e771926fbfad59af420745 blobları/silmeleri yeniden doğrulandı. Cloudflare ve live kontrolleri başarılı. Canlı Chromium: fotoğraf decode, sıfır araç kontrolü/canvas, 360 metni yok, lightbox lit=true; JS hatası yok. Kanıt P3_7D_PHOTO_ONLY_LIVE.json. GitHub verify sürüyor; tam CI başarı iddiası yok. Sıradaki tek plan işi P3.6 fiziksel cihaz kabulüdür.
