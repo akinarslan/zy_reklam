@@ -48,19 +48,21 @@ for (const group of groups) {
   });
 
   const blocks = group.services.map((item,index) => {
-    const [id,title,description,image] = item;
-    const reverse = index % 2 ? ' service-detail-reverse' : '';
-    return `<article class="service-detail${reverse}" id="${esc(id)}">
+    const [id,title,description,image,gallery=[]] = item;
+    const images = gallery.length ? gallery : [image];
+    const galleryHtml = images.map((src,imageIndex) => `<figure class="service-gallery-item">
+      <img src="${esc(src)}" alt="${esc(title)} örnek uygulama ${imageIndex+1}" loading="${index<2?'eager':'lazy'}" decoding="async">
+    </figure>`).join('');
+    return `<article class="service-detail service-detail-gallery" id="${esc(id)}">
       <div class="service-detail-copy">
         <span class="service-detail-number">${String(index+1).padStart(2,'0')}</span>
         <h2>${esc(title)}</h2>
         <p>${esc(description)}</p>
         <a class="text-link" href="/#iletisim">Bu hizmet için teklif alın <span aria-hidden="true">→</span></a>
       </div>
-      <figure class="service-detail-media">
-        <img src="${esc(image)}" alt="${esc(title)} için örnek uygulama görseli" loading="${index<2?'eager':'lazy'}" decoding="async">
-        <figcaption>Örnek uygulama görseli</figcaption>
-      </figure>
+      <div class="service-gallery" aria-label="${esc(title)} örnekleri">
+        ${galleryHtml}
+      </div>
     </article>`;
   }).join('');
 
