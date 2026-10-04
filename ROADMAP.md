@@ -412,3 +412,10 @@ Sıradaki tek iş:
 - Sıradaki tek iş: canlı hizmet revizyonunu doğrulamak.
 
 - Canlı Cloudflare yayın kontrolü başarılı. Chromium canlı origin: altı yeni fotoğraf decode, kaldırılan beş blok 0 adet, JS hatası yok. Tam fotoğraf için Totem/LED-Neon galerilerine contain stili eklendi; masaüstü/mobil yeniden kontrol edildi. Kanıt P2_TOTEM_NEON_LIVE.json. Sıradaki tek plan işi P3.6 fiziksel cihaz kabulüdür.
+
+### 2026-10-04 — P2 Işıklı Tabela / Lightbox / Çatı görselleri
+
+- Kullanıcı sırası: 1 Işıklı Tabela Rahat Villa yerine; 2–4 Lightbox eski görsel yerine; 5 Çatı Tabelası eski görsel yerine. Beş optimize WebP eklendi; eski Rahat Villa türevi kaldırıldı. Paylaşılan proje kaynakları korunur.
+- AGENTS, mimari v1.14 ve roadmap v1.13 tamamen okundu; içerik mimarisi değişmedi. Lightbox contain stiliyle tam görünür.
+- Production build/TypeScript ve üç hizmet testi geçti. 1440/360 px galeri decode ve taşma kontrolü başarılı. Tam paket çalıştırılmadı; P3.6 açık.
+- Sıradaki tek iş: yeni beş fotoğrafın canlı yayınını doğrulamak.

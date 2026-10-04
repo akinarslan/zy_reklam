@@ -1,9 +1,9 @@
-# Son rapor — 2026-10-04
+# Son İş Raporu
 
-P2 hizmet içerik revizyonu: istenen beş başlık ve ilgili blokları kaldırıldı; yüklenen fotoğraf 1–3 Totem, 4–6 LED / Neon galerisinde. src/content/services.json ve altı WebP güncellendi. Mimari v1.14 değişmedi.
+P2 hizmet görselleri güncellendi: 1 Işıklı Tabela/Rahat Villa, 2–4 Lightbox, 5 Çatı Tabelası. Önceki ilgili görseller kaldırıldı.
 
-Build/TypeScript ve hizmet testleri 3/3 geçti. 1440/360 px tarayıcı kontrolleri başarılı: altı görsel decode, silinen başlıklar yok, yatay taşma yok. Tam test paketi çalıştırılmadı; P3.6 fiziksel kabulü açık.
+Değişen dosyalar: src/content/services.json, src/styles/main.css, public/assets/services altındaki beş yeni WebP ve bir silinen WebP, ROADMAP.md, LAST_REPORT.md.
 
-src/styles/main.css içinde Totem/Neon fotoğraflarının tamamı gösterilir. Canlı Cloudflare ve Chromium doğrulaması başarılı: altı fotoğraf, kaldırılan beş blok yok, JS hatası yok. Kanıt docs/evidence/P2_TOTEM_NEON_LIVE.json.
+Mimari v1.14 ile uyumlu. Production build/TypeScript, üç hizmet testi ve 1440/360 px galeri kontrolü başarılı. Tam paket çalıştırılmadı.
 
-Sıradaki tek plan işi: P3.6 fiziksel cihaz kabulü.
+Engel yok. Canlı yayın kontrolü bekliyor. Sıradaki tek iş: yeni fotoğrafları canlıda doğrulamak.

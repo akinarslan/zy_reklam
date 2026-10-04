@@ -19,7 +19,7 @@
           [
             "/assets/services/isikli-tabela-01.webp",
             "/assets/services/isikli-tabela-02.webp",
-            "/assets/services/isikli-tabela-03.webp"
+            "/assets/services/isikli-tabela-rahat-villa.webp"
           ]
         ],
         [
@@ -69,8 +69,12 @@
           "lightbox",
           "Lightbox / Işıklı Kutu",
           "Homojen yüzey aydınlatmalı, değiştirilebilir görselli ışıklı kutular.",
-          "/assets/project-examples/ornek-11-960.webp",
-          []
+          "/assets/services/lightbox-01.webp",
+          [
+            "/assets/services/lightbox-01.webp",
+            "/assets/services/lightbox-02.webp",
+            "/assets/services/lightbox-03.webp"
+          ]
         ],
         [
           "cephe-tabelasi",
@@ -87,8 +91,10 @@
           "cati-tabelasi",
           "Çatı Tabelası",
           "Yüksek görünürlük için çatı ve üst kotlarda konstrüksiyonlu tabela uygulamaları.",
-          "/assets/project-examples/ornek-13-960.webp",
-          []
+          "/assets/services/cati-tabela-01.webp",
+          [
+            "/assets/services/cati-tabela-01.webp"
+          ]
         ],
         [
           "asma-tabela",
