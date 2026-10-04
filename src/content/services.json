@@ -1,0 +1,447 @@
+{
+  "groups": [
+    {
+      "id": "tabela-yonlendirme",
+      "title": "Tabela & Yönlendirme",
+      "eyebrow": "TABELA · TOTEM · YÖNLENDİRME",
+      "description": "Dış cepheden iç mekân yönlendirmesine, ışıklı kutu harften toteme kadar kurumsal görünürlüğü fiziksel mekâna taşıyan çözümler.",
+      "menuPreview": [
+        "Işıklı Tabela",
+        "Kutu Harf",
+        "Totem & Yönlendirme"
+      ],
+      "services": [
+        [
+          "tabela-imalati",
+          "Tabela İmalatı",
+          "Projeye, ölçüye ve kullanım alanına göre tabela üretimi.",
+          "/assets/project-examples/ornek-02-960.webp"
+        ],
+        [
+          "tabela-montaji",
+          "Tabela Montajı",
+          "Üretilen tabelaların yerinde, güvenli ve temiz montajı.",
+          "/assets/project-examples/ornek-03-960.webp"
+        ],
+        [
+          "isikli-tabela",
+          "Işıklı Tabela",
+          "Gece ve gündüz görünürlüğü yüksek LED aydınlatmalı tabela çözümleri.",
+          "/assets/project-examples/ornek-04-960.webp"
+        ],
+        [
+          "isiksiz-tabela",
+          "Işıksız Tabela",
+          "Cephe ve iç mekânlarda sade, dayanıklı ve kurumsal tabela uygulamaları.",
+          "/assets/project-examples/ornek-05-960.webp"
+        ],
+        [
+          "kutu-harf",
+          "Kutu Harf Tabela",
+          "Pleksi, alüminyum, paslanmaz ve farklı yüzeylerle üç boyutlu kutu harf üretimi.",
+          "/assets/project-examples/ornek-06-960.webp"
+        ],
+        [
+          "krom-kutu-harf",
+          "Paslanmaz / Krom Kutu Harf",
+          "Metalik yüzeyli, güçlü ve premium kutu harf uygulamaları.",
+          "/assets/project-examples/ornek-07-960.webp"
+        ],
+        [
+          "gold-bronz-harf",
+          "Gold / Bronz Kutu Harf",
+          "Şampanya, gold ve bronz tonlarda dekoratif metal harfler.",
+          "/assets/project-examples/ornek-08-960.webp"
+        ],
+        [
+          "pleksi-kutu-harf",
+          "Pleksi Kutu Harf",
+          "Renkli, ışık geçirgen ve modern pleksi kutu harf çözümleri.",
+          "/assets/project-examples/ornek-09-960.webp"
+        ],
+        [
+          "led-neon",
+          "LED / Neon Tabela",
+          "Dekoratif çizgi ışıkları ve LED neon karakterli iç-dış mekân uygulamaları.",
+          "/assets/project-examples/ornek-10-960.webp"
+        ],
+        [
+          "lightbox",
+          "Lightbox / Işıklı Kutu",
+          "Homojen yüzey aydınlatmalı, değiştirilebilir görselli ışıklı kutular.",
+          "/assets/project-examples/ornek-11-960.webp"
+        ],
+        [
+          "cephe-tabelasi",
+          "Cephe Tabelası",
+          "İşletme cephesine göre ölçülendirilen, uzaktan okunabilir tabela sistemleri.",
+          "/assets/project-examples/ornek-12-960.webp"
+        ],
+        [
+          "cati-tabelasi",
+          "Çatı Tabelası",
+          "Yüksek görünürlük için çatı ve üst kotlarda konstrüksiyonlu tabela uygulamaları.",
+          "/assets/project-examples/ornek-13-960.webp"
+        ],
+        [
+          "asma-tabela",
+          "Asma Tabela",
+          "Yaya akslarında iki yönden görülebilen kompakt ve dikkat çekici tabelalar.",
+          "/assets/project-examples/ornek-02-960.webp"
+        ],
+        [
+          "totem-tabela",
+          "Totem Tabela",
+          "Dikey, bağımsız, ışıklı veya dijital ekranlı reklam ve yönlendirme totemleri.",
+          "/assets/project-examples/ornek-16-960.webp"
+        ],
+        [
+          "ic-mekan-yonlendirme",
+          "İç Mekân Yönlendirme",
+          "Ofis, hastane, okul, mağaza ve tesisler için modüler yönlendirme sistemleri.",
+          "/assets/project-examples/ornek-17-960.webp"
+        ],
+        [
+          "fabrika-guvenlik",
+          "Fabrika & İş Güvenliği Levhaları",
+          "Tesis içi rota, bölüm, uyarı ve iş güvenliği levhaları.",
+          "/assets/project-examples/ornek-18-960.webp"
+        ]
+      ]
+    },
+    {
+      "id": "dijital-baski-kaplama",
+      "title": "Dijital Baskı & Kaplama",
+      "eyebrow": "BASKI · FOLYO · GİYDİRME",
+      "description": "Camdan araca, cepheden standa kadar yüksek çözünürlüklü baskı ve yüzey kaplama uygulamaları.",
+      "menuPreview": [
+        "Dijital Baskı",
+        "Araç Giydirme",
+        "Folyo & Branda"
+      ],
+      "services": [
+        [
+          "dijital-baski",
+          "Dijital Baskı",
+          "İç ve dış mekân için yüksek çözünürlüklü geniş format baskı.",
+          "/assets/project-examples/ornek-14-960.webp"
+        ],
+        [
+          "folyo-baski",
+          "Folyo Baskı",
+          "Cam, tabela ve düz yüzeylerde kesim veya baskılı folyo uygulamaları.",
+          "/assets/project-examples/ornek-15-960.webp"
+        ],
+        [
+          "vinil-baski",
+          "Vinil Baskı",
+          "Dayanıklı dış mekân reklamları için vinil baskı uygulamaları.",
+          "/assets/project-examples/ornek-19-960.webp"
+        ],
+        [
+          "branda-baski",
+          "Branda Baskı",
+          "Büyük ebatlı cephe, etkinlik ve saha reklamları için branda baskı.",
+          "/assets/project-examples/ornek-20-960.webp"
+        ],
+        [
+          "afis-baski",
+          "Afiş Baskı",
+          "Kampanya, duyuru ve etkinlikler için farklı ölçülerde afiş üretimi.",
+          "/assets/project-examples/ornek-21-960.webp"
+        ],
+        [
+          "roll-up",
+          "Roll-up",
+          "Fuar, mağaza ve etkinliklerde taşınabilir dikey tanıtım sistemi.",
+          "/assets/project-examples/ornek-14-960.webp"
+        ],
+        [
+          "x-banner",
+          "X-Banner",
+          "Kolay taşınabilir, değiştirilebilir baskılı tanıtım standı.",
+          "/assets/project-examples/ornek-22-960.webp"
+        ],
+        [
+          "orumcek-stand",
+          "Örümcek Stand",
+          "Geniş arka plan ve etkinlik sunumları için modüler stand sistemi.",
+          "/assets/project-examples/ornek-23-960.webp"
+        ],
+        [
+          "reklam-bayragi",
+          "Reklam Bayrağı",
+          "Marka ve kampanyalar için iç-dış mekân baskılı bayrak uygulamaları.",
+          "/assets/project-examples/ornek-24-960.webp"
+        ],
+        [
+          "yelken-bayrak",
+          "Yelken Bayrak",
+          "Açık alanda yüksek görünürlük sağlayan taşınabilir yelken bayraklar.",
+          "/assets/project-examples/ornek-25-960.webp"
+        ],
+        [
+          "one-way-vision",
+          "One Way Vision",
+          "Cam yüzeylerde dışarıdan reklam görünümü, içeriden görüş sağlayan perforajlı folyo.",
+          "/assets/project-examples/ornek-15-960.webp"
+        ],
+        [
+          "cam-giydirme",
+          "Cam Giydirme",
+          "Vitrin, ofis ve mağaza camlarında tam veya parçalı reklam kaplamaları.",
+          "/assets/project-examples/ornek-19-960.webp"
+        ],
+        [
+          "kumlama-folyo",
+          "Kumlama Folyo",
+          "Mahremiyet ve dekorasyon için buzlu cam etkili folyo uygulaması.",
+          "/assets/project-examples/ornek-20-960.webp"
+        ],
+        [
+          "arac-giydirme",
+          "Araç Giydirme",
+          "Ticari ve kurumsal araçlarda tam veya parçalı reklam kaplama.",
+          "/assets/project-examples/ornek-21-960.webp"
+        ],
+        [
+          "arac-kaplama",
+          "Araç Kaplama",
+          "Renk değişimi ve yüzey koruma odaklı folyo kaplama uygulamaları.",
+          "/assets/project-examples/ornek-22-960.webp"
+        ],
+        [
+          "cephe-giydirme",
+          "Cephe Giydirme",
+          "Kompozit, folyo ve baskı kombinasyonlarıyla kurumsal cephe uygulamaları.",
+          "/assets/project-examples/ornek-23-960.webp"
+        ],
+        [
+          "magnet-sticker",
+          "Magnet, Sticker & Etiket",
+          "Kesimli veya baskılı magnet, sticker ve ürün etiketi çözümleri.",
+          "/assets/project-examples/ornek-24-960.webp"
+        ]
+      ]
+    },
+    {
+      "id": "lazer-ozel-uretim",
+      "title": "Lazer & Özel Üretim",
+      "eyebrow": "KESİM · UV · ÖZEL ÜRETİM",
+      "description": "Lazer kesimden özel imalata, pleksi ve metal işlemeden UV uygulamalarına kadar atölye odaklı üretim.",
+      "menuPreview": [
+        "Lazer Kesim",
+        "UV Baskı",
+        "Özel İmalat"
+      ],
+      "services": [
+        [
+          "lazer-kesim",
+          "Lazer Kesim",
+          "Reklam, dekorasyon ve özel parçalar için hassas lazer kesim.",
+          "/assets/project-examples/ornek-01-960.webp"
+        ],
+        [
+          "pleksi-kesim",
+          "Pleksi Kesim",
+          "Tabela, stand ve dekoratif ürünler için temiz kenarlı pleksi kesim.",
+          "/assets/project-examples/ornek-03-960.webp"
+        ],
+        [
+          "metal-kesim",
+          "Metal Kesim",
+          "Dekoratif metal eleman ve özel parçalar için hassas kesim çözümleri.",
+          "/assets/project-examples/ornek-05-960.webp"
+        ],
+        [
+          "dekoratif-kesim",
+          "Dekoratif Lazer Kesim",
+          "Desen, silüet, panel ve iç mekân dekorasyon uygulamaları.",
+          "/assets/project-examples/ornek-01-960.webp"
+        ],
+        [
+          "uv-baski",
+          "UV Baskı",
+          "Pleksi, metal, ahşap ve çeşitli sert yüzeylere doğrudan baskı.",
+          "/assets/project-examples/ornek-14-960.webp"
+        ],
+        [
+          "uv-dtf",
+          "UV DTF Baskı",
+          "Düz veya eğimli objelere transfer uygulanabilen dayanıklı UV DTF baskı.",
+          "/assets/project-examples/ornek-15-960.webp"
+        ],
+        [
+          "dtf-tekstil",
+          "DTF Tekstil Baskı",
+          "Tişört, sweatshirt ve tekstil ürünlerine renkli transfer baskı.",
+          "/assets/promotions/tekstil-giyim-960.webp"
+        ],
+        [
+          "pleksi-baski",
+          "Pleksi Baskı",
+          "Şeffaf veya renkli pleksi yüzeylerde yüksek detaylı baskı.",
+          "/assets/project-examples/ornek-11-960.webp"
+        ],
+        [
+          "forex-dekota",
+          "Forex / Dekota Baskı",
+          "Hafif levhalarda pano, stand ve iç mekân grafik uygulamaları.",
+          "/assets/project-examples/ornek-18-960.webp"
+        ],
+        [
+          "ozel-imalat",
+          "Projeye Özel İmalat",
+          "Ölçü, malzeme ve kullanım senaryosuna göre özel üretim.",
+          "/assets/project-examples/ornek-08-960.webp"
+        ],
+        [
+          "dekoratif-uygulamalar",
+          "Dekoratif Uygulamalar",
+          "Mekâna özel ışık, metal, pleksi ve grafik kombinasyonları.",
+          "/assets/project-examples/ornek-09-960.webp"
+        ],
+        [
+          "fuar-standi",
+          "Fuar Standı & Stant Üretimi",
+          "Marka sunumları için modüler veya özel tasarım stand çözümleri.",
+          "/assets/project-examples/ornek-10-960.webp"
+        ]
+      ]
+    },
+    {
+      "id": "promosyon-baski",
+      "title": "Promosyon & Baskı",
+      "eyebrow": "PROMOSYON · HEDİYE · TEKSTİL",
+      "description": "Markayı günlük kullanıma taşıyan tekstil, ofis, yaşam ve kurumsal hediye ürünleri.",
+      "menuPreview": [
+        "Tekstil & Giyim",
+        "Kupa & Termos",
+        "VIP Setler"
+      ],
+      "services": [
+        [
+          "tekstil",
+          "Tekstil & Giyim",
+          "Polo, tişört ve kurumsal giyim ürünlerinde logo uygulaması.",
+          "/assets/promotions/tekstil-giyim-960.webp"
+        ],
+        [
+          "sapka",
+          "Şapka Baskı",
+          "Etkinlik ve kurumsal kullanım için logolu şapka uygulamaları.",
+          "/assets/promotions/tekstil-giyim-960.webp"
+        ],
+        [
+          "ajanda-kalem",
+          "Ajanda & Kalem",
+          "Kurumsal kimliğe özel ajanda, kalem ve yazı setleri.",
+          "/assets/promotions/kutulu-ajanda-kalem-960.webp"
+        ],
+        [
+          "ofis-setleri",
+          "Ofis Promosyon Setleri",
+          "Organizer, defter ve masaüstü ürünlerden kurumsal setler.",
+          "/assets/promotions/mavi-organizer-960.webp"
+        ],
+        [
+          "kupa",
+          "Baskılı Kupa",
+          "Logo, isim veya özel tasarım baskılı kupa çözümleri.",
+          "/assets/promotions/baskili-kupa-960.webp"
+        ],
+        [
+          "termos",
+          "Termos & Matara",
+          "Kurumsal hediye ve günlük kullanım için kişiselleştirilmiş termoslar.",
+          "/assets/promotions/kisisel-termos-seti-960.webp"
+        ],
+        [
+          "vip-set",
+          "VIP Hediye Setleri",
+          "Özel kutulu, çok parçalı premium kurumsal hediye setleri.",
+          "/assets/promotions/premium-hediye-seti-960.webp"
+        ],
+        [
+          "ekolojik",
+          "Bez Çanta & Ekolojik Ürünler",
+          "Tekrar kullanılabilir bez çanta, kese ve çevreci promosyon ürünleri.",
+          "/assets/promotions/bez-canta-960.webp"
+        ],
+        [
+          "teknoloji-seti",
+          "Teknoloji Hediye Setleri",
+          "Kurumsal teknoloji aksesuarlarıyla hazırlanan özel setler.",
+          "/assets/promotions/teknoloji-hediye-seti-960.webp"
+        ],
+        [
+          "serigrafi",
+          "Serigrafi & Ürün Baskı",
+          "Uygun yüzeylerde seri ve dayanıklı baskı uygulamaları.",
+          "/assets/promotions/kurumsal-hediye-seti-960.webp"
+        ]
+      ]
+    },
+    {
+      "id": "tasarim-kurumsal",
+      "title": "Tasarım & Kurumsal",
+      "eyebrow": "KİMLİK · TASARIM · BASILI İŞLER",
+      "description": "Markanın görsel dilini kuran logo, kurumsal kimlik, tabela tasarımı ve basılı iletişim çözümleri.",
+      "menuPreview": [
+        "Logo & Kimlik",
+        "Tabela Tasarımı",
+        "Katalog & Broşür"
+      ],
+      "services": [
+        [
+          "logo-tasarimi",
+          "Logo Tasarımı",
+          "Markanın karakterine uygun, farklı mecralarda çalışabilen logo tasarımı.",
+          "/assets/project-examples/ornek-06-960.webp"
+        ],
+        [
+          "kurumsal-kimlik",
+          "Kurumsal Kimlik",
+          "Renk, tipografi ve temel uygulamaları kapsayan bütünlüklü marka kimliği.",
+          "/assets/project-examples/ornek-07-960.webp"
+        ],
+        [
+          "tabela-tasarimi",
+          "Tabela Tasarımı",
+          "Cephe, ölçek, okunabilirlik ve üretim tekniğini birlikte ele alan tabela tasarımı.",
+          "/assets/project-examples/ornek-02-960.webp"
+        ],
+        [
+          "sosyal-medya",
+          "Sosyal Medya Tasarımı",
+          "Kampanya ve marka iletişimi için sosyal medya görsel tasarımları.",
+          "/assets/project-examples/ornek-12-960.webp"
+        ],
+        [
+          "kartvizit",
+          "Kartvizit",
+          "Kurumsal kimlikle uyumlu kartvizit tasarımı ve baskısı.",
+          "/assets/project-examples/ornek-13-960.webp"
+        ],
+        [
+          "brosur",
+          "Broşür",
+          "Ürün, hizmet ve kampanyaları anlatan katlamalı veya düz broşürler.",
+          "/assets/project-examples/ornek-20-960.webp"
+        ],
+        [
+          "el-ilani",
+          "El İlanı",
+          "Kampanya ve duyurular için hızlı, ekonomik basılı iletişim ürünü.",
+          "/assets/project-examples/ornek-21-960.webp"
+        ],
+        [
+          "katalog",
+          "Katalog",
+          "Ürün ve hizmetlerin düzenli, kurumsal ve görsel ağırlıklı katalog sunumu.",
+          "/assets/project-examples/ornek-22-960.webp"
+        ]
+      ]
+    }
+  ]
+}
