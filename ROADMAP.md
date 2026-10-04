@@ -375,3 +375,5 @@ Sıradaki tek iş:
 - Build/TypeScript başarılı. Showcase davranış testleri 4/4; genel sayfa ve önceki showroom testleri 9/9 geçti. Mouse/touch, tam turdan fazla dönüş, klavye/reset, idle/offscreen duruş, context kaybı, model HTTP hatası, reduced-motion/JS kapalı ve 360/1440 px kontrolleri. Tam test paketi çalıştırılmadı; fiziksel GPU kabulü açık.
 - Mimari v1.13 / A14. Uygulama main için hazırlanır; canlı yayın sonucu kayıt sonrasında ayrıca doğrulanır.
 - Sıradaki tek iş: canlı yeni lightbox ve Nissan viewer yayınının doğrulanması.
+
+- Uzak uygulama commit'i bf717d52cc4e2be2639c4870679ff020ffa92f08 main üzerinde 13 blob ile doğrulandı. Cloudflare Workers Builds ve live check başarılı. Canlı HTTPS origin'den bütün yanıtları ileten Chromium köprüsünde lightbox lit=true, Nissan başlangıç 2,6 → 3,1236 rad; JS hatası yok. Kanıt P3_7C_LIVE.json. GitHub verify son kontrolde sürüyordu; CI tam paket başarısı iddia edilmez. Sıradaki tek plan işi P3.6 fiziksel cihaz kabulüdür.
