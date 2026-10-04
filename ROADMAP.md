@@ -1,6 +1,6 @@
 # ZY Reklam — Yol Haritası
 
-**Sürüm:** 1.12 · **Başlangıç:** 2026-10-01
+**Sürüm:** 1.13 · **Başlangıç:** 2026-10-01
 
 **Kaynak:** [ARCHITECTURE.md](ARCHITECTURE.md) · **Zorunlu kontrol:** [AGENTS.md](AGENTS.md)
 
@@ -10,7 +10,7 @@
 
 **Aktif aşama:** P3 — Gerçek 3D açılış uygulandı; performans kapanışı devam ediyor.
 
-**Kullanıcı önceliği:** P3.7c — Lightbox ve 360° araç giydirme vitrini. Kullanıcının açık önceliği fiziksel P3.6 kapanışı beklenirken uygulanır; diğer aşamalar tamamlanmış sayılmaz.
+**Kullanıcı önceliği:** P3.7d — Lightbox ve yalnızca araç fotoğrafı. Kullanıcının açık önceliği fiziksel P3.6 kapanışı beklenirken uygulanır; diğer aşamalar tamamlanmış sayılmaz.
 
 P1 kaynak, logo, font ve iletişim incelemesi yapıldı; gerçek proje bilgileri/fotoğrafları doğrulanmadığı için P1.5 açık kalır. Planın engel yönetimi uyarınca bağımsız P2 temeli tamamlandı. Vite/TypeScript sayfası, statik SVG poster, mobil menü, hareket tercihi ve temel WhatsApp iletişim akışı çalışıyor. Gerçek 3D açılış şimdi uygulanmıştır. Üretim animasyonları, galeri, stüdyo ve upload henüz uygulanmadı.
 
@@ -385,3 +385,10 @@ Sıradaki tek iş:
 - Kayıt/yayın sonucu ayrıca doğrulanır. Sıradaki tek iş: canlıda kapatma düğmesini kontrol etmek.
 
 - 360° kapatma canlı doğrulaması: 2226c7e2934b40a3d38b7babd64eea1cc801d664 Cloudflare başarılı. Canlı Chromium aç/döndür/kapat geçti; poster, sıfır canvas ve JS hatası yok. Kanıt docs/evidence/P3_7C_CLOSE_LIVE.json. P3.6 fiziksel kabulü açık.
+
+### 2026-10-04 — P3.7d araç 3D iptali
+
+- Kullanıcı araçta yalnızca beğendiği fotoğrafın kalmasını istedi. Araç modeli/viewer ve eski kullanılmayan showcase 3D modülleri, tüm dönüş kontrolleri ve 360° açıklamaları kaldırıldı. Referans fotoğrafı/kırpma ve lightbox ışığı korundu.
+- Başta AGENTS, mimari v1.13 ve roadmap v1.12 okundu; mimari v1.14/A15 kullanıcı kapsam revizyonunu kaydeder. Hero, önceki showroom ve eşzamanlı hizmet içerikleri korunur.
+- Kabul: production build/TypeScript ve fotoğraf/lightbox tarayıcı testleri 2/2 geçti; 360/1440 px, klavye/hover, JS kapalı ve reduced-motion kontrol edildi. P3.6 fiziksel GPU kabulü açık.
+- Sıradaki tek iş: sadeleştirilmiş vitrini canlı yayında doğrulamak.

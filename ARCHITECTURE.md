@@ -1,6 +1,6 @@
 # ZY Reklam — Mimari
 
-**Sürüm:** 1.13 · **Tarih:** 2026-10-04 · **Durum:** P3 gerçek 3D ve güvenli yollar uygulandı; fiziksel cihaz performans kabulü açık
+**Sürüm:** 1.14 · **Tarih:** 2026-10-04 · **Durum:** P3 gerçek 3D ve güvenli yollar uygulandı; fiziksel cihaz performans kabulü açık
 
 **İlgili belgeler:** [Yol haritası](ROADMAP.md) · [Çalışma kuralları](AGENTS.md)
 
@@ -351,3 +351,7 @@ Kullanıcı gerçek Nissan X-Trail T32 GLB dosyasını sağladı; indirme engeli
 Lightbox gerçek fotoğraf + DOM ışık tepkisini korur. Araç viewer ayrı dinamik src/showcase/vehicle.ts adaptörüdür: 360° görünümü aç düğmesi modeli açık kullanıcı eyleminde yükler. Bu nedenle 4,1 MB araç, ilk sayfa/hero bütçesine eklenmez. GLTFLoader + Three'ın yerel MeshoptDecoder'ı kullanılır; harici runtime model/CDN yoktur. Yükleme 25 sn süre sınırı/cleanup sinyaliyle iptal edilebilir. WebGL/context veya HTTP hatası gerçek fotoğraf ve tekrar deneme yolunu korur.
 
 Dönüş yatayda sınırsız mouse/touch, ok tuşları, Home ve DOM düğmeleriyle yapılır; otomatik dönme/atalet yok. Dikey dokunma scroll'u korunur. Idle/offscreen/hidden render durur; resize olay başına tek kare. DPR masaüstü 1,5 / dar ekranda 1; model geometrileri, materyaller, texture/env, renderer ve listener/observer cleanup uygulanır. Hero ve önceki showroom modülleri değişmedi. Fiziksel GPU/performance kabulü P3.6 kapsamında açık kalır.
+
+### A15 — Araç vitrini yalnızca fotoğraf (2026-10-04)
+
+Kullanıcı A13/A14 araç 3D kapsamını iptal etti. Yeni vitrinde Nissan referans fotoğrafı mevcut kırpmasıyla sabit kalır; model, viewer, dönüş/açma/kapatma kontrolleri ve 360° metinleri kaldırılır. Lightbox DOM/CSS ışık tepkisi korunur. Hero ve önceki tabela showroom 3D kapsamı değişmez.
