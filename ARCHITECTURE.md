@@ -1,6 +1,6 @@
 # ZY Reklam — Mimari
 
-**Sürüm:** 1.12 · **Tarih:** 2026-10-04 · **Durum:** P3 gerçek 3D ve güvenli yollar uygulandı; fiziksel cihaz performans kabulü açık
+**Sürüm:** 1.13 · **Tarih:** 2026-10-04 · **Durum:** P3 gerçek 3D ve güvenli yollar uygulandı; fiziksel cihaz performans kabulü açık
 
 **İlgili belgeler:** [Yol haritası](ROADMAP.md) · [Çalışma kuralları](AGENTS.md)
 
@@ -339,3 +339,15 @@ Kullanıcının açık yeni kapsamı: mevcut tabelalara ek tabela üretmeden lig
 NOVA Coffee, bu iş için oluşturulmuş temsili marka konseptidir; ZY müşteri referansı olarak sunulmaz. Yeşil/krem/bakır kaplama ve kahve illüstrasyonu CanvasTexture ile yerelde üretilir; dış model, görsel veya font indirilmez. Araç bütün eksen çevresinde sınırsız yatay döner; pointer capture ve `touch-action:pan-y` ile dokunma/dikey kaydırma ayrılır. Klavye okları, sola/sağa ve başlangıç düğmeleri vardır. Lightbox emissive ön yüzü ayrı düğmeyle açılıp kapanır. Reduced-motion durumunda otomatik hareket yok; kullanıcı kontrollü tek kare dönüş korunur.
 
 Context/yükleme hatasında dispose ve responsive WebP poster; bütün ticari metin DOM'da kalır. Geometri, materyal, texture, environment, gölge, observer ve listener temizlenir. P3.6 fiziksel GPU kabulü açık kalır; bu iş P4–P9 kabulü değildir.
+
+### 2026-10-04 — A14 gerçek görseller ve Nissan modeli (P3.7c, kısmi)
+
+Kullanıcı A13 prosedürel araç görünümünü reddetti; sağladığı lightbox ve Nissan X-Trail T32 fotoğrafları esas alınır. Lightbox özgün PNG ile DOM üzerinde gösterilir; mouse yaklaşması, klavye odağı ve ışık düğmesi belirgin parlaklık/halo sağlar. Yeni showcase controller WebGL yüklemez; önceki showroom korunur. Araç fotoğrafı yalnızca gerçek uygulama referansıdır; fotoğraf açı geçişi 360° olarak sunulmaz. Kullanıcı kesintisiz 360° seçti. Gerçek GLB/glTF modeli olmadan bu kabul karşılanmaz. Sketchfab model 30663a0fbc9e4e32b6f7adacca2b603c (Merc_TV, CC BY 4.0) bulundu; indirme API'si 401 oturum gerektirir. Model dosyası ve kaplama uygulaması beklenir. Çalışma ayrı taslak dalında tutulur, main/canlı yayın değiştirilmez.
+
+### 2026-10-04 — A14 gerçek Nissan GLB uygulaması (P3.7c)
+
+Kullanıcı gerçek Nissan X-Trail T32 GLB dosyasını sağladı; indirme engeli kalktı. Özgün dosya değiştirilmedi. Site türevi kullanılmayan motor/iç parçalar olmadan, sınırları koruyan meshopt sadeleştirme ve EXT_meshopt_compression ile 4.110.300 bayta düşürüldü; 232.295 kaynak üçgeni içerir. Kaynak model tek tekerlek içerdiği için dört aks konumuna örneklendi; kauçuk torus lastikler eklendi. Fotoğraftaki buyHome renk/marka kaplaması CanvasTexture ile gövdeye yeniden uyarlandı; fotoğrafla piksel düzeyinde eşleşme iddiası yok. Merc_TV, model bağlantısı ve CC BY 4.0 atfı görünür DOM'da yer alır.
+
+Lightbox gerçek fotoğraf + DOM ışık tepkisini korur. Araç viewer ayrı dinamik src/showcase/vehicle.ts adaptörüdür: 360° görünümü aç düğmesi modeli açık kullanıcı eyleminde yükler. Bu nedenle 4,1 MB araç, ilk sayfa/hero bütçesine eklenmez. GLTFLoader + Three'ın yerel MeshoptDecoder'ı kullanılır; harici runtime model/CDN yoktur. Yükleme 25 sn süre sınırı/cleanup sinyaliyle iptal edilebilir. WebGL/context veya HTTP hatası gerçek fotoğraf ve tekrar deneme yolunu korur.
+
+Dönüş yatayda sınırsız mouse/touch, ok tuşları, Home ve DOM düğmeleriyle yapılır; otomatik dönme/atalet yok. Dikey dokunma scroll'u korunur. Idle/offscreen/hidden render durur; resize olay başına tek kare. DPR masaüstü 1,5 / dar ekranda 1; model geometrileri, materyaller, texture/env, renderer ve listener/observer cleanup uygulanır. Hero ve önceki showroom modülleri değişmedi. Fiziksel GPU/performance kabulü P3.6 kapsamında açık kalır.

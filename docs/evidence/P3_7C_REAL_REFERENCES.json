@@ -1,0 +1,57 @@
+{
+  "checks": [
+    {
+      "width": 1440,
+      "photosDecoded": true,
+      "keyboard": true,
+      "touchControl": true,
+      "hover": true,
+      "overflow": false
+    },
+    {
+      "width": 360,
+      "photosDecoded": true,
+      "keyboard": true,
+      "touchControl": true,
+      "hover": false,
+      "overflow": false
+    },
+    {
+      "javaScript": true,
+      "photographicFallback": true,
+      "vehicle360PosterUntilExplicitLoad": true
+    },
+    {
+      "javaScript": false,
+      "photographicFallback": true,
+      "vehicle360PosterUntilExplicitLoad": true
+    },
+    {
+      "width": 1440,
+      "modelLoaded": true,
+      "continuous360": true,
+      "keyboard": true,
+      "drag": true,
+      "idleStopped": true,
+      "offscreenStopped": true,
+      "contextFallback": true,
+      "errors": []
+    },
+    {
+      "width": 360,
+      "modelLoaded": true,
+      "continuous360": true,
+      "keyboard": true,
+      "drag": true,
+      "idleStopped": true,
+      "offscreenStopped": true,
+      "contextFallback": true,
+      "errors": []
+    },
+    {
+      "modelFailureFallback": true
+    }
+  ],
+  "vehicle360": "actual Nissan GLB, user-controlled continuous 360 degrees",
+  "modelBytes": 4110300
+}

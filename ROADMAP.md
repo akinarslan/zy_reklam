@@ -1,6 +1,6 @@
 # ZY Reklam — Yol Haritası
 
-**Sürüm:** 1.11 · **Başlangıç:** 2026-10-01
+**Sürüm:** 1.12 · **Başlangıç:** 2026-10-01
 
 **Kaynak:** [ARCHITECTURE.md](ARCHITECTURE.md) · **Zorunlu kontrol:** [AGENTS.md](AGENTS.md)
 
@@ -10,7 +10,7 @@
 
 **Aktif aşama:** P3 — Gerçek 3D açılış uygulandı; performans kapanışı devam ediyor.
 
-**Kullanıcı önceliği:** P3.7b — Lightbox ve 360° araç giydirme vitrini. Kullanıcının açık önceliği fiziksel P3.6 kapanışı beklenirken uygulanır; diğer aşamalar tamamlanmış sayılmaz.
+**Kullanıcı önceliği:** P3.7c — Lightbox ve 360° araç giydirme vitrini. Kullanıcının açık önceliği fiziksel P3.6 kapanışı beklenirken uygulanır; diğer aşamalar tamamlanmış sayılmaz.
 
 P1 kaynak, logo, font ve iletişim incelemesi yapıldı; gerçek proje bilgileri/fotoğrafları doğrulanmadığı için P1.5 açık kalır. Planın engel yönetimi uyarınca bağımsız P2 temeli tamamlandı. Vite/TypeScript sayfası, statik SVG poster, mobil menü, hareket tercihi ve temel WhatsApp iletişim akışı çalışıyor. Gerçek 3D açılış şimdi uygulanmıştır. Üretim animasyonları, galeri, stüdyo ve upload henüz uygulanmadı.
 
@@ -359,3 +359,19 @@ Sıradaki tek iş:
 - Sıradaki tek iş: canlı yayında yeni vitrinin görünürlüğünü ve sürükleme/ışık düğmelerini doğrulamak.
 
 - Uzak uygulama kaydı 44ec239ef9a88555b45d9662f888711ddd27105c main üzerinde doğrulandı; 17 blob eşleşti. Cloudflare Workers Builds başarılı. Canlı HTTPS içeriğinde yeni bölüm var. Chromium'da tüm yanıtları canlı origin'den ileten yerel HTTP köprüsüyle gerçek 3D, dönüş ve ışık düğmesi başarılı; JS hatası yok. GitHub Verify son kontrolde sürüyordu. Canlı yayın kontrolü tamamlandı; sıradaki tek plan işi P3.6 fiziksel cihaz kabulüdür.
+
+### 2026-10-04 — P3.7c gerçek lightbox / Nissan (devam ediyor)
+
+- Kullanıcının sağladığı iki görsel özgün dosya olarak eklendi. Lightbox gerçek fotoğraf, belirgin hover/klavye ışığı ve sabitleme düğmesiyle hazır.
+- Araç gerçek Nissan fotoğrafıyla referans olarak gösterildi. Kesintisiz 360° engelli: gerçek model dosyası eksik; fotoğraf geçişi veya eski prosedürel araç kabul yerine kullanılmadı.
+- Production build başarılı; masaüstü/mobil, klavye, reduced-motion ve JS kapalı durumlarını içeren showcase testleri 2/2 geçti. 1440 ve 360 ekranları incelendi. Kanıt: docs/evidence/P3_7C_REAL_REFERENCES.json. Tam test paketi bu revizyonda çalıştırılmadı.
+- Mevcut hero/showroom korundu. Taslak wip/realistic-lightbox-nissan dalında; canlı yayın yapılmadı.
+- Sıradaki tek iş: kullanıcının Nissan model ZIP/GLB/glTF dosyasını sağlaması, ardından gerçek kaplamalı 360° araç uygulaması.
+
+### 2026-10-04 — P3.7c gerçek GLB dönüşü (uygulandı)
+
+- Model kullanıcı tarafından sağlandı; önceki indirme engeli kalktı. Gerçek Nissan T32, uyarlanmış kırmızı/beyaz/siyah buyHome kaplaması, cam/metal/far/kauçuk materyalleri ve gerçek lightbox fotoğrafı birlikte gösterilir.
+- 360° görünümü aç düğmesi 4.110.300 bayt modeli açık kullanıcı eyleminde yükler. Meshopt sadeleştirme/sıkıştırma, dört tekerlek konumu, kaynak/CC BY atfı. Otomatik sürekli dönüş yok; kullanıcı yönettiği tam 360° var.
+- Build/TypeScript başarılı. Showcase davranış testleri 4/4; genel sayfa ve önceki showroom testleri 9/9 geçti. Mouse/touch, tam turdan fazla dönüş, klavye/reset, idle/offscreen duruş, context kaybı, model HTTP hatası, reduced-motion/JS kapalı ve 360/1440 px kontrolleri. Tam test paketi çalıştırılmadı; fiziksel GPU kabulü açık.
+- Mimari v1.13 / A14. Uygulama main için hazırlanır; canlı yayın sonucu kayıt sonrasında ayrıca doğrulanır.
+- Sıradaki tek iş: canlı yeni lightbox ve Nissan viewer yayınının doğrulanması.
