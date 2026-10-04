@@ -1,11 +1,7 @@
 # Son rapor — 2026-10-04
 
-P2 hizmet görselleri: kullanıcı ZIP’indeki 20 fotoğraf public/assets/services altına özgün byte’larıyla eklendi. Mevcut hizmet adı/açıklama/galeri sırası ve iki sütunlu masaüstü düzeni korunur. Araç giydirme Dijital Baskı & Kaplama altındadır.
+P2 hizmet içerik revizyonu: istenen beş başlık ve ilgili blokları kaldırıldı; yüklenen fotoğraf 1–3 Totem, 4–6 LED / Neon galerisinde. src/content/services.json ve altı WebP güncellendi. Mimari v1.14 değişmedi.
 
-Build/TypeScript başarılı, hizmet testleri 3/3 başarılı; 20 WebP decode ve görsel içerik eşlemesi kontrol edildi. Mimari v1.14 değişmedi. Tam test paketi yeniden çalıştırılmadı. P3.6 fiziksel kabulü açık.
+Build/TypeScript ve hizmet testleri 3/3 geçti. 1440/360 px tarayıcı kontrolleri başarılı: altı görsel decode, silinen başlıklar yok, yatay taşma yok. Tam test paketi çalıştırılmadı; P3.6 fiziksel kabulü açık.
 
-Değişen dosyalar: 20 WebP, ROADMAP.md, LAST_REPORT.md, docs/evidence/P2_SERVICE_IMAGES.json.
-
-Canlı yayın kontrolü başarılı: 20 fotoğraf açılıyor, JavaScript hatası yok; iki sütunlu tabela ekranı incelendi.
-
-Sıradaki tek plan işi: P3.6 fiziksel cihaz kabulü.
+Sıradaki tek iş: canlı hizmet revizyonunu doğrulamak.

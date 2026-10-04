@@ -403,3 +403,10 @@ Sıradaki tek iş:
 - Sıradaki tek iş: canlı hizmet galerisi fotoğraflarını kontrol etmek.
 
 - Canlı Cloudflare yayını başarılı; canlı HTTPS origin Chromium kontrolünde 20 hizmet fotoğrafı decode edildi, JavaScript hatası yok. İki sütunlu ışıklı tabela ekranı incelendi. Kanıt P2_SERVICE_IMAGES_LIVE.json. Sıradaki tek plan işi P3.6 fiziksel cihaz kabulüdür.
+
+### 2026-10-04 — P2 hizmet listesi / Totem ve LED-Neon
+
+- Talimat: Fabrika & İş Güvenliği Levhaları, Kutu Harf Tabela, Tabela İmalatı, Tabela Montajı, Pleksi Kutu Harf başlıkları ve ilgili görsel blokları kaldırıldı. İlk üç yüklenen fotoğraf Totem Tabela, son üç LED / Neon Tabela galerisine eklendi. Paylaşılan proje varlıkları diğer sayfalarda kullanıldığı için kaynakları korunur.
+- Başta AGENTS, mimari v1.14 ve roadmap v1.13 tamamen okundu; mevcut içerik mimarisine uyuldu. Hizmet JSON, altı WebP ve rapor/kanıt kayıtları değişir.
+- Production build/TypeScript ve üç hizmet testi başarılı. 1440/360 px fotoğraf decode, silinen blokların yokluğu ve taşma kontrolü geçti. Diğer aşamalar ve P3.6 açık.
+- Sıradaki tek iş: canlı hizmet revizyonunu doğrulamak.

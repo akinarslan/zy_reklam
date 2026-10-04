@@ -7,24 +7,10 @@
       "description": "Dış cepheden iç mekân yönlendirmesine, ışıklı kutu harften toteme kadar kurumsal görünürlüğü fiziksel mekâna taşıyan çözümler.",
       "menuPreview": [
         "Işıklı Tabela",
-        "Kutu Harf",
+        "Krom & Gold Harf",
         "Totem & Yönlendirme"
       ],
       "services": [
-        [
-          "tabela-imalati",
-          "Tabela İmalatı",
-          "Projeye, ölçüye ve kullanım alanına göre tabela üretimi.",
-          "/assets/project-examples/ornek-02-960.webp",
-          []
-        ],
-        [
-          "tabela-montaji",
-          "Tabela Montajı",
-          "Üretilen tabelaların yerinde, güvenli ve temiz montajı.",
-          "/assets/project-examples/ornek-03-960.webp",
-          []
-        ],
         [
           "isikli-tabela",
           "Işıklı Tabela",
@@ -48,13 +34,6 @@
           ]
         ],
         [
-          "kutu-harf",
-          "Kutu Harf Tabela",
-          "Pleksi, alüminyum, paslanmaz ve farklı yüzeylerle üç boyutlu kutu harf üretimi.",
-          "/assets/project-examples/ornek-06-960.webp",
-          []
-        ],
-        [
           "krom-kutu-harf",
           "Paslanmaz / Krom Kutu Harf",
           "Metalik yüzeyli, güçlü ve premium kutu harf uygulamaları.",
@@ -76,18 +55,15 @@
           ]
         ],
         [
-          "pleksi-kutu-harf",
-          "Pleksi Kutu Harf",
-          "Renkli, ışık geçirgen ve modern pleksi kutu harf çözümleri.",
-          "/assets/project-examples/ornek-09-960.webp",
-          []
-        ],
-        [
           "led-neon",
           "LED / Neon Tabela",
           "Dekoratif çizgi ışıkları ve LED neon karakterli iç-dış mekân uygulamaları.",
-          "/assets/project-examples/ornek-10-960.webp",
-          []
+          "/assets/services/led-neon-01.webp",
+          [
+            "/assets/services/led-neon-01.webp",
+            "/assets/services/led-neon-02.webp",
+            "/assets/services/led-neon-03.webp"
+          ]
         ],
         [
           "lightbox",
@@ -128,8 +104,12 @@
           "totem-tabela",
           "Totem Tabela",
           "Dikey, bağımsız, ışıklı veya dijital ekranlı reklam ve yönlendirme totemleri.",
-          "/assets/project-examples/ornek-16-960.webp",
-          []
+          "/assets/services/totem-01.webp",
+          [
+            "/assets/services/totem-01.webp",
+            "/assets/services/totem-02.webp",
+            "/assets/services/totem-03.webp"
+          ]
         ],
         [
           "ic-mekan-yonlendirme",
@@ -141,13 +121,6 @@
             "/assets/services/ic-yonlendirme-02.webp",
             "/assets/services/ic-yonlendirme-03.webp"
           ]
-        ],
-        [
-          "fabrika-guvenlik",
-          "Fabrika & İş Güvenliği Levhaları",
-          "Tesis içi rota, bölüm, uyarı ve iş güvenliği levhaları.",
-          "/assets/project-examples/ornek-18-960.webp",
-          []
         ]
       ]
     },

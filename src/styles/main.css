@@ -242,3 +242,6 @@ html[data-motion=reduced]{scroll-behavior:auto}html[data-motion=reduced] *,html[
   .service-gallery-item img{transition:none}
 }
 /* SERVICE GALLERY LAYOUT END */
+
+/* Preserve the full portrait totem and neon references in their gallery frames. */
+#totem-tabela .service-gallery-item img,#led-neon .service-gallery-item img{object-fit:contain}
