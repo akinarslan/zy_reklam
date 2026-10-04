@@ -1,0 +1,21 @@
+{
+  "passed": true,
+  "results": [
+    {
+      "width": 1440,
+      "hover": true,
+      "tapToggle": false,
+      "keyboardToggle": true,
+      "shadowAndHalo": true,
+      "errors": []
+    },
+    {
+      "width": 360,
+      "hover": false,
+      "tapToggle": true,
+      "keyboardToggle": false,
+      "shadowAndHalo": true,
+      "errors": []
+    }
+  ]
+}
