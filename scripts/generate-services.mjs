@@ -51,7 +51,7 @@ for (const group of groups) {
     const [id,title,description,image,gallery=[]] = item;
     const images = gallery.length ? gallery : [image];
     const galleryHtml = images.map((src,imageIndex) => `<figure class="service-gallery-item">
-      <img src="${esc(src)}" alt="${esc(title)} örnek uygulama ${imageIndex+1}" loading="${index<2?'eager':'lazy'}" decoding="async">
+      <img src="${esc(src)}" alt="${esc(title)} örnek uygulama ${imageIndex+1}" loading="${index<2?'eager':'lazy'}" decoding="async" onerror="this.onerror=null;this.src='${esc(image)}'">
     </figure>`).join('');
     return `<article class="service-detail service-detail-gallery" id="${esc(id)}">
       <div class="service-detail-copy">
