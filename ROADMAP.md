@@ -410,3 +410,5 @@ Sıradaki tek iş:
 - Başta AGENTS, mimari v1.14 ve roadmap v1.13 tamamen okundu; mevcut içerik mimarisine uyuldu. Hizmet JSON, altı WebP ve rapor/kanıt kayıtları değişir.
 - Production build/TypeScript ve üç hizmet testi başarılı. 1440/360 px fotoğraf decode, silinen blokların yokluğu ve taşma kontrolü geçti. Diğer aşamalar ve P3.6 açık.
 - Sıradaki tek iş: canlı hizmet revizyonunu doğrulamak.
+
+- Canlı Cloudflare yayın kontrolü başarılı. Chromium canlı origin: altı yeni fotoğraf decode, kaldırılan beş blok 0 adet, JS hatası yok. Tam fotoğraf için Totem/LED-Neon galerilerine contain stili eklendi; masaüstü/mobil yeniden kontrol edildi. Kanıt P2_TOTEM_NEON_LIVE.json. Sıradaki tek plan işi P3.6 fiziksel cihaz kabulüdür.
