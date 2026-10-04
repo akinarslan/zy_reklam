@@ -1,0 +1,21 @@
+{
+  "passed": true,
+  "results": [
+    {
+      "width": 1440,
+      "category": "tabela-yonlendirme",
+      "images": 8,
+      "fullImages": true,
+      "hoverCrop": false,
+      "overflow": false
+    },
+    {
+      "width": 360,
+      "category": "tabela-yonlendirme",
+      "images": 8,
+      "fullImages": true,
+      "hoverCrop": false,
+      "overflow": false
+    }
+  ]
+}

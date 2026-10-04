@@ -428,3 +428,5 @@ Sıradaki tek iş:
 - AGENTS, mimari v1.14 ve roadmap v1.13 tamamen okundu. Mimari/veri sözleşmesi değişmedi.
 - Production build/TypeScript, üç hizmet testi ve beş kategoride 1440/360 px × 76 görsel decode/tam çerçeve/hover/taşma kontrolü geçti. Masaüstü Asma ve mobil İç Mekân ekranları incelendi. Kanıt P2_SERVICE_PHOTO_FIT.json. Tam paket çalıştırılmadı.
 - Sıradaki tek iş: canlı hizmet galerilerinde kırpmasız görünümü doğrulamak.
+
+- Uzak uygulama 2096225e15c771abf3f94477e6b74668f9f2a38c blobları doğrulandı. Cloudflare başarılı. Canlı Chromium 1440/360 px Cephe/Asma/İç Mekân sekiz fotoğraf decode/contain/hover kırpması yok/taşma yok kontrolleri geçti; Cephe masaüstü ekranı incelendi. İlk canlı denemede stil kabulü başarısızdı; güncel CSS HTTP 200 doğrulandıktan sonra masaüstü ve mobil kabul başarılıdır. Kanıt P2_SERVICE_PHOTO_FIT_LIVE.json. Sıradaki tek plan işi P3.6 fiziksel cihaz kabulüdür.
