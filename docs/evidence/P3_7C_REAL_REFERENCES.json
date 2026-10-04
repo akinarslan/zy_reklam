@@ -3,16 +3,14 @@
     {
       "width": 1440,
       "photosDecoded": true,
-      "keyboard": true,
-      "touchControl": true,
+      "lightboxButtonPresent": false,
       "hover": true,
       "overflow": false
     },
     {
       "width": 360,
       "photosDecoded": true,
-      "keyboard": true,
-      "touchControl": true,
+      "lightboxButtonPresent": false,
       "hover": false,
       "overflow": false
     },

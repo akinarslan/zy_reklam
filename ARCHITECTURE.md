@@ -355,3 +355,7 @@ Dönüş yatayda sınırsız mouse/touch, ok tuşları, Home ve DOM düğmeleriy
 ### A15 — Araç vitrini yalnızca fotoğraf (2026-10-04)
 
 Kullanıcı A13/A14 araç 3D kapsamını iptal etti. Yeni vitrinde Nissan referans fotoğrafı mevcut kırpmasıyla sabit kalır; model, viewer, dönüş/açma/kapatma kontrolleri ve 360° metinleri kaldırılır. Lightbox DOM/CSS ışık tepkisi korunur. Hero ve önceki tabela showroom 3D kapsamı değişmez.
+
+### A15 — Araç fotoğrafında gölge ve aydınlatma (2026-10-04)
+
+P3.7e kullanıcı talimatı: aynı fotoğraf/crop korunur; başlangıçta mat/koyu filtre ve gölge katmanı, mouse hover veya native button dokunma/Enter/Space ile özgün parlak fotoğraf ve beyaz halo. Dokunma ikinci aktivasyonda kapanır; mouse hover geçicidir. AbortController cleanup ve reduced-motion korunur. Araç WebGL/modeli eklenmez. Mevcut DOM/CSS mimarisi içinde rutin görsel etkileşimdir.

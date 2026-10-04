@@ -1,9 +1,9 @@
 # Son İş Raporu
 
-P2 hizmet fotoğrafları: bütün görseli göstermek için ortak galeri contain/center olarak değişti. Hover yakınlaştırması kaldırıldı. Cephe, Asma ve İç Mekân dahil beş hizmet kategorisi kontrol edildi.
+P3.7e araç fotoğrafına mat/gölgeli başlangıç, mouse hover/dokunma ile özgün parlaklık ve belirgin beyaz halo eklendi. İkinci dokunma kapatır; Enter/Space desteklenir.
 
-Dosyalar: src/styles/main.css, docs/evidence/P2_SERVICE_PHOTO_FIT.json, ROADMAP.md, LAST_REPORT.md.
+Değişiklikler: index.html, src/showcase/controller.ts, src/styles/showcase.css, tests/showcase.test.mjs, ARCHITECTURE.md/A15, ROADMAP.md, LAST_REPORT.md ve P3_7E_CAR_LIGHT.json.
 
-Mimari v1.14 korunur. Build/TypeScript, üç hizmet testi ve 1440/360 px tüm 76 fotoğraf decode/tam görünüm/hover/taşma kontrolü başarılı. Tam paket çalıştırılmadı. Engel yok.
+Build/TypeScript ve 1440/360 px fare/dokunma/klavye/reduced-motion/taşma/decode kabulü başarılı. Koyu/parlak ekranlar incelendi. Mimari v1.14 DOM/CSS sınırları korunur. Güncellenmiş showcase testleri 2/2 geçti. Tam paket çalıştırılmadı. Engel yok.
 
-Uzak uygulama 2096225e15c771abf3f94477e6b74668f9f2a38c doğrulandı. Cloudflare başarılı. Canlı Chromium Cephe, Asma ve İç Mekân sekiz görselini 1440/360 px boyutlarda decode/contain/hover/taşma kontrollerinden geçirdi. Kanıt: P2_SERVICE_PHOTO_FIT_LIVE.json. İlk canlı stil kabulü başarısızdı; güncel CSS HTTP 200 ve yeni masaüstü/mobil kabulü başarılı. Sıradaki tek plan işi: P3.6 fiziksel cihaz kabulü.
+Sıradaki tek iş: canlı yayın kontrolü.

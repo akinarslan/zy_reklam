@@ -426,7 +426,13 @@ Sıradaki tek iş:
 
 - Talimat: Cephe Tabelası, Asma Tabela ve İç Mekân Yönlendirme dahil tüm hizmet görselleri tam görünsün. Ortak galeri contain/center kullanır; hover yakınlaştırması kaldırıldı. İki sütun/tek sütun düzen ve fotoğraflar korunur. Eski tekil hizmet medyası da contain kullanır.
 - AGENTS, mimari v1.14 ve roadmap v1.13 tamamen okundu. Mimari/veri sözleşmesi değişmedi.
-- Production build/TypeScript, üç hizmet testi ve beş kategoride 1440/360 px × 76 görsel decode/tam çerçeve/hover/taşma kontrolü geçti. Masaüstü Asma ve mobil İç Mekân ekranları incelendi. Kanıt P2_SERVICE_PHOTO_FIT.json. Tam paket çalıştırılmadı.
+- Production build/TypeScript, üç hizmet testi ve beş kategoride 1440/360 px × 76 görsel decode/tam çerçeve/hover/taşma kontrolü geçti. Masaüstü Asma ve mobil İç Mekân ekranları incelendi. Kanıt P2_SERVICE_PHOTO_FIT.json. Güncellenmiş showcase testleri 2/2 geçti. Tam paket çalıştırılmadı.
 - Sıradaki tek iş: canlı hizmet galerilerinde kırpmasız görünümü doğrulamak.
 
 - Uzak uygulama 2096225e15c771abf3f94477e6b74668f9f2a38c blobları doğrulandı. Cloudflare başarılı. Canlı Chromium 1440/360 px Cephe/Asma/İç Mekân sekiz fotoğraf decode/contain/hover kırpması yok/taşma yok kontrolleri geçti; Cephe masaüstü ekranı incelendi. İlk canlı denemede stil kabulü başarısızdı; güncel CSS HTTP 200 doğrulandıktan sonra masaüstü ve mobil kabul başarılıdır. Kanıt P2_SERVICE_PHOTO_FIT_LIVE.json. Sıradaki tek plan işi P3.6 fiziksel cihaz kabulüdür.
+
+### 2026-10-04 — P3.7e araç fotoğrafı gölge / ışık
+
+- Başta AGENTS, mimari v1.14 ve roadmap v1.13 tamamen okundu. Aynı araç fotoğrafı başlangıçta brightness .62/saturate .78 ve gölge katmanıyla mat/koyu; mouse hover veya dokunma/Enter/Space ile özgün parlaklık ve beyaz halo. İkinci dokunma kapatır. Fotoğraf kırpması, hero ve önceki showroom korunur.
+- Build/TypeScript başarılı; 1440/360 px fare/dokunma/klavye/reduced-motion/taşma ve fotoğraf decode kontrolü geçti; koyu/parlak ekranları incelendi. Mevcut showcase testleri, uzak ana sayfada kaldırılmış lightbox düğmesini varsaydığı için ilk koşuda başarısızdı; güncel opsiyonel düğme durumuna uyarlandı. Güncellenmiş showcase testleri 2/2 geçti. Tam paket çalıştırılmadı.
+- A15 notu eklendi; DOM/CSS sınırı değişmez. Kanıt P3_7E_CAR_LIGHT.json. Sıradaki tek iş: canlı araç ışığını doğrulamak.
