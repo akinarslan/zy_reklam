@@ -29,5 +29,6 @@ for (const c of categories) {
  const dir=join(root,'projeler',c.id);await mkdir(dir,{recursive:true});await writeFile(join(dir,'index.html'),html);
 }
 const promos=JSON.parse(await readFile(join(root,'src/content/promotions.json'),'utf8')).categories;
-await writeFile(join(root,'public/sitemap.xml'),`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${['/',...promos.map(c=>c.href),...categories.map(c=>c.href)].map(p=>`  <url><loc>https://zyreklamdijital.com.tr${p}</loc></url>`).join('\n')}\n</urlset>\n`);
+const serviceGroups=JSON.parse(await readFile(join(root,'src/content/services.json'),'utf8')).groups;
+await writeFile(join(root,'public/sitemap.xml'),`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${['/',...promos.map(c=>c.href),...categories.map(c=>c.href),...serviceGroups.map(g=>`/hizmetler/${g.id}/`)].map(p=>`  <url><loc>https://zyreklamdijital.com.tr${p}</loc></url>`).join('\n')}\n</urlset>\n`);
 console.log(`Generated ${categories.length} project example pages and shared menus.`);
