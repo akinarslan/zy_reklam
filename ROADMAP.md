@@ -421,3 +421,10 @@ Sıradaki tek iş:
 - Sıradaki tek iş: yeni beş fotoğrafın canlı yayınını doğrulamak.
 
 - Uzak uygulama faa08b0f2019bf1141dc226fb1c78135920d11b7: tüm değişen bloblar ve silme doğrulandı. Cloudflare başarılı. Canlı origin Chromium: Işıklı Tabela yeni Rahat Villa yolu, Lightbox yeni üç görsel ve toplam yedi galeri fotoğrafı decode; JS hatası yok. Kanıt P2_LIGHTBOX_ROOF_LIVE.json. Sıradaki tek plan işi P3.6 fiziksel cihaz kabulüdür.
+
+### 2026-10-04 — P2 hizmet fotoğraflarında kırpmayı kaldırma
+
+- Talimat: Cephe Tabelası, Asma Tabela ve İç Mekân Yönlendirme dahil tüm hizmet görselleri tam görünsün. Ortak galeri contain/center kullanır; hover yakınlaştırması kaldırıldı. İki sütun/tek sütun düzen ve fotoğraflar korunur. Eski tekil hizmet medyası da contain kullanır.
+- AGENTS, mimari v1.14 ve roadmap v1.13 tamamen okundu. Mimari/veri sözleşmesi değişmedi.
+- Production build/TypeScript, üç hizmet testi ve beş kategoride 1440/360 px × 76 görsel decode/tam çerçeve/hover/taşma kontrolü geçti. Masaüstü Asma ve mobil İç Mekân ekranları incelendi. Kanıt P2_SERVICE_PHOTO_FIT.json. Tam paket çalıştırılmadı.
+- Sıradaki tek iş: canlı hizmet galerilerinde kırpmasız görünümü doğrulamak.

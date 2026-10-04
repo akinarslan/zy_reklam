@@ -1,0 +1,85 @@
+{
+  "passed": true,
+  "results": [
+    {
+      "width": 1440,
+      "category": "tabela-yonlendirme",
+      "images": 29,
+      "fullImages": true,
+      "hoverCrop": false,
+      "overflow": false
+    },
+    {
+      "width": 1440,
+      "category": "dijital-baski-kaplama",
+      "images": 17,
+      "fullImages": true,
+      "hoverCrop": false,
+      "overflow": false
+    },
+    {
+      "width": 1440,
+      "category": "lazer-ozel-uretim",
+      "images": 12,
+      "fullImages": true,
+      "hoverCrop": false,
+      "overflow": false
+    },
+    {
+      "width": 1440,
+      "category": "promosyon-baski",
+      "images": 10,
+      "fullImages": true,
+      "hoverCrop": false,
+      "overflow": false
+    },
+    {
+      "width": 1440,
+      "category": "tasarim-kurumsal",
+      "images": 8,
+      "fullImages": true,
+      "hoverCrop": false,
+      "overflow": false
+    },
+    {
+      "width": 360,
+      "category": "tabela-yonlendirme",
+      "images": 29,
+      "fullImages": true,
+      "hoverCrop": false,
+      "overflow": false
+    },
+    {
+      "width": 360,
+      "category": "dijital-baski-kaplama",
+      "images": 17,
+      "fullImages": true,
+      "hoverCrop": false,
+      "overflow": false
+    },
+    {
+      "width": 360,
+      "category": "lazer-ozel-uretim",
+      "images": 12,
+      "fullImages": true,
+      "hoverCrop": false,
+      "overflow": false
+    },
+    {
+      "width": 360,
+      "category": "promosyon-baski",
+      "images": 10,
+      "fullImages": true,
+      "hoverCrop": false,
+      "overflow": false
+    },
+    {
+      "width": 360,
+      "category": "tasarim-kurumsal",
+      "images": 8,
+      "fullImages": true,
+      "hoverCrop": false,
+      "overflow": false
+    }
+  ]
+}

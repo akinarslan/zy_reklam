@@ -160,7 +160,7 @@ html[data-motion=reduced]{scroll-behavior:auto}html[data-motion=reduced] *,html[
   border:1px solid rgba(217,181,90,.18);background:#0a2118;
   box-shadow:0 20px 55px rgba(0,0,0,.24)
 }
-.service-detail-media img{width:100%;height:360px;object-fit:cover}
+.service-detail-media img{width:100%;height:360px;object-fit:contain}
 .service-detail-media figcaption{
   position:absolute;left:14px;bottom:12px;padding:7px 9px;
   background:rgba(2,10,8,.78);backdrop-filter:blur(7px);
@@ -227,11 +227,8 @@ html[data-motion=reduced]{scroll-behavior:auto}html[data-motion=reduced] *,html[
   display:block;
   width:100%;
   aspect-ratio:4 / 3;
-  object-fit:cover;
-  transition:transform .25s ease;
-}
-.service-gallery-item:hover img{
-  transform:scale(1.015);
+  object-fit:contain;
+  object-position:center;
 }
 @media(max-width:767px){
   .service-detail-gallery{padding:38px 0 46px}
@@ -243,5 +240,3 @@ html[data-motion=reduced]{scroll-behavior:auto}html[data-motion=reduced] *,html[
 }
 /* SERVICE GALLERY LAYOUT END */
 
-/* Preserve the full portrait totem, neon and lightbox references in their gallery frames. */
-#totem-tabela .service-gallery-item img,#led-neon .service-gallery-item img, #lightbox .service-gallery-item img{object-fit:contain}
