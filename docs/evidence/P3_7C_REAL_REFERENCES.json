@@ -1,0 +1,31 @@
+{
+  "checks": [
+    {
+      "width": 1440,
+      "photosDecoded": true,
+      "keyboard": true,
+      "touchControl": true,
+      "hover": true,
+      "overflow": false
+    },
+    {
+      "width": 360,
+      "photosDecoded": true,
+      "keyboard": true,
+      "touchControl": true,
+      "hover": false,
+      "overflow": false
+    },
+    {
+      "javaScript": true,
+      "photographicFallback": true,
+      "vehicle360Claim": false
+    },
+    {
+      "javaScript": false,
+      "photographicFallback": true,
+      "vehicle360Claim": false
+    }
+  ],
+  "vehicle360": "blocked: actual GLB not downloaded"
+}

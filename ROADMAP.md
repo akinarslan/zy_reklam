@@ -359,3 +359,11 @@ Sıradaki tek iş:
 - Sıradaki tek iş: canlı yayında yeni vitrinin görünürlüğünü ve sürükleme/ışık düğmelerini doğrulamak.
 
 - Uzak uygulama kaydı 44ec239ef9a88555b45d9662f888711ddd27105c main üzerinde doğrulandı; 17 blob eşleşti. Cloudflare Workers Builds başarılı. Canlı HTTPS içeriğinde yeni bölüm var. Chromium'da tüm yanıtları canlı origin'den ileten yerel HTTP köprüsüyle gerçek 3D, dönüş ve ışık düğmesi başarılı; JS hatası yok. GitHub Verify son kontrolde sürüyordu. Canlı yayın kontrolü tamamlandı; sıradaki tek plan işi P3.6 fiziksel cihaz kabulüdür.
+
+### 2026-10-04 — P3.7c gerçek lightbox / Nissan (devam ediyor)
+
+- Kullanıcının sağladığı iki görsel özgün dosya olarak eklendi. Lightbox gerçek fotoğraf, belirgin hover/klavye ışığı ve sabitleme düğmesiyle hazır.
+- Araç gerçek Nissan fotoğrafıyla referans olarak gösterildi. Kesintisiz 360° engelli: gerçek model dosyası eksik; fotoğraf geçişi veya eski prosedürel araç kabul yerine kullanılmadı.
+- Production build başarılı; masaüstü/mobil, klavye, reduced-motion ve JS kapalı durumlarını içeren showcase testleri 2/2 geçti. 1440 ve 360 ekranları incelendi. Kanıt: docs/evidence/P3_7C_REAL_REFERENCES.json. Tam test paketi bu revizyonda çalıştırılmadı.
+- Mevcut hero/showroom korundu. Taslak wip/realistic-lightbox-nissan dalında; canlı yayın yapılmadı.
+- Sıradaki tek iş: kullanıcının Nissan model ZIP/GLB/glTF dosyasını sağlaması, ardından gerçek kaplamalı 360° araç uygulaması.
