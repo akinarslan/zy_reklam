@@ -394,3 +394,12 @@ Sıradaki tek iş:
 - Sıradaki tek iş: sadeleştirilmiş vitrini canlı yayında doğrulamak.
 
 - Uzak uygulama d664d44248c9be9ba5e771926fbfad59af420745 blobları/silmeleri yeniden doğrulandı. Cloudflare ve live kontrolleri başarılı. Canlı Chromium: fotoğraf decode, sıfır araç kontrolü/canvas, 360 metni yok, lightbox lit=true; JS hatası yok. Kanıt P3_7D_PHOTO_ONLY_LIVE.json. GitHub verify sürüyor; tam CI başarı iddiası yok. Sıradaki tek plan işi P3.6 fiziksel cihaz kabulüdür.
+
+### 2026-10-04 — P2 hizmet görsellerinin devralınması
+
+- Kullanıcı diğer sohbetten yüklediği hizmet fotoğraflarını burada yayınlamayı istedi. ZIP içindeki 20 WebP mevcut services.json galeri yollarına değişmeden eklendi; 19 tabela/yönlendirme ve bir araç giydirme. Başlık/açıklama altında masaüstünde iki sütun, mobilde tek sütun düzen korunur.
+- Başta AGENTS, mimari v1.14 ve roadmap v1.13 tamamen okundu. Mevcut mimariye uyuldu; hizmet, showroom, SEO ve domain kodu değişmedi. P3.6 açık.
+- Production build/TypeScript ve üç hizmet testi başarılı; 20 dosya decode ve görsel eşleme kontrol edildi. Kanıt docs/evidence/P2_SERVICE_IMAGES.json. Tam paket yeniden çalıştırılmadı.
+- Sıradaki tek iş: canlı hizmet galerisi fotoğraflarını kontrol etmek.
+
+- Canlı Cloudflare yayını başarılı; canlı HTTPS origin Chromium kontrolünde 20 hizmet fotoğrafı decode edildi, JavaScript hatası yok. İki sütunlu ışıklı tabela ekranı incelendi. Kanıt P2_SERVICE_IMAGES_LIVE.json. Sıradaki tek plan işi P3.6 fiziksel cihaz kabulüdür.

@@ -1,0 +1,108 @@
+{
+  "source": "zy_reklam_service_images.zip",
+  "count": 20,
+  "build": "passed",
+  "serviceTests": "3/3 passed",
+  "files": [
+    {
+      "path": "public/assets/services/arac-giydirme-01.webp",
+      "bytes": 37646,
+      "sha256": "d0f5f6c9981ee8bc58bff94ced679a4a06e23cd4ee4c75ed4dd91fd0e10dc515"
+    },
+    {
+      "path": "public/assets/services/asma-tabela-01.webp",
+      "bytes": 51112,
+      "sha256": "3e2ff8b8662c481fe3a2ef9811e1cd46039f5cf017d551f7b474c8257d672379"
+    },
+    {
+      "path": "public/assets/services/asma-tabela-02.webp",
+      "bytes": 61624,
+      "sha256": "6915e477e6184732fdc68ff80c0c0040cf06997aed5db05d8d09cbb3a3118273"
+    },
+    {
+      "path": "public/assets/services/cephe-tabela-01.webp",
+      "bytes": 18538,
+      "sha256": "1d07695bc79cab3fc9f61310b71fa8df02feb5087d9fce99117846fe5bcb6af3"
+    },
+    {
+      "path": "public/assets/services/cephe-tabela-02.webp",
+      "bytes": 81116,
+      "sha256": "3cbc13c24e508374aa727bb128d208cce142a0a0e6fd6ee0ae951380efe5b4c3"
+    },
+    {
+      "path": "public/assets/services/cephe-tabela-03.webp",
+      "bytes": 134876,
+      "sha256": "8942fd0e90c05425e501831fb1380554ecd8051fa8f2cde615da4698c2951155"
+    },
+    {
+      "path": "public/assets/services/gold-kutu-harf-01.webp",
+      "bytes": 99650,
+      "sha256": "3295e2e32ada474ac675a4360733438c204608d46dc42cf78d629d0455d8ab17"
+    },
+    {
+      "path": "public/assets/services/gold-kutu-harf-02.webp",
+      "bytes": 34986,
+      "sha256": "aa30c3686a134ac46ecdb8b097d3d80ea247a9e7024d317fbfe3828f6cd6e7e6"
+    },
+    {
+      "path": "public/assets/services/ic-yonlendirme-01.webp",
+      "bytes": 17946,
+      "sha256": "4a17418e74331c12eb83550c852b7d7522d714c4fea28ca3b76f60fa941d8197"
+    },
+    {
+      "path": "public/assets/services/ic-yonlendirme-02.webp",
+      "bytes": 35694,
+      "sha256": "141c0fdd6105dab013fffcc92cb7662a2feeadcea207afec11d09122e1baac80"
+    },
+    {
+      "path": "public/assets/services/ic-yonlendirme-03.webp",
+      "bytes": 44808,
+      "sha256": "39d7d22b161ac9f5560086a97953b54eda7c4b224950d759df17580f8299bcaf"
+    },
+    {
+      "path": "public/assets/services/isikli-tabela-01.webp",
+      "bytes": 34870,
+      "sha256": "0f7b2e49dcc5dd191c6ae192abb9d524182f32c05d8106d18722dfb69906a15d"
+    },
+    {
+      "path": "public/assets/services/isikli-tabela-02.webp",
+      "bytes": 99912,
+      "sha256": "85f523d221f966e5d61ef8003fbd575f49aed89840f33db156b8b8142b0daf6a"
+    },
+    {
+      "path": "public/assets/services/isikli-tabela-03.webp",
+      "bytes": 94874,
+      "sha256": "8c7819bb8456d4f67e3ec0a55c955cb383b31e709d7da52d96e51ac0641e6259"
+    },
+    {
+      "path": "public/assets/services/isiksiz-tabela-01.webp",
+      "bytes": 107224,
+      "sha256": "917dbebe554de88546509d08b7c9d6b7e8d4eb06dfedce11ec1e389aa4f26b5a"
+    },
+    {
+      "path": "public/assets/services/isiksiz-tabela-02.webp",
+      "bytes": 47034,
+      "sha256": "0a259cdfe3073d5523954af10b9efd8d320113ee1ca4bcbcbd674816360073bb"
+    },
+    {
+      "path": "public/assets/services/isiksiz-tabela-03.webp",
+      "bytes": 36342,
+      "sha256": "89a4b0afe1923f4e0e4e4c136d4a9bcc2ae55373e9bdf1cc99aaf568266c5324"
+    },
+    {
+      "path": "public/assets/services/krom-kutu-harf-01.webp",
+      "bytes": 40838,
+      "sha256": "98b770e0528720bc996d862a2dd195fe3b685633038a0b4ecc63d05745dbbb0d"
+    },
+    {
+      "path": "public/assets/services/krom-kutu-harf-02.webp",
+      "bytes": 30908,
+      "sha256": "e7ee92ca4b0f5b5ce6943a548a27f10f168f914737e76b827f5527ca1edfbb7c"
+    },
+    {
+      "path": "public/assets/services/krom-kutu-harf-03.webp",
+      "bytes": 46966,
+      "sha256": "9acf2cbf423fbb351e658767ad049d58363ae9d54a0afe203ec4903f78a86d10"
+    }
+  ]
+}
