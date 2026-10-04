@@ -419,3 +419,5 @@ Sıradaki tek iş:
 - AGENTS, mimari v1.14 ve roadmap v1.13 tamamen okundu; içerik mimarisi değişmedi. Lightbox contain stiliyle tam görünür.
 - Production build/TypeScript ve üç hizmet testi geçti. 1440/360 px galeri decode ve taşma kontrolü başarılı. Tam paket çalıştırılmadı; P3.6 açık.
 - Sıradaki tek iş: yeni beş fotoğrafın canlı yayınını doğrulamak.
+
+- Uzak uygulama faa08b0f2019bf1141dc226fb1c78135920d11b7: tüm değişen bloblar ve silme doğrulandı. Cloudflare başarılı. Canlı origin Chromium: Işıklı Tabela yeni Rahat Villa yolu, Lightbox yeni üç görsel ve toplam yedi galeri fotoğrafı decode; JS hatası yok. Kanıt P2_LIGHTBOX_ROOF_LIVE.json. Sıradaki tek plan işi P3.6 fiziksel cihaz kabulüdür.
