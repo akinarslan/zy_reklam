@@ -27,7 +27,7 @@ P7.0 — Admin paneli ve Worker altyapısı; P7 genel kabulü devam ediyor.
 
 ## Commit ve uzak doğrulama
 
-Branch: `feat/admin-panel`. Commit SHA ve `origin/feat/admin-panel` uzak doğrulaması commit/push tamamlanınca bu raporun kaydedildiği commit geçmişinde bulunur. Push yalnızca `feat/admin-panel` dalına yapıldı.
+Branch: `feat/admin-panel`. Kaynak commit: `72c7f54f9035600a8caa45468c92261d42734796` (`feat(admin): add Worker-backed admin panel`). `git push -u origin feat/admin-panel` başarılı oldu. Push sonrasında remote dal tekrar fetch edilerek yerel kaynak commit'iyle SHA eşleşmesi ve `admin/index.html`, `src/admin/main.ts`, `worker/index.ts`, `wrangler.jsonc` dosyalarının uzak commit'te bulunduğu doğrulandı. `main` dalına push/merge yapılmadı.
 
 ## Sınırlar ve sıradaki tek iş
 
