@@ -25,6 +25,7 @@ const state: ContentState = {
 const draftKey = 'zy-reklam-admin-draft';
 let currentUser: string | null = null;
 let statusMessage = 'Yükleniyor...';
+let navigationObserver: IntersectionObserver | null = null;
 
 const app = document.querySelector('#app');
 if (!app) {
@@ -135,28 +136,67 @@ const renderHome = (): string => `
       <span>Sayfa başlığı</span>
       <input data-section="site" data-field="title" value="${escapeHtml(state.site.title)}" />
     </label>
+    <label class="field field-wide">
+      <span>Meta açıklama</span>
+      <textarea data-section="site" data-field="description">${escapeHtml(state.site.description)}</textarea>
+    </label>
+  </div>
+`;
+
+const renderContact = (): string => `
+  <div class="form-grid">
     <label class="field">
       <span>Telefon</span>
       <input data-section="site" data-field="phone" value="${escapeHtml(state.site.phone)}" />
     </label>
-    <label class="field" style="grid-column: 1 / -1;">
-      <span>Meta açıklama</span>
-      <textarea data-section="site" data-field="description">${escapeHtml(state.site.description)}</textarea>
-    </label>
-    <label class="field" style="grid-column: 1 / -1;">
+    <label class="field field-wide">
       <span>Adres</span>
       <textarea data-section="site" data-field="address">${escapeHtml(state.site.address)}</textarea>
     </label>
-    <label class="field" style="grid-column: 1 / -1;">
+    <label class="field field-wide">
       <span>Instagram linki</span>
       <input data-section="site" data-field="instagram" value="${escapeHtml(state.site.instagram)}" />
     </label>
-    <label class="field" style="grid-column: 1 / -1;">
+  </div>
+`;
+
+const renderFooter = (): string => `
+  <div class="form-grid">
+    <label class="field field-wide">
       <span>Footer metni</span>
       <input data-section="site" data-field="footerText" value="${escapeHtml(state.site.footerText)}" />
     </label>
   </div>
 `;
+
+const renderDashboard = (): string => {
+  const serviceCount = state.services.groups.reduce((count, group) => count + group.services.length, 0);
+  return `
+    <div class="dashboard-stats">
+      <article class="stat-card"><span>Hizmet</span><strong>${serviceCount}</strong></article>
+      <article class="stat-card"><span>Proje kategorisi</span><strong>${state.projects.categories.length}</strong></article>
+      <article class="stat-card"><span>Promosyon kategorisi</span><strong>${state.promotions.categories.length}</strong></article>
+    </div>
+    <p class="panel-note">İçerik değişikliklerinizi ilgili bölümlerde düzenleyin. Taslak ve yayınlama durumu ayrı bölümde yer alır.</p>
+  `;
+};
+
+const renderMediaLibrary = (): string => {
+  const serviceMedia = state.services.groups.reduce((count, group) => count + group.services.reduce(
+    (serviceCount, service) => serviceCount + (service[3] ? 1 : 0) + (Array.isArray(service[4]) ? service[4].filter(Boolean).length : 0),
+    0
+  ), 0);
+  const projectMedia = state.projects.categories.filter((category) => category.cover).length;
+  const promotionMedia = state.promotions.categories.filter((category) => category.cover).length;
+  return `
+    <div class="dashboard-stats">
+      <article class="stat-card"><span>Hizmet görselleri</span><strong>${serviceMedia}</strong></article>
+      <article class="stat-card"><span>Proje kapakları</span><strong>${projectMedia}</strong></article>
+      <article class="stat-card"><span>Promosyon kapakları</span><strong>${promotionMedia}</strong></article>
+    </div>
+    <p class="panel-note">Bu görünüm mevcut içerik kaynaklarındaki görsel referanslarını özetler. Dosya yükleme ve kalıcı medya yönetimi henüz etkin değildir.</p>
+  `;
+};
 
 const renderServices = (): string => state.services.groups.map((group, groupIndex) => `
   <div class="service-group">
@@ -220,7 +260,7 @@ const renderPromotions = (): string => `
 `;
 
 const renderLogin = (): string => `
-  <div class="admin-layout" style="display: grid; place-items: center; min-height: 100vh;">
+  <div class="login-layout">
     <div class="panel" style="max-width: 480px; width: 100%;">
       <div class="panel-header"><div><h2>Admin Girişi</h2><p class="panel-subtitle">Yayın ve içerik yönetimi için giriş yapın.</p></div></div>
       <form id="login-form" class="form-grid">
@@ -234,6 +274,9 @@ const renderLogin = (): string => `
 `;
 
 const renderApp = (): void => {
+  navigationObserver?.disconnect();
+  navigationObserver = null;
+
   if (!currentUser) {
     app.innerHTML = renderLogin();
     const form = document.querySelector('#login-form') as HTMLFormElement | null;
@@ -257,63 +300,152 @@ const renderApp = (): void => {
 
   app.innerHTML = `
     <div class="admin-layout">
-      <aside class="admin-sidebar">
-        <div class="brand-mark"><div class="brand-mark-badge">ZY</div><div>Admin</div></div>
-        <nav class="admin-nav" aria-label="Yönetim menüsü">
-          <button type="button" data-target="home">Ana Sayfa</button>
-          <button type="button" data-target="services">Hizmetler</button>
-          <button type="button" data-target="projects">Projeler</button>
-          <button type="button" data-target="promotions">Promosyonlar</button>
-          <button type="button" data-target="seo">SEO</button>
-        </nav>
-        <div style="margin-top: 24px; display: grid; gap: 10px;">
-          <button type="button" class="secondary-button" data-action="draft">Taslağı Kaydet</button>
-          <button type="button" class="primary-button" data-action="publish">Yayınla</button>
-          <button type="button" class="ghost-button" data-action="logout">Çıkış</button>
+      <header class="admin-header">
+        <div class="admin-topbar">
+          <a class="brand-mark" href="#dashboard-panel" aria-label="ZY REKLAM yönetim paneli">
+            <img src="/assets/brand/zy-reklam-wordmark.svg" alt="ZY REKLAM" />
+            <span class="brand-divider" aria-hidden="true"></span>
+            <span class="brand-caption">Yönetim Paneli</span>
+          </a>
+          <div class="header-account">
+            <span class="account-indicator" aria-hidden="true"></span>
+            <span>${escapeHtml(currentUser)}</span>
+          </div>
+          <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="admin-navigation">
+            <span class="menu-toggle-icon" aria-hidden="true"></span>
+            <span class="menu-toggle-label">Menü</span>
+          </button>
         </div>
-      </aside>
+        <nav class="admin-nav" id="admin-navigation" aria-label="Yönetim bölümleri">
+          <button type="button" class="nav-dashboard" data-tone="dashboard" data-target="dashboard" aria-pressed="true">Dashboard</button>
+          <button type="button" class="nav-home" data-tone="home" data-target="home" aria-pressed="false">Ana Sayfa</button>
+          <button type="button" class="nav-services" data-tone="services" data-target="services" aria-pressed="false">Hizmetler</button>
+          <button type="button" class="nav-projects" data-tone="projects" data-target="projects" aria-pressed="false">Projeler</button>
+          <button type="button" class="nav-promotions" data-tone="promotions" data-target="promotions" aria-pressed="false">Promosyonlar</button>
+          <button type="button" class="nav-showroom" data-tone="showroom" data-target="showroom" aria-pressed="false">3D Vitrin</button>
+          <button type="button" class="nav-contact" data-tone="contact" data-target="contact" aria-pressed="false">İletişim</button>
+          <button type="button" class="nav-footer" data-tone="footer" data-target="footer" aria-pressed="false">Footer</button>
+          <button type="button" class="nav-seo" data-tone="seo" data-target="seo" aria-pressed="false">SEO</button>
+          <button type="button" class="nav-media" data-tone="media" data-target="media" aria-pressed="false">Medya Kütüphanesi</button>
+          <button type="button" class="nav-publishing" data-tone="publishing" data-target="publishing" aria-pressed="false">Yayınlama</button>
+          <button type="button" class="nav-exit" data-action="logout">Çıkış</button>
+        </nav>
+      </header>
       <main class="admin-main">
         <div class="admin-content">
-          <section class="panel" id="home-panel">
-            <div class="panel-header"><div><h2>Ana sayfa</h2><p class="panel-subtitle">Başlık, iletişim, SEO ve footer alanları.</p></div></div>
+          <section class="panel section-panel section-dashboard" id="dashboard-panel">
+            <div class="panel-header"><div><span class="section-kicker">GENEL BAKIŞ</span><h2>Dashboard</h2><p class="panel-subtitle">Yönetilen içeriklerin kısa özeti.</p></div></div>
+            ${renderDashboard()}
+          </section>
+          <section class="panel section-panel section-home" id="home-panel">
+            <div class="panel-header"><div><span class="section-kicker">ANA SAYFA</span><h2>Ana Sayfa</h2><p class="panel-subtitle">Ana sayfa başlığı ve açıklama alanları.</p></div></div>
             ${renderHome()}
           </section>
-          <section class="panel" id="services-panel">
-            <div class="panel-header"><div><h2>Hizmetler</h2><p class="panel-subtitle">Her hizmet ve grup düzenlenebilir.</p></div></div>
+          <section class="panel section-panel section-services" id="services-panel">
+            <div class="panel-header"><div><span class="section-kicker">HİZMET YÖNETİMİ</span><h2>Hizmetler</h2><p class="panel-subtitle">Her hizmet ve grup düzenlenebilir.</p></div></div>
             ${renderServices()}
           </section>
-          <section class="panel" id="projects-panel">
-            <div class="panel-header"><div><h2>Projeler</h2><p class="panel-subtitle">Kategori ve örnek görünüm alanları.</p></div></div>
+          <section class="panel section-panel section-projects" id="projects-panel">
+            <div class="panel-header"><div><span class="section-kicker">PROJE KATALOĞU</span><h2>Projeler</h2><p class="panel-subtitle">Kategori ve örnek görünüm alanları.</p></div></div>
             ${renderProjects()}
           </section>
-          <section class="panel" id="promotions-panel">
-            <div class="panel-header"><div><h2>Promosyonlar</h2><p class="panel-subtitle">Kategori ve promosyon içerikleri.</p></div></div>
+          <section class="panel section-panel section-promotions" id="promotions-panel">
+            <div class="panel-header"><div><span class="section-kicker">KAMPANYA İÇERİĞİ</span><h2>Promosyonlar</h2><p class="panel-subtitle">Kategori ve promosyon içerikleri.</p></div></div>
             ${renderPromotions()}
           </section>
-          <section class="panel" id="seo-panel">
-            <div class="panel-header"><div><h2>SEO</h2><p class="panel-subtitle">Anahtar kelimeler ve sayfa meta düzeni.</p></div></div>
+          <section class="panel section-panel section-showroom" id="showroom-panel">
+            <div class="panel-header"><div><span class="section-kicker">GÖRSEL VİTRİN</span><h2>3D Vitrin</h2><p class="panel-subtitle">Site vitrininin mevcut görünümü ve yönetim kapsamı.</p></div></div>
+            <div class="notice-card"><strong>Vitrin içeriği bu panelden düzenlenmiyor.</strong><p>3D vitrin kaynakları site uygulamasının parçasıdır; bu panelde vitrin için içerik düzenleme alanı bulunmamaktadır.</p></div>
+          </section>
+          <section class="panel section-panel section-contact" id="contact-panel">
+            <div class="panel-header"><div><span class="section-kicker">İLETİŞİM BİLGİLERİ</span><h2>İletişim</h2><p class="panel-subtitle">Ziyaretçilerin ulaşacağı doğrulanmış iletişim alanları.</p></div></div>
+            ${renderContact()}
+          </section>
+          <section class="panel section-panel section-footer" id="footer-panel">
+            <div class="panel-header"><div><span class="section-kicker">SAYFA ALTI</span><h2>Footer</h2><p class="panel-subtitle">Sayfa altı imza ve bilgilendirme metni.</p></div></div>
+            ${renderFooter()}
+          </section>
+          <section class="panel section-panel section-seo" id="seo-panel">
+            <div class="panel-header"><div><span class="section-kicker">ARAMA GÖRÜNÜRLÜĞÜ</span><h2>SEO</h2><p class="panel-subtitle">Anahtar kelimeler ve sayfa meta düzeni.</p></div></div>
             <div class="form-grid">
-              <label class="field" style="grid-column: 1 / -1;"><span>Site adı</span><input data-section="seo" data-field="site.name" value="${escapeHtml(state.seo.site.name)}" /></label>
-              <label class="field" style="grid-column: 1 / -1;"><span>URL</span><input data-section="seo" data-field="site.url" value="${escapeHtml(state.seo.site.url)}" /></label>
-              <label class="field" style="grid-column: 1 / -1;"><span>Telefon</span><input data-section="seo" data-field="site.phone" value="${escapeHtml(state.seo.site.phone)}" /></label>
-              <label class="field" style="grid-column: 1 / -1;"><span>Primary keywords</span><textarea data-section="seo" data-field="primaryKeywords">${escapeHtml(state.seo.primaryKeywords.join('\n'))}</textarea></label>
+              <label class="field"><span>Site adı</span><input data-section="seo" data-field="site.name" value="${escapeHtml(state.seo.site.name)}" /></label>
+              <label class="field"><span>URL</span><input data-section="seo" data-field="site.url" value="${escapeHtml(state.seo.site.url)}" /></label>
+              <label class="field"><span>Telefon</span><input data-section="seo" data-field="site.phone" value="${escapeHtml(state.seo.site.phone)}" /></label>
+              <label class="field field-wide"><span>Primary keywords</span><textarea data-section="seo" data-field="primaryKeywords">${escapeHtml(state.seo.primaryKeywords.join('\n'))}</textarea></label>
             </div>
           </section>
-          <section class="panel">
-            <div class="panel-header"><div><h2>Yayın durumu</h2><p class="panel-subtitle">Bu taslak bu tarayıcıda saklanır.</p></div></div>
+          <section class="panel section-panel section-media" id="media-panel">
+            <div class="panel-header"><div><span class="section-kicker">MEDYA ENVANTERİ</span><h2>Medya Kütüphanesi</h2><p class="panel-subtitle">İçerik kaynaklarında kullanılan görsel referansları.</p></div></div>
+            ${renderMediaLibrary()}
+          </section>
+          <section class="panel section-panel section-publishing" id="publishing-panel">
+            <div class="panel-header"><div><span class="section-kicker">TASLAK VE YAYIN</span><h2>Yayınlama</h2><p class="panel-subtitle">Taslağı bu tarayıcıda saklayın veya mevcut yayınlama akışını başlatın.</p></div></div>
             <div class="status-box" id="status-box">${escapeHtml(statusMessage)}</div>
+            <div class="publishing-actions">
+              <button type="button" class="secondary-button" data-action="draft">Taslağı Kaydet</button>
+              <button type="button" class="primary-button" data-action="publish">Yayınla</button>
+            </div>
           </section>
         </div>
       </main>
     </div>
   `;
 
+  const menuToggle = app.querySelector<HTMLButtonElement>('.menu-toggle');
+  const navigation = app.querySelector<HTMLElement>('.admin-nav');
+  const setNavigationOpen = (open: boolean): void => {
+    menuToggle?.setAttribute('aria-expanded', String(open));
+    navigation?.classList.toggle('is-open', open);
+  };
+  const setActiveNavigation = (target: string): void => {
+    app.querySelectorAll<HTMLButtonElement>('[data-target]').forEach((button) => {
+      const active = button.dataset.target === target;
+      button.classList.toggle('is-active', active);
+      button.setAttribute('aria-pressed', String(active));
+    });
+  };
+
+  menuToggle?.addEventListener('click', () => {
+    setNavigationOpen(menuToggle.getAttribute('aria-expanded') !== 'true');
+  });
+
+  navigation?.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      setNavigationOpen(false);
+      menuToggle?.focus();
+    }
+  });
+
   app.querySelectorAll('[data-target]').forEach((button) => {
     button.addEventListener('click', () => {
       const target = button.getAttribute('data-target');
-      document.getElementById(`${target}-panel`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      if (!target) return;
+      document.getElementById(`${target}-panel`)?.scrollIntoView({
+        behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+        block: 'start'
+      });
+      setActiveNavigation(target);
+      setNavigationOpen(false);
     });
   });
+
+  app.querySelector('.brand-mark')?.addEventListener('click', (event) => {
+    event.preventDefault();
+    document.getElementById('dashboard-panel')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    setActiveNavigation('dashboard');
+  });
+
+  if ('IntersectionObserver' in window) {
+    navigationObserver = new IntersectionObserver((entries) => {
+      if (!entries.some((entry) => entry.isIntersecting)) return;
+      const headerBottom = app.querySelector('.admin-header')?.getBoundingClientRect().bottom ?? 0;
+      const activeSection = Array.from(app.querySelectorAll<HTMLElement>('.section-panel'))
+        .find((section) => section.getBoundingClientRect().bottom > headerBottom + 12);
+      const target = activeSection?.id.replace(/-panel$/, '');
+      if (target) setActiveNavigation(target);
+    }, { rootMargin: '-116px 0px -65% 0px', threshold: [0, 0.15, 0.35, 0.6] });
+    app.querySelectorAll<HTMLElement>('.section-panel').forEach((section) => navigationObserver?.observe(section));
+  }
 
   app.querySelectorAll('[data-action="draft"]').forEach((button) => button.addEventListener('click', () => {
     saveDraftLocally();
@@ -432,8 +564,6 @@ const renderApp = (): void => {
       if (target.dataset.field === 'href') category.href = target.value;
     }
   });
-
-  app.querySelectorAll('[data-action="save"]').forEach((button) => button.remove());
 };
 
 const loadContentFromApi = async (): Promise<void> => {

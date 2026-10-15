@@ -2,35 +2,44 @@
 
 ## Talimat ve kapsam
 
-Admin paneli için mevcut kaynak değişikliklerini doğrulayıp generator çıktılarından ayırdım, doğrulama komutlarını çalıştırdım ve yalnızca kaynak/dokümantasyon değişikliklerini `feat/admin-panel` dalında commit edip origin'e push ettim. `main` dalına geçilmedi, merge veya production deploy yapılmadı.
+Admin panelinin çalışan içerik düzenleme akışını koruyarak sidebar kaldırıldı; sabit üst navigasyon, responsive mobil menü, bölüm renk kimlikleri ve daha net içerik ayırıcıları uygulandı.
 
 ## Aşama ve iş kimliği
 
-P7.0 — Admin paneli ve Worker altyapısı; P7 genel kabulü devam ediyor.
+P7.0 — Admin paneli ve Worker altyapısı. Bu görev yalnızca arayüz düzenidir; P7 genel kabulü devam ediyor.
 
 ## Değişen dosyalar
 
-`.gitignore`, `.dev.vars.example`, `admin/index.html`, `src/admin/main.ts`, `src/admin/admin.css`, `src/content/site.json`, `worker/index.ts`, `scripts/hash-admin-password.mjs`, `package.json`, `package-lock.json`, `vite.config.ts`, `wrangler.jsonc`, `tsconfig.json`, `README.md`, `ARCHITECTURE.md`, `ROADMAP.md`, `LAST_REPORT.md`.
+- `src/admin/main.ts` — 12 navigasyon hedefi, dashboard özeti, mevcut iletişim/footer alanlarının ayrıştırılması, medya envanteri, mobil menü ve aktif bölüm davranışı.
+- `src/admin/admin.css` — sabit üst header, yatay kaydırılabilir masaüstü navigasyon, mobil hamburger menü, premium renk sistemi, klavye odakları ve section/kart ayırıcıları.
+- `ROADMAP.md` — P7.0 arayüz işi ve doğrulama günlüğü.
+- `LAST_REPORT.md` — bu rapor.
 
-## Üretilmiş dosya kararı
+`admin/index.html` değiştirilmedi; mevcut app root ve entrypoint yeterliydi. `ARCHITECTURE.md` değiştirilmedi; mimari/veri sözleşmesi değişikliği yoktur ve A12 sınırlarına uyulmuştur.
 
-`hizmetler/*/index.html`, `projeler/*/index.html`, `promosyonlar/*/index.html`, kök `index.html` içindeki üretilen menü blokları ve `public/sitemap.xml`, `npm run generate:pages` tarafından yeniden üretildiği için commit'e alınmadı. Build'in oluşturduğu `dist/`, `.wrangler` ve testlerin güncellediği P2/P3 kanıt çıktıları da commit dışında tutuldu. Mevcut generator mimarisi build öncesi bu HTML/sitemap dosyalarını ürettiğinden kaynak commit'inde güncel kopyaları saklamak gerekmiyor.
+## Tasarım özeti
+
+- Masaüstünde sidebar yok; üst navbar sabittir ve dar alanda yatay kaydırılır. Mobil/tablet düzeninde hamburger menü, `aria-expanded`, Escape ile kapatma ve bölüm seçilince kapanma davranışı vardır.
+- Dashboard, Ana Sayfa, Hizmetler, Projeler, Promosyonlar, 3D Vitrin, İletişim, Footer, SEO, Medya Kütüphanesi, Yayınlama ve Çıkış sekmeleri eklendi.
+- Renkler: Dashboard şampanya/altın; Ana Sayfa zümrüt; Hizmetler teal; Projeler mavi; Promosyonlar mor; 3D Vitrin bakır; İletişim yeşil; Footer gri/altın; SEO bordo; Medya Kütüphanesi indigo; Yayınlama amber; Çıkış kırmızı.
+- Her düzenlenebilir bölüm başlığı, vurgu çizgisi, kart kenarı ve form odağı kendi renk ailesini kullanır. İletişim ve footer alanları mevcut `site` verisini düzenlemeyi sürdürür.
+- 3D Vitrin düzenleme alanı ve medya upload altyapısı mevcut olmadığından bu sekmeler kapsamı dürüstçe açıklayan salt-okunur görünüm olarak sunulur. Yeni upload/yayın özelliği iddia edilmez.
 
 ## Doğrulama
 
-- `npm ci` başarılı; Wrangler manifesti ve lockfile eşitlendi.
-- `npm run check` başarılı.
-- `npm test` başarılı: **34 test geçti, 0 başarısız**. İlk denemede Playwright Chromium kurulu olmadığından testler başlayamadı; Chromium kurulduktan ve taze build sonrası tekrar çalıştırıldığında tamamı geçti.
-- `npm run build` başarılı; `dist/admin/index.html` üretildi. Three/SVGLoader chunk'ı için mevcut 500 kB Vite uyarısı devam etti.
-- `npx wrangler deploy --dry-run` başarılı; `ASSETS` binding ve Worker derlemesi doğrulandı.
-- Worker'da varsayılan session secret kaldırıldı; medya publish yolları izinli dizin, MIME/uzantı ve 8 MB sınırıyla doğrulanıyor.
+- `npm run check` — başarılı (`tsc --noEmit`).
+- `npm test -- --test-concurrency=1` — başarılı: **34 test geçti, 0 başarısız**. Ön denemelerde test sayfalarının generator tarafından üretilmesi gereği ve paralel Chromium kaynak çakışması ortaya çıktı; generator ile sayfalar hazırlandı ve seri çalıştırmada tam suite geçti.
+- `npm run build` — başarılı; `dist/admin/index.html` üretildi. Vite'ın mevcut büyük `SVGLoader` chunk'ı için 500 kB uyarısı devam etti.
+- `npx wrangler deploy --dry-run` — başarılı; 189 asset okundu. Bu yalnızca dry-run'dır, production deploy yapılmadı.
+- Üretim preview tarayıcı kontrolü — API yanıtları yerel test için mock edilerek 12 sekme, header'ın kaydırmada sabit kalması, mobil menü açma/kapatma, aktif sekme, yatay sayfa taşmaması ve taslak kaydetmenin `localStorage` yazması doğrulandı.
+- `git diff --check` — başarılı.
 
-## Commit ve uzak doğrulama
+## Çalışma ağacı ve sınırlar
 
-Branch: `feat/admin-panel`. Kaynak commit: `72c7f54f9035600a8caa45468c92261d42734796` (`feat(admin): add Worker-backed admin panel`). `git push -u origin feat/admin-panel` başarılı oldu. Push sonrasında remote dal tekrar fetch edilerek yerel kaynak commit'iyle SHA eşleşmesi ve `admin/index.html`, `src/admin/main.ts`, `worker/index.ts`, `wrangler.jsonc` dosyalarının uzak commit'te bulunduğu doğrulandı. `main` dalına push/merge yapılmadı.
+Generator çıktıları (`index.html`, `hizmetler/`, `projeler/*/index.html`, `promosyonlar/*/index.html`, `public/sitemap.xml`), build çıktısı `dist/` ve `.wrangler/` yerel çalışma durumu temizlendi; build/test için yeniden üretilen tracked sayfalar ve test kanıtları sonrasında kaynak ağacından ayrıldı. Bunlar admin kaynak değişikliği olarak değerlendirilmedi.
 
-## Sınırlar ve sıradaki tek iş
+Değişiklikler sadece `feat/admin-panel` dalında commit edilip `origin/feat/admin-panel` dalına push edilir. `main` dalına geçilmedi, merge edilmedi veya production deploy yapılmadı. Kalıcı taslak depolama, medya upload/depo ve gerçek GitHub publish doğrulaması P7'nin açık işleridir.
 
-Gerçek Cloudflare secret'ları veya GitHub token'ı eklenmedi; gerçek GitHub publish ve production deploy çalıştırılmadı. Kalıcı taslak depolama ve uçtan uca medya yükleme/depo akışı tamamlanmadığından P7 devam ediyor.
+## Sıradaki tek iş
 
-Sıradaki tek iş: P7 için kalıcı taslak ve medya upload/publish akışını tamamlamak; geçerli üretim token'ı olmadan canlı publish denememek.
+P7 için kalıcı taslak ve medya upload/publish akışını tamamlamak.

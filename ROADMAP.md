@@ -1,6 +1,6 @@
 # ZY Reklam — Yol Haritası
 
-**Sürüm:** 1.13 · **Başlangıç:** 2026-10-01
+**Sürüm:** 1.14 · **Başlangıç:** 2026-10-01
 
 **Kaynak:** [ARCHITECTURE.md](ARCHITECTURE.md) · **Zorunlu kontrol:** [AGENTS.md](AGENTS.md)
 
@@ -34,6 +34,7 @@ Durumlar: `bekliyor`, `devam ediyor`, `engelli`, `tamamlandı`. İş kutuları y
 ### P7.0 — Admin paneli ve güvenli backend
 
 - [x] `admin/index.html`, `src/admin/main.ts` ve `src/admin/admin.css` eklenerek `/admin/` düzeni ve içerik düzenleme arayüzü oluşturuldu.
+- [x] Admin paneli sidebar'sız, sabit yatay üst menüye ve dar ekranda hamburger navigasyona dönüştürüldü; 12 bölüm bağlantısı, aktif durum ve bölüm bazlı vurgu renkleri doğrulandı.
 - [x] Ana sayfa, hizmetler, projeler ve promosyonların içerik listesi düzenlenebilir form yapısına alındı.
 - [x] Vite build çıktısında `/admin/index.html` üretimi aktif hale getirildi.
 - [x] Cloudflare Worker'da oturum kontrollü login/logout/session ve içerik GET/PUT uçları eklendi.
@@ -451,6 +452,16 @@ Sıradaki tek iş:
 - A15 notu eklendi; DOM/CSS sınırı değişmez. Kanıt P3_7E_CAR_LIGHT.json. Sıradaki tek iş: canlı araç ışığını doğrulamak.
 
 - Uzak uygulama f7eebfef4f7a674fd2e52feacdc1169b59bc277f blobları doğrulandı; Cloudflare başarılı. İlk canlı denemede eski HTML sunuldu; yayın tamamlandıktan sonraki Chromium 1440/360 px fare hover, dokunma ikinci basışla kapatma, Enter/Space, koyu/parlak filtre, gölge ve taşma kabulü geçti. JS hatası yok. Kanıt P3_7E_CAR_LIGHT_LIVE.json. Sıradaki tek plan işi P3.6 fiziksel cihaz kabulüdür.
+
+### 2026-10-15 — P7 admin paneli üst navigasyon tasarımı ve branch teslimi
+
+- Talimat: admin sidebar'ını kaldır; sabit üst navigasyon, mobil menü, her içerik bölümü için kontrollü renk kimliği ve daha belirgin section/kart ayrımları uygula. Ardından `feat/admin-panel` dalında mesajı `style(admin): add sticky colored top navigation` olan commit oluştur ve yalnızca aynı feature dalına push et.
+- Değişen kaynaklar: `src/admin/main.ts` ve `src/admin/admin.css`. Dashboard, Ana Sayfa, Hizmetler, Projeler, Promosyonlar, 3D Vitrin, İletişim, Footer, SEO, Medya Kütüphanesi, Yayınlama ve Çıkış üst navigasyona alındı. İletişim/footer alanları kendi mevcut site alanlarına ayrıldı; gerçek düzenleme/yükleme altyapısı bulunmayan vitrin ve medya bölümleri bilgi/envanter görünümü olarak kaldı. Bu kayıt ve son rapor da güncellendi.
+- Başlangıçta temizlenenler: generator tarafından üretilmiş kök `index.html`, hizmet/proje/promosyon HTML sayfaları ve `public/sitemap.xml`; geçici `.wrangler/` Worker durumu. Bunlar build/test için yeniden üretildi; doğrulama tamamlandıktan sonra tekrar temizlendi.
+- Doğrulama: `npm run check` başarılı. `npm test` ilk olarak generator sayfaları temizlendiğinden iki sayfa testi bulamadı; generator çalıştırıldıktan sonra parallel Chromium kaynak çakışması görüldü. Tekil concurrency ile `npm test -- --test-concurrency=1` başarılı: **34/34**. `npm run build` ve `npx wrangler deploy --dry-run` başarılı; dry-run 189 asset okudu, production deploy yapılmadı. Build'de mevcut 500 kB `SVGLoader` uyarısı sürdü. Üretim preview tarayıcı kontrolünde header kaydırmada sabit, mobil menü aç/kapa/Escape ve odak dönüşü, 12 hedef, taşmasız düzen ve taslak localStorage kaydı doğrulandı.
+- Commit ve push `feat/admin-panel` dalında yapılır. `main` dalına geçiş, merge veya production deploy yapılmadı.
+- Mimari/veri sözleşmesi değişmedi; A12 ve P7.0 sınırlarına uyuldu. P7 genel durumu devam ediyor; kalıcı taslak, medya upload/depo ve gerçek publish doğrulaması tamamlanmadı.
+- Sıradaki tek iş: P7 için kalıcı taslak ve medya upload/publish akışını tamamlamak.
 
 ### 2026-10-15 — P7 admin paneli kaynak commit hazırlığı
 
