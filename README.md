@@ -53,3 +53,9 @@ P1.5 için gerçek proje fotoğrafları ve bilgilerinin doğrulanması bekliyor.
 ## Projeler örnek koleksiyonu
 
 Beş fotoğraflı Projeler kategorisi /projeler/tabela/, /projeler/totem/, /projeler/lazer-kesim/, /projeler/dijital-baski/ ve /projeler/ozel-uretim/ adreslerindedir. 19 görsel ve bir video kullanıcı tarafından sağlanan tasarım/uygulama örnekleridir; ZY müşteri referansı değildir. Eşleme docs/PROJECT_ASSETS.md; kaynak src/content/projects.json. `npm run generate:pages` iki mega menüyü ve dokuz kategori sayfasını birlikte üretir. Video otomatik oynatılmaz.
+
+## Admin paneli
+
+Admin paneli `/admin/` altında statik Vite sayfası ve Cloudflare Worker API'si olarak çalışır. Yerel doğrulama için önce `npm run build` ile statik dosyaları üretin, `.dev.vars.example` dosyasını `.dev.vars` olarak kopyalayıp dört ortam değişkenini yerel değerlerle doldurun, ardından `npm run worker:dev` çalıştırıp `http://localhost:8787/admin/` adresini açın. Parola hash'i `npm run hash:admin -- "yerel-şifreniz"` komutuyla üretilebilir. `.dev.vars` ve gerçek secret'lar Git'e eklenmemelidir.
+
+Worker'ın ortam değişkenleri `ADMIN_USERNAME`, `ADMIN_PASSWORD_HASH`, `ADMIN_SESSION_SECRET` ve `GITHUB_TOKEN`'dır. Admin taslağı tarayıcıda tutulur; gerçek GitHub publish için Worker'ın bu secret'larla yapılandırılması gerekir. Yerel geliştirme, gerçek GitHub publish veya Cloudflare production deploy kanıtı değildir. Medya yükleme arayüzü ve kalıcı taslak/depo akışı henüz tamamlanmamıştır.

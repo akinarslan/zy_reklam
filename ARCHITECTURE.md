@@ -1,6 +1,6 @@
 # ZY Reklam — Mimari
 
-**Sürüm:** 1.14 · **Tarih:** 2026-10-04 · **Durum:** P3 gerçek 3D ve güvenli yollar uygulandı; fiziksel cihaz performans kabulü açık
+**Sürüm:** 1.15 · **Tarih:** 2026-10-15 · **Durum:** P3 gerçek 3D ve güvenli yollar uygulandı; fiziksel cihaz performans kabulü açık; admin Worker yerel doğrulamadan geçti
 
 **İlgili belgeler:** [Yol haritası](ROADMAP.md) · [Çalışma kuralları](AGENTS.md)
 
@@ -33,7 +33,7 @@ Promosyon gezinmesi: “Promosyonlar” altında fotoğraflı dört kart; her ka
 
 Proje gezinmesi: Tabela, Totem, Lazer Kesim, Dijital Baskı ve Özel Üretim için beş fotoğraflı mega menü kartı ve /projeler/<kategori>/ statik sayfaları. P2.8 kullanıcı önceliğidir; yüklenen medya tasarım/uygulama örnekleri olarak etiketlenir.
 
-İlk sürüm dışı: ödeme/sepet, otomatik fiyatlandırma, müşteri hesabı, yönetici paneli, CRM, otomatik WhatsApp gönderimi, canlı üretim takibi ve yapay zekâyla üretim görseli oluşturma. Bunlar yeni kullanıcı talimatı olmadan eklenmez.
+İlk sürüm dışı: ödeme/sepet, otomatik fiyatlandırma, müşteri hesabı, CRM, otomatik WhatsApp gönderimi, canlı üretim takibi ve yapay zekâyla üretim görseli oluşturma. Bunlar yeni kullanıcı talimatı olmadan eklenmez.
 
 ## 3. Görsel kimlik
 
@@ -75,8 +75,14 @@ flowchart TD
 | Bölümler/DOM | Sayfa düzeni, erişim, CTA, form alanları | İş mantığını renderer’a bağlamaz |
 | Etkileşim | Bölüm görünürlüğü, hareket tercihi, kalite modu | Tek merkezi hareket/yaşam döngüsü |
 | Sahne yöneticisi | Kamera, ışık, materyal, animasyon, yükleme ve temizleme | Form veya WhatsApp yönetmez |
-| Tabela stüdyosu | Doğrulanan seçim durumu ve temsili önizleme | Hesap/ödeme/fiyat motoru içermez |
-| Teklif | Doğrulama, tasarım aktarımı, metin oluşturma | Mesajı kendiliğinden göndermez |
+| Tabela stüdyosu | Doğrulanan seçim durumu ve temsili önizleme | Ana çerçeveyi değiştirmez |
+| Admin paneli ve Worker | İçerik düzenleme arayüzü, admin oturumu ve GitHub publish istemcisi | Worker belleği kalıcı taslak deposu değildir; üretim secret'ları ve yayın yetkisi gerekir |
+
+### A12 — Admin paneli ve Worker
+
+Admin paneli `/admin/` altında statik Vite girişidir. İçerik formları `src/content/*.json` verisini gösterir; taslak tarayıcı `localStorage` alanında tutulur. Cloudflare Worker oturum, içerik GET/PUT, medya API iskeleti ve GitHub Data API publish uçlarını sağlar. Oturum parolası PBKDF2 ile doğrulanır; imzalı cookie `HttpOnly`, `Secure`, `SameSite=Strict` ve sınırlı ömürlüdür. Gerekli değerler `ADMIN_USERNAME`, `ADMIN_PASSWORD_HASH`, `ADMIN_SESSION_SECRET` ve `GITHUB_TOKEN` olarak sunucu ortamında tutulur.
+
+Bu teslim yerel Worker login/session/content PUT akışı ve Wrangler dry-run ile doğrulanmıştır; canlı GitHub commit'i ve Cloudflare deploy'u çalıştırılmamıştır. Worker içi içerik/media durumu kalıcı değildir; admin arayüzündeki içerik değişiklikleri ayrı bir sunucu kaydetme eylemiyle kalıcılaştırılmadan yalnızca yayın isteğine eklenir. Medya yükleme arayüzü ve kalıcı/özel medya deposu tamamlanmış değildir. P7 bu nedenle devam eder; bu paneli üretim için hazır veya tam upload çözümü olarak sunmayın.
 | Upload istemcisi/API | Görsel doğrulama, güvenli yükleme ve süreli bağlantı | Dosyayı Git’e veya analytics’e yazmaz |
 
 ### 4.3 Önerilen dosya yapısı
@@ -242,10 +248,15 @@ Görsel kanıtlar: açılış, üretim, galeri, stüdyo, form ve footer için se
 | A07 | Gerçek görsel yükleme için ayrı API/özel depo | Tasarım kabul; sağlayıcı bekliyor | Link ile dosya eklemenin farkı; P7 tamamlama |
 | A08 | Mevcut domain/hosting korunarak entegrasyon | P1 doğrulaması bekliyor | Çalışan yayının gereksiz değişmemesi |
 | A09 | Her talimatta mimari ve roadmap kontrolü | Kabul | Kullanıcının plan takibi isteği; AGENTS.md ile kalıcı kural |
-| A11 | Projeler altında beş örnek kategori; kontrollü video | Kullanıcı talimatıyla uygulandı | P2.8, müşteri projesi sahipliği varsayılmaz |
 | A10 | Promosyonlar altında dört fotoğraflı kategori ve ayrı statik sayfa | Kullanıcı talimatıyla uygulandı | P2.7; 3D’den bağımsız gezinme ve katalog içeriği |
+| A11 | Projeler altında beş örnek kategori; kontrollü video | Kullanıcı talimatıyla uygulandı | P2.8, müşteri projesi sahipliği varsayılmaz |
+| A12 | Admin paneli Cloudflare Worker ile backend'e bağlandı | Kısmi; yerel login/session/content PUT ve dry-run doğrulandı | Canlı GitHub publish, kalıcı taslak ve medya deposu henüz doğrulanmadı |
 
 Mimari değişiklikte sürüm, tarih, ilgili karar ve etkilenen roadmap işi güncellenir. Yeni kullanıcı talimatıyla değişen kapsam eski kabul ölçütlerine gizlenmez.
+
+### 2026-10-15 — A12 admin Worker kapsamı ve doğrulama sınırı
+
+Admin paneli Cloudflare Worker'a bağlandı; yerel login/session/content PUT akışı, üretim build'i ve Wrangler dry-run doğrulandı. GitHub `main` üzerinde gerçek commit, Cloudflare deploy, gerçek secret'lar, kalıcı taslak depolama ve medya uploader/depo bu teslimde doğrulanmadı veya tamamlanmadı. P7 açık kalır. Statik kategori HTML'leri ve `public/sitemap.xml`, `npm run generate:pages` tarafından içerik JSON'u ve generator'lardan yeniden üretilen çıktılardır; değişiklikleri build öncesinde tekrar üretildiği için admin kaynak commit'ine dahil edilmez.
 
 ### 2026-10-01 — v1.1 logo kaynak açıklaması
 

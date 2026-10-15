@@ -27,9 +27,22 @@ Durumlar: `bekliyor`, `devam ediyor`, `engelli`, `tamamlandı`. İş kutuları y
 | P4 | Üretim anlatımı ve hizmet etkileşimleri | P3 | Bekliyor |
 | P5 | Gerçek proje galerisi | P2 + gerçek görseller; teslim sırası P4 sonrası | Bekliyor |
 | P6 | Mini stüdyo ve WhatsApp teklif metni | P3, P5 + doğrulanmış iletişim | Bekliyor |
-| P7 | Güvenli görsel yükleme ve teklif bağlantısı | P6 + sağlayıcı/veri politikası kararı | Bekliyor |
+| P7 | Güvenli görsel yükleme ve teklif bağlantısı | P6 + sağlayıcı/veri politikası kararı | Devam ediyor |
 | P8 | Uçtan uca kabul, mobil/performance/SEO | P2–P7 | Bekliyor |
 | P9 | Yetkilendirilmiş canlı geçiş ve geri dönüş kontrolü | P8 + mevcut hosting erişimi/yayın yetkisi | Bekliyor |
+
+### P7.0 — Admin paneli ve güvenli backend
+
+- [x] `admin/index.html`, `src/admin/main.ts` ve `src/admin/admin.css` eklenerek `/admin/` düzeni ve içerik düzenleme arayüzü oluşturuldu.
+- [x] Ana sayfa, hizmetler, projeler ve promosyonların içerik listesi düzenlenebilir form yapısına alındı.
+- [x] Vite build çıktısında `/admin/index.html` üretimi aktif hale getirildi.
+- [x] Cloudflare Worker'da oturum kontrollü login/logout/session ve içerik GET/PUT uçları eklendi.
+- [x] GitHub Data API ile blob/tree/commit/ref publish akışı hazırlandı; gerçek publish ve fast-forward yarışı canlı GitHub yetkisiyle doğrulanmadı.
+- [x] Local Worker'da login, session, content PUT ve statik asset fallback akışı doğrulandı; `wrangler deploy --dry-run` başarılı.
+- [ ] Formdan içerik kaydetme akışını Worker'a bağla ve taslakları kalıcı depoda tut; mevcut tarayıcı taslağı `localStorage`, Worker içeriği ise bellek tabanlıdır.
+- [ ] Medya yükleme arayüzü, kalıcı dosya deposu ve upload → publish uçtan uca akışını tamamla; API iskeleti tek başına kabul değildir.
+
+**Durum:** Kısmi/`devam ediyor`. Admin arayüzü ve Worker iskeleti mevcuttur. Kalıcı taslak ve medya akışları ile canlı GitHub publish doğrulanmadan P7 tamamlanmış sayılmaz. Üretim secret'ları Git'e eklenmez.
 
 İşler bağımlılıkları karşılanmadan tamamlanamaz. Galeri içeriği gibi bağımsız hazırlıklar öne alınabilir; aşama teslim sırası korunur. Kullanıcının hata düzeltme/öncelik değiştirme talimatları belgelenerek uygulanır.
 
@@ -438,3 +451,12 @@ Sıradaki tek iş:
 - A15 notu eklendi; DOM/CSS sınırı değişmez. Kanıt P3_7E_CAR_LIGHT.json. Sıradaki tek iş: canlı araç ışığını doğrulamak.
 
 - Uzak uygulama f7eebfef4f7a674fd2e52feacdc1169b59bc277f blobları doğrulandı; Cloudflare başarılı. İlk canlı denemede eski HTML sunuldu; yayın tamamlandıktan sonraki Chromium 1440/360 px fare hover, dokunma ikinci basışla kapatma, Enter/Space, koyu/parlak filtre, gölge ve taşma kabulü geçti. JS hatası yok. Kanıt P3_7E_CAR_LIGHT_LIVE.json. Sıradaki tek plan işi P3.6 fiziksel cihaz kabulüdür.
+
+### 2026-10-15 — P7 admin paneli kaynak commit hazırlığı
+
+- Talimat: Admin paneli kaynaklarını ve generator çıktılarından ayrımını denetle; check/test/build/Wrangler dry-run çalıştır; `feat/admin-panel` üzerinde commit edip aynı dalı origin'e push et. `main` dalına geçilmedi, merge veya production deploy yapılmadı.
+- Başlangıç Git durumu: `feat/admin-panel`, HEAD `73951ed`; remote feature dalı henüz yoktu. `hizmetler/*/index.html`, promosyon/proje sayfaları, kök `index.html` içindeki menü parçaları ve sitemap `npm run generate:pages` tarafından `src/content` ve generator'lardan üretilir; Worker/Vite build öncesi üretim yaptığı için değişen çıktı dosyaları kaynak commit'ine alınmadı. Testlerin yeniden ürettiği P2/P3 kanıt dosyaları da çalışma ağacında korundu, commit'e dahil edilmedi.
+- Kaynak/konfigürasyon: Wrangler manifest-lock tutarsızlığı giderildi; Worker kimliği mevcut `zy-reklam` olarak korundu. Admin login başarısızlığı görünür yapıldı; eksik auth secret'larında varsayılan oturum anahtarı kaldırıldı; publish medya yolları izinli dizin, MIME/uzantı ve 8 MB ile sınırlandı.
+- Doğrulama: `npm ci`, `npm run check`, `npm run build`, `npm test` (34/34) ve `npx wrangler deploy --dry-run` başarılı. Build'de Three/SVGLoader ortak chunk'ı 500 kB uyarısı verdi; bu admin kaynak değişikliğinden bağımsızdır. İlk test denemesinde Chromium eksikti; Playwright Chromium kurulduktan ve üretim build'i yenilendikten sonra tam test başarılı oldu.
+- Durum: Admin paneli/Worker kısmi P7 çalışmasıdır; kalıcı taslak depolama, medya upload arayüzü/deposu ve gerçek GitHub publish doğrulaması eksiktir. Bu işte yerel dal commit/push edilmiştir; remote ref push sonrası yeniden okunarak doğrulanmıştır. Commit SHA `LAST_REPORT.md` içindedir.
+- Sıradaki tek iş: P7'de kalıcı taslak ve medya upload/publish akışını tamamlamak; gerçek üretim token'ı olmadan live GitHub commit'i denenmemelidir.

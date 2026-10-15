@@ -1,7 +1,11 @@
 {
+  "$schema": "https://raw.githubusercontent.com/cloudflare/workers-sdk/main/packages/wrangler/config-schema.json",
   "name": "zy-reklam",
-  "compatibility_date": "2026-10-01",
+  "main": "worker/index.ts",
+  "compatibility_date": "2026-10-15",
   "assets": {
-    "directory": "./dist"
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application"
   }
 }
