@@ -28,7 +28,7 @@ Admin UI kaynakları bu doğrulama sırasında değiştirilmedi. `ARCHITECTURE.m
 
 Generator'ın değiştirdiği tracked HTML/sitemap ve testlerin değiştirdiği tracked kanıtlar başlangıçtaki HEAD'e döndürüldü. Bu doğrulamada oluşturulan `dist/`, `hizmetler/` ve `.wrangler/` kaldırıldı; kalan doğrulama ağacı kaynak değişikliği içermiyor. `.dev.vars` dosyasına dokunulmadı.
 
-Commit öncesi hedef dal `feat/admin-panel`; başlangıçtaki UI commit'i zaten `origin/feat/admin-panel` üzerindeydi. İstenen commit mesajıyla doğrulama kaydı aynı feature dalına kaydedilip origin'e push edilir. `main` dalına geçilmedi, merge edilmedi ve production deploy yapılmadı.
+Commit öncesi hedef dal `feat/admin-panel`; başlangıçtaki UI commit'i zaten `origin/feat/admin-panel` üzerindeydi. Doğrulama kaydı istenen commit mesajıyla aynı feature dalına kaydedildi ve origin'e push sonrası uzak ref yeniden doğrulandı. `main` dalına geçilmedi, merge edilmedi ve production deploy yapılmadı.
 
 ## Durum ve engeller
 
