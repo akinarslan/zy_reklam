@@ -363,15 +363,12 @@ test('Local Worker persists drafts, validates uploads, protects used files, and 
     await page.waitForTimeout(100);
     const headerTop = await page.locator('.admin-header').evaluate((header) => header.getBoundingClientRect().top);
     assert.ok(Math.abs(headerTop) <= 1, `Admin sabit menü kaydırmada kayboldu: top=${headerTop}`);
-    await page.setViewportSize({ width: 1440, height: 900 });
-    await page.locator('#media-panel').scrollIntoViewIfNeeded();
-    await page.screenshot({ path: 'docs/evidence/responsive/admin-media-1440.png' });
     console.log(`Admin responsive measurements: ${JSON.stringify(responsiveMetrics)}`);
     assert.deepEqual(errors, []);
     await page.close();
   } finally {
     await browser?.close();
     await stopWorker();
-    await rm(testDirectory, { recursive: true, force: true });
+    await rm(testDirectory, { recursive: true, force: true, maxRetries: 12, retryDelay: 250 });
   }
 });

@@ -1,6 +1,6 @@
 # ZY Reklam — Yol Haritası
 
-**Sürüm:** 1.15 · **Başlangıç:** 2026-10-01 · **Güncelleme:** 2026-10-16
+**Sürüm:** 1.16 · **Başlangıç:** 2026-10-01 · **Güncelleme:** 2026-10-16
 
 **Kaynak:** [ARCHITECTURE.md](ARCHITECTURE.md) · **Zorunlu kontrol:** [AGENTS.md](AGENTS.md)
 
@@ -10,7 +10,7 @@
 
 **Aktif aşama:** P3 — Gerçek 3D açılış uygulandı; performans kapanışı devam ediyor.
 
-**Kullanıcı önceliği:** P3.7d — Lightbox ve yalnızca araç fotoğrafı. Kullanıcının açık önceliği fiziksel P3.6 kapanışı beklenirken uygulanır; diğer aşamalar tamamlanmış sayılmaz.
+**Kullanıcı önceliği:** P8.7 — ana site ve admin responsive viewport alt kabulü. Bağımsız responsive işi P3.6/P7 açıkken ilerletildi; hiçbir üst aşama tamamlanmış sayılmaz.
 
 P1 kaynak, logo, font ve iletişim incelemesi yapıldı; gerçek proje bilgileri/fotoğrafları doğrulanmadığı için P1.5 açık kalır. Planın engel yönetimi uyarınca bağımsız P2 temeli tamamlandı. Vite/TypeScript sayfası, statik SVG poster, mobil menü, hareket tercihi ve temel WhatsApp iletişim akışı çalışıyor. Gerçek 3D açılış şimdi uygulanmıştır. Üretim animasyonları, galeri, stüdyo ve upload henüz uygulanmadı.
 
@@ -28,7 +28,7 @@ Durumlar: `bekliyor`, `devam ediyor`, `engelli`, `tamamlandı`. İş kutuları y
 | P5 | Gerçek proje galerisi | P2 + gerçek görseller; teslim sırası P4 sonrası | Bekliyor |
 | P6 | Mini stüdyo ve WhatsApp teklif metni | P3, P5 + doğrulanmış iletişim | Bekliyor |
 | P7 | Admin medya/taslak akışı ve ziyaretçi teklif eki | P6 + KV/R2/GitHub erişimi + veri politikası | Devam ediyor; admin kodu yerel doğrulandı, canlı kaynak/yayın ve ziyaretçi eki açık |
-| P8 | Uçtan uca kabul, mobil/performance/SEO | P2–P7 | Bekliyor |
+| P8 | Uçtan uca kabul, mobil/performance/SEO | P2–P7 | Devam ediyor; P8.7 responsive alt işi tamamlandı, genel kabul açık |
 | P9 | Yetkilendirilmiş canlı geçiş ve geri dönüş kontrolü | P8 + mevcut hosting erişimi/yayın yetkisi | Bekliyor |
 
 ### P7.0 — Admin paneli ve güvenli backend
@@ -178,6 +178,16 @@ P7 iki farklı akış içerir. P7.0 admin panelinin site içerik medyası ve yay
 - [ ] P8.6 Upload güvenliği/temizliği ve kişisel veri içermeyen raporlama davranışını doğrula.
 
 **Kabul:** ARCHITECTURE.md §8 hedefleri tanımlı koşullarda karşılanır veya açık gerekçeli, kullanıcı talimatıyla uyumlu revizyon kaydedilir. Kullanıcı akışında kritik hata, mobil taşma veya erişilemeyen kontrol yoktur. Laboratuvar raporu gerçek saha verisi diye sunulmaz. Ölçülmemiş hedefler başarı sayılmaz.
+
+### P8.7 — Ana site ve admin responsive viewport alt kabulü
+
+- [x] Ana site responsive düzenini `src/styles/` altında, admin düzenini `src/admin/admin.css` içinde bağımsız tut; 1440px+ kontrollü max container ve large-screen ölçekleri uygula.
+- [x] 360×800, 390×844, 412×915, 768×1024, 820×1180, 1024×768, 1280×720, 1366×768, 1440×900, 1536×864, 1600×900, 1920×1080, 2560×1440, 3440×1440 ve 3840×2160 ölçülerinde ana site ile admin için yatay overflow kontrolü yap.
+- [x] Üretilen beş hizmet, beş proje ve dört promosyon sayfasını 390, 768, 1440, 1920 ve 3840px genişliklerde kontrol et; detay galerisi, video sınırı ve ürün `object-fit` davranışını doğrula.
+- [x] Admin sticky header, 1100px ve altı hamburger, 44px dokunma hedefleri, editör alanları, medya grid'i, yayın dialog'u ve 4K max-width davranışını test et.
+- [x] İstenen site/admin 1440, 1920, 2560, 3440 ve 3840 viewport ekran görüntülerini üret ve görsel olarak incele.
+
+**Durum:** P8.7 responsive alt işi tamamlandı; 42/42 otomatik test, TypeScript ve production build başarılıdır. Chromium viewport emülasyonu fiziksel cihaz/GPU testi değildir. P3.6, P7 ve P8.1–P8.6 açık olduğundan genel P8 kabulü veya canlıya hazır olma sonucu çıkarılmaz.
 
 ## 12. P9 — Canlı geçiş
 
@@ -510,3 +520,14 @@ Sıradaki tek iş:
 - Temizlik/sınır: testin yeniden yazdığı tracked evidence ve generator HTML/sitemap geri alındı; `dist/`, üretilen `hizmetler/`, admin medya manifesti ve boş `.wrangler/tmp` temizlendi. Gerçek GitHub `main` yayını, Cloudflare resource provisioning ve production deploy çalıştırılmadı. KV ID config'te sıfır yer tutucudur; gerçek `GITHUB_TOKEN` veya müşteri verisi yoktur.
 - Durum: P7.0 admin akışı yerel kod/entegrasyon düzeyinde uygulanmıştır; genel P7 ve canlıya hazır olma kabul edilmemiştir. Feature commit'i `3b2b24744b49fa449cebd9f7b901e0f954e93f14` `feat/admin-panel` dalına push edildi; `origin/feat/admin-panel` SHA'sı ve uzak `worker/github.ts` / `src/admin/main.ts` içerikleri tekrar okundu.
 - Sıradaki tek iş: Yetkili Cloudflare hesabında `ADMIN_DRAFTS` KV ve R2 staging kaynağını oluşturup gerçek KV ID'sini güvenli yapılandırmak; ardından ayrı onayla live publish ve visitor attachment işleri değerlendirilir.
+
+### 2026-10-16 — P8.7 ana site ve admin responsive viewport alt kabulü
+
+- Talimat: Ana site ve `/admin/` arayüzünü mobil, tablet, laptop, Full HD, 2K, ultrawide ve 4K viewportlarında responsive hale getir; ekran taşmasını ve geniş ekranlarda küçük/dar kalan düzenleri düzelt; ekran görüntülerini üretip görsel incele; yalnız responsive kaynak değişikliklerini `feat/admin-panel` üzerinde commit/push et. `main`'e geçilmedi, merge edilmedi veya production deploy yapılmadı.
+- Başlangıç: `AGENTS.md`, mimari v1.16 ve roadmap v1.15 tamamen okundu; dal `feat/admin-panel`, başlangıç HEAD `0e1f91f`, çalışma ağacı temizdi. Hiçbir kullanıcı değişikliği üzerine yazılmadı.
+- Uygulama: site `.shell` max 1760px; hero/başlık/tabela, hizmet detay/gallery, showcase, showroom, proje videosu, promosyon ürünleri ve bölüm boşlukları large-screen `clamp()` ile ölçeklenir. Admin CSS bağımsızdır; içerik max 1760px, header/nav max 1824px, form geniş alanları max 1200px, medya grid max 6 kart; 1100px ve altında hamburger, en az 44px hedef.
+- Test: Site ve admin, 15 viewport ölçüsünün tümünde Playwright Chromium ile yatay taşma kontrolünden geçti. Beş hizmet, beş proje ve dört promosyon kategorisi 390/768/1440/1920/3840 genişliklerinde kontrol edildi. 44px nav hedefleri, 1100px hamburger, 1280–1920 tüm sekmelerin görünürlüğü, form genişlikleri, max 6 medya kolonu, modal sınırı ve sayfa sonuna kaydırmada sabit admin başlığı doğrulandı. Tam test **42/42**, `npm.cmd run check` ve `npm.cmd run build` başarılı. Test build öncesi ilk kez çalıştırıldığında `dist/` henüz yoktu ve preview tabanlı testler başarısız oldu; build'den sonra aynı seri tam paket 42/42 geçti. Build'de mevcut SVGLoader 599.52 kB chunk uyarısı sürer. `npx.cmd wrangler deploy --dry-run` build sonrasında başarılı; gerçek deploy yapılmadı.
+- Görsel kanıt: `docs/evidence/responsive/site-{1440,1920,2560,3440,3840}.png` ve `admin-{1440,1920,2560,3440,3840}.png` üretildi ve görsel olarak incelendi. Görünür showroom yedeğinin decode edilmesi screenshot testine eklendi. Bunlar Chromium viewport emülasyonudur; fiziksel ekran/GPU kabulü değildir.
+- Temizlik: generator HTML'leri, sitemap, testlerin değiştirdiği P2/P3 kanıtları ve `dist/` geri alındı/kaldırıldı. `.wrangler/` bulunmadı. Responsive ekran görüntüleri kaynak commit'ine dahil edilmez.
+- Durum: P8.7 responsive alt işi tamamlandı; P8 genel kabulü açık. P3.6 fiziksel GPU/FPS, P7 kaynak/ziyaretçi eki ve P8.1–P8.6 tamamlanmış gibi gösterilmez. Veri sözleşmesi ve yayın mimarisi değişmedi; A17 kaydı eklendi. Kaynak/test commit'leri: `1b8b27feb6377ed50703b8e576e1e4d83d993772` ve `f57dcf839934bba39d3366944b8c2ed0667bceef`.
+- Sıradaki tek iş: P3.6 — tanımlı fiziksel masaüstü ve orta seviye mobil cihazlarda FPS kabulünü ölçmek ve sonucu kaydetmek.

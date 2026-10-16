@@ -1,6 +1,6 @@
 # ZY Reklam — Mimari
 
-**Sürüm:** 1.16 · **Tarih:** 2026-10-16 · **Durum:** P3 fiziksel cihaz performans kabulü açık; P7 admin medya/taslak akışı yerel entegrasyonla doğrulandı; Cloudflare kaynak kurulumu ve canlı GitHub yayını yapılmadı
+**Sürüm:** 1.17 · **Tarih:** 2026-10-16 · **Durum:** P3 fiziksel cihaz performans kabulü açık; P7 admin medya/taslak akışı yerel entegrasyonla doğrulandı; responsive viewport alt kabulü tamamlandı; Cloudflare kaynak kurulumu ve canlı GitHub yayını yapılmadı
 
 **İlgili belgeler:** [Yol haritası](ROADMAP.md) · [Çalışma kuralları](AGENTS.md)
 
@@ -257,6 +257,7 @@ Görsel kanıtlar: açılış, üretim, galeri, stüdyo, form ve footer için se
 | A11 | Projeler altında beş örnek kategori; kontrollü video | Kullanıcı talimatıyla uygulandı | P2.8, müşteri projesi sahipliği varsayılmaz |
 | A12 | Admin paneli Cloudflare Worker ile backend'e bağlandı | Login/session ve local Worker dry-run; A16 KV/R2 kodu/testleri eklendi | Gerçek kaynak provisioning, GitHub `main` yazımı ve Cloudflare deploy doğrulaması açık |
 | A16 | Admin medya kütüphanesi ve kalıcı taslak | Kod + yerel Worker entegrasyonu doğrulandı; Cloudflare provisioning/live publish açık | KV taslak, R2 staging, CSRF, içerik kullanım koruması ve tek GitHub commit'i; visitor attachment sözleşmesinden ayrıdır |
+| A17 | Ana site ve admin için bağımsız responsive ölçekleme | Kod ve Chromium viewport emülasyonu ile doğrulandı; P8 genel kabulü açık | Ana `.shell` 1760px, admin içerik 1760px / header-nav 1824px; admin editör alanı en çok 1200px. DPR mevcut 1,5 sınırında kalır |
 
 Mimari değişiklikte sürüm, tarih, ilgili karar ve etkilenen roadmap işi güncellenir. Yeni kullanıcı talimatıyla değişen kapsam eski kabul ölçütlerine gizlenmez.
 
@@ -269,6 +270,12 @@ Admin paneli Cloudflare Worker'a bağlandı; yerel login/session/content PUT ak�
 Admin içerik ve medya taslakları Worker tarafında KV/R2 ile kalıcılaştırılır; panel localStorage'a bağımlı değildir. CSRF + aynı-origin denetimi, imza/MIME/uzantı/klasör/boyut doğrulaması, izinli medya hedefleri, upload ilerlemesi ve önizleme, kullanım haritası, kullanımdayken silme engeli, değişiklik önizlemesi ve yayın geçmişi eklendi. GitHub Data API'de JSON, binary medya ve silme yolları tek tree/commit içinde toplanır; `main` ref'i commit öncesi tekrar kontrol edilir. GitHub istekleri mock ile, Worker ise ayrı geçici local KV/R2 durumuyla test edilir.
 
 Cloudflare KV namespace ID'si config'te bilinçli olarak yer tutucudur; staging R2 bucket ve secret'lar gerçek hesapta oluşturulmadı. Gerçek GitHub `main` commit'i veya Cloudflare production deploy çalıştırılmadı. Admin medya yönetimi ziyaretçi teklif eki linki değildir; ziyaretçi eki P7.1–P7.6 kabulü açık kalır. A16, mevcut mimariyi admin medya işine genişletir ve P7 genel aşamasını tamamlandı yapmaz.
+
+### 2026-10-16 — A17 ana site ve admin responsive ölçekleme
+
+Ana site ve `/admin/` responsive stilleri kendi CSS sınırlarında tutuldu. 1440px üstünde ana container 1760px, admin içerik 1760px ve admin header/nav 1824px ile sınırlıdır; admin uzun alanları 1200px'i aşmaz. Hero, hizmet detayları, showcase, showroom, proje videosu ve promosyon ürün boyutları geniş ekranlarda kontrollü `clamp()` değerleriyle büyür. Admin medya kartları en çok altı kolonda kalır; tablet/hamburger eşiği 1100px, dokunma hedefleri en az 44px'tir. Three.js renderer DPR mevcut 1,5 sınırını korur; bu işte renderer kodu değiştirilmedi.
+
+Playwright Chromium viewport emülasyonunda 15 ölçüde ana site ve admin sayfa taşması kontrol edildi; üretilen 14 hizmet/proje/promosyon kategorisi beş seçili genişlikte ayrıca açıldı. İstenen beş masaüstü çözünürlük ekran görüntüleri `docs/evidence/responsive/` altında üretildi ve görsel olarak incelendi. Bu laboratuvar/emülasyon kanıtı fiziksel cihaz, gerçek GPU, saha performansı veya tam P8 kabulü değildir. Veri sözleşmesi ve yayın mimarisi değişmedi.
 
 ### 2026-10-01 — v1.1 logo kaynak açıklaması
 

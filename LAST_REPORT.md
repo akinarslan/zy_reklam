@@ -2,42 +2,51 @@
 
 ## Talimat ve kapsam
 
-P7.0 admin paneli için güvenli medya yükleme/kütüphanesi, sunucu tarafında kalıcı taslaklar ve GitHub'a atomik içerik+medya yayın akışı uygulandı. İş `feat/admin-panel` dalında tamamlandı; `main` dalına geçilmedi, merge yapılmadı, GitHub `main`'e gerçek yayın ve Cloudflare production deploy çalıştırılmadı.
+Ana siteyi ve `/admin/` panelini mobil, tablet, laptop, Full HD, 2K, ultrawide ve 4K viewportlarında responsive hale getirme; yatay taşmayı önleme, geniş ekran ölçülerini düzenleme ve görsel kanıt üretme işi tamamlandı. Kaynak/test değişiklikleri yalnızca `feat/admin-panel` dalında commit edildi. `main` dalına geçilmedi, merge yapılmadı ve production deploy yapılmadı.
 
 ## Aşama ve iş kimliği
 
-**P7.0 — Admin medya ve yayın altyapısı (yerel olarak uygulandı/doğrulandı).** Genel P7 devam ediyor: gerçek Cloudflare kaynakları provision edilmedi ve ziyaretçi teklif eki/süreli bağlantı akışı farklı kabul kapsamı olarak açık.
+**P8.7 — Responsive viewport alt kabulü tamamlandı.** Genel P8 kabulü açık kalır. P3.6 fiziksel cihaz/GPU ölçümü ve P7 kaynak/ziyaretçi eki kabulü bu iş kapsamında kapatılmadı.
+
+Başlangıçta `AGENTS.md`, `ARCHITECTURE.md` v1.16 ve `ROADMAP.md` v1.15 tamamen okundu. Başlangıç dalı `feat/admin-panel`, HEAD `0e1f91f`; çalışma ağacı temizdi.
 
 ## Değişen dosyalar
 
-- `worker/index.ts`, `worker/content.ts`, `worker/media.ts`, `worker/github.ts` — KV draft, R2 staging, CSRF/same-origin, upload doğrulama, kullanım haritası/silme koruması, özel Range önizleme ve GitHub Data API publish/conflict akışı.
-- `src/shared/admin-media.ts`, `scripts/generate-admin-media-manifest.mjs`, `.gitignore`, `package.json` — paylaşılan medya sözleşmesi ve build envanteri.
-- `src/admin/main.ts`, `src/admin/admin.css` — kalıcı draft, yükleme/önizleme/ilerleme, medya kartları, video poster/metadata ve yayın değişiklik onayı/geçmiş UI'ı.
-- `tests/admin-media.test.mjs`, `tests/admin-worker.test.mjs` — format/limit/stream/GitHub mock ve ayrı local Worker/KV/R2/browser testleri.
-- `wrangler.jsonc`, `.dev.vars.example`, `README.md` — resource/setup ve secret güvenliği yönergeleri.
-- `ARCHITECTURE.md` — v1.16/A16 admin-media kararı ve ziyaretçi eki ayrımı.
-- `ROADMAP.md` — v1.15/P7.0 kabul durumu ve doğrulama günlüğü.
+- `src/styles/main.css` — ana container, hero, başlık, hizmet kartları ve geniş ekran aralıkları.
+- `src/styles/showcase.css`, `src/styles/showroom.css` — ışıklı tabela/showroom alanlarının kontrollü geniş ekran ölçekleri.
+- `src/styles/projects.css`, `src/styles/promotions.css` — proje videosu ve promosyon görsellerinin büyük ekran ölçüleri.
+- `src/admin/admin.css` — admin içerik/nav sınırları, tablet hamburger eşiği, dokunma hedefleri, form/media grid ve büyük ekran metin ölçüleri.
+- `tests/responsive.test.mjs` — 15 viewport ana site, kategori URL’leri, menü/taşma kontrolleri ve screenshot üretimi.
+- `tests/admin-worker.test.mjs` — izole local Worker üzerinde 15 viewport, admin menü/form/media/dialog ve sticky header kabulü.
+- `ARCHITECTURE.md` — v1.17/A17 responsive karar kaydı; veri sözleşmesi ve yayın mimarisi değişmedi.
+- `ROADMAP.md` — v1.16/P8.7 alt kabulü ve doğrulama günlüğü; P8 genel durumu açık.
 - `LAST_REPORT.md` — bu rapor.
+- Görsel kanıt: `docs/evidence/responsive/site-1440.png`, `site-1920.png`, `site-2560.png`, `site-3440.png`, `site-3840.png`, `admin-1440.png`, `admin-1920.png`, `admin-2560.png`, `admin-3440.png`, `admin-3840.png`.
 
 ## Doğrulama
 
-- `npm run check` — başarılı.
-- `npm test -- --test-concurrency=1` — **40/40 test geçti**. Buna mock GitHub atomic commit/conflict testleri ve test secret'larıyla ayrı geçici persist dizininde local Worker, KV/R2, CSRF, taslak kalıcılığı, upload imza doğrulaması, Range preview, kullanılan dosya silme koruması ve browser UI akışı dahildir.
-- `npm run build` — başarılı. Mevcut `SVGLoader` chunk'ı 599.52 kB olduğu için 500 kB boyut uyarısı sürüyor.
-- `npx wrangler deploy --dry-run` — başarılı; 190 asset okudu. Bu gerçek deploy değildir.
+- `npm.cmd run check` — başarılı.
+- `npm.cmd test -- --test-concurrency=1` — build sonrası **42/42 geçti**. İlk deneme build öncesi yapıldığı için `dist/` preview bulunamadı; build alındıktan sonra tam seri test paketi başarılı tamamlandı.
+- Screenshot readiness düzeltmesinden sonra odaklı responsive dosyası `node --test tests/responsive.test.mjs` — **2/2 geçti**; görünür showroom posterinin decode edilmesi screenshot öncesinde beklenir.
+- `npm.cmd run build` — başarılı. Mevcut SVGLoader chunk’ı 599.52 kB olduğu için Vite’ın 500 kB boyut uyarısı sürüyor.
+- `npx.cmd wrangler deploy --dry-run` — build sonrasında başarılı; dry-run Worker upload boyutu 110.77 KiB (gzip 25.41 KiB). Gerçek deploy değildir.
+- 15 viewport ölçüsünde ana site/admin yatay taşma kontrolü; 14 hizmet/proje/promosyon sayfasında 390/768/1440/1920/3840 genişlik kontrolleri geçti.
+- Beş masaüstü çözünürlüğündeki site/admin screenshot’ları görsel olarak incelendi. Bunlar Chromium viewport emülasyonudur; fiziksel ekran/GPU performans kabulü değildir.
 - `git diff --check` — başarılı.
-- Feature commit'i: `3b2b24744b49fa449cebd9f7b901e0f954e93f14` (`feat(admin): complete media upload and publish flow`). `origin/feat/admin-panel` ref'i ve uzak `worker/github.ts` / `src/admin/main.ts` tekrar okunarak doğrulandı.
 
 ## Temizlik ve sınırlar
 
-Build/test sonrası generator HTML'leri, sitemap ve testlerin değiştirdiği kanıtlar başlangıçtaki HEAD'e döndürüldü. `dist/`, üretilen `hizmetler/`, `public/admin-media-manifest.json` ve boş `.wrangler/tmp` temizlendi. `.dev.vars` okunmadı veya değiştirilmedi; gerçek credential, müşteri dosyası veya test upload Git'e eklenmedi.
+Test/build/generator tarafından yeniden oluşturulan tracked kategori HTML’leri, sitemap ve P2/P3 test kanıtları başlangıç commit’ine geri alındı. Üretilmiş `dist/`, `hizmetler/`, `public/admin-media-manifest.json` ve `.wrangler/` kaldırıldı. Responsive ekran görüntüleri ayrı görsel kanıt olarak korundu; build/generator artığı değildir.
 
-`wrangler.jsonc` içindeki sıfırlardan oluşan KV ID yalnızca yer tutucudur; R2 bucket/secret'lar Cloudflare'de oluşturulmadı. Gerçek GitHub `main` publish ve Workers Builds/production deploy durumu çalıştırılmadı. Bu nedenle kod ve yerel test başarısı canlı entegrasyon kanıtı veya P7 tamamlanması olarak sunulmaz.
+## Mimari ve commit’ler
 
-## Mimari ve durum
+Mevcut mimariye A17 ile uyuldu; yeni veri sözleşmesi veya renderer davranışı eklenmedi. Responsive kaynak/test commit’leri:
 
-Mevcut A12 sınırına A16 ile uyuldu: admin medya içerikleri public site içeriğidir ve ziyaretçi teklif eki API'sinden ayrıdır. P7.0 uygulaması yerel entegrasyon düzeyinde tamamlandı; genel P7 `devam ediyor`, canlı kaynak/yayın yapılandırması ve ziyaretçi eki kabulü açık.
+- `1b8b27feb6377ed50703b8e576e1e4d83d993772` — `style: improve site and admin responsiveness`
+- `f57dcf839934bba39d3366944b8c2ed0667bceef` — `test: wait for responsive screenshot assets`
+
+Mimari, roadmap ve screenshot kanıtları ayrı dokümantasyon commit’inde kaydedildi. Uzak `feat/admin-panel` push’u commit’lerden sonra yeniden doğrulandı; `main`/production üzerinde işlem yapılmadı.
 
 ## Sıradaki tek iş
 
-Yetkili Cloudflare hesabında `ADMIN_DRAFTS` KV namespace'i ve R2 staging bucket'ını oluşturup gerçek KV ID'sini güvenli yapılandırmak; bu adımdan bağımsız olarak production deploy yapılmayacak.
+P3.6 — tanımlı fiziksel masaüstü ve orta seviye mobil cihazlarda FPS kabulini ölçüp sonucu kaydetmek.
