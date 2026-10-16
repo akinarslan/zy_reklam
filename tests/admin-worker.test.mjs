@@ -130,6 +130,13 @@ test('Local Worker persists drafts, validates uploads, protects used files, and 
   let browser;
   try {
     await startWorker();
+    const homePage = await fetch(`${base}/`);
+    assert.equal(homePage.status, 200);
+    assert.match(await homePage.text(), /ZY REKLAM/);
+    const sessionApi = await fetch(`${base}/api/admin/session`);
+    assert.equal(sessionApi.status, 200);
+    assert.equal((await sessionApi.json()).authenticated, false);
+
     const adminPage = await fetch(`${base}/admin/`);
     assert.equal(adminPage.status, 200);
     const adminHtml = await adminPage.text();
