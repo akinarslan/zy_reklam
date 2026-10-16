@@ -1,6 +1,6 @@
 # ZY Reklam — Yol Haritası
 
-**Sürüm:** 1.13 · **Başlangıç:** 2026-10-01
+**Sürüm:** 1.16 · **Başlangıç:** 2026-10-01 · **Güncelleme:** 2026-10-16
 
 **Kaynak:** [ARCHITECTURE.md](ARCHITECTURE.md) · **Zorunlu kontrol:** [AGENTS.md](AGENTS.md)
 
@@ -10,7 +10,7 @@
 
 **Aktif aşama:** P3 — Gerçek 3D açılış uygulandı; performans kapanışı devam ediyor.
 
-**Kullanıcı önceliği:** P3.7d — Lightbox ve yalnızca araç fotoğrafı. Kullanıcının açık önceliği fiziksel P3.6 kapanışı beklenirken uygulanır; diğer aşamalar tamamlanmış sayılmaz.
+**Kullanıcı önceliği:** P8.7 — ana site ve admin responsive viewport alt kabulü. Bağımsız responsive işi P3.6/P7 açıkken ilerletildi; hiçbir üst aşama tamamlanmış sayılmaz.
 
 P1 kaynak, logo, font ve iletişim incelemesi yapıldı; gerçek proje bilgileri/fotoğrafları doğrulanmadığı için P1.5 açık kalır. Planın engel yönetimi uyarınca bağımsız P2 temeli tamamlandı. Vite/TypeScript sayfası, statik SVG poster, mobil menü, hareket tercihi ve temel WhatsApp iletişim akışı çalışıyor. Gerçek 3D açılış şimdi uygulanmıştır. Üretim animasyonları, galeri, stüdyo ve upload henüz uygulanmadı.
 
@@ -27,9 +27,26 @@ Durumlar: `bekliyor`, `devam ediyor`, `engelli`, `tamamlandı`. İş kutuları y
 | P4 | Üretim anlatımı ve hizmet etkileşimleri | P3 | Bekliyor |
 | P5 | Gerçek proje galerisi | P2 + gerçek görseller; teslim sırası P4 sonrası | Bekliyor |
 | P6 | Mini stüdyo ve WhatsApp teklif metni | P3, P5 + doğrulanmış iletişim | Bekliyor |
-| P7 | Güvenli görsel yükleme ve teklif bağlantısı | P6 + sağlayıcı/veri politikası kararı | Bekliyor |
-| P8 | Uçtan uca kabul, mobil/performance/SEO | P2–P7 | Bekliyor |
+| P7 | Admin medya/taslak akışı ve ziyaretçi teklif eki | P6 + KV/R2/GitHub erişimi + veri politikası | Devam ediyor; admin kodu yerel doğrulandı, canlı kaynak/yayın ve ziyaretçi eki açık |
+| P8 | Uçtan uca kabul, mobil/performance/SEO | P2–P7 | Devam ediyor; P8.7 responsive alt işi tamamlandı, genel kabul açık |
 | P9 | Yetkilendirilmiş canlı geçiş ve geri dönüş kontrolü | P8 + mevcut hosting erişimi/yayın yetkisi | Bekliyor |
+
+### P7.0 — Admin paneli ve güvenli backend
+
+- [x] `admin/index.html`, `src/admin/main.ts` ve `src/admin/admin.css` eklenerek `/admin/` düzeni ve içerik düzenleme arayüzü oluşturuldu.
+- [x] Admin paneli sidebar'sız, sabit yatay üst menüye ve dar ekranda hamburger navigasyona dönüştürüldü; 12 bölüm bağlantısı, aktif durum ve bölüm bazlı vurgu renkleri doğrulandı.
+- [x] Ana sayfa, hizmetler, projeler ve promosyonların içerik listesi düzenlenebilir form yapısına alındı.
+- [x] Vite build çıktısında `/admin/index.html` üretimi aktif hale getirildi.
+- [x] Cloudflare Worker'da oturum kontrollü login/logout/session ve içerik GET/PUT uçları eklendi.
+- [x] Formdan içerik kaydetmeyi Worker KV taslağına bağla; oturum için CSRF token'ı ve same-origin mutasyon kontrolü ekle.
+- [x] JPG/JPEG/PNG/WebP ve MP4/WebM upload'ını izinli klasör/target, MIME/uzantı/imza ve 8 MB/50 MB sınırlarıyla doğrula; R2 staging kullan.
+- [x] Medya manifesti/kütüphanesi, upload ilerlemesi ve önizlemesi, video poster/metadata alanları, kullanım haritası, kullanılan dosya silme engeli ve taslak silme işaretlemesi ekle.
+- [x] JSON + yeni medya + silme işlemlerini tek GitHub Data API commit'inde yayınla; commit öncesi main ref kontrolü ve çatışma yanıtı ekle.
+- [x] İzole local Worker/KV/R2 ve geçici test credential'larıyla session, CSRF, kalıcı draft, upload imzası, range preview, kullanım koruması ve browser UI akışını test et; GitHub API'yi mock'la.
+- [ ] Cloudflare KV namespace/R2 staging kaynağını yetkili hesapta provision et ve secret'ları güvenli şekilde ayarla. Mevcut KV ID sıfır yer tutucudur.
+- [ ] Gerçek GitHub `main` publish/Cloudflare Workers Builds sonucunu ayrıca ve açık yayın yetkisiyle doğrula; bu işlem production deploy başlatabileceğinden burada çalıştırılmadı.
+
+**Durum:** P7 `devam ediyor`. Admin medya/taslak kodu ve yerel entegrasyon kanıtlandı; gerçek Cloudflare kaynak kurulumu ve canlı GitHub yazımı bilinçli olarak yapılmadı. Bu admin kütüphanesi, ziyaretçinin teklif formuna dosya ekleme ve süreli bağlantı sözleşmesi değildir. P7.1–P7.6 ziyaretçi eki kabulü açık kalır. Üretim secret'ları Git'e eklenmez.
 
 İşler bağımlılıkları karşılanmadan tamamlanamaz. Galeri içeriği gibi bağımsız hazırlıklar öne alınabilir; aşama teslim sırası korunur. Kullanıcının hata düzeltme/öncelik değiştirme talimatları belgelenerek uygulanır.
 
@@ -125,16 +142,31 @@ Süreler takvim taahhüdü değildir. P1 sonrası logo kalitesi, gerçek görsel
 
 **Kabul:** Türkçe karakter, `&`, satır sonu, uzun işletme adı, geçersiz adet ve ondalık virgül durumları doğrulanır. Girdi HTML olarak çalışmaz. Tasarım özeti seçilen değerlerle eşleşir. WhatsApp açılırken metin doğru kodlanır; gerçek mesaj otomatik gönderilmez. “Gönderildi” şeklinde yanlış başarı bildirimi yoktur. P6 bitmesi P7 görsel yükleme özelliğinin bittiği anlamına gelmez.
 
-## 10. P7 — Gerçek görsel yükleme
+## 10. P7 — Admin medya yönetimi ve ziyaretçi görsel yükleme
 
-- [ ] P7.1 P1 adaylarından sağlayıcıyı seç; erişim, maliyet sınırı, veri saklama süresi ve kullanıcı açıklamasını kesinleştir; mimari karar kaydını güncelle.
+P7 iki farklı akış içerir. P7.0 admin panelinin site içerik medyası ve yayın taslağıdır; P7.1–P7.6 ise ziyaretçinin teklif formuna eklediği dosyanın ayrı, süreli bağlantı sözleşmesidir. Admin medya akışının tamamlanması ziyaretçi eki kabulünü kapatmaz.
+
+### P7.0 — Admin paneli medya/taslak akışı
+
+- [x] Login/session'a oturum başına CSRF token ve same-origin mutasyon kontrolü ekle.
+- [x] İçerik taslağını KV'de, upload medyasını R2 staging'de kullanıcı bazlı tut; tarayıcı localStorage'ını kaynak olmaktan çıkar.
+- [x] JPG/JPEG/PNG/WebP ve MP4/WebM, izinli klasör/target, MIME/uzantı/imza ve 8 MB/50 MB doğrulamasını uygula.
+- [x] Medya envanteri, kullanım haritası, dosya önizlemesi/range desteği, upload ilerlemesi, silme koruması ve hizmet/proje/promosyon/video hedeflerini bağla.
+- [x] Yayın önizleme/geçmişini ve JSON+medya+silme işlemlerini tek GitHub commit'inde, main ref yarış kontrolüyle uygula.
+- [x] Geçici test credential'larıyla local Worker/KV/R2 ve browser UI akışını; GitHub isteklerini mock ile doğrula.
+- [ ] Gerçek Cloudflare KV/R2 kaynaklarını provision et ve secret'ları yapılandır; mevcut KV ID yer tutucudur.
+- [ ] Gerçek GitHub `main` yayınını ve olası Workers Builds sonucunu açık yayın yetkisiyle doğrula; bu işte canlı yazma/deploy çalıştırılmadı.
+
+### P7.1–P7.6 — Ziyaretçi teklif eki
+
+- [ ] P7.1 Ziyaretçi teklif eki için sağlayıcıyı seç; erişim, maliyet sınırı, veri saklama süresi ve kullanıcı açıklamasını kesinleştir; admin panelinin KV/R2 kaydı bu kararı karşılamaz.
 - [ ] P7.2 Mimari API sözleşmesine uygun yükleme/silme/görüntüleme uçlarını ve özel depoyu kur.
 - [ ] P7.3 Sunucuda tür/decode/boyut/piksel sınırı, yeniden kodlama ve metadata temizlemeyi uygula.
 - [ ] P7.4 Hız sınırı, kota, izinli origin, süreli link ve gerçek süre sonu temizliği kur.
 - [ ] P7.5 Ön yüzde açık yükleme eylemi, ilerleme, hata/tekrar deneme ve kaldırma kontrollerini bağla.
 - [ ] P7.6 Başarılı görsel linkini teklif mesajına ekle; hatada yerel formu koru ve manuel ekleme yolunu göster.
 
-**Kabul:** Geçerli görsel yüklenir; sahte uzantılı/bozuk/aşırı büyük dosyalar sunucuda reddedilir. Ön yüzde anahtar yoktur. Yetkisiz silme/depo listeleme çalışmaz. Süresi dolan link açılmaz ve saklama sonu temizliği doğrulanır. WhatsApp metninde yalnızca uygun süreli görüntüleme linki bulunur; silme tokenı bulunmaz. Sağlayıcı erişimi yoksa aşama `engelli` kalır; tam görsel yükleme tamamlandı denmez.
+**Ziyaretçi eki kabulü:** Geçerli görsel yüklenir; sahte uzantılı/bozuk/aşırı büyük dosyalar sunucuda reddedilir. Ön yüzde anahtar yoktur. Yetkisiz silme/depo listeleme çalışmaz. Süresi dolan link açılmaz ve saklama sonu temizliği doğrulanır. WhatsApp metninde yalnızca uygun süreli görüntüleme linki bulunur; silme tokenı bulunmaz. Sağlayıcı erişimi yoksa bu kapsam `engelli` kalır. P7 genel aşaması ancak admin akışı için gerekli kaynak/yayın kanıtları ve ziyaretçi eki kabulü birlikte tamamlanınca kapanır.
 
 ## 11. P8 — Kabul ve optimizasyon
 
@@ -146,6 +178,16 @@ Süreler takvim taahhüdü değildir. P1 sonrası logo kalitesi, gerçek görsel
 - [ ] P8.6 Upload güvenliği/temizliği ve kişisel veri içermeyen raporlama davranışını doğrula.
 
 **Kabul:** ARCHITECTURE.md §8 hedefleri tanımlı koşullarda karşılanır veya açık gerekçeli, kullanıcı talimatıyla uyumlu revizyon kaydedilir. Kullanıcı akışında kritik hata, mobil taşma veya erişilemeyen kontrol yoktur. Laboratuvar raporu gerçek saha verisi diye sunulmaz. Ölçülmemiş hedefler başarı sayılmaz.
+
+### P8.7 — Ana site ve admin responsive viewport alt kabulü
+
+- [x] Ana site responsive düzenini `src/styles/` altında, admin düzenini `src/admin/admin.css` içinde bağımsız tut; 1440px+ kontrollü max container ve large-screen ölçekleri uygula.
+- [x] 360×800, 390×844, 412×915, 768×1024, 820×1180, 1024×768, 1280×720, 1366×768, 1440×900, 1536×864, 1600×900, 1920×1080, 2560×1440, 3440×1440 ve 3840×2160 ölçülerinde ana site ile admin için yatay overflow kontrolü yap.
+- [x] Üretilen beş hizmet, beş proje ve dört promosyon sayfasını 390, 768, 1440, 1920 ve 3840px genişliklerde kontrol et; detay galerisi, video sınırı ve ürün `object-fit` davranışını doğrula.
+- [x] Admin sticky header, 1100px ve altı hamburger, 44px dokunma hedefleri, editör alanları, medya grid'i, yayın dialog'u ve 4K max-width davranışını test et.
+- [x] İstenen site/admin 1440, 1920, 2560, 3440 ve 3840 viewport ekran görüntülerini üret ve görsel olarak incele.
+
+**Durum:** P8.7 responsive alt işi tamamlandı; 42/42 otomatik test, TypeScript ve production build başarılıdır. Chromium viewport emülasyonu fiziksel cihaz/GPU testi değildir. P3.6, P7 ve P8.1–P8.6 açık olduğundan genel P8 kabulü veya canlıya hazır olma sonucu çıkarılmaz.
 
 ## 12. P9 — Canlı geçiş
 
@@ -438,3 +480,54 @@ Sıradaki tek iş:
 - A15 notu eklendi; DOM/CSS sınırı değişmez. Kanıt P3_7E_CAR_LIGHT.json. Sıradaki tek iş: canlı araç ışığını doğrulamak.
 
 - Uzak uygulama f7eebfef4f7a674fd2e52feacdc1169b59bc277f blobları doğrulandı; Cloudflare başarılı. İlk canlı denemede eski HTML sunuldu; yayın tamamlandıktan sonraki Chromium 1440/360 px fare hover, dokunma ikinci basışla kapatma, Enter/Space, koyu/parlak filtre, gölge ve taşma kabulü geçti. JS hatası yok. Kanıt P3_7E_CAR_LIGHT_LIVE.json. Sıradaki tek plan işi P3.6 fiziksel cihaz kabulüdür.
+
+### 2026-10-15 — P7 admin paneli üst navigasyon tasarımı ve branch teslimi
+
+- Talimat: admin sidebar'ını kaldır; sabit üst navigasyon, mobil menü, her içerik bölümü için kontrollü renk kimliği ve daha belirgin section/kart ayrımları uygula. Ardından `feat/admin-panel` dalında mesajı `style(admin): add sticky colored top navigation` olan commit oluştur ve yalnızca aynı feature dalına push et.
+- Değişen kaynaklar: `src/admin/main.ts` ve `src/admin/admin.css`. Dashboard, Ana Sayfa, Hizmetler, Projeler, Promosyonlar, 3D Vitrin, İletişim, Footer, SEO, Medya Kütüphanesi, Yayınlama ve Çıkış üst navigasyona alındı. İletişim/footer alanları kendi mevcut site alanlarına ayrıldı; gerçek düzenleme/yükleme altyapısı bulunmayan vitrin ve medya bölümleri bilgi/envanter görünümü olarak kaldı. Bu kayıt ve son rapor da güncellendi.
+- Başlangıçta temizlenenler: generator tarafından üretilmiş kök `index.html`, hizmet/proje/promosyon HTML sayfaları ve `public/sitemap.xml`; geçici `.wrangler/` Worker durumu. Bunlar build/test için yeniden üretildi; doğrulama tamamlandıktan sonra tekrar temizlendi.
+- Doğrulama: `npm run check` başarılı. `npm test` ilk olarak generator sayfaları temizlendiğinden iki sayfa testi bulamadı; generator çalıştırıldıktan sonra parallel Chromium kaynak çakışması görüldü. Tekil concurrency ile `npm test -- --test-concurrency=1` başarılı: **34/34**. `npm run build` ve `npx wrangler deploy --dry-run` başarılı; dry-run 189 asset okudu, production deploy yapılmadı. Build'de mevcut 500 kB `SVGLoader` uyarısı sürdü. Üretim preview tarayıcı kontrolünde header kaydırmada sabit, mobil menü aç/kapa/Escape ve odak dönüşü, 12 hedef, taşmasız düzen ve taslak localStorage kaydı doğrulandı.
+- Commit ve push `feat/admin-panel` dalında yapılır. `main` dalına geçiş, merge veya production deploy yapılmadı.
+- Mimari/veri sözleşmesi değişmedi; A12 ve P7.0 sınırlarına uyuldu. P7 genel durumu devam ediyor; kalıcı taslak, medya upload/depo ve gerçek publish doğrulaması tamamlanmadı.
+- Sıradaki tek iş: P7 için kalıcı taslak ve medya upload/publish akışını tamamlamak.
+
+### 2026-10-15 — P7 admin paneli kaynak commit hazırlığı
+
+- Talimat: Admin paneli kaynaklarını ve generator çıktılarından ayrımını denetle; check/test/build/Wrangler dry-run çalıştır; `feat/admin-panel` üzerinde commit edip aynı dalı origin'e push et. `main` dalına geçilmedi, merge veya production deploy yapılmadı.
+- Başlangıç Git durumu: `feat/admin-panel`, HEAD `73951ed`; remote feature dalı henüz yoktu. `hizmetler/*/index.html`, promosyon/proje sayfaları, kök `index.html` içindeki menü parçaları ve sitemap `npm run generate:pages` tarafından `src/content` ve generator'lardan üretilir; Worker/Vite build öncesi üretim yaptığı için değişen çıktı dosyaları kaynak commit'ine alınmadı. Testlerin yeniden ürettiği P2/P3 kanıt dosyaları da çalışma ağacında korundu, commit'e dahil edilmedi.
+- Kaynak/konfigürasyon: Wrangler manifest-lock tutarsızlığı giderildi; Worker kimliği mevcut `zy-reklam` olarak korundu. Admin login başarısızlığı görünür yapıldı; eksik auth secret'larında varsayılan oturum anahtarı kaldırıldı; publish medya yolları izinli dizin, MIME/uzantı ve 8 MB ile sınırlandı.
+- Doğrulama: `npm ci`, `npm run check`, `npm run build`, `npm test` (34/34) ve `npx wrangler deploy --dry-run` başarılı. Build'de Three/SVGLoader ortak chunk'ı 500 kB uyarısı verdi; bu admin kaynak değişikliğinden bağımsızdır. İlk test denemesinde Chromium eksikti; Playwright Chromium kurulduktan ve üretim build'i yenilendikten sonra tam test başarılı oldu.
+- Durum: Admin paneli/Worker kısmi P7 çalışmasıdır; kalıcı taslak depolama, medya upload arayüzü/deposu ve gerçek GitHub publish doğrulaması eksiktir. Bu işte yerel dal commit/push edilmiştir; remote ref push sonrası yeniden okunarak doğrulanmıştır. Commit SHA `LAST_REPORT.md` içindedir.
+- Sıradaki tek iş: P7'de kalıcı taslak ve medya upload/publish akışını tamamlamak; gerçek üretim token'ı olmadan live GitHub commit'i denenmemelidir.
+
+### 2026-10-16 — P7.0 admin paneli teslim doğrulaması
+
+- Talimat: `feat/admin-panel` dalındaki sticky, renkli admin üst navigasyonunu check/test/build/Wrangler dry-run ile yeniden doğrula; üretilen çıktıları temizle ve yalnızca aynı dala commit/push et. `main` dalına geçilmedi, merge veya production deploy yapılmadı.
+- Başlangıç: çalışma ağacı temizdi; dal `feat/admin-panel`, HEAD ve `origin/feat/admin-panel` `db40778` (`style(admin): add sticky colored top navigation`) idi. `git diff --stat` boştu. Bu, kaynak commit'in bu doğrulama öncesinde de uzak dalda bulunduğunu gösterir.
+- Hazırlık: `npm run generate:pages` testlerin ihtiyaç duyduğu statik kategori dosyalarını üretti. Tarayıcı testleri `dist/` production preview beklediğinden önce build alındı; ardından istenen `npm test` komutu tam olarak çalıştırıldı.
+- Kanıt: `npm run check` başarılı; `npm test` **34/34** başarılı; `npm run build` başarılı; `npx wrangler deploy --dry-run` başarılı ve 189 asset okudu. Build'de Three/SVGLoader chunk'ı için 500 kB uyarısı sürdü. İlk build öncesi test denemesi `dist/` yokluğu nedeniyle başarısızdı; build sonrası aynı test komutu başarılı tamamlandı.
+- Temizlik: build/test ile yeniden yazılan tracked generator ve test kanıtları başlangıçtaki HEAD'e geri alındı; oluşturulan `dist/`, `hizmetler/` ve `.wrangler/` kaldırıldı. Build/test kaynak değişikliği üretmedi; kullanıcıya ait `.dev.vars` dosyasına dokunulmadı.
+- Mimari/veri sözleşmesi değişmedi; A12/P7.0 sınırlarına uyuldu. P7 devam ediyor: kalıcı taslak, medya deposu/upload ve gerçek GitHub publish doğrulaması tamamlanmadı.
+- Sıradaki tek iş: P7 için kalıcı taslak ve medya upload/publish akışını tamamlamak.
+
+### 2026-10-16 — P7.0 kalıcı admin medya ve yayın akışı
+
+- Talimat: admin medya yükleme/kütüphane, kalıcı içerik taslağı ve güvenli GitHub yayın akışını feature branch'inde tamamla; production deploy veya gerçek `main` yayınlama yapma.
+- Başlangıç: `AGENTS.md`, mimari v1.15 ve roadmap v1.14 kontrol edildi; çalışma dalı `feat/admin-panel`. `.dev.vars` içeriği okunmadı veya değiştirilmedi.
+- Uygulama: Worker KV taslağı/R2 staging, CSRF + same-origin, 8 MB görsel / 50 MB video MIME/uzantı/imza doğrulaması, içerik hedefi, usage map, range preview, kullanılan medyayı silme koruması ve yayın geçmişi. Admin UI upload progress/preview, hizmet/proje/promosyon/video target'ları ve publish değişiklik onayıyla güncellendi. GitHub Data API JSON+binary+delete path'lerini tek tree/commit'te birleştirir; base tree SHA ve main ref yarış kontrolü doğrulandı.
+- Belgeler: mimari v1.16/A16 kararıyla admin medya akışı ziyaretçi teklif eki akışından ayrıldı. README KV/R2 provisioning ve secret güvenliği açıklar. ROADMAP, gerçek Cloudflare resource provisioning ve ziyaretçi eki kabulü nedeniyle P7'yi `devam ediyor` bırakır.
+- Doğrulama: `npm run check` başarılı; media/GitHub mock testleri 5/5; local Worker API + browser UI testi geçici KV/R2, test-only secrets ve ayrı persist dizininde geçti; tam `npm test -- --test-concurrency=1` **40/40**; `npm run build` başarılı; `npx wrangler deploy --dry-run` 190 asset okudu ve başarılı oldu. Build'in mevcut Three/SVGLoader chunk 500 kB uyarısı sürdü.
+- Temizlik/sınır: testin yeniden yazdığı tracked evidence ve generator HTML/sitemap geri alındı; `dist/`, üretilen `hizmetler/`, admin medya manifesti ve boş `.wrangler/tmp` temizlendi. Gerçek GitHub `main` yayını, Cloudflare resource provisioning ve production deploy çalıştırılmadı. KV ID config'te sıfır yer tutucudur; gerçek `GITHUB_TOKEN` veya müşteri verisi yoktur.
+- Durum: P7.0 admin akışı yerel kod/entegrasyon düzeyinde uygulanmıştır; genel P7 ve canlıya hazır olma kabul edilmemiştir. Feature commit'i `3b2b24744b49fa449cebd9f7b901e0f954e93f14` `feat/admin-panel` dalına push edildi; `origin/feat/admin-panel` SHA'sı ve uzak `worker/github.ts` / `src/admin/main.ts` içerikleri tekrar okundu.
+- Sıradaki tek iş: Yetkili Cloudflare hesabında `ADMIN_DRAFTS` KV ve R2 staging kaynağını oluşturup gerçek KV ID'sini güvenli yapılandırmak; ardından ayrı onayla live publish ve visitor attachment işleri değerlendirilir.
+
+### 2026-10-16 — P8.7 ana site ve admin responsive viewport alt kabulü
+
+- Talimat: Ana site ve `/admin/` arayüzünü mobil, tablet, laptop, Full HD, 2K, ultrawide ve 4K viewportlarında responsive hale getir; ekran taşmasını ve geniş ekranlarda küçük/dar kalan düzenleri düzelt; ekran görüntülerini üretip görsel incele; yalnız responsive kaynak değişikliklerini `feat/admin-panel` üzerinde commit/push et. `main`'e geçilmedi, merge edilmedi veya production deploy yapılmadı.
+- Başlangıç: `AGENTS.md`, mimari v1.16 ve roadmap v1.15 tamamen okundu; dal `feat/admin-panel`, başlangıç HEAD `0e1f91f`, çalışma ağacı temizdi. Hiçbir kullanıcı değişikliği üzerine yazılmadı.
+- Uygulama: site `.shell` max 1760px; hero/başlık/tabela, hizmet detay/gallery, showcase, showroom, proje videosu, promosyon ürünleri ve bölüm boşlukları large-screen `clamp()` ile ölçeklenir. Admin CSS bağımsızdır; içerik max 1760px, header/nav max 1824px, form geniş alanları max 1200px, medya grid max 6 kart; 1100px ve altında hamburger, en az 44px hedef.
+- Test: Site ve admin, 15 viewport ölçüsünün tümünde Playwright Chromium ile yatay taşma kontrolünden geçti. Beş hizmet, beş proje ve dört promosyon kategorisi 390/768/1440/1920/3840 genişliklerinde kontrol edildi. 44px nav hedefleri, 1100px hamburger, 1280–1920 tüm sekmelerin görünürlüğü, form genişlikleri, max 6 medya kolonu, modal sınırı ve sayfa sonuna kaydırmada sabit admin başlığı doğrulandı. Tam test **42/42**, `npm.cmd run check` ve `npm.cmd run build` başarılı. Test build öncesi ilk kez çalıştırıldığında `dist/` henüz yoktu ve preview tabanlı testler başarısız oldu; build'den sonra aynı seri tam paket 42/42 geçti. Build'de mevcut SVGLoader 599.52 kB chunk uyarısı sürer. `npx.cmd wrangler deploy --dry-run` build sonrasında başarılı; gerçek deploy yapılmadı.
+- Görsel kanıt: `docs/evidence/responsive/site-{1440,1920,2560,3440,3840}.png` ve `admin-{1440,1920,2560,3440,3840}.png` üretildi ve görsel olarak incelendi. Görünür showroom yedeğinin decode edilmesi screenshot testine eklendi. Bunlar Chromium viewport emülasyonudur; fiziksel ekran/GPU kabulü değildir.
+- Temizlik: generator HTML'leri, sitemap, testlerin değiştirdiği P2/P3 kanıtları ve `dist/` geri alındı/kaldırıldı. `.wrangler/` bulunmadı. Responsive ekran görüntüleri kaynak commit'ine dahil edilmez.
+- Durum: P8.7 responsive alt işi tamamlandı; P8 genel kabulü açık. P3.6 fiziksel GPU/FPS, P7 kaynak/ziyaretçi eki ve P8.1–P8.6 tamamlanmış gibi gösterilmez. Veri sözleşmesi ve yayın mimarisi değişmedi; A17 kaydı eklendi. Kaynak/test commit'leri: `1b8b27feb6377ed50703b8e576e1e4d83d993772`, `f57dcf839934bba39d3366944b8c2ed0667bceef` ve `e7ffac2a9b4ee37a2da3b256efa46d65ffc28771`. Son commit ile birlikte A17/P8.7 belgeleri ve 10 ekran görüntüsü kaydedildi.
+- Sıradaki tek iş: P3.6 — tanımlı fiziksel masaüstü ve orta seviye mobil cihazlarda FPS kabulünü ölçmek ve sonucu kaydetmek.

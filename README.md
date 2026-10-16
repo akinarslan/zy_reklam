@@ -53,3 +53,29 @@ P1.5 için gerçek proje fotoğrafları ve bilgilerinin doğrulanması bekliyor.
 ## Projeler örnek koleksiyonu
 
 Beş fotoğraflı Projeler kategorisi /projeler/tabela/, /projeler/totem/, /projeler/lazer-kesim/, /projeler/dijital-baski/ ve /projeler/ozel-uretim/ adreslerindedir. 19 görsel ve bir video kullanıcı tarafından sağlanan tasarım/uygulama örnekleridir; ZY müşteri referansı değildir. Eşleme docs/PROJECT_ASSETS.md; kaynak src/content/projects.json. `npm run generate:pages` iki mega menüyü ve dokuz kategori sayfasını birlikte üretir. Video otomatik oynatılmaz.
+
+## Admin paneli
+
+Admin paneli `/admin/` altında statik Vite sayfası ve Cloudflare Worker API'si olarak çalışır. Taslak içerik ve bekleyen medya kullanıcı adına göre KV/R2'de tutulur; tarayıcı depolaması kaynak değildir. Medya kütüphanesi public image/video envanterini ve R2 staging dosyalarını listeler. Silme kullanımdaki dosyaları reddeder. GitHub yayın eylemi içerik JSON'larını, eklenen medyayı ve silme işlemlerini tek bir `main` commit'inde birleştirir; panel Cloudflare Builds/deploy durumunu doğrulamaz.
+
+Yerel doğrulama:
+
+```sh
+npm run build
+npm run worker:dev
+```
+
+`.dev.vars.example` dosyasını `.dev.vars` olarak kopyalayıp yalnızca test değerleriyle doldurun; parola hash'i `npm run hash:admin -- "yerel-şifreniz"` komutuyla üretilebilir. Yerel testlerde `GITHUB_TOKEN` tanımlamayın; böylece GitHub `main` yayın ucu kapalı kalır. `.dev.vars` ve gerçek secret'lar Git'e eklenmemelidir.
+
+## Cloudflare kaynakları ve yayın güvenliği
+
+`wrangler.jsonc` içindeki sıfırlardan oluşan KV namespace ID'si yalnızca yerel geliştirme/konfigürasyon yer tutucusudur; gerçek deploy öncesi `ADMIN_DRAFTS` için oluşturulan KV namespace'in ID'siyle değiştirilmelidir. Ayrıca aşağıdaki kaynak Cloudflare hesabında önceden oluşturulmalıdır:
+
+```sh
+npx wrangler kv namespace create ADMIN_DRAFTS
+npx wrangler r2 bucket create zy-reklam-admin-media-staging
+```
+
+R2 bucket adı config ile aynı olmalıdır. Worker secret'larını Cloudflare'de `wrangler secret put ADMIN_USERNAME`, `ADMIN_PASSWORD_HASH`, `ADMIN_SESSION_SECRET` ve `GITHUB_TOKEN` ile tanımlayın. `GITHUB_TOKEN` yalnız gerekli GitHub `contents` yazma yetkisiyle ve yayımlama yetkisi açıkça verilmiş ortamda eklenmelidir. Bu Worker `main` dalına commit oluşturur; bağlı Workers Builds bu commit üzerine deploy başlatabilir. Gerçek Cloudflare kaynakları bu değişiklikte oluşturulmamış, GitHub `main`'e gerçek yayın yapılmamış ve production deploy çalıştırılmamıştır. Wrangler `--dry-run` gerçek kaynak/credential doğrulaması değildir.
+
+Doğrulama, test Worker'ı ayrı geçici dizin, yerel KV/R2 emülasyonu ve geçici test credential'larıyla başlatır; çalışma alanındaki `.dev.vars` dosyasını kullanmaz.

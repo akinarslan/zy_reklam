@@ -11,3 +11,28 @@
 @media(hover:hover) and (pointer:fine){.real-car-reference:hover{border-color:#e3efffbb;box-shadow:0 0 0 1px #dbeaff55,0 0 32px #d9eaff88,0 0 70px #b5d6ff40,0 25px 70px #0008}.real-car-reference:hover img{filter:brightness(1) saturate(1)}.real-car-reference:hover::after{opacity:0}}
 @media(prefers-reduced-motion:reduce){.real-car-reference,.real-car-reference img,.real-car-reference::after{transition:none}}
 html[data-motion=reduced] .real-car-reference,html[data-motion=reduced] .real-car-reference img,html[data-motion=reduced] .real-car-reference::after{transition:none}
+
+@media (min-width: 1440px) {
+  .real-showcase-grid,
+  .brand-showcase-details {
+    gap: clamp(44px, 4vw, 80px);
+  }
+
+  .real-lightbox {
+    min-height: clamp(560px, 32vw, 640px);
+  }
+
+  .real-lightbox img {
+    height: clamp(560px, 32vw, 640px);
+  }
+}
+
+@media (min-width: 1920px) {
+  .real-lightbox {
+    min-height: clamp(620px, 34vw, 680px);
+  }
+
+  .real-lightbox img {
+    height: clamp(620px, 34vw, 680px);
+  }
+}

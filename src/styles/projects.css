@@ -2,3 +2,14 @@
 @media(min-width:768px) and (max-width:1023px){.project-menu-card h3{font-size:13px}.project-menu-card p{font-size:10px}.project-menu-card>img{height:120px}.project-menu-card>div{padding:10px}.promo-overview .project-menu-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:767px){.promo-mega .project-menu-grid{grid-template-columns:1fr}.project-mega .project-menu-card>img{object-fit:cover;padding:0}.promo-overview .project-menu-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.project-video{padding:18px}.project-video h2{font-size:24px}}
 @media(prefers-reduced-motion:reduce){.project-photo-link img{transition:none}}
+
+@media (min-width: 1440px) {
+  .project-video {
+    max-width: clamp(900px, 52vw, 1050px);
+    padding: clamp(28px, 2.2vw, 42px);
+  }
+
+  .project-video video {
+    max-height: clamp(560px, 40vw, 820px);
+  }
+}
