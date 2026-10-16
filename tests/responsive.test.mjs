@@ -113,6 +113,13 @@ test('Ana site viewport matrisi, geniş ekran ölçekleri, menüler ve yatay ta�
     }
     metrics.push(measurement);
     if ([1440, 1920, 2560, 3440, 3840].includes(viewport.width)) {
+      await page.evaluate(async () => {
+        const image = document.querySelector('.showroom-fallback img');
+        if (image && image.getBoundingClientRect().top < innerHeight) {
+          image.loading = 'eager';
+          await image.decode();
+        }
+      });
       await page.screenshot({ path: `docs/evidence/responsive/site-${viewport.width}.png` });
     }
   }
