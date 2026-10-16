@@ -11,7 +11,7 @@
     "check": "tsc --noEmit",
     "build": "npm run generate:pages && npm run check && vite build",
     "preview": "vite preview --host 0.0.0.0",
-    "test": "node --test tests/*.test.mjs",
+    "test": "node --test --test-concurrency=1 tests/*.test.mjs",
     "generate:promotions": "node scripts/generate-promotions.mjs",
     "generate:pages": "node scripts/generate-services.mjs && node scripts/generate-projects.mjs && node scripts/generate-admin-media-manifest.mjs",
     "hash:admin": "node scripts/hash-admin-password.mjs",
