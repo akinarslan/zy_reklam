@@ -1,6 +1,6 @@
 # ZY Reklam — Yol Haritası
 
-**Sürüm:** 1.17 · **Başlangıç:** 2026-10-01 · **Güncelleme:** 2026-10-16
+**Sürüm:** 1.18 · **Başlangıç:** 2026-10-01 · **Güncelleme:** 2026-10-16
 
 **Kaynak:** [ARCHITECTURE.md](ARCHITECTURE.md) · **Zorunlu kontrol:** [AGENTS.md](AGENTS.md)
 
@@ -27,7 +27,7 @@ Durumlar: `bekliyor`, `devam ediyor`, `engelli`, `tamamlandı`. İş kutuları y
 | P4 | Üretim anlatımı ve hizmet etkileşimleri | P3 | Bekliyor |
 | P5 | Gerçek proje galerisi | P2 + gerçek görseller; teslim sırası P4 sonrası | Bekliyor |
 | P6 | Mini stüdyo ve WhatsApp teklif metni | P3, P5 + doğrulanmış iletişim | Bekliyor |
-| P7 | Admin medya/taslak akışı ve ziyaretçi teklif eki | P6 + KV/R2/GitHub erişimi + veri politikası | Devam ediyor; admin kodu yerel doğrulandı, canlı kaynak/yayın ve ziyaretçi eki açık |
+| P7 | Admin medya/taslak akışı ve ziyaretçi teklif eki | P6 + KV/R2/GitHub erişimi + veri politikası | Devam ediyor; ADMIN_DRAFTS KV oluşturulup config'e bağlandı, R2/production secrets ve canlı yayın engelli; ziyaretçi eki açık |
 | P8 | Uçtan uca kabul, mobil/performance/SEO | P2–P7 | Devam ediyor; P8.7 responsive alt işi tamamlandı, genel kabul açık |
 | P9 | Yetkilendirilmiş canlı geçiş ve geri dönüş kontrolü | P8 + mevcut hosting erişimi/yayın yetkisi | Bekliyor |
 
@@ -43,10 +43,12 @@ Durumlar: `bekliyor`, `devam ediyor`, `engelli`, `tamamlandı`. İş kutuları y
 - [x] Medya manifesti/kütüphanesi, upload ilerlemesi ve önizlemesi, video poster/metadata alanları, kullanım haritası, kullanılan dosya silme engeli ve taslak silme işaretlemesi ekle.
 - [x] JSON + yeni medya + silme işlemlerini tek GitHub Data API commit'inde yayınla; commit öncesi main ref kontrolü ve çatışma yanıtı ekle.
 - [x] İzole local Worker/KV/R2 ve geçici test credential'larıyla session, CSRF, kalıcı draft, upload imzası, range preview, kullanım koruması ve browser UI akışını test et; GitHub API'yi mock'la.
-- [ ] Cloudflare KV namespace/R2 staging kaynağını yetkili hesapta provision et ve secret'ları güvenli şekilde ayarla. Mevcut KV ID sıfır yer tutucudur.
+- [x] `ADMIN_DRAFTS` KV namespace'ini yetkili hesapta oluştur ve gerçek ID'yi `wrangler.jsonc`'ye bağla.
+- [ ] Cloudflare hesabında R2'yi etkinleştirip `zy-reklam-admin-media-staging` bucket'ını oluştur.
+- [ ] `ADMIN_USERNAME`, `ADMIN_PASSWORD_HASH`, `ADMIN_SESSION_SECRET` ve `GITHUB_TOKEN` production secret'larını güvenli şekilde ayarla; değerleri repo/sohbet içine alma.
 - [ ] Gerçek GitHub `main` publish/Cloudflare Workers Builds sonucunu ayrıca ve açık yayın yetkisiyle doğrula; bu işlem production deploy başlatabileceğinden burada çalıştırılmadı.
 
-**Durum:** P7 `devam ediyor`. Admin medya/taslak kodu ve yerel entegrasyon kanıtlandı; gerçek Cloudflare kaynak kurulumu ve canlı GitHub yazımı bilinçli olarak yapılmadı. Bu admin kütüphanesi, ziyaretçinin teklif formuna dosya ekleme ve süreli bağlantı sözleşmesi değildir. P7.1–P7.6 ziyaretçi eki kabulü açık kalır. Üretim secret'ları Git'e eklenmez.
+**Durum:** P7 `devam ediyor`. Admin medya/taslak kodu ve yerel entegrasyon kanıtlandı; `ADMIN_DRAFTS` KV oluşturulup production config'e bağlandı. Cloudflare R2 hesapta etkin olmadığından bucket oluşturma engelli; gerekli production secret'ları da tanımlı değil. Gerçek GitHub publish ve Cloudflare deploy doğrulanmadı. Bu admin kütüphanesi, ziyaretçinin teklif formuna dosya ekleme ve süreli bağlantı sözleşmesi değildir. P7.1–P7.6 ziyaretçi eki kabulü açık kalır. Production secret'ları Git'e eklenmez.
 
 İşler bağımlılıkları karşılanmadan tamamlanamaz. Galeri içeriği gibi bağımsız hazırlıklar öne alınabilir; aşama teslim sırası korunur. Kullanıcının hata düzeltme/öncelik değiştirme talimatları belgelenerek uygulanır.
 
@@ -154,7 +156,8 @@ P7 iki farklı akış içerir. P7.0 admin panelinin site içerik medyası ve yay
 - [x] Medya envanteri, kullanım haritası, dosya önizlemesi/range desteği, upload ilerlemesi, silme koruması ve hizmet/proje/promosyon/video hedeflerini bağla.
 - [x] Yayın önizleme/geçmişini ve JSON+medya+silme işlemlerini tek GitHub commit'inde, main ref yarış kontrolüyle uygula.
 - [x] Geçici test credential'larıyla local Worker/KV/R2 ve browser UI akışını; GitHub isteklerini mock ile doğrula.
-- [ ] Gerçek Cloudflare KV/R2 kaynaklarını provision et ve secret'ları yapılandır; mevcut KV ID yer tutucudur.
+- [x] `ADMIN_DRAFTS` KV namespace'ini provision et ve gerçek ID'yi production config'e bağla.
+- [ ] R2 hesabını etkinleştirip `zy-reklam-admin-media-staging` bucket'ını oluştur; production secrets'ı güvenli şekilde tanımla.
 - [ ] Gerçek GitHub `main` yayınını ve olası Workers Builds sonucunu açık yayın yetkisiyle doğrula; bu işte canlı yazma/deploy çalıştırılmadı.
 
 ### P7.1–P7.6 — Ziyaretçi teklif eki
@@ -545,3 +548,14 @@ Sıradaki tek iş:
 - Güvenlik: `.dev.vars` Git'e eklenmedi veya okunmadı; tracked merge içeriğinde `.dev.vars` yok ve token biçimli credential taraması eşleşme bulmadı. `.dev.vars.example` yalnız örnek placeholder içerir.
 - Mimari/veri sözleşmesi değişmedi; ARCHITECTURE v1.17/A12 sınırları korundu. P9 tamamlandı işaretlenmedi; Cloudflare build ve `/admin/` 404 canlı geçişi engelliyor.
 - Sıradaki tek iş: yetkili Cloudflare Workers Build logundan başarısızlığın nedenini belirleyip deployment/`/admin/` görünürlüğünü düzeltmek ve canlı kontrolleri tekrarlamak.
+
+### 2026-10-16 — P7.0 Cloudflare admin deployment düzeltmesi (devam ediyor)
+
+- Talimat: Cloudflare production KV/R2 kaynaklarını ve Worker bindings'i doğrula, başarısız Workers Build nedenini bul, `/admin/` routing'ini düzelt, feature branch'te test/build/dry-run doğrulayıp PR ve canlı deployment zincirini tamamla.
+- Aşama/iş: P7.0, A18 ve P9 canlı doğrulama kapısı. Hiçbir aşama tamamlandı işaretlenmedi.
+- Kaynaklar: Cloudflare `ADMIN_DRAFTS` KV namespace oluşturuldu ve gerçek ID `wrangler.jsonc`'ye eklendi. R2 list/create çağrısı API 10042 ile başarısız; hesap R2 etkinleştirmesi bekliyor. `wrangler secret list` boştu; dört production secret mevcut değil. Secret değerleri istenmedi, okunmadı veya yazılmadı.
+- Uygulama: Worker GET/HEAD `/admin` isteklerini `/admin/`'ye yönlendirir; `/admin/` statik `/admin/index.html` varlığına rewrite edilir. `/api/admin/*` yolu ayrı ve değişmeden kalır. Vite admin girişini zaten multi-page build'e alıyordu; config değişikliği gerekmedi.
+- Doğrulama: `npm.cmd run check`, `npm.cmd run build`, `npm.cmd test -- --test-concurrency=1` **42/42**, `npx.cmd wrangler deploy --dry-run` PASS. Local Worker testi `/admin`, `/admin/`, `/admin/index.html` ile derlenmiş admin JS/CSS varlıklarının HTTP 200 yanıtını doğruladı. `dist/admin/index.html` mevcuttu. İlk local redirect assertion runtime 307 ile döndüğü için 307/308 kalıcı/geçici yönlendirme durumları kabul edilerek path doğrulaması yapıldı.
+- Engeller: Build ID `dba220d1-43ce-4540-9042-80b5a16a14da` için Cloudflare dashboard loguna erişilemedi; build failure nedeni kesin değil. R2, production secrets, CI/PR, main merge/push ve canlı site/admin doğrulaması yapılmadı. `wrangler deploy` çalıştırılmadı.
+- Temizlik: build/test tarafından üretilen statik sayfalar, evidence ve `dist`/`.wrangler` geçici çıktıları temizlenecek; `.dev.vars` okunmadı ve hiçbir secret Git'e eklenmedi.
+- Sıradaki tek iş: R2'yi Cloudflare Dashboard'da etkinleştirip bucket oluşturmayı ve production secrets'ı güvenli `wrangler secret put <NAME>` komutlarıyla tanımlamayı tamamlamak; ardından başarısız Build logunu inceleyip CI/PR kapısına devam etmek.

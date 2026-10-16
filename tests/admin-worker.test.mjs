@@ -130,6 +130,23 @@ test('Local Worker persists drafts, validates uploads, protects used files, and 
   let browser;
   try {
     await startWorker();
+    const adminPage = await fetch(`${base}/admin/`);
+    assert.equal(adminPage.status, 200);
+    const adminHtml = await adminPage.text();
+    assert.match(adminHtml, /ZY REKLAM \| Admin Panel/);
+    const adminScript = adminHtml.match(/src="([^"]+\.js)"/)?.[1];
+    const adminStylesheet = adminHtml.match(/href="([^"]+\.css)"/)?.[1];
+    assert.ok(adminScript);
+    assert.ok(adminStylesheet);
+    assert.equal((await fetch(new URL(adminScript, base))).status, 200);
+    assert.equal((await fetch(new URL(adminStylesheet, base))).status, 200);
+    const adminIndex = await fetch(`${base}/admin/index.html`);
+    assert.equal(adminIndex.status, 200);
+    assert.match(await adminIndex.text(), /ZY REKLAM \| Admin Panel/);
+    const adminCanonical = await fetch(`${base}/admin`, { redirect: 'manual' });
+    assert.ok([307, 308].includes(adminCanonical.status));
+    assert.equal(new URL(adminCanonical.headers.get('location'), base).pathname, '/admin/');
+
     const login = await fetch(`${base}/api/admin/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Origin: base },

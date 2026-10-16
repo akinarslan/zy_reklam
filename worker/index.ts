@@ -666,7 +666,21 @@ const handleApi = async (request: Request, env: Env): Promise<Response> => {
     });
   }
 
-  if (!url.pathname.startsWith('/api/admin/')) return env.ASSETS.fetch(request);
+  if (!url.pathname.startsWith('/api/admin/')) {
+    if (request.method === 'GET' || request.method === 'HEAD') {
+      if (url.pathname === '/admin') {
+        return new Response(null, {
+          status: 308,
+          headers: { Location: new URL('/admin/', request.url).href }
+        });
+      }
+      if (url.pathname === '/admin/') {
+        url.pathname = '/admin/index.html';
+        return env.ASSETS.fetch(new Request(url, request));
+      }
+    }
+    return env.ASSETS.fetch(request);
+  }
   const session = await requireSession(request, env);
   if (request.method !== 'GET') requireCsrf(request, session);
 

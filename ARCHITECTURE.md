@@ -1,6 +1,6 @@
 # ZY Reklam — Mimari
 
-**Sürüm:** 1.17 · **Tarih:** 2026-10-16 · **Durum:** P3 fiziksel cihaz performans kabulü açık; P7 admin medya/taslak akışı yerel entegrasyonla doğrulandı; responsive viewport alt kabulü tamamlandı; Cloudflare kaynak kurulumu ve canlı GitHub yayını yapılmadı
+**Sürüm:** 1.18 · **Tarih:** 2026-10-16 · **Durum:** P3 fiziksel cihaz performans kabulü açık; P7 admin medya/taslak akışı yerel entegrasyonla doğrulandı ve ADMIN_DRAFTS KV provision edildi; R2/production secrets ve canlı GitHub yayını engelli; responsive viewport alt kabulü tamamlandı
 
 **İlgili belgeler:** [Yol haritası](ROADMAP.md) · [Çalışma kuralları](AGENTS.md)
 
@@ -82,7 +82,9 @@ flowchart TD
 
 Admin paneli `/admin/` altında statik Vite girişidir. Oturum parolası PBKDF2 ile doğrulanır; imzalı cookie `HttpOnly`, `Secure`, `SameSite=Strict` ve sınırlı ömürlüdür. Mutasyonlar aynı-origin ve oturuma özel CSRF token'ı gerektirir. İçerik taslağı kullanıcı başına KV'de; bekleyen medya R2 staging'de tutulur. Upload sunucuda izinli klasör, MIME, uzantı, magic byte ve 8 MB görsel / 50 MB video sınırlarıyla doğrulanır. Medya kullanım haritası, önizleme, silme koruması ve yayın önizlemesi admin akışına dahildir.
 
-Admin yayınlaması beş içerik JSON'unu, eklenen medya bloblarını ve silinecek dosya yollarını tek bir GitHub Data API tree/commit işlemiyle `main` ref'ine uygular; commit öncesi ref yeniden okunur ve fast-forward dışı yarış 409 olarak ele alınır. Gerekli Worker değerleri `ADMIN_USERNAME`, `ADMIN_PASSWORD_HASH`, `ADMIN_SESSION_SECRET` ve yalnız yayımlama yetkisi olan ortamda `GITHUB_TOKEN`'dır. `wrangler.jsonc` KV namespace ID'si sıfır yer tutucudur; gerçek Cloudflare KV/R2 kaynakları bu teslimde provision edilmemiştir. Mock GitHub ve yerel Worker testleri canlı `main` yazımı veya cloud deployment kanıtı değildir.
+Admin yayınlaması beş içerik JSON'unu, eklenen medya bloblarını ve silinecek dosya yollarını tek bir GitHub Data API tree/commit işlemiyle `main` ref'ine uygular; commit öncesi ref yeniden okunur ve fast-forward dışı yarış 409 olarak ele alınır. Gerekli Worker değerleri `ADMIN_USERNAME`, `ADMIN_PASSWORD_HASH`, `ADMIN_SESSION_SECRET` ve yalnız yayımlama yetkisi olan ortamda `GITHUB_TOKEN`'dır. `ADMIN_DRAFTS` için gerçek KV namespace provision edilip `wrangler.jsonc`'ye bağlanmıştır; R2 hesabı henüz etkin olmadığından staging bucket doğrulanmamıştır ve production secrets tanımlı değildir. Mock GitHub ve yerel Worker testleri canlı `main` yazımı veya cloud deployment kanıtı değildir.
+
+Worker statik yönlendirmesi GET/HEAD `/admin` isteklerini `/admin/` adresine yönlendirir ve `/admin/` isteğini `/admin/index.html` varlığına çözer. `/api/admin/*` API dispatch'i bu statik route normalleştirmesinden ayrı tutulur.
 
 Admin medya kütüphanesi ziyaretçi teklif eki akışından ayrıdır. Aşağıdaki P7 ziyaretçi eki sözleşmesi, bu admin medya akışının yerine geçmez; ziyaretçi görselinin süreli erişimi, silme token'ı ve saklama temizliği hâlâ kendi kabulünü gerektirir. Gerçek GitHub yayın eylemi bağlı Workers Builds'i tetikleyebilir; Cloudflare deploy durumu bu panel tarafından doğrulanmaz.
 
@@ -258,6 +260,7 @@ Görsel kanıtlar: açılış, üretim, galeri, stüdyo, form ve footer için se
 | A12 | Admin paneli Cloudflare Worker ile backend'e bağlandı | Login/session ve local Worker dry-run; A16 KV/R2 kodu/testleri eklendi | Gerçek kaynak provisioning, GitHub `main` yazımı ve Cloudflare deploy doğrulaması açık |
 | A16 | Admin medya kütüphanesi ve kalıcı taslak | Kod + yerel Worker entegrasyonu doğrulandı; Cloudflare provisioning/live publish açık | KV taslak, R2 staging, CSRF, içerik kullanım koruması ve tek GitHub commit'i; visitor attachment sözleşmesinden ayrıdır |
 | A17 | Ana site ve admin için bağımsız responsive ölçekleme | Kod ve Chromium viewport emülasyonu ile doğrulandı; P8 genel kabulü açık | Ana `.shell` 1760px, admin içerik 1760px / header-nav 1824px; admin editör alanı en çok 1200px. DPR mevcut 1,5 sınırında kalır |
+| A18 | Admin statik route ve production binding yapılandırması | Yerel route/asset testleri, build ve Wrangler dry-run geçti; Cloudflare canlı doğrulaması engelli | `/admin` → `/admin/` → `admin/index.html`; gerçek KV ID bağlandı. R2 etkinleştirme, production secrets ve Workers Build logu bekliyor |
 
 Mimari değişiklikte sürüm, tarih, ilgili karar ve etkilenen roadmap işi güncellenir. Yeni kullanıcı talimatıyla değişen kapsam eski kabul ölçütlerine gizlenmez.
 
@@ -276,6 +279,12 @@ Cloudflare KV namespace ID'si config'te bilinçli olarak yer tutucudur; staging 
 Ana site ve `/admin/` responsive stilleri kendi CSS sınırlarında tutuldu. 1440px üstünde ana container 1760px, admin içerik 1760px ve admin header/nav 1824px ile sınırlıdır; admin uzun alanları 1200px'i aşmaz. Hero, hizmet detayları, showcase, showroom, proje videosu ve promosyon ürün boyutları geniş ekranlarda kontrollü `clamp()` değerleriyle büyür. Admin medya kartları en çok altı kolonda kalır; tablet/hamburger eşiği 1100px, dokunma hedefleri en az 44px'tir. Three.js renderer DPR mevcut 1,5 sınırını korur; bu işte renderer kodu değiştirilmedi.
 
 Playwright Chromium viewport emülasyonunda 15 ölçüde ana site ve admin sayfa taşması kontrol edildi; üretilen 14 hizmet/proje/promosyon kategorisi beş seçili genişlikte ayrıca açıldı. İstenen beş masaüstü çözünürlük ekran görüntüleri `docs/evidence/responsive/` altında üretildi ve görsel olarak incelendi. Bu laboratuvar/emülasyon kanıtı fiziksel cihaz, gerçek GPU, saha performansı veya tam P8 kabulü değildir. Veri sözleşmesi ve yayın mimarisi değişmedi.
+
+### 2026-10-16 — A18 Cloudflare admin route ve kaynak yapılandırması
+
+`ADMIN_DRAFTS` için Cloudflare'da gerçek namespace oluşturuldu ve ID `wrangler.jsonc`'ye bağlandı. Worker GET/HEAD `/admin` isteğini `/admin/`'ye yönlendirir; `/admin/` doğrudan `/admin/index.html` statik varlığına gider. `/api/admin/*` dispatch değişmeden kaldı. Yerel entegrasyon testi admin HTML, JavaScript/CSS varlıkları, `/admin`, `/admin/` ve `/admin/index.html` yollarını doğrular.
+
+TypeScript kontrolü, production build, 42/42 seri test ve Wrangler dry-run geçti; build çıktısında `dist/admin/index.html` ve hash'li JS/CSS var. Dry-run yalnızca config'i derler, Cloudflare kaynağı/secret veya canlı deploy doğrulaması değildir. Hesapta R2 etkin olmadığı için R2 bucket list/create API'si 10042 ile başarısız oldu; gerekli production secrets listede yoktu. Workers Build `dba220d1-43ce-4540-9042-80b5a16a14da` için erişilebilir log/annotation bulunamadı. Bu nedenle canlı deployment ve `/admin/` kontrolü açık kalır; gerçek GitHub publish, manuel deploy veya `main` değişikliği yapılmadı.
 
 ### 2026-10-01 — v1.1 logo kaynak açıklaması
 
