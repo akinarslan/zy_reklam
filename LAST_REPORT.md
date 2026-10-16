@@ -1,73 +1,69 @@
-# ZY REKLAM CLOUDFLARE ADMIN DEPLOY RAPORU
+# ZY REKLAM PRODUCTION ADMIN DEPLOY RAPORU
 
-Fix branch:
-`fix/cloudflare-admin-deploy`
+R2:
+OK
 
-Feature commit:
-`cc9150104b61f4c4ea0c5bd0624e258b6d09c5a4` — `fix: configure Cloudflare admin deployment`
+Bucket:
+`zy-reklam-admin-media-staging`
 
-KV ADMIN_DRAFTS:
-CREATED — Cloudflare namespace oluşturuldu.
+Public access:
+DISABLED — `wrangler r2 bucket dev-url get` disabled; no custom domains are connected. Bucket Standard storage class.
 
-KV ID production config:
-OK — `wrangler.jsonc` gerçek namespace ID'sine bağlandı; uzak branch dosyası tekrar okundu.
+KV:
+OK
 
-R2 bucket:
-ERROR / BLOCKED — Cloudflare R2 API `10042` döndürdü; hesapta R2'yi Dashboard'dan etkinleştirmek gerekiyor. Bucket oluşturulmadı.
+KV binding:
+MATCH — Cloudflare namespace listindeki ADMIN_DRAFTS ID, `wrangler.jsonc` ile eşleşiyor.
 
-Production secrets:
-INCOMPLETE — `wrangler secret list` boş döndü. Secret değerleri istenmedi, okunmadı veya yazılmadı.
-
-Build:
-PASS — `npm.cmd run build`; `dist/admin/index.html` ve hash'li admin JS/CSS üretildi. Mevcut SVGLoader 500 kB üzeri chunk uyarısı sürüyor.
-
-Tests:
-42/42 PASS — `npm.cmd test -- --test-concurrency=1`. Local Worker testi `/admin`, `/admin/`, `/admin/index.html` ve admin JS/CSS HTTP 200 yanıtlarını doğruladı.
-
-Wrangler dry-run:
-PASS — `npx.cmd wrangler deploy --dry-run`; KV, R2 binding tanımı ve ASSETS görüldü. Dry-run gerçek R2 varlığını veya production secret'larını doğrulamaz.
-
-dist/admin/index.html:
-EXISTS — build/test sırasında doğrulandı; geçici build çıktıları sonra temizlendi.
-
-PR:
-NOT CREATED — GitHub compare sayfası oturum açılmamış gösterdi; `gh` CLI kurulu değil. Dalı push etmek için PR bağlantısı: https://github.com/akinarslan/zy_reklam/compare/main...fix/cloudflare-admin-deploy
-
-GitHub Verify:
-IN PROGRESS — push workflow run `38897230217`; henüz PR Verify çalışması yok.
-
-Merge main:
-NO — R2, production secrets, erişilebilir Build hata logu ve PR/CI kapıları tamamlanmadı.
-
-Cloudflare Workers Build:
-FAILED / UNRESOLVED — önceki main Build ID `dba220d1-43ce-4540-9042-80b5a16a14da`; erişilebilir log/annotation yok. Bu branch main'e alınmadı ve yeni production build tetiklenmedi.
-
-Live main:
-ERROR / STALE — önceki doğrulamada domain yanıt veriyordu ancak eski deployment içeriği sunuluyordu; bu çalışmada yeni deploy yapılmadığından tekrar doğrulanmadı.
-
-Live /admin/:
-404 — önceki canlı kontrolde 404/boş yanıt. Worker route düzeltmesi henüz production'a dağıtılmadı.
-
-Admin login page:
-NOT VISIBLE — canlı `/admin/` 404; bu çalışmada login/publish denenmedi.
+Secrets:
+INCOMPLETE — `wrangler secret list` 0/4 gösterdi. Değerler istenmedi, okunmadı veya yazılmadı.
 
 Secret leak:
-NONE — gerçek secret değerleriyle işlem yapılmadı; `.dev.vars` okunmadı veya Git'e eklenmedi.
+NONE — bu çalışmada production secret veya `.dev.vars` okunmadı/değiştirilmedi.
+
+Check:
+PASS — `npm.cmd run check`
+
+Build:
+PASS — `npm.cmd run build`; `dist/admin/index.html` ve admin JS/CSS üretildi. Mevcut 599.52 kB SVGLoader chunk uyarısı sürüyor.
+
+Tests:
+42/42 PASS — `npm.cmd test -- --test-concurrency=1`
+
+Wrangler dry-run:
+PASS — KV, R2 ve ASSETS binding'leri gösterildi; gerçek deployment yapılmadı.
+
+PR #2:
+OPEN / DRAFT — yeni PR oluşturulmadı.
+
+PR Verify:
+GREEN — run `38897936832`, head `0d7c4805b63f06be136a91f3d67625f080c4f94b`. Sonraki rapor-only branch commit'i yeni bir Verify başlatır.
+
+Cloudflare Build:
+FAILED — PR preview build ID `4bcd17f8-cd9a-47d3-b4a9-0162acee435c`. Dashboard oturumu authenticated olmadığı için build logunun nedeni okunamadı; GitHub check kaydı da ayrıntılı log sağlamadı.
+
+Live site:
+NOT CHECKED — merge/deployment yapılmadı.
+
+Live /admin/:
+NOT CHECKED — önceki sürümde 404 olduğu bildirilmişti; bu çalışmada tekrar denenmedi.
+
+Admin login:
+NOT TESTED — production secrets eksik; login yapılmadı.
+
+R2 media staging:
+NOT TESTED — bucket varlığı ve private access doğrulandı; object upload/preview/delete smoke yapılmadı.
+
+Admin publish:
+NOT EXECUTED — gerçek GitHub publish yapılmadı.
 
 Final main SHA:
 `a11fa8da1127c74c5021947ef0ca62531b905e49` — değişmedi.
 
-Değişen dosyalar:
-- `wrangler.jsonc` — gerçek ADMIN_DRAFTS KV ID'si.
-- `worker/index.ts` — `/admin` canonical redirect ve `/admin/` → `/admin/index.html`; API dispatch ayrı kaldı.
-- `tests/admin-worker.test.mjs` — route ve derlenmiş JS/CSS varlık kontrolleri.
-- `README.md`, `ARCHITECTURE.md`, `ROADMAP.md` — kaynak durumu, route kararı, doğrulama ve engeller.
-- `LAST_REPORT.md` — bu rapor.
+Fix branch:
+`fix/cloudflare-admin-deploy`; uygulama düzeltmesi `cc9150104b61f4c4ea0c5bd0624e258b6d09c5a4`. Bu dalda `/admin` canonical redirect, `/admin/` → `/admin/index.html`, gerçek KV ID, route/asset testleri ve durum belgeleri bulunur.
 
-Git durumu:
-Özellik commit'i `origin/fix/cloudflare-admin-deploy` üzerinde doğrulandı; `main` ve `origin/main` değişmedi. Build/test tarafından oluşturulan generator dosyaları, `dist/` ve `.wrangler/` temizlendi. Bu rapor ve yol haritası güncellemesi aynı feature branch'e kaydediliyor.
+Engel / sıradaki tek iş:
+Önce dört production secret'ı kullanıcı kendi terminalinde güvenle tanımlamalı; sonra authenticated Cloudflare Dashboard'dan Build `4bcd17f8-cd9a-47d3-b4a9-0162acee435c` logunu incelemeliyiz. Bu kapılar ve güncel PR Verify yeşil olmadan PR Ready for review yapılmayacak, merge edilmeyecek veya deploy edilmeyecek.
 
-Engel ve sıradaki tek iş:
-Cloudflare Dashboard'da R2'yi etkinleştirip `zy-reklam-admin-media-staging` bucket'ını oluşturun ve dört production secret'ı kendi terminalinizde güvenli `npx.cmd wrangler secret put <NAME>` komutlarıyla tanımlayın. Ardından Build ID'nin Cloudflare logunu paylaşın veya authenticated Dashboard erişimi sağlayın; secret değerlerini sohbete göndermeyin.
-
-Canlı deployment tamamlanmadı; main’de yeni production değişikliği uygulanmadı veya başarısız build geri alınmadan bırakılmadı.
+İş güvenli noktada durduruldu; başarısız kapı nedeniyle production merge/deploy ilerletilmedi.
