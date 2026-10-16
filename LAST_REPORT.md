@@ -2,38 +2,42 @@
 
 ## Talimat ve kapsam
 
-Admin paneli üst navigasyon revizyonunun güvenli teslim doğrulaması yapıldı: çalışma ağacı ve dal kontrol edildi, check/test/build/Wrangler dry-run çalıştırıldı ve generator/build çıktıları temizlendi.
+P7.0 admin paneli için güvenli medya yükleme/kütüphanesi, sunucu tarafında kalıcı taslaklar ve GitHub'a atomik içerik+medya yayın akışı uygulandı. İş `feat/admin-panel` dalında tamamlandı; `main` dalına geçilmedi, merge yapılmadı, GitHub `main`'e gerçek yayın ve Cloudflare production deploy çalıştırılmadı.
 
 ## Aşama ve iş kimliği
 
-P7.0 — Admin paneli ve Worker altyapısı. Üst navigasyon UI işi önceki `db40778` (`style(admin): add sticky colored top navigation`) commit'inde mevcuttu ve başlangıçta `origin/feat/admin-panel` ile eşleşiyordu. P7 genel kabulü devam ediyor.
+**P7.0 — Admin medya ve yayın altyapısı (yerel olarak uygulandı/doğrulandı).** Genel P7 devam ediyor: gerçek Cloudflare kaynakları provision edilmedi ve ziyaretçi teklif eki/süreli bağlantı akışı farklı kabul kapsamı olarak açık.
 
 ## Değişen dosyalar
 
-- `ROADMAP.md` — 2026-10-16 doğrulama günlüğü.
+- `worker/index.ts`, `worker/content.ts`, `worker/media.ts`, `worker/github.ts` — KV draft, R2 staging, CSRF/same-origin, upload doğrulama, kullanım haritası/silme koruması, özel Range önizleme ve GitHub Data API publish/conflict akışı.
+- `src/shared/admin-media.ts`, `scripts/generate-admin-media-manifest.mjs`, `.gitignore`, `package.json` — paylaşılan medya sözleşmesi ve build envanteri.
+- `src/admin/main.ts`, `src/admin/admin.css` — kalıcı draft, yükleme/önizleme/ilerleme, medya kartları, video poster/metadata ve yayın değişiklik onayı/geçmiş UI'ı.
+- `tests/admin-media.test.mjs`, `tests/admin-worker.test.mjs` — format/limit/stream/GitHub mock ve ayrı local Worker/KV/R2/browser testleri.
+- `wrangler.jsonc`, `.dev.vars.example`, `README.md` — resource/setup ve secret güvenliği yönergeleri.
+- `ARCHITECTURE.md` — v1.16/A16 admin-media kararı ve ziyaretçi eki ayrımı.
+- `ROADMAP.md` — v1.15/P7.0 kabul durumu ve doğrulama günlüğü.
 - `LAST_REPORT.md` — bu rapor.
-
-Admin UI kaynakları bu doğrulama sırasında değiştirilmedi. `ARCHITECTURE.md` değiştirilmedi; mimari/veri sözleşmesi değişikliği yoktur ve A12/P7.0 sınırlarına uyulmuştur.
 
 ## Doğrulama
 
-- Başlangıç `git status --short --branch` temizdi; dal `feat/admin-panel`, HEAD `db40778`; `git diff --stat` boştu.
-- `npm run check` — başarılı (`tsc --noEmit`).
-- Kategori sayfaları generator ile üretildikten ve testlerin gerektirdiği production `dist/` hazırlandıktan sonra `npm test` — başarılı: **34 test geçti, 0 başarısız**.
-- `npm run build` — başarılı; `/admin/` dahil Vite çıktıları üretildi. Three/SVGLoader chunk'ı için mevcut 500 kB boyut uyarısı devam etti.
-- `npx wrangler deploy --dry-run` — başarılı; dist içinden 189 asset okundu. Gerçek deploy yapılmadı.
-- İlk build öncesi `npm test` denemesi `dist/` bulunmadığından başarısız oldu (9 başarılı / 26 başarısız); build sonrası istenen komut tekrar çalıştırıldığında suite bütünüyle geçti.
+- `npm run check` — başarılı.
+- `npm test -- --test-concurrency=1` — **40/40 test geçti**. Buna mock GitHub atomic commit/conflict testleri ve test secret'larıyla ayrı geçici persist dizininde local Worker, KV/R2, CSRF, taslak kalıcılığı, upload imza doğrulaması, Range preview, kullanılan dosya silme koruması ve browser UI akışı dahildir.
+- `npm run build` — başarılı. Mevcut `SVGLoader` chunk'ı 599.52 kB olduğu için 500 kB boyut uyarısı sürüyor.
+- `npx wrangler deploy --dry-run` — başarılı; 190 asset okudu. Bu gerçek deploy değildir.
+- `git diff --check` — başarılı.
+- Feature commit'i: `3b2b24744b49fa449cebd9f7b901e0f954e93f14` (`feat(admin): complete media upload and publish flow`). `origin/feat/admin-panel` ref'i ve uzak `worker/github.ts` / `src/admin/main.ts` tekrar okunarak doğrulandı.
 
 ## Temizlik ve sınırlar
 
-Generator'ın değiştirdiği tracked HTML/sitemap ve testlerin değiştirdiği tracked kanıtlar başlangıçtaki HEAD'e döndürüldü. Bu doğrulamada oluşturulan `dist/`, `hizmetler/` ve `.wrangler/` kaldırıldı; kalan doğrulama ağacı kaynak değişikliği içermiyor. `.dev.vars` dosyasına dokunulmadı.
+Build/test sonrası generator HTML'leri, sitemap ve testlerin değiştirdiği kanıtlar başlangıçtaki HEAD'e döndürüldü. `dist/`, üretilen `hizmetler/`, `public/admin-media-manifest.json` ve boş `.wrangler/tmp` temizlendi. `.dev.vars` okunmadı veya değiştirilmedi; gerçek credential, müşteri dosyası veya test upload Git'e eklenmedi.
 
-Commit öncesi hedef dal `feat/admin-panel`; başlangıçtaki UI commit'i zaten `origin/feat/admin-panel` üzerindeydi. Doğrulama kaydı istenen commit mesajıyla aynı feature dalına kaydedildi ve origin'e push sonrası uzak ref yeniden doğrulandı. `main` dalına geçilmedi, merge edilmedi ve production deploy yapılmadı.
+`wrangler.jsonc` içindeki sıfırlardan oluşan KV ID yalnızca yer tutucudur; R2 bucket/secret'lar Cloudflare'de oluşturulmadı. Gerçek GitHub `main` publish ve Workers Builds/production deploy durumu çalıştırılmadı. Bu nedenle kod ve yerel test başarısı canlı entegrasyon kanıtı veya P7 tamamlanması olarak sunulmaz.
 
-## Durum ve engeller
+## Mimari ve durum
 
-P7 devam ediyor. Kalıcı taslak depolama, medya upload/depo ve gerçek GitHub publish doğrulaması bu işin kapsamı dışında ve tamamlanmış sayılmıyor.
+Mevcut A12 sınırına A16 ile uyuldu: admin medya içerikleri public site içeriğidir ve ziyaretçi teklif eki API'sinden ayrıdır. P7.0 uygulaması yerel entegrasyon düzeyinde tamamlandı; genel P7 `devam ediyor`, canlı kaynak/yayın yapılandırması ve ziyaretçi eki kabulü açık.
 
 ## Sıradaki tek iş
 
-P7 için kalıcı taslak ve medya upload/publish akışını tamamlamak.
+Yetkili Cloudflare hesabında `ADMIN_DRAFTS` KV namespace'i ve R2 staging bucket'ını oluşturup gerçek KV ID'sini güvenli yapılandırmak; bu adımdan bağımsız olarak production deploy yapılmayacak.
