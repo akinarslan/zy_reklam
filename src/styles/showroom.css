@@ -13,3 +13,26 @@
 .showroom-controls button[aria-pressed=true],.showroom-controls button:hover { border-color:var(--gold); color:var(--gold); }
 .showroom-note { text-align:center; font-size:11px; color:var(--muted); line-height:1.7; margin:16px 0 0; }
 @media(max-width:767px){.showroom{padding:40px 0}.showroom-heading{display:block}.showroom-heading > p{margin-top:18px}.showroom-stage{height:660px;margin-top:0}.showroom-controls{gap:8px}.showroom-controls button{padding:10px 14px}.showroom-fallback{object-fit:contain}}
+
+@media (min-width: 1440px) {
+  .showroom {
+    padding-block: clamp(60px, 5vw, 88px);
+  }
+
+  .showroom-stage {
+    height: clamp(620px, 30vw, 650px);
+    margin-top: clamp(20px, 2vw, 36px);
+  }
+}
+
+@media (min-width: 1920px) {
+  .showroom-stage {
+    height: clamp(680px, 34vw, 720px);
+  }
+}
+
+@media (min-width: 2560px) {
+  .showroom-stage {
+    height: clamp(730px, 29vw, 800px);
+  }
+}

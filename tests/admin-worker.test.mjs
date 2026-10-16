@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { pbkdf2Sync, randomBytes } from 'node:crypto';
 import { spawn } from 'node:child_process';
-import { mkdtemp, rm, writeFile } from 'node:fs/promises';
+import { mkdir, mkdtemp, rm, writeFile } from 'node:fs/promises';
 import { deflateSync } from 'node:zlib';
 import { chromium } from 'playwright';
 import net from 'node:net';
@@ -249,6 +249,124 @@ test('Local Worker persists drafts, validates uploads, protects used files, and 
     await page.locator('#media-upload-form button[type="submit"]').click();
     await page.getByText('Medya KV/R2 taslağına eklendi', { exact: false }).waitFor();
     assert.ok(await page.locator('.media-card').count() >= 2);
+
+    await mkdir('docs/evidence/responsive', { recursive: true });
+    const viewportMatrix = [
+      { width: 360, height: 800 },
+      { width: 390, height: 844 },
+      { width: 412, height: 915 },
+      { width: 768, height: 1024 },
+      { width: 820, height: 1180 },
+      { width: 1024, height: 768 },
+      { width: 1280, height: 720 },
+      { width: 1366, height: 768 },
+      { width: 1440, height: 900 },
+      { width: 1536, height: 864 },
+      { width: 1600, height: 900 },
+      { width: 1920, height: 1080 },
+      { width: 2560, height: 1440 },
+      { width: 3440, height: 1440 },
+      { width: 3840, height: 2160 }
+    ];
+    const responsiveMetrics = [];
+    for (const viewport of viewportMatrix) {
+      await page.setViewportSize(viewport);
+      const measurement = await page.evaluate(() => {
+        const bounds = (selector) => {
+          const element = document.querySelector(selector);
+          if (!element) return null;
+          const rect = element.getBoundingClientRect();
+          return { width: rect.width, height: rect.height, top: rect.top, left: rect.left, right: rect.right };
+        };
+        return {
+          width: innerWidth,
+          height: innerHeight,
+          documentWidth: document.documentElement.scrollWidth,
+          adminContent: bounds('.admin-content'),
+          header: bounds('.admin-header'),
+          navigationWidth: document.querySelector('.admin-nav')?.scrollWidth ?? 0,
+          navigationClientWidth: document.querySelector('.admin-nav')?.clientWidth ?? 0,
+          mediaColumns: (() => {
+            const cards = [...document.querySelectorAll('.media-card')];
+            if (cards.length === 0) return 0;
+            const rowTop = Math.round(cards[0].getBoundingClientRect().top);
+            return new Set(cards
+              .filter((card) => Math.round(card.getBoundingClientRect().top) === rowTop)
+              .map((card) => Math.round(card.getBoundingClientRect().left))).size;
+          })(),
+          formFieldOverflow: [...document.querySelectorAll('.field input, .field textarea, .field select')]
+            .some((field) => field.getBoundingClientRect().right > innerWidth + 1),
+          wideFieldWidth: document.querySelector('.field-wide')?.getBoundingClientRect().width ?? 0
+        };
+      });
+      assert.ok(measurement.documentWidth <= viewport.width,
+        `Admin sayfa yatay taşıyor: ${JSON.stringify(measurement)}`);
+      assert.ok(measurement.adminContent.width <= 1761,
+        `Admin container max sınırını aştı: ${JSON.stringify(measurement)}`);
+      assert.equal(measurement.formFieldOverflow, false,
+        `Admin form alanı viewport dışına taştı: ${JSON.stringify(measurement)}`);
+      assert.ok(measurement.mediaColumns <= 6, `Admin medya grid'i 6 kolonu aştı: ${JSON.stringify(measurement)}`);
+      if (viewport.width >= 1280) {
+        assert.ok(measurement.navigationWidth <= measurement.navigationClientWidth,
+          `Admin masaüstü menüsünde gizli sekme/taşma var: ${JSON.stringify(measurement)}`);
+      }
+      if (viewport.width >= 1920) {
+        assert.ok(measurement.wideFieldWidth <= 1201,
+          `Admin geniş metin alanı okunabilir max genişliği aştı: ${JSON.stringify(measurement)}`);
+      }
+
+      if (viewport.width <= 1100) {
+        const menuToggle = page.locator('.menu-toggle');
+        assert.equal(await menuToggle.isVisible(), true);
+        await menuToggle.click();
+        assert.equal(await menuToggle.getAttribute('aria-expanded'), 'true');
+        const navBounds = await page.locator('.admin-nav').evaluate((nav) => {
+          const rect = nav.getBoundingClientRect();
+          return { left: rect.left, right: rect.right };
+        });
+        assert.ok(navBounds.left >= 0 && navBounds.right <= viewport.width,
+          `Admin mobil/tablet menüsü taşmış: ${JSON.stringify(navBounds)}`);
+        const touchTarget = await page.locator('.admin-nav button').first().evaluate((button) => button.getBoundingClientRect().height);
+        assert.ok(touchTarget >= 44, `Admin menü dokunma hedefi 44px altında: ${touchTarget}px`);
+        await menuToggle.click();
+      } else {
+        assert.equal(await page.locator('.admin-nav').isVisible(), true);
+        assert.equal(await page.locator('.admin-nav button').count(), 12);
+      }
+
+      if ([1440, 1920, 2560, 3440, 3840].includes(viewport.width)) {
+        await page.evaluate(() => window.scrollTo(0, 0));
+        await page.screenshot({ path: `docs/evidence/responsive/admin-${viewport.width}.png` });
+      }
+      responsiveMetrics.push(measurement);
+    }
+    for (const section of ['site', 'services', 'projects', 'promotions', 'seo']) {
+      assert.ok(await page.locator(`[data-section="${section}"]`).count() > 0,
+        `${section} içerik editörü bulunamadı.`);
+    }
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.locator('[data-action="publish"]').click();
+    const publishDialog = page.locator('#publish-dialog[open]');
+    await publishDialog.waitFor({ state: 'visible' });
+    const dialogBounds = await publishDialog.evaluate((dialog) => {
+      const rect = dialog.getBoundingClientRect();
+      return { width: rect.width, height: rect.height, left: rect.left, right: rect.right };
+    });
+    assert.ok(dialogBounds.left >= 0 && dialogBounds.right <= 390,
+      `Mobil yayın penceresi viewport dışına taştı: ${JSON.stringify(dialogBounds)}`);
+    assert.ok(dialogBounds.height <= 0.9 * 844,
+      `Mobil yayın penceresi ekran yüksekliğini aştı: ${JSON.stringify(dialogBounds)}`);
+    await page.locator('[data-action="close-publish"]').click();
+
+    await page.setViewportSize({ width: 1366, height: 768 });
+    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+    await page.waitForTimeout(100);
+    const headerTop = await page.locator('.admin-header').evaluate((header) => header.getBoundingClientRect().top);
+    assert.ok(Math.abs(headerTop) <= 1, `Admin sabit menü kaydırmada kayboldu: top=${headerTop}`);
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.locator('#media-panel').scrollIntoViewIfNeeded();
+    await page.screenshot({ path: 'docs/evidence/responsive/admin-media-1440.png' });
+    console.log(`Admin responsive measurements: ${JSON.stringify(responsiveMetrics)}`);
     assert.deepEqual(errors, []);
     await page.close();
   } finally {

@@ -6,3 +6,33 @@
 @media(min-width:768px) and (max-width:1023px){.promo-product-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.promo-overview .promo-menu-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:767px){.js #main-nav{max-height:calc(100dvh - 76px);overflow-y:auto}.promo-dropdown>summary{font-size:14px;padding:15px;justify-content:space-between;min-height:48px}.promo-mega{position:static;margin:0 0 12px;padding:12px;border-top-width:1px;box-shadow:none}.promo-mega-heading{display:none}.promo-mega .promo-menu-grid{grid-template-columns:1fr;gap:9px}.promo-mega .promo-menu-card{flex-direction:row;align-items:center}.promo-mega .promo-menu-card>img{width:76px;height:84px;padding:5px;flex-shrink:0}.promo-mega .promo-menu-card>div{padding:10px}.promo-mega .promo-menu-card h3{font-size:13px;line-height:1.4}.promo-mega .promo-menu-card p,.promo-mega .promo-card-action{display:none}.promo-menu-overview{font-size:11px;margin-top:14px}.promo-overview .promo-menu-grid{grid-template-columns:1fr 1fr}.promo-overview .promo-menu-card>img{height:140px}.promo-overview .promo-menu-card h3{font-size:15px}.promo-category-hero{padding:26px 0 45px}.promo-breadcrumb{margin-bottom:30px}.promo-category-intro{grid-template-columns:1fr;gap:30px}.promo-page h1{font-size:38px}.promo-category-cover img{height:260px}.promo-collections{padding-block:40px}.promo-product-grid{grid-template-columns:1fr 1fr;gap:15px}.promo-product-image{padding:10px}.promo-product-image img{height:230px}.promo-product-copy{padding:18px}.promo-other-categories{grid-template-columns:1fr;gap:18px;margin-top:40px}html:not(.js) #main-nav{max-height:none}html:not(.js) .promo-dropdown{width:100%}}
 @media(max-width:600px){.promo-product-grid{grid-template-columns:1fr}.promo-gallery-heading h2{font-size:27px}.promo-gallery-heading p{font-size:10px}.promo-category-end{padding-block:45px}.promo-page h1{font-size:34px}}
+
+@media (min-width: 1440px) {
+  .promo-category-intro {
+    gap: clamp(75px, 6vw, 120px);
+  }
+
+  .promo-category-cover {
+    padding: clamp(20px, 2vw, 36px);
+  }
+
+  .promo-category-cover img {
+    height: clamp(340px, 23vw, 430px);
+  }
+
+  .promo-product-grid {
+    gap: clamp(24px, 2vw, 40px);
+  }
+
+  .promo-product-image {
+    padding: clamp(18px, 1.7vw, 32px);
+  }
+
+  .promo-product-image img {
+    height: clamp(300px, 21vw, 420px);
+  }
+
+  .promo-product-copy {
+    padding: clamp(24px, 2vw, 36px);
+  }
+}
