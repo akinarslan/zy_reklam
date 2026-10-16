@@ -26,7 +26,7 @@ Başlangıçta `AGENTS.md`, `ARCHITECTURE.md` v1.16 ve `ROADMAP.md` v1.15 tamame
 ## Doğrulama
 
 - `npm.cmd run check` — başarılı.
-- `npm.cmd test -- --test-concurrency=1` — build sonrası **42/42 geçti**. İlk deneme build öncesi yapıldığı için `dist/` preview bulunamadı; build alındıktan sonra tam seri test paketi başarılı tamamlandı.
+- `npm.cmd test -- --test-concurrency=1` — build sonrası **42/42 geçti**. İlk deneme build öncesi yapıldığı için `dist/` preview bulunamadı; build alındıktan sonra tam seri test paketi başarılı tamamlandı. Windows'ta Worker testinin geçici SQLite dosyalarını kapatma yarışı için sınırlı `EBUSY` retry eklendi; son tam test tekrarında 42/42 geçti.
 - Screenshot readiness düzeltmesinden sonra odaklı responsive dosyası `node --test tests/responsive.test.mjs` — **2/2 geçti**; görünür showroom posterinin decode edilmesi screenshot öncesinde beklenir.
 - `npm.cmd run build` — başarılı. Mevcut SVGLoader chunk’ı 599.52 kB olduğu için Vite’ın 500 kB boyut uyarısı sürüyor.
 - `npx.cmd wrangler deploy --dry-run` — build sonrasında başarılı; dry-run Worker upload boyutu 110.77 KiB (gzip 25.41 KiB). Gerçek deploy değildir.
@@ -44,8 +44,9 @@ Mevcut mimariye A17 ile uyuldu; yeni veri sözleşmesi veya renderer davranış�
 
 - `1b8b27feb6377ed50703b8e576e1e4d83d993772` — `style: improve site and admin responsiveness`
 - `f57dcf839934bba39d3366944b8c2ed0667bceef` — `test: wait for responsive screenshot assets`
+- `e7ffac2a9b4ee37a2da3b256efa46d65ffc28771` — `test: clean up local worker state reliably`; test temizliğiyle birlikte A17/P8.7 belge ve screenshot kanıtlarını da kaydeder.
 
-Mimari, roadmap ve screenshot kanıtları ayrı dokümantasyon commit’inde kaydedildi. Uzak `feat/admin-panel` push’u commit’lerden sonra yeniden doğrulandı; `main`/production üzerinde işlem yapılmadı.
+Commit’ler yalnızca `feat/admin-panel` dalında tutuldu ve `origin/feat/admin-panel` üzerine push edilerek uzak ref ve ilgili içerikler tekrar doğrulandı; `main`/production üzerinde işlem yapılmadı.
 
 ## Sıradaki tek iş
 
