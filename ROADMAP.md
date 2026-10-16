@@ -1,6 +1,6 @@
 # ZY Reklam — Yol Haritası
 
-**Sürüm:** 1.14 · **Başlangıç:** 2026-10-01
+**Sürüm:** 1.15 · **Başlangıç:** 2026-10-01 · **Güncelleme:** 2026-10-16
 
 **Kaynak:** [ARCHITECTURE.md](ARCHITECTURE.md) · **Zorunlu kontrol:** [AGENTS.md](AGENTS.md)
 
@@ -27,7 +27,7 @@ Durumlar: `bekliyor`, `devam ediyor`, `engelli`, `tamamlandı`. İş kutuları y
 | P4 | Üretim anlatımı ve hizmet etkileşimleri | P3 | Bekliyor |
 | P5 | Gerçek proje galerisi | P2 + gerçek görseller; teslim sırası P4 sonrası | Bekliyor |
 | P6 | Mini stüdyo ve WhatsApp teklif metni | P3, P5 + doğrulanmış iletişim | Bekliyor |
-| P7 | Güvenli görsel yükleme ve teklif bağlantısı | P6 + sağlayıcı/veri politikası kararı | Devam ediyor |
+| P7 | Admin medya/taslak akışı ve ziyaretçi teklif eki | P6 + KV/R2/GitHub erişimi + veri politikası | Devam ediyor; admin kodu yerel doğrulandı, canlı kaynak/yayın ve ziyaretçi eki açık |
 | P8 | Uçtan uca kabul, mobil/performance/SEO | P2–P7 | Bekliyor |
 | P9 | Yetkilendirilmiş canlı geçiş ve geri dönüş kontrolü | P8 + mevcut hosting erişimi/yayın yetkisi | Bekliyor |
 
@@ -38,12 +38,15 @@ Durumlar: `bekliyor`, `devam ediyor`, `engelli`, `tamamlandı`. İş kutuları y
 - [x] Ana sayfa, hizmetler, projeler ve promosyonların içerik listesi düzenlenebilir form yapısına alındı.
 - [x] Vite build çıktısında `/admin/index.html` üretimi aktif hale getirildi.
 - [x] Cloudflare Worker'da oturum kontrollü login/logout/session ve içerik GET/PUT uçları eklendi.
-- [x] GitHub Data API ile blob/tree/commit/ref publish akışı hazırlandı; gerçek publish ve fast-forward yarışı canlı GitHub yetkisiyle doğrulanmadı.
-- [x] Local Worker'da login, session, content PUT ve statik asset fallback akışı doğrulandı; `wrangler deploy --dry-run` başarılı.
-- [ ] Formdan içerik kaydetme akışını Worker'a bağla ve taslakları kalıcı depoda tut; mevcut tarayıcı taslağı `localStorage`, Worker içeriği ise bellek tabanlıdır.
-- [ ] Medya yükleme arayüzü, kalıcı dosya deposu ve upload → publish uçtan uca akışını tamamla; API iskeleti tek başına kabul değildir.
+- [x] Formdan içerik kaydetmeyi Worker KV taslağına bağla; oturum için CSRF token'ı ve same-origin mutasyon kontrolü ekle.
+- [x] JPG/JPEG/PNG/WebP ve MP4/WebM upload'ını izinli klasör/target, MIME/uzantı/imza ve 8 MB/50 MB sınırlarıyla doğrula; R2 staging kullan.
+- [x] Medya manifesti/kütüphanesi, upload ilerlemesi ve önizlemesi, video poster/metadata alanları, kullanım haritası, kullanılan dosya silme engeli ve taslak silme işaretlemesi ekle.
+- [x] JSON + yeni medya + silme işlemlerini tek GitHub Data API commit'inde yayınla; commit öncesi main ref kontrolü ve çatışma yanıtı ekle.
+- [x] İzole local Worker/KV/R2 ve geçici test credential'larıyla session, CSRF, kalıcı draft, upload imzası, range preview, kullanım koruması ve browser UI akışını test et; GitHub API'yi mock'la.
+- [ ] Cloudflare KV namespace/R2 staging kaynağını yetkili hesapta provision et ve secret'ları güvenli şekilde ayarla. Mevcut KV ID sıfır yer tutucudur.
+- [ ] Gerçek GitHub `main` publish/Cloudflare Workers Builds sonucunu ayrıca ve açık yayın yetkisiyle doğrula; bu işlem production deploy başlatabileceğinden burada çalıştırılmadı.
 
-**Durum:** Kısmi/`devam ediyor`. Admin arayüzü ve Worker iskeleti mevcuttur. Kalıcı taslak ve medya akışları ile canlı GitHub publish doğrulanmadan P7 tamamlanmış sayılmaz. Üretim secret'ları Git'e eklenmez.
+**Durum:** P7 `devam ediyor`. Admin medya/taslak kodu ve yerel entegrasyon kanıtlandı; gerçek Cloudflare kaynak kurulumu ve canlı GitHub yazımı bilinçli olarak yapılmadı. Bu admin kütüphanesi, ziyaretçinin teklif formuna dosya ekleme ve süreli bağlantı sözleşmesi değildir. P7.1–P7.6 ziyaretçi eki kabulü açık kalır. Üretim secret'ları Git'e eklenmez.
 
 İşler bağımlılıkları karşılanmadan tamamlanamaz. Galeri içeriği gibi bağımsız hazırlıklar öne alınabilir; aşama teslim sırası korunur. Kullanıcının hata düzeltme/öncelik değiştirme talimatları belgelenerek uygulanır.
 
@@ -139,16 +142,31 @@ Süreler takvim taahhüdü değildir. P1 sonrası logo kalitesi, gerçek görsel
 
 **Kabul:** Türkçe karakter, `&`, satır sonu, uzun işletme adı, geçersiz adet ve ondalık virgül durumları doğrulanır. Girdi HTML olarak çalışmaz. Tasarım özeti seçilen değerlerle eşleşir. WhatsApp açılırken metin doğru kodlanır; gerçek mesaj otomatik gönderilmez. “Gönderildi” şeklinde yanlış başarı bildirimi yoktur. P6 bitmesi P7 görsel yükleme özelliğinin bittiği anlamına gelmez.
 
-## 10. P7 — Gerçek görsel yükleme
+## 10. P7 — Admin medya yönetimi ve ziyaretçi görsel yükleme
 
-- [ ] P7.1 P1 adaylarından sağlayıcıyı seç; erişim, maliyet sınırı, veri saklama süresi ve kullanıcı açıklamasını kesinleştir; mimari karar kaydını güncelle.
+P7 iki farklı akış içerir. P7.0 admin panelinin site içerik medyası ve yayın taslağıdır; P7.1–P7.6 ise ziyaretçinin teklif formuna eklediği dosyanın ayrı, süreli bağlantı sözleşmesidir. Admin medya akışının tamamlanması ziyaretçi eki kabulünü kapatmaz.
+
+### P7.0 — Admin paneli medya/taslak akışı
+
+- [x] Login/session'a oturum başına CSRF token ve same-origin mutasyon kontrolü ekle.
+- [x] İçerik taslağını KV'de, upload medyasını R2 staging'de kullanıcı bazlı tut; tarayıcı localStorage'ını kaynak olmaktan çıkar.
+- [x] JPG/JPEG/PNG/WebP ve MP4/WebM, izinli klasör/target, MIME/uzantı/imza ve 8 MB/50 MB doğrulamasını uygula.
+- [x] Medya envanteri, kullanım haritası, dosya önizlemesi/range desteği, upload ilerlemesi, silme koruması ve hizmet/proje/promosyon/video hedeflerini bağla.
+- [x] Yayın önizleme/geçmişini ve JSON+medya+silme işlemlerini tek GitHub commit'inde, main ref yarış kontrolüyle uygula.
+- [x] Geçici test credential'larıyla local Worker/KV/R2 ve browser UI akışını; GitHub isteklerini mock ile doğrula.
+- [ ] Gerçek Cloudflare KV/R2 kaynaklarını provision et ve secret'ları yapılandır; mevcut KV ID yer tutucudur.
+- [ ] Gerçek GitHub `main` yayınını ve olası Workers Builds sonucunu açık yayın yetkisiyle doğrula; bu işte canlı yazma/deploy çalıştırılmadı.
+
+### P7.1–P7.6 — Ziyaretçi teklif eki
+
+- [ ] P7.1 Ziyaretçi teklif eki için sağlayıcıyı seç; erişim, maliyet sınırı, veri saklama süresi ve kullanıcı açıklamasını kesinleştir; admin panelinin KV/R2 kaydı bu kararı karşılamaz.
 - [ ] P7.2 Mimari API sözleşmesine uygun yükleme/silme/görüntüleme uçlarını ve özel depoyu kur.
 - [ ] P7.3 Sunucuda tür/decode/boyut/piksel sınırı, yeniden kodlama ve metadata temizlemeyi uygula.
 - [ ] P7.4 Hız sınırı, kota, izinli origin, süreli link ve gerçek süre sonu temizliği kur.
 - [ ] P7.5 Ön yüzde açık yükleme eylemi, ilerleme, hata/tekrar deneme ve kaldırma kontrollerini bağla.
 - [ ] P7.6 Başarılı görsel linkini teklif mesajına ekle; hatada yerel formu koru ve manuel ekleme yolunu göster.
 
-**Kabul:** Geçerli görsel yüklenir; sahte uzantılı/bozuk/aşırı büyük dosyalar sunucuda reddedilir. Ön yüzde anahtar yoktur. Yetkisiz silme/depo listeleme çalışmaz. Süresi dolan link açılmaz ve saklama sonu temizliği doğrulanır. WhatsApp metninde yalnızca uygun süreli görüntüleme linki bulunur; silme tokenı bulunmaz. Sağlayıcı erişimi yoksa aşama `engelli` kalır; tam görsel yükleme tamamlandı denmez.
+**Ziyaretçi eki kabulü:** Geçerli görsel yüklenir; sahte uzantılı/bozuk/aşırı büyük dosyalar sunucuda reddedilir. Ön yüzde anahtar yoktur. Yetkisiz silme/depo listeleme çalışmaz. Süresi dolan link açılmaz ve saklama sonu temizliği doğrulanır. WhatsApp metninde yalnızca uygun süreli görüntüleme linki bulunur; silme tokenı bulunmaz. Sağlayıcı erişimi yoksa bu kapsam `engelli` kalır. P7 genel aşaması ancak admin akışı için gerekli kaynak/yayın kanıtları ve ziyaretçi eki kabulü birlikte tamamlanınca kapanır.
 
 ## 11. P8 — Kabul ve optimizasyon
 
@@ -481,3 +499,14 @@ Sıradaki tek iş:
 - Temizlik: build/test ile yeniden yazılan tracked generator ve test kanıtları başlangıçtaki HEAD'e geri alındı; oluşturulan `dist/`, `hizmetler/` ve `.wrangler/` kaldırıldı. Build/test kaynak değişikliği üretmedi; kullanıcıya ait `.dev.vars` dosyasına dokunulmadı.
 - Mimari/veri sözleşmesi değişmedi; A12/P7.0 sınırlarına uyuldu. P7 devam ediyor: kalıcı taslak, medya deposu/upload ve gerçek GitHub publish doğrulaması tamamlanmadı.
 - Sıradaki tek iş: P7 için kalıcı taslak ve medya upload/publish akışını tamamlamak.
+
+### 2026-10-16 — P7.0 kalıcı admin medya ve yayın akışı
+
+- Talimat: admin medya yükleme/kütüphane, kalıcı içerik taslağı ve güvenli GitHub yayın akışını feature branch'inde tamamla; production deploy veya gerçek `main` yayınlama yapma.
+- Başlangıç: `AGENTS.md`, mimari v1.15 ve roadmap v1.14 kontrol edildi; çalışma dalı `feat/admin-panel`. `.dev.vars` içeriği okunmadı veya değiştirilmedi.
+- Uygulama: Worker KV taslağı/R2 staging, CSRF + same-origin, 8 MB görsel / 50 MB video MIME/uzantı/imza doğrulaması, içerik hedefi, usage map, range preview, kullanılan medyayı silme koruması ve yayın geçmişi. Admin UI upload progress/preview, hizmet/proje/promosyon/video target'ları ve publish değişiklik onayıyla güncellendi. GitHub Data API JSON+binary+delete path'lerini tek tree/commit'te birleştirir; base tree SHA ve main ref yarış kontrolü doğrulandı.
+- Belgeler: mimari v1.16/A16 kararıyla admin medya akışı ziyaretçi teklif eki akışından ayrıldı. README KV/R2 provisioning ve secret güvenliği açıklar. ROADMAP, gerçek Cloudflare resource provisioning ve ziyaretçi eki kabulü nedeniyle P7'yi `devam ediyor` bırakır.
+- Doğrulama: `npm run check` başarılı; media/GitHub mock testleri 5/5; local Worker API + browser UI testi geçici KV/R2, test-only secrets ve ayrı persist dizininde geçti; tam `npm test -- --test-concurrency=1` **40/40**; `npm run build` başarılı; `npx wrangler deploy --dry-run` 190 asset okudu ve başarılı oldu. Build'in mevcut Three/SVGLoader chunk 500 kB uyarısı sürdü.
+- Temizlik/sınır: testin yeniden yazdığı tracked evidence ve generator HTML/sitemap geri alındı; `dist/`, üretilen `hizmetler/`, admin medya manifesti ve boş `.wrangler/tmp` temizlendi. Gerçek GitHub `main` yayını, Cloudflare resource provisioning ve production deploy çalıştırılmadı. KV ID config'te sıfır yer tutucudur; gerçek `GITHUB_TOKEN` veya müşteri verisi yoktur.
+- Durum: P7.0 admin akışı yerel kod/entegrasyon düzeyinde uygulanmıştır; genel P7 ve canlıya hazır olma kabul edilmemiştir. Commit/push sonucu yalnızca oluştuğunda rapora eklenir.
+- Sıradaki tek iş: Yetkili Cloudflare hesabında `ADMIN_DRAFTS` KV ve R2 staging kaynağını oluşturup gerçek KV ID'sini güvenli yapılandırmak; ardından ayrı onayla live publish ve visitor attachment işleri değerlendirilir.

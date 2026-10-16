@@ -3,6 +3,7 @@ import projectsData from '../content/projects.json';
 import promotionsData from '../content/promotions.json';
 import seoData from '../content/seo.json';
 import siteData from '../content/site.json';
+import { MEDIA_FOLDERS, MEDIA_LIMITS, formatMediaSize, type MediaFolder } from '../shared/admin-media';
 
 type ContentState = {
   site: typeof siteData.site;
@@ -13,6 +14,19 @@ type ContentState = {
 };
 
 type ActionTarget = HTMLElement & { dataset: DOMStringMap; value?: string };
+type MediaFile = {
+  path: string;
+  mimeType: string;
+  mediaType: 'image' | 'video';
+  size: number;
+  folder: string;
+  pending: boolean;
+  pendingDelete: boolean;
+  previewUrl: string;
+  usage: string[];
+};
+type PublishEntry = { timestamp: string; username: string; commitSha: string; message: string; url?: string };
+type TargetOption = { value: string; label: string; folder: MediaFolder; currentPath?: string };
 
 const state: ContentState = {
   site: structuredClone(siteData.site),
@@ -22,10 +36,17 @@ const state: ContentState = {
   seo: structuredClone(seoData)
 };
 
-const draftKey = 'zy-reklam-admin-draft';
 let currentUser: string | null = null;
+let csrfToken: string | null = null;
 let statusMessage = 'Yükleniyor...';
 let navigationObserver: IntersectionObserver | null = null;
+let mediaFiles: MediaFile[] = [];
+let publishLog: PublishEntry[] = [];
+let publishedBaseline: ContentState = structuredClone(state);
+let lastPublish: PublishEntry | null = null;
+let changedSections: string[] = [];
+let draftHasChanges = false;
+let uploadPreviewUrl: string | null = null;
 
 const app = document.querySelector('#app');
 if (!app) {
@@ -47,34 +68,15 @@ const setStatus = (message: string): void => {
   }
 };
 
-const saveDraftLocally = (): void => {
-  localStorage.setItem(draftKey, JSON.stringify(state));
-  setStatus('Bu taslak bu tarayıcıda saklanır.');
-};
-
-const loadDraftLocally = (): void => {
-  const saved = localStorage.getItem(draftKey);
-  if (!saved) {
-    return;
-  }
-
-  try {
-    const parsed = JSON.parse(saved) as Partial<ContentState>;
-    if (parsed.site) state.site = parsed.site;
-    if (parsed.services) state.services = parsed.services;
-    if (parsed.projects) state.projects = parsed.projects;
-    if (parsed.promotions) state.promotions = parsed.promotions;
-    if (parsed.seo) state.seo = parsed.seo;
-  } catch {
-    console.warn('Draft load failed.');
-  }
-};
-
 const sendJson = async <T>(path: string, init: RequestInit = {}): Promise<T> => {
+  const method = (init.method ?? 'GET').toUpperCase();
+  const headers = new Headers(init.headers);
+  if (init.body && !(init.body instanceof FormData)) headers.set('Content-Type', 'application/json');
+  if (method !== 'GET' && method !== 'HEAD' && csrfToken) headers.set('X-CSRF-Token', csrfToken);
   const response = await fetch(path, {
+    ...init,
     credentials: 'same-origin',
-    headers: { 'Content-Type': 'application/json' },
-    ...init
+    headers
   });
 
   const payload = await response.json().catch(() => ({}));
@@ -85,10 +87,10 @@ const sendJson = async <T>(path: string, init: RequestInit = {}): Promise<T> => 
 };
 
 const api = {
-  async session(): Promise<{ authenticated: boolean; username: string | null }> {
+  async session(): Promise<{ authenticated: boolean; username: string | null; csrfToken: string | null }> {
     return sendJson('/api/admin/session');
   },
-  async login(username: string, password: string): Promise<{ ok: true; username: string }> {
+  async login(username: string, password: string): Promise<{ ok: true; username: string; csrfToken: string }> {
     return sendJson('/api/admin/login', {
       method: 'POST',
       body: JSON.stringify({ username, password })
@@ -98,7 +100,15 @@ const api = {
     await sendJson('/api/admin/logout', { method: 'POST' });
   },
   async getContent(): Promise<ContentState> {
-    const response = await sendJson<{ site: typeof state.site; services: typeof state.services; projects: typeof state.projects; promotions: typeof state.promotions; seo: typeof state.seo }>('/api/admin/content');
+    const response = await sendJson<{
+      site: typeof state.site;
+      services: typeof state.services;
+      projects: typeof state.projects;
+      promotions: typeof state.promotions;
+      seo: typeof state.seo;
+      publishedContent: ContentState;
+    }>('/api/admin/draft');
+    publishedBaseline = response.publishedContent;
     return {
       site: response.site,
       services: response.services,
@@ -107,26 +117,65 @@ const api = {
       seo: response.seo
     };
   },
-  async saveSection(section: keyof ContentState, value: ContentState[keyof ContentState]): Promise<void> {
+  async saveDraft(): Promise<void> {
     await sendJson('/api/admin/content', {
       method: 'PUT',
-      body: JSON.stringify({ section, data: value })
+      body: JSON.stringify({ content: state })
     });
   },
-  async publish(message: string): Promise<{ ok: boolean; commitSha?: string; error?: string }> {
+  async getMedia(): Promise<MediaFile[]> {
+    const response = await sendJson<{ files: MediaFile[] }>('/api/admin/media');
+    return response.files;
+  },
+  async deleteMedia(path: string): Promise<{ ok: true; pendingPublish?: boolean }> {
+    return sendJson('/api/admin/media', { method: 'DELETE', body: JSON.stringify({ path }) });
+  },
+  async publish(message: string): Promise<{ ok: boolean; commitSha?: string; commitUrl?: string; error?: string; cloudflareDeploy?: string; warnings?: string[] }> {
     return sendJson('/api/admin/publish', {
       method: 'POST',
-      body: JSON.stringify({
-        message,
-        baseSha: null,
-        site: state.site,
-        services: state.services,
-        projects: state.projects,
-        promotions: state.promotions,
-        seo: state.seo,
-        media: {}
-      })
+      body: JSON.stringify({ message })
     });
+  },
+  async getPublishLog(): Promise<PublishEntry[]> {
+    const response = await sendJson<{ entries: PublishEntry[] }>('/api/admin/publish-log');
+    return response.entries;
+  },
+  async getStatus(): Promise<{
+    lastPublish: PublishEntry | null;
+    hasPendingDraft: boolean;
+    changedSections: string[];
+    pendingMedia: number;
+    deletedMedia: number;
+  }> {
+    return sendJson('/api/admin/status');
+  },
+  async uploadMedia(form: FormData, onProgress: (percent: number) => void): Promise<void> {
+    await new Promise<void>((resolve, reject) => {
+      const request = new XMLHttpRequest();
+      request.open('POST', '/api/admin/media');
+      request.withCredentials = true;
+      if (csrfToken) request.setRequestHeader('X-CSRF-Token', csrfToken);
+      request.upload.addEventListener('progress', (event) => {
+        if (event.lengthComputable) onProgress(Math.floor((event.loaded / event.total) * 100));
+      });
+      request.addEventListener('load', () => {
+        let response: { ok?: boolean; error?: string } = {};
+        try {
+          response = JSON.parse(request.responseText) as typeof response;
+        } catch {
+          reject(new Error('Sunucu geçerli JSON yanıtı vermedi.'));
+          return;
+        }
+        if (request.status < 200 || request.status >= 300) {
+          reject(new Error(response.error || 'Medya yüklenemedi.'));
+          return;
+        }
+        resolve();
+      });
+      request.addEventListener('error', () => reject(new Error('Yükleme sırasında ağ hatası oluştu.')));
+      request.addEventListener('abort', () => reject(new Error('Medya yüklemesi iptal edildi.')));
+      request.send(form);
+    })
   }
 };
 
@@ -176,25 +225,134 @@ const renderDashboard = (): string => {
       <article class="stat-card"><span>Hizmet</span><strong>${serviceCount}</strong></article>
       <article class="stat-card"><span>Proje kategorisi</span><strong>${state.projects.categories.length}</strong></article>
       <article class="stat-card"><span>Promosyon kategorisi</span><strong>${state.promotions.categories.length}</strong></article>
+      <article class="stat-card"><span>Medya dosyası</span><strong>${mediaFiles.filter(({ pendingDelete }) => !pendingDelete).length}</strong></article>
     </div>
-    <p class="panel-note">İçerik değişikliklerinizi ilgili bölümlerde düzenleyin. Taslak ve yayınlama durumu ayrı bölümde yer alır.</p>
+    <p class="panel-note">Taslak: ${draftHasChanges ? 'kaydedilmemiş değişiklik var' : changedSections.length ? `kaydedildi (${changedSections.join(', ')})` : 'değişiklik yok'} · ${mediaFiles.filter(({ pending }) => pending).length} yeni medya · ${mediaFiles.filter(({ pendingDelete }) => pendingDelete).length} silinecek medya.</p>
+    <p class="panel-note">${lastPublish
+      ? `Son yayın: ${escapeHtml(lastPublish.commitSha.slice(0, 7))} · ${escapeHtml(new Date(lastPublish.timestamp).toLocaleString('tr-TR'))}`
+      : 'Henüz yayın kaydı bulunmuyor.'} Taslaklar sunucu tarafında KV’de saklanır.</p>
   `;
 };
 
+const targetOptions = (): TargetOption[] => {
+  const options: TargetOption[] = [];
+  for (const group of state.services.groups) {
+    for (const service of group.services) {
+      const [serviceId, title, , primaryImage, gallery = []] = service as [string, string, string, string, string[]];
+      options.push({
+        value: JSON.stringify({ kind: 'service', serviceId, field: 'primary' }),
+        label: `Hizmet · ${group.title} · ${title} · Ön görsel`,
+        folder: 'services',
+        ...(primaryImage ? { currentPath: primaryImage } : {})
+      });
+      gallery.forEach((path, index) => options.push({
+        value: JSON.stringify({ kind: 'service', serviceId, field: 'gallery', index }),
+        label: `Hizmet · ${group.title} · ${title} · Galeri ${index + 1}`,
+        folder: 'services',
+        currentPath: path
+      }));
+      options.push({
+        value: JSON.stringify({ kind: 'service', serviceId, field: 'gallery', index: gallery.length }),
+        label: `Hizmet · ${group.title} · ${title} · Galeri ${gallery.length + 1} (ekle)`,
+        folder: 'services'
+      });
+    }
+  }
+  for (const category of state.projects.categories) {
+    const photos = state.projects.photos.filter((photo) => photo.category === category.id);
+    photos.forEach((photo) => options.push({
+      value: JSON.stringify({ kind: 'project-image', categoryId: category.id, photoId: photo.id }),
+      label: `Proje · ${category.title} · ${photo.title}`,
+      folder: 'projects',
+      ...(photo.variants[0]?.src ? { currentPath: photo.variants[0].src } : {})
+    }));
+    options.push({
+      value: JSON.stringify({ kind: 'project-image', categoryId: category.id }),
+      label: `Proje · ${category.title} · Yeni görsel`,
+      folder: 'projects'
+    });
+    state.projects.videos.filter((video) => video.category === category.id).forEach((video) => options.push({
+      value: JSON.stringify({ kind: 'project-video', categoryId: category.id, videoId: video.id }),
+      label: `Video · ${category.title} · ${video.title}`,
+      folder: 'videos',
+      currentPath: video.src
+    }));
+    options.push({
+      value: JSON.stringify({ kind: 'project-video', categoryId: category.id }),
+      label: `Video · ${category.title} · Yeni video`,
+      folder: 'videos'
+    });
+  }
+  for (const category of state.promotions.categories) {
+    state.promotions.photos.filter((photo) => photo.category === category.id).forEach((photo) => options.push({
+      value: JSON.stringify({ kind: 'promotion-image', categoryId: category.id, photoId: photo.id }),
+      label: `Promosyon · ${category.title} · ${photo.title}`,
+      folder: 'promotions',
+      ...(photo.variants[0]?.src ? { currentPath: photo.variants[0].src } : {})
+    }));
+    options.push({
+      value: JSON.stringify({ kind: 'promotion-image', categoryId: category.id }),
+      label: `Promosyon · ${category.title} · Yeni görsel`,
+      folder: 'promotions'
+    });
+  }
+  for (const folder of Object.keys(MEDIA_FOLDERS) as MediaFolder[]) {
+    options.push({
+      value: JSON.stringify({ kind: 'none', folder }),
+      label: `İçeriğe bağlama · ${MEDIA_FOLDERS[folder].label}`,
+      folder
+    });
+  }
+  return options;
+};
+
+const renderPublishHistory = (): string => publishLog.length
+  ? `<ul class="publish-history">${publishLog.map((entry) => `<li><strong>${escapeHtml(entry.message)}</strong><span>${escapeHtml(entry.commitSha.slice(0, 7))} · ${escapeHtml(new Date(entry.timestamp).toLocaleString('tr-TR'))}</span>${entry.url ? `<a href="${escapeHtml(entry.url)}" target="_blank" rel="noopener noreferrer">Commiti görüntüle</a>` : ''}</li>`).join('')}</ul>`
+  : '<p class="panel-note">Yayın geçmişi henüz boş.</p>';
+
 const renderMediaLibrary = (): string => {
-  const serviceMedia = state.services.groups.reduce((count, group) => count + group.services.reduce(
-    (serviceCount, service) => serviceCount + (service[3] ? 1 : 0) + (Array.isArray(service[4]) ? service[4].filter(Boolean).length : 0),
-    0
-  ), 0);
-  const projectMedia = state.projects.categories.filter((category) => category.cover).length;
-  const promotionMedia = state.promotions.categories.filter((category) => category.cover).length;
+  const options = targetOptions();
+  const imageChoices = mediaFiles.filter(({ mediaType, pendingDelete }) => mediaType === 'image' && !pendingDelete);
   return `
-    <div class="dashboard-stats">
-      <article class="stat-card"><span>Hizmet görselleri</span><strong>${serviceMedia}</strong></article>
-      <article class="stat-card"><span>Proje kapakları</span><strong>${projectMedia}</strong></article>
-      <article class="stat-card"><span>Promosyon kapakları</span><strong>${promotionMedia}</strong></article>
-    </div>
-    <p class="panel-note">Bu görünüm mevcut içerik kaynaklarındaki görsel referanslarını özetler. Dosya yükleme ve kalıcı medya yönetimi henüz etkin değildir.</p>
+    <form class="media-upload-form" id="media-upload-form">
+      <h3>Yeni medya yükle</h3>
+      <p>JPG, PNG veya WebP (en çok ${formatMediaSize(MEDIA_LIMITS.imageBytes)}); MP4 veya WebM (en çok ${formatMediaSize(MEDIA_LIMITS.videoBytes)}).</p>
+      <div class="form-grid">
+        <label class="field field-wide"><span>İçerik hedefi / klasör</span>
+          <select id="upload-target" name="target">${options.map((option) => `<option value="${escapeHtml(option.value)}" data-folder="${option.folder}">${escapeHtml(option.label)}</option>`).join('')}</select>
+        </label>
+        <label class="field field-wide"><span>Dosya</span><input id="media-file" name="file" type="file" accept=".jpg,.jpeg,.png,.webp,.mp4,.webm,image/jpeg,image/png,image/webp,video/mp4,video/webm" required /></label>
+      </div>
+      <label class="field video-poster-field"><span>Video posteri (isteğe bağlı)</span>
+        <select id="video-poster"><option value="">Poster seçilmedi</option>${imageChoices.map((file) => `<option value="${escapeHtml(file.path)}">${escapeHtml(file.path)}${file.pending ? ' · taslak' : ''}</option>`).join('')}</select>
+      </label>
+      <div class="upload-preview" id="upload-preview" aria-live="polite">Dosya seçildiğinde önizleme burada görünür.</div>
+      <input type="hidden" name="width" id="media-width" value="0" />
+      <input type="hidden" name="height" id="media-height" value="0" />
+      <input type="hidden" name="durationSeconds" id="media-duration" value="0" />
+      <div class="upload-progress" id="upload-progress" role="status" aria-live="polite"></div>
+      <button type="submit" class="primary-button">Yükle ve taslağa ekle</button>
+    </form>
+    <div class="media-grid">${mediaFiles.length ? mediaFiles.map((file) => `
+      <article class="media-card${file.pendingDelete ? ' is-pending-delete' : ''}">
+        <div class="media-preview">
+          ${file.mediaType === 'video'
+            ? `<video src="${escapeHtml(file.previewUrl)}" controls preload="metadata" aria-label="${escapeHtml(file.path)}"></video>`
+            : `<img src="${escapeHtml(file.previewUrl)}" alt="${escapeHtml(file.path.split('/').pop() ?? 'Medya dosyası')}" loading="lazy" />`}
+        </div>
+        <div class="media-card-body">
+          <strong>${escapeHtml(file.path.split('/').pop() ?? file.path)}</strong>
+          <span>${escapeHtml(file.folder)} · ${escapeHtml(formatMediaSize(file.size))} · ${escapeHtml(file.mimeType)}</span>
+          <code>${escapeHtml(file.path)}</code>
+          ${file.pending ? '<span class="media-state">Taslak yüklemesi</span>' : ''}
+          ${file.pendingDelete ? '<span class="media-state">Yayında silinmek üzere</span>' : ''}
+          <div class="media-usage"><strong>Kullanıldığı yerler</strong>${file.usage.length ? `<ul>${file.usage.map((use) => `<li>${escapeHtml(use)}</li>`).join('')}</ul>` : '<span>İçerikte kullanılmıyor.</span>'}</div>
+          <div class="media-card-actions">
+            ${file.pendingDelete ? '' : `<button type="button" class="secondary-button" data-action="replace-media" data-path="${escapeHtml(file.path)}">Değiştir</button>`}
+            ${file.pendingDelete ? '' : `<button type="button" class="danger-button" data-action="delete-media" data-path="${escapeHtml(file.path)}"${file.usage.length ? ' disabled title="Kullanımdayken silinemez"' : ''}>Sil</button>`}
+          </div>
+        </div>
+      </article>`).join('') : '<p class="panel-note">Yayınlanmış veya taslak medya dosyası yok.</p>'}</div>
   `;
 };
 
@@ -273,6 +431,44 @@ const renderLogin = (): string => `
   </div>
 `;
 
+const flattenValues = (value: unknown, path = ''): Map<string, string> => {
+  const result = new Map<string, string>();
+  if (Array.isArray(value)) {
+    value.forEach((item, index) => flattenValues(item, `${path}[${index}]`).forEach((entry, key) => result.set(key, entry)));
+    return result;
+  }
+  if (value && typeof value === 'object') {
+    Object.entries(value).forEach(([key, item]) => flattenValues(item, path ? `${path}.${key}` : key)
+      .forEach((entry, itemPath) => result.set(itemPath, entry)));
+    return result;
+  }
+  result.set(path || 'içerik', value === undefined ? '' : String(value));
+  return result;
+};
+
+const clippedValue = (value: string): string => value.length > 100 ? `${value.slice(0, 97)}…` : value;
+
+const contentDiff = (): string[] => {
+  const before = flattenValues(publishedBaseline);
+  const after = flattenValues(state);
+  const paths = new Set([...before.keys(), ...after.keys()]);
+  return [...paths].filter((path) => before.get(path) !== after.get(path)).map((path) =>
+    `${path}: “${clippedValue(before.get(path) ?? '—')}” → “${clippedValue(after.get(path) ?? '—')}”`);
+};
+
+const fillPublishPreview = (): void => {
+  const content = contentDiff();
+  const contentList = app.querySelector<HTMLUListElement>('#publish-content-diff');
+  const mediaList = app.querySelector<HTMLUListElement>('#publish-media-diff');
+  if (contentList) contentList.innerHTML = content.length
+    ? content.slice(0, 50).map((line) => `<li>${escapeHtml(line)}</li>`).join('') + (content.length > 50 ? `<li>ve ${content.length - 50} değişiklik daha</li>` : '')
+    : '<li>Yayınlanmış içerikten farklı metin/veri yok.</li>';
+  const mediaChanges = mediaFiles.filter(({ pending, pendingDelete }) => pending || pendingDelete);
+  if (mediaList) mediaList.innerHTML = mediaChanges.length
+    ? mediaChanges.map((file) => `<li>${file.pendingDelete ? 'Silinecek' : file.pending ? 'Eklenecek' : 'Değişecek'}: ${escapeHtml(file.path)}${file.usage.length ? ` · ${escapeHtml(file.usage.join(', '))}` : ''}</li>`).join('')
+    : '<li>Medya dosyası değişikliği yok.</li>';
+};
+
 const renderApp = (): void => {
   navigationObserver?.disconnect();
   navigationObserver = null;
@@ -288,7 +484,9 @@ const renderApp = (): void => {
       try {
         const result = await api.login(username, password);
         currentUser = result.username;
+        csrfToken = result.csrfToken;
         await loadContentFromApi();
+        await loadAdminResources();
         renderApp();
       } catch (error) {
         setStatus(error instanceof Error ? error.message : 'Giriş sırasında hata oluştu.');
@@ -375,20 +573,38 @@ const renderApp = (): void => {
             </div>
           </section>
           <section class="panel section-panel section-media" id="media-panel">
-            <div class="panel-header"><div><span class="section-kicker">MEDYA ENVANTERİ</span><h2>Medya Kütüphanesi</h2><p class="panel-subtitle">İçerik kaynaklarında kullanılan görsel referansları.</p></div></div>
+            <div class="panel-header"><div><span class="section-kicker">MEDYA ENVANTERİ</span><h2>Medya Kütüphanesi</h2><p class="panel-subtitle">Görsel ve videoları yükleyin, kullanım yerlerini inceleyin ve taslakta yönetin.</p></div></div>
             ${renderMediaLibrary()}
           </section>
           <section class="panel section-panel section-publishing" id="publishing-panel">
-            <div class="panel-header"><div><span class="section-kicker">TASLAK VE YAYIN</span><h2>Yayınlama</h2><p class="panel-subtitle">Taslağı bu tarayıcıda saklayın veya mevcut yayınlama akışını başlatın.</p></div></div>
+            <div class="panel-header"><div><span class="section-kicker">TASLAK VE YAYIN</span><h2>Yayınlama</h2><p class="panel-subtitle">Taslağı kalıcı olarak kaydedin veya değişiklikleri gözden geçirip GitHub’a yayınlayın.</p></div></div>
             <div class="status-box" id="status-box">${escapeHtml(statusMessage)}</div>
             <div class="publishing-actions">
               <button type="button" class="secondary-button" data-action="draft">Taslağı Kaydet</button>
               <button type="button" class="primary-button" data-action="publish">Yayınla</button>
             </div>
+            <h3>Yayın geçmişi</h3>
+            ${renderPublishHistory()}
           </section>
         </div>
       </main>
     </div>
+    <dialog class="publish-dialog" id="publish-dialog" aria-labelledby="publish-dialog-title">
+      <form method="dialog" class="publish-dialog-content">
+        <h2 id="publish-dialog-title">Yayın önizlemesi</h2>
+        <p>GitHub main dalına tek atomik commit olarak gönderilecek değişiklikleri doğrulayın.</p>
+        <label class="field"><span>Commit mesajı</span><input id="publish-message" maxlength="120" value="Admin içerik güncellemesi" required /></label>
+        <h3>İçerik değişiklikleri</h3>
+        <ul id="publish-content-diff" class="publish-diff"></ul>
+        <h3>Medya değişiklikleri</h3>
+        <ul id="publish-media-diff" class="publish-diff"></ul>
+        <p class="notice-card">Commit başarıyla oluşturulması Cloudflare deploy’unun başladığını veya tamamlandığını kanıtlamaz; bu panel deploy durumunu doğrulayamaz.</p>
+        <div class="publishing-actions">
+          <button type="button" class="secondary-button" data-action="close-publish">Geri dön</button>
+          <button type="button" class="primary-button" data-action="confirm-publish">main’e yayınla</button>
+        </div>
+      </form>
+    </dialog>
   `;
 
   const menuToggle = app.querySelector<HTMLButtonElement>('.menu-toggle');
@@ -447,14 +663,22 @@ const renderApp = (): void => {
     app.querySelectorAll<HTMLElement>('.section-panel').forEach((section) => navigationObserver?.observe(section));
   }
 
-  app.querySelectorAll('[data-action="draft"]').forEach((button) => button.addEventListener('click', () => {
-    saveDraftLocally();
+  app.querySelectorAll('[data-action="draft"]').forEach((button) => button.addEventListener('click', async () => {
+    try {
+      await api.saveDraft();
+      draftHasChanges = false;
+      await loadAdminResources();
+      setStatus('Taslak sunucuda kalıcı olarak kaydedildi.');
+    } catch (error) {
+      setStatus(error instanceof Error ? error.message : 'Taslak kaydedilemedi.');
+    }
   }));
 
   app.querySelectorAll('[data-action="logout"]').forEach((button) => button.addEventListener('click', async () => {
     try {
       await api.logout();
       currentUser = null;
+      csrfToken = null;
       renderApp();
     } catch (error) {
       setStatus(error instanceof Error ? error.message : 'Çıkış sırasında hata oluştu.');
@@ -463,14 +687,182 @@ const renderApp = (): void => {
 
   app.querySelectorAll('[data-action="publish"]').forEach((button) => button.addEventListener('click', async () => {
     try {
-      const result = await api.publish(`Admin: ${new Date().toISOString()}`);
-      if (result.ok) {
-        setStatus(`Yayın başarılı: ${result.commitSha ?? 'commit'} `);
-      } else {
-        setStatus(result.error || 'Yayın sırasında hata oluştu.');
-      }
+      await api.saveDraft();
+      await loadContentFromApi();
+      await loadAdminResources();
+      fillPublishPreview();
+      app.querySelector<HTMLDialogElement>('#publish-dialog')?.showModal();
+    } catch (error) {
+      setStatus(error instanceof Error ? error.message : 'Yayın önizlemesi hazırlanamadı.');
+    }
+  }));
+
+  app.querySelector('[data-action="close-publish"]')?.addEventListener('click', () => {
+    app.querySelector<HTMLDialogElement>('#publish-dialog')?.close();
+  });
+
+  app.querySelector('[data-action="confirm-publish"]')?.addEventListener('click', async (event) => {
+    const button = event.currentTarget as HTMLButtonElement;
+    const message = app.querySelector<HTMLInputElement>('#publish-message')?.value.trim() ?? '';
+    if (!message || message.length > 120) {
+      setStatus('Commit mesajı 1–120 karakter olmalı.');
+      return;
+    }
+    button.disabled = true;
+    setStatus('GitHub’da atomik commit oluşturuluyor…');
+    try {
+      await api.saveDraft();
+      const result = await api.publish(message);
+      if (!result.ok) throw new Error(result.error || 'Yayın sırasında hata oluştu.');
+      await loadAdminResources();
+      app.querySelector<HTMLDialogElement>('#publish-dialog')?.close();
+      const warnings = result.warnings?.length ? ` Uyarı: ${result.warnings.join(' ')}` : '';
+      setStatus(`GitHub commit oluşturuldu: ${result.commitSha ?? 'commit'}${result.commitUrl ? ` · ${result.commitUrl}` : ''}. ${result.cloudflareDeploy ?? 'Cloudflare deploy durumu doğrulanmadı.'}${warnings}`);
+      renderApp();
     } catch (error) {
       setStatus(error instanceof Error ? error.message : 'Yayın sırasında hata oluştu.');
+    } finally {
+      button.disabled = false;
+    }
+  });
+
+  const uploadForm = app.querySelector<HTMLFormElement>('#media-upload-form');
+  const mediaInput = app.querySelector<HTMLInputElement>('#media-file');
+  const targetInput = app.querySelector<HTMLSelectElement>('#upload-target');
+  const preview = app.querySelector<HTMLDivElement>('#upload-preview');
+  const resetDimensions = (): void => {
+    app.querySelector<HTMLInputElement>('#media-width')!.value = '0';
+    app.querySelector<HTMLInputElement>('#media-height')!.value = '0';
+    app.querySelector<HTMLInputElement>('#media-duration')!.value = '0';
+  };
+
+  targetInput?.addEventListener('change', () => {
+    const folder = targetInput.selectedOptions[0]?.dataset.folder;
+    const posterField = app.querySelector<HTMLElement>('.video-poster-field');
+    if (posterField) posterField.hidden = folder !== 'videos';
+  });
+  targetInput?.dispatchEvent(new Event('change'));
+
+  mediaInput?.addEventListener('change', () => {
+    if (uploadPreviewUrl) URL.revokeObjectURL(uploadPreviewUrl);
+    uploadPreviewUrl = null;
+    resetDimensions();
+    const file = mediaInput.files?.[0];
+    if (!file || !preview) {
+      if (preview) preview.textContent = 'Dosya seçildiğinde önizleme burada görünür.';
+      return;
+    }
+    uploadPreviewUrl = URL.createObjectURL(file);
+    preview.replaceChildren();
+    const label = document.createElement('p');
+    label.textContent = `${file.name} · ${formatMediaSize(file.size)} · ${file.type || 'MIME belirtilmemiş'}`;
+    preview.append(label);
+    if (file.type.startsWith('image/')) {
+      const image = document.createElement('img');
+      image.alt = 'Yükleme önizlemesi';
+      image.onload = () => {
+        app.querySelector<HTMLInputElement>('#media-width')!.value = String(image.naturalWidth);
+        app.querySelector<HTMLInputElement>('#media-height')!.value = String(image.naturalHeight);
+      };
+      image.src = uploadPreviewUrl;
+      preview.append(image);
+    } else if (file.type.startsWith('video/')) {
+      const video = document.createElement('video');
+      video.controls = true;
+      video.preload = 'metadata';
+      video.onloadedmetadata = () => {
+        app.querySelector<HTMLInputElement>('#media-width')!.value = String(video.videoWidth);
+        app.querySelector<HTMLInputElement>('#media-height')!.value = String(video.videoHeight);
+        app.querySelector<HTMLInputElement>('#media-duration')!.value = String(Math.ceil(video.duration));
+      };
+      video.src = uploadPreviewUrl;
+      preview.append(video);
+    } else {
+      preview.append(document.createTextNode('Önizleme için desteklenmeyen MIME türü.'));
+    }
+  });
+
+  uploadForm?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const file = mediaInput?.files?.[0];
+    const progress = app.querySelector<HTMLDivElement>('#upload-progress');
+    if (!file || !targetInput || !progress) return;
+    const selected = targetInput.selectedOptions[0];
+    const folder = selected?.dataset.folder;
+    if (!folder) {
+      setStatus('İzinli bir hedef klasör seçin.');
+      return;
+    }
+    const maxSize = file.type.startsWith('video/') ? MEDIA_LIMITS.videoBytes : MEDIA_LIMITS.imageBytes;
+    if (file.size > maxSize) {
+      setStatus(`Dosya boyutu ${formatMediaSize(maxSize)} sınırını aşıyor.`);
+      return;
+    }
+    const data = new FormData(uploadForm);
+    data.set('folder', folder);
+    try {
+      const target = JSON.parse(selected.value) as Record<string, unknown>;
+      if (target.kind === 'project-video') {
+        const width = Number(data.get('width'));
+        const height = Number(data.get('height'));
+        const durationSeconds = Number(data.get('durationSeconds'));
+        if (![width, height, durationSeconds].every(Number.isFinite) || width < 1 || height < 1 || durationSeconds <= 0) {
+          setStatus('Video önizlemesinde ölçü ve süre bilgisinin yüklenmesini bekleyin.');
+          return;
+        }
+        const poster = app.querySelector<HTMLSelectElement>('#video-poster')?.value;
+        if (poster) target.poster = poster;
+        target.width = width;
+        target.height = height;
+        target.durationSeconds = durationSeconds;
+      }
+      data.set('target', JSON.stringify(target));
+    } catch {
+      setStatus('Seçilen medya hedefi geçersiz.');
+      return;
+    }
+    progress.textContent = 'Yükleme başlatılıyor…';
+    const submit = uploadForm.querySelector<HTMLButtonElement>('button[type="submit"]');
+    if (submit) submit.disabled = true;
+    try {
+      await api.uploadMedia(data, (percent) => {
+        progress.textContent = `Yükleniyor: ${percent}%`;
+      });
+      await loadContentFromApi();
+      await loadAdminResources();
+      setStatus('Medya KV/R2 taslağına eklendi; yayınlanana kadar canlı sitede görünmez.');
+      renderApp();
+      document.getElementById('media-panel')?.scrollIntoView({ behavior: 'smooth' });
+    } catch (error) {
+      progress.textContent = '';
+      setStatus(error instanceof Error ? error.message : 'Medya yüklenemedi.');
+    } finally {
+      if (submit) submit.disabled = false;
+    }
+  });
+
+  app.querySelectorAll<HTMLButtonElement>('[data-action="replace-media"]').forEach((button) => button.addEventListener('click', () => {
+    const filePath = button.dataset.path;
+    const option = targetOptions().find((item) => item.currentPath === filePath);
+    if (!option || !targetInput) {
+      setStatus('Bu medya dosyası için değiştirilebilir içerik hedefi bulunamadı.');
+      return;
+    }
+    targetInput.value = option.value;
+    targetInput.dispatchEvent(new Event('change'));
+    app.querySelector<HTMLInputElement>('#media-file')?.click();
+  }));
+
+  app.querySelectorAll<HTMLButtonElement>('[data-action="delete-media"]').forEach((button) => button.addEventListener('click', async () => {
+    const path = button.dataset.path;
+    if (!path || !window.confirm(`“${path}” dosyası taslakta silinmek üzere işaretlensin mi? Yayınlanmış dosya yayın başarılı olana kadar korunur.`)) return;
+    try {
+      await api.deleteMedia(path);
+      await loadAdminResources();
+      setStatus('Medya taslakta silinmek üzere işaretlendi; dosya yayınlanana kadar korunur.');
+      renderApp();
+    } catch (error) {
+      setStatus(error instanceof Error ? error.message : 'Medya silinemedi.');
     }
   }));
 
@@ -480,12 +872,14 @@ const renderApp = (): void => {
     if (!section || typeof target.value !== 'string') {
       return;
     }
+    draftHasChanges = true;
 
     if (section === 'site') {
       const field = target.dataset.field as keyof typeof state.site;
       if (field && field in state.site) {
         state.site[field] = target.value;
       }
+      setStatus('Kaydedilmemiş değişiklik var.');
       return;
     }
 
@@ -502,6 +896,7 @@ const renderApp = (): void => {
       if (target.dataset.field === 'primaryKeywords') {
         state.seo.primaryKeywords = target.value.split(/\n|,/) .map((item) => item.trim()).filter(Boolean);
       }
+      setStatus('Kaydedilmemiş değişiklik var.');
       return;
     }
 
@@ -521,6 +916,7 @@ const renderApp = (): void => {
         if (target.dataset.field === 'eyebrow') group.eyebrow = target.value;
         if (target.dataset.field === 'description') group.description = target.value;
         if (target.dataset.field === 'menuPreview') group.menuPreview = target.value.split('·').map((item) => item.trim()).filter(Boolean);
+        setStatus('Kaydedilmemiş değişiklik var.');
         return;
       }
       if (kind === 'service') {
@@ -538,6 +934,7 @@ const renderApp = (): void => {
           service[4] = gallery;
         }
       }
+      setStatus('Kaydedilmemiş değişiklik var.');
       return;
     }
 
@@ -550,6 +947,7 @@ const renderApp = (): void => {
       if (target.dataset.field === 'description') category.description = target.value;
       if (target.dataset.field === 'cover') category.cover = target.value;
       if (target.dataset.field === 'href') category.href = target.value;
+      setStatus('Kaydedilmemiş değişiklik var.');
       return;
     }
 
@@ -562,34 +960,43 @@ const renderApp = (): void => {
       if (target.dataset.field === 'description') category.description = target.value;
       if (target.dataset.field === 'cover') category.cover = target.value;
       if (target.dataset.field === 'href') category.href = target.value;
+      setStatus('Kaydedilmemiş değişiklik var.');
     }
   });
 };
 
 const loadContentFromApi = async (): Promise<void> => {
-  try {
-    const content = await api.getContent();
-    state.site = content.site;
-    state.services = content.services;
-    state.projects = content.projects;
-    state.promotions = content.promotions;
-    state.seo = content.seo;
-    setStatus('İçerik API üzerinden yüklendi.');
-  } catch (error) {
-    setStatus(error instanceof Error ? error.message : 'İçerik yüklenemedi.');
-  }
+  const content = await api.getContent();
+  state.site = content.site;
+  state.services = content.services;
+  state.projects = content.projects;
+  state.promotions = content.promotions;
+  state.seo = content.seo;
+  draftHasChanges = false;
+  setStatus('Sunucu taslağı yüklendi.');
+};
+
+const loadAdminResources = async (): Promise<void> => {
+  const [files, entries, status] = await Promise.all([api.getMedia(), api.getPublishLog(), api.getStatus()]);
+  mediaFiles = files;
+  publishLog = entries;
+  lastPublish = status.lastPublish;
+  changedSections = status.changedSections;
 };
 
 const initialize = async (): Promise<void> => {
-  loadDraftLocally();
   try {
     const session = await api.session();
     currentUser = session.authenticated ? session.username : null;
+    csrfToken = session.csrfToken;
     if (currentUser) {
       await loadContentFromApi();
+      await loadAdminResources();
     }
-  } catch {
+  } catch (error) {
     currentUser = null;
+    csrfToken = null;
+    statusMessage = error instanceof Error ? error.message : 'Oturum doğrulanamadı.';
   }
   renderApp();
 };

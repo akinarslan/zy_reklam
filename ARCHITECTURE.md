@@ -1,6 +1,6 @@
 # ZY Reklam — Mimari
 
-**Sürüm:** 1.15 · **Tarih:** 2026-10-15 · **Durum:** P3 gerçek 3D ve güvenli yollar uygulandı; fiziksel cihaz performans kabulü açık; admin Worker yerel doğrulamadan geçti
+**Sürüm:** 1.16 · **Tarih:** 2026-10-16 · **Durum:** P3 fiziksel cihaz performans kabulü açık; P7 admin medya/taslak akışı yerel entegrasyonla doğrulandı; Cloudflare kaynak kurulumu ve canlı GitHub yayını yapılmadı
 
 **İlgili belgeler:** [Yol haritası](ROADMAP.md) · [Çalışma kuralları](AGENTS.md)
 
@@ -76,14 +76,17 @@ flowchart TD
 | Etkileşim | Bölüm görünürlüğü, hareket tercihi, kalite modu | Tek merkezi hareket/yaşam döngüsü |
 | Sahne yöneticisi | Kamera, ışık, materyal, animasyon, yükleme ve temizleme | Form veya WhatsApp yönetmez |
 | Tabela stüdyosu | Doğrulanan seçim durumu ve temsili önizleme | Ana çerçeveyi değiştirmez |
-| Admin paneli ve Worker | İçerik düzenleme arayüzü, admin oturumu ve GitHub publish istemcisi | Worker belleği kalıcı taslak deposu değildir; üretim secret'ları ve yayın yetkisi gerekir |
+| Admin paneli ve Worker | İçerik yönetimi, CSRF korumalı oturum, KV taslakları, R2 staging ve GitHub publish | Gerçek Cloudflare kaynakları ve GitHub yazma secret'ı gerektirir; production deploy doğrulaması değildir |
 
 ### A12 — Admin paneli ve Worker
 
-Admin paneli `/admin/` altında statik Vite girişidir. İçerik formları `src/content/*.json` verisini gösterir; taslak tarayıcı `localStorage` alanında tutulur. Cloudflare Worker oturum, içerik GET/PUT, medya API iskeleti ve GitHub Data API publish uçlarını sağlar. Oturum parolası PBKDF2 ile doğrulanır; imzalı cookie `HttpOnly`, `Secure`, `SameSite=Strict` ve sınırlı ömürlüdür. Gerekli değerler `ADMIN_USERNAME`, `ADMIN_PASSWORD_HASH`, `ADMIN_SESSION_SECRET` ve `GITHUB_TOKEN` olarak sunucu ortamında tutulur.
+Admin paneli `/admin/` altında statik Vite girişidir. Oturum parolası PBKDF2 ile doğrulanır; imzalı cookie `HttpOnly`, `Secure`, `SameSite=Strict` ve sınırlı ömürlüdür. Mutasyonlar aynı-origin ve oturuma özel CSRF token'ı gerektirir. İçerik taslağı kullanıcı başına KV'de; bekleyen medya R2 staging'de tutulur. Upload sunucuda izinli klasör, MIME, uzantı, magic byte ve 8 MB görsel / 50 MB video sınırlarıyla doğrulanır. Medya kullanım haritası, önizleme, silme koruması ve yayın önizlemesi admin akışına dahildir.
 
-Bu teslim yerel Worker login/session/content PUT akışı ve Wrangler dry-run ile doğrulanmıştır; canlı GitHub commit'i ve Cloudflare deploy'u çalıştırılmamıştır. Worker içi içerik/media durumu kalıcı değildir; admin arayüzündeki içerik değişiklikleri ayrı bir sunucu kaydetme eylemiyle kalıcılaştırılmadan yalnızca yayın isteğine eklenir. Medya yükleme arayüzü ve kalıcı/özel medya deposu tamamlanmış değildir. P7 bu nedenle devam eder; bu paneli üretim için hazır veya tam upload çözümü olarak sunmayın.
-| Upload istemcisi/API | Görsel doğrulama, güvenli yükleme ve süreli bağlantı | Dosyayı Git’e veya analytics’e yazmaz |
+Admin yayınlaması beş içerik JSON'unu, eklenen medya bloblarını ve silinecek dosya yollarını tek bir GitHub Data API tree/commit işlemiyle `main` ref'ine uygular; commit öncesi ref yeniden okunur ve fast-forward dışı yarış 409 olarak ele alınır. Gerekli Worker değerleri `ADMIN_USERNAME`, `ADMIN_PASSWORD_HASH`, `ADMIN_SESSION_SECRET` ve yalnız yayımlama yetkisi olan ortamda `GITHUB_TOKEN`'dır. `wrangler.jsonc` KV namespace ID'si sıfır yer tutucudur; gerçek Cloudflare KV/R2 kaynakları bu teslimde provision edilmemiştir. Mock GitHub ve yerel Worker testleri canlı `main` yazımı veya cloud deployment kanıtı değildir.
+
+Admin medya kütüphanesi ziyaretçi teklif eki akışından ayrıdır. Aşağıdaki P7 ziyaretçi eki sözleşmesi, bu admin medya akışının yerine geçmez; ziyaretçi görselinin süreli erişimi, silme token'ı ve saklama temizliği hâlâ kendi kabulünü gerektirir. Gerçek GitHub yayın eylemi bağlı Workers Builds'i tetikleyebilir; Cloudflare deploy durumu bu panel tarafından doğrulanmaz.
+
+| Upload istemcisi/API | Ziyaretçi teklif eki için güvenli doğrulama, süreli bağlantı ve silme | Admin içerik medyası ayrı KV/R2 staging ve GitHub publish akışıdır |
 
 ### 4.3 Önerilen dosya yapısı
 
@@ -186,6 +189,8 @@ WhatsApp linki dosya eklemez. P6’daki yerel dosya seçimi yalnızca önizleme 
 
 ### P7 yükleme API sözleşmesi
 
+Bu sözleşme ziyaretçinin teklif formuna eklediği dosyalar içindir; admin panelinin public site medyalarını yönetmesiyle aynı akış değildir.
+
 - Küçük, ön yüzden ayrı bir sunucu/işlev; özel nesne deposu. Sağlayıcı mevcut hosting, maliyet ve veri politikası P1’de incelendikten sonra karar kaydına yazılır. Ön yüzde hiçbir depo anahtarı bulunmaz.
 - `POST /api/attachments`: JPEG/PNG/WebP dosyası; başlangıç sınırı 5 MB ve tek görsel. Başarılı yanıtta rastgele `attachmentId`, kısıtlı `viewUrl`, `expiresAt` bulunur.
 - Sunucuda dosya boyutu, gerçek tür/decode ve piksel sınırı denetlenir; dosya güvenli raster biçimde yeniden kodlanır, konum/EXIF verileri kaldırılır. SVG/HTML/PDF bu uçta kabul edilmez.
@@ -250,13 +255,20 @@ Görsel kanıtlar: açılış, üretim, galeri, stüdyo, form ve footer için se
 | A09 | Her talimatta mimari ve roadmap kontrolü | Kabul | Kullanıcının plan takibi isteği; AGENTS.md ile kalıcı kural |
 | A10 | Promosyonlar altında dört fotoğraflı kategori ve ayrı statik sayfa | Kullanıcı talimatıyla uygulandı | P2.7; 3D’den bağımsız gezinme ve katalog içeriği |
 | A11 | Projeler altında beş örnek kategori; kontrollü video | Kullanıcı talimatıyla uygulandı | P2.8, müşteri projesi sahipliği varsayılmaz |
-| A12 | Admin paneli Cloudflare Worker ile backend'e bağlandı | Kısmi; yerel login/session/content PUT ve dry-run doğrulandı | Canlı GitHub publish, kalıcı taslak ve medya deposu henüz doğrulanmadı |
+| A12 | Admin paneli Cloudflare Worker ile backend'e bağlandı | Login/session ve local Worker dry-run; A16 KV/R2 kodu/testleri eklendi | Gerçek kaynak provisioning, GitHub `main` yazımı ve Cloudflare deploy doğrulaması açık |
+| A16 | Admin medya kütüphanesi ve kalıcı taslak | Kod + yerel Worker entegrasyonu doğrulandı; Cloudflare provisioning/live publish açık | KV taslak, R2 staging, CSRF, içerik kullanım koruması ve tek GitHub commit'i; visitor attachment sözleşmesinden ayrıdır |
 
 Mimari değişiklikte sürüm, tarih, ilgili karar ve etkilenen roadmap işi güncellenir. Yeni kullanıcı talimatıyla değişen kapsam eski kabul ölçütlerine gizlenmez.
 
 ### 2026-10-15 — A12 admin Worker kapsamı ve doğrulama sınırı
 
 Admin paneli Cloudflare Worker'a bağlandı; yerel login/session/content PUT akışı, üretim build'i ve Wrangler dry-run doğrulandı. GitHub `main` üzerinde gerçek commit, Cloudflare deploy, gerçek secret'lar, kalıcı taslak depolama ve medya uploader/depo bu teslimde doğrulanmadı veya tamamlanmadı. P7 açık kalır. Statik kategori HTML'leri ve `public/sitemap.xml`, `npm run generate:pages` tarafından içerik JSON'u ve generator'lardan yeniden üretilen çıktılardır; değişiklikleri build öncesinde tekrar üretildiği için admin kaynak commit'ine dahil edilmez.
+
+### 2026-10-16 — A16 Admin medya kütüphanesi ve kalıcı taslak
+
+Admin içerik ve medya taslakları Worker tarafında KV/R2 ile kalıcılaştırılır; panel localStorage'a bağımlı değildir. CSRF + aynı-origin denetimi, imza/MIME/uzantı/klasör/boyut doğrulaması, izinli medya hedefleri, upload ilerlemesi ve önizleme, kullanım haritası, kullanımdayken silme engeli, değişiklik önizlemesi ve yayın geçmişi eklendi. GitHub Data API'de JSON, binary medya ve silme yolları tek tree/commit içinde toplanır; `main` ref'i commit öncesi tekrar kontrol edilir. GitHub istekleri mock ile, Worker ise ayrı geçici local KV/R2 durumuyla test edilir.
+
+Cloudflare KV namespace ID'si config'te bilinçli olarak yer tutucudur; staging R2 bucket ve secret'lar gerçek hesapta oluşturulmadı. Gerçek GitHub `main` commit'i veya Cloudflare production deploy çalıştırılmadı. Admin medya yönetimi ziyaretçi teklif eki linki değildir; ziyaretçi eki P7.1–P7.6 kabulü açık kalır. A16, mevcut mimariyi admin medya işine genişletir ve P7 genel aşamasını tamamlandı yapmaz.
 
 ### 2026-10-01 — v1.1 logo kaynak açıklaması
 

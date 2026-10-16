@@ -465,6 +465,208 @@ button {
   line-height: 1.5;
 }
 
+.media-upload-form {
+  display: grid;
+  gap: 14px;
+  margin: 18px 0 24px;
+  padding: 20px;
+  border: 1px solid rgba(215, 184, 121, 0.25);
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.media-upload-form h3,
+.media-upload-form p {
+  margin: 0;
+}
+
+.media-upload-form p,
+.panel-note {
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.video-poster-field[hidden] {
+  display: none;
+}
+
+.upload-preview {
+  display: grid;
+  gap: 10px;
+  min-height: 48px;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+
+.upload-preview img,
+.upload-preview video {
+  display: block;
+  width: min(100%, 520px);
+  max-height: 340px;
+  border-radius: 10px;
+  object-fit: contain;
+  background: #020806;
+}
+
+.upload-progress {
+  min-height: 1.4em;
+  color: var(--gold);
+}
+
+.media-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 255px), 1fr));
+  gap: 16px;
+}
+
+.media-card {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.media-card.is-pending-delete {
+  opacity: 0.65;
+}
+
+.media-preview {
+  display: grid;
+  min-height: 160px;
+  place-items: center;
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.media-preview img,
+.media-preview video {
+  display: block;
+  width: 100%;
+  max-height: 230px;
+  object-fit: contain;
+}
+
+.media-card-body {
+  display: grid;
+  gap: 8px;
+  padding: 13px;
+}
+
+.media-card-body > span,
+.media-card code,
+.media-usage {
+  color: var(--muted);
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.media-card code {
+  overflow-wrap: anywhere;
+}
+
+.media-state {
+  color: var(--gold) !important;
+}
+
+.media-usage ul {
+  margin: 5px 0 0;
+  padding-left: 18px;
+}
+
+.media-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.danger-button {
+  min-height: 40px;
+  padding: 9px 12px;
+  border: 1px solid rgba(220, 119, 123, 0.4);
+  border-radius: 10px;
+  background: rgba(220, 119, 123, 0.08);
+  color: #f1a5a8;
+  cursor: pointer;
+}
+
+.danger-button:disabled,
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.48;
+  transform: none;
+}
+
+.publish-history,
+.publish-diff {
+  display: grid;
+  gap: 10px;
+  padding-left: 20px;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+
+.publish-history li {
+  display: grid;
+  gap: 4px;
+}
+
+.publish-history a {
+  color: var(--gold);
+}
+
+.publish-dialog {
+  width: min(720px, calc(100% - 28px));
+  max-height: min(85vh, 900px);
+  padding: 0;
+  border: 1px solid rgba(215, 184, 121, 0.35);
+  border-radius: 16px;
+  background: var(--panel);
+  color: var(--text);
+  box-shadow: var(--shadow);
+}
+
+.publish-dialog::backdrop {
+  background: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(4px);
+}
+
+.publish-dialog-content {
+  display: grid;
+  gap: 12px;
+  padding: clamp(18px, 4vw, 30px);
+}
+
+.publish-dialog-content h2,
+.publish-dialog-content h3,
+.publish-dialog-content p {
+  margin: 0;
+}
+
+.publish-dialog-content > p {
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.publish-dialog .notice-card {
+  color: #e5cc96;
+}
+
+.publish-dialog .notice-card::before {
+  content: "Bilgi: ";
+  font-weight: 700;
+}
+
+@media (max-width: 600px) {
+  .media-upload-form {
+    padding: 15px;
+  }
+
+  .media-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .empty-state {
   color: var(--muted);
   margin: 10px 0 0;

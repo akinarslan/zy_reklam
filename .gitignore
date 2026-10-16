@@ -10,3 +10,4 @@ uploads/
 *.log
 Thumbs.db
 docs/evidence/*.png
+/public/admin-media-manifest.json
