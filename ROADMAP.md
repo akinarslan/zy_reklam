@@ -1,6 +1,6 @@
 # ZY Reklam — Yol Haritası
 
-**Sürüm:** 1.16 · **Başlangıç:** 2026-10-01 · **Güncelleme:** 2026-10-16
+**Sürüm:** 1.17 · **Başlangıç:** 2026-10-01 · **Güncelleme:** 2026-10-16
 
 **Kaynak:** [ARCHITECTURE.md](ARCHITECTURE.md) · **Zorunlu kontrol:** [AGENTS.md](AGENTS.md)
 
@@ -531,3 +531,17 @@ Sıradaki tek iş:
 - Temizlik: generator HTML'leri, sitemap, testlerin değiştirdiği P2/P3 kanıtları ve `dist/` geri alındı/kaldırıldı. `.wrangler/` bulunmadı. Responsive ekran görüntüleri kaynak commit'ine dahil edilmez.
 - Durum: P8.7 responsive alt işi tamamlandı; P8 genel kabulü açık. P3.6 fiziksel GPU/FPS, P7 kaynak/ziyaretçi eki ve P8.1–P8.6 tamamlanmış gibi gösterilmez. Veri sözleşmesi ve yayın mimarisi değişmedi; A17 kaydı eklendi. Kaynak/test commit'leri: `1b8b27feb6377ed50703b8e576e1e4d83d993772`, `f57dcf839934bba39d3366944b8c2ed0667bceef` ve `e7ffac2a9b4ee37a2da3b256efa46d65ffc28771`. Son commit ile birlikte A17/P8.7 belgeleri ve 10 ekran görüntüsü kaydedildi.
 - Sıradaki tek iş: P3.6 — tanımlı fiziksel masaüstü ve orta seviye mobil cihazlarda FPS kabulünü ölçmek ve sonucu kaydetmek.
+
+### 2026-10-16 — PR #1 güvenli merge ve Cloudflare doğrulaması
+
+- Talimat: Açık PR #1'i kullan; Verify yeşil değilse merge etme. Yeşil olduktan sonra yalnız `feat/admin-panel` → `main` no-ff merge yap, merge sonrası check/build/test/Wrangler dry-run çalıştır, başarılıysa `origin/main`'e push et; manuel production deploy çalıştırma.
+- Aşama/iş: P9 merge/publish kapısı; P9 aşaması tamamlanmadı. P3.6, P7 ve P8'in açık kabul maddeleri kapatılmış sayılmaz.
+- Başlangıç durumu: `feat/admin-panel` ve `origin/feat/admin-panel` `5d899477da6d4ff1dadeb4d4fe8e1d8911589928`; `main` ve `origin/main` `73951ed27e79c31f69cbe1340f7de2a75988e116`; çalışma ağacı temizdi. PR #1 açıktı. Verify run 38888012995 başarısızdı: 42 testten 41 geçti, cihaz ölçüm ekranı Linux timeout verdi.
+- Stabilizasyon: `package.json` test komutu `node --test --test-concurrency=1 tests/*.test.mjs` olarak ayarlandı; serial ayarı npm test script'inde açıkça verildi. Böylece Browser/WebGL testleri paralel test dosyalarının kaynak yarışı olmadan çalışır.
+- Feature commit/push: `b80f8e706ad23cb23f708a1b4d0b8dcb0dec7d86` (`test: stabilize browser CI checks`) yalnız `feat/admin-panel` dalına push edildi. PR Verify run 38890396099 ve aynı SHA push Verify başarılı; PR #1 merge edildi.
+- Merge commit/push: eski main `73951ed27e79c31f69cbe1340f7de2a75988e116`; `--no-ff` merge `d89664a1ef13fc2f642accf0b651f662be5c7812`; remote `origin/main` bu SHA'ya güncellendi. Merge çatışması olmadı.
+- Merge sonrası kanıt: `npm ci`, `npm.cmd run check`, `npm.cmd run build`, `npm.cmd test -- --test-concurrency=1` **42/42**, `npx.cmd wrangler deploy --dry-run` başarılı. Build'de mevcut 500 kB üzeri SVGLoader chunk uyarısı devam etti. Üretilen HTML/evidence, `dist/`, `hizmetler/` ve `.wrangler/` temizlendi.
+- Canlı doğrulama: main Verify run 38891781966 ve workers.dev Projects mega-menu live-smoke başarılı. Ana domain Chromium'da 1440, 390 ve 3840 px genişliklerde yatay taşma olmadan açıldı, başlık ve Projects menüsü mevcut. Cloudflare Workers Builds check'i main SHA üzerinde başarısız oldu (build `dba220d1-43ce-4540-9042-80b5a16a14da`); custom domain ve workers.dev `/admin/` 404/boş yanıt verdi. Dashboard build nedeni erişilebilir logla doğrulanamadı. Manuel `wrangler deploy`, admin login ve publish çalıştırılmadı.
+- Güvenlik: `.dev.vars` Git'e eklenmedi veya okunmadı; tracked merge içeriğinde `.dev.vars` yok ve token biçimli credential taraması eşleşme bulmadı. `.dev.vars.example` yalnız örnek placeholder içerir.
+- Mimari/veri sözleşmesi değişmedi; ARCHITECTURE v1.17/A12 sınırları korundu. P9 tamamlandı işaretlenmedi; Cloudflare build ve `/admin/` 404 canlı geçişi engelliyor.
+- Sıradaki tek iş: yetkili Cloudflare Workers Build logundan başarısızlığın nedenini belirleyip deployment/`/admin/` görünürlüğünü düzeltmek ve canlı kontrolleri tekrarlamak.

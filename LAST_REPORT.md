@@ -1,53 +1,62 @@
-# Son İş Raporu
+# ZY REKLAM MAIN MERGE RAPORU
 
-## Talimat ve kapsam
+PR:
+#1 — https://github.com/akinarslan/zy_reklam/pull/1 (mevcut PR kullanıldı)
 
-Ana siteyi ve `/admin/` panelini mobil, tablet, laptop, Full HD, 2K, ultrawide ve 4K viewportlarında responsive hale getirme; yatay taşmayı önleme, geniş ekran ölçülerini düzenleme ve görsel kanıt üretme işi tamamlandı. Kaynak/test değişiklikleri yalnızca `feat/admin-panel` dalında commit edildi. `main` dalına geçilmedi, merge yapılmadı ve production deploy yapılmadı.
+PR CI:
+GREEN — GitHub Actions Verify başarılı (run 38890396099, feature SHA `b80f8e706ad23cb23f708a1b4d0b8dcb0dec7d86`). Main üzerindeki Verify ve workers.dev live-smoke da başarılı (run 38891781966).
 
-## Aşama ve iş kimliği
+Feature branch:
+`b80f8e706ad23cb23f708a1b4d0b8dcb0dec7d86` (`test: stabilize browser CI checks`)
 
-**P8.7 — Responsive viewport alt kabulü tamamlandı.** Genel P8 kabulü açık kalır. P3.6 fiziksel cihaz/GPU ölçümü ve P7 kaynak/ziyaretçi eki kabulü bu iş kapsamında kapatılmadı.
+Main eski SHA:
+`73951ed27e79c31f69cbe1340f7de2a75988e116`
 
-Başlangıçta `AGENTS.md`, `ARCHITECTURE.md` v1.16 ve `ROADMAP.md` v1.15 tamamen okundu. Başlangıç dalı `feat/admin-panel`, HEAD `0e1f91f`; çalışma ağacı temizdi.
+Merge commit:
+`d89664a1ef13fc2f642accf0b651f662be5c7812`
 
-## Değişen dosyalar
+Check:
+PASS — `npm.cmd run check`
 
-- `src/styles/main.css` — ana container, hero, başlık, hizmet kartları ve geniş ekran aralıkları.
-- `src/styles/showcase.css`, `src/styles/showroom.css` — ışıklı tabela/showroom alanlarının kontrollü geniş ekran ölçekleri.
-- `src/styles/projects.css`, `src/styles/promotions.css` — proje videosu ve promosyon görsellerinin büyük ekran ölçüleri.
-- `src/admin/admin.css` — admin içerik/nav sınırları, tablet hamburger eşiği, dokunma hedefleri, form/media grid ve büyük ekran metin ölçüleri.
-- `tests/responsive.test.mjs` — 15 viewport ana site, kategori URL’leri, menü/taşma kontrolleri ve screenshot üretimi.
-- `tests/admin-worker.test.mjs` — izole local Worker üzerinde 15 viewport, admin menü/form/media/dialog ve sticky header kabulü.
-- `ARCHITECTURE.md` — v1.17/A17 responsive karar kaydı; veri sözleşmesi ve yayın mimarisi değişmedi.
-- `ROADMAP.md` — v1.16/P8.7 alt kabulü ve doğrulama günlüğü; P8 genel durumu açık.
-- `LAST_REPORT.md` — bu rapor.
-- Görsel kanıt: `docs/evidence/responsive/site-1440.png`, `site-1920.png`, `site-2560.png`, `site-3440.png`, `site-3840.png`, `admin-1440.png`, `admin-1920.png`, `admin-2560.png`, `admin-3440.png`, `admin-3840.png`.
+Build:
+PASS — `npm.cmd run build`; mevcut SVGLoader 500 kB chunk uyarısı devam ediyor.
 
-## Doğrulama
+Tests:
+42/42 PASS — `npm.cmd test -- --test-concurrency=1`; `package.json` artık concurrency değerini script içinde açıkça seri ayarlar.
 
-- `npm.cmd run check` — başarılı.
-- `npm.cmd test -- --test-concurrency=1` — build sonrası **42/42 geçti**. İlk deneme build öncesi yapıldığı için `dist/` preview bulunamadı; build alındıktan sonra tam seri test paketi başarılı tamamlandı. Windows'ta Worker testinin geçici SQLite dosyalarını kapatma yarışı için sınırlı `EBUSY` retry eklendi; son tam test tekrarında 42/42 geçti.
-- Screenshot readiness düzeltmesinden sonra odaklı responsive dosyası `node --test tests/responsive.test.mjs` — **2/2 geçti**; görünür showroom posterinin decode edilmesi screenshot öncesinde beklenir.
-- `npm.cmd run build` — başarılı. Mevcut SVGLoader chunk’ı 599.52 kB olduğu için Vite’ın 500 kB boyut uyarısı sürüyor.
-- `npx.cmd wrangler deploy --dry-run` — build sonrasında başarılı; dry-run Worker upload boyutu 110.77 KiB (gzip 25.41 KiB). Gerçek deploy değildir.
-- 15 viewport ölçüsünde ana site/admin yatay taşma kontrolü; 14 hizmet/proje/promosyon sayfasında 390/768/1440/1920/3840 genişlik kontrolleri geçti.
-- Beş masaüstü çözünürlüğündeki site/admin screenshot’ları görsel olarak incelendi. Bunlar Chromium viewport emülasyonudur; fiziksel ekran/GPU performans kabulü değildir.
-- `git diff --check` — başarılı.
+Wrangler dry-run:
+PASS — `npx.cmd wrangler deploy --dry-run`; 190 asset okundu. Gerçek deploy komutu çalıştırılmadı.
+
+origin/main push:
+YES — `d89664a1ef13fc2f642accf0b651f662be5c7812` push sonrası remote ref yeniden okundu.
+
+Cloudflare auto deploy:
+STARTED (FAILED) — main SHA için Workers Builds check'i başarısız oldu; build ID `dba220d1-43ce-4540-9042-80b5a16a14da`. Build nedeni dashboard üzerinden doğrulanamadı. Manuel production deploy yapılmadı.
+
+Canlı ana site:
+OK — `https://zyreklamdijital.com.tr/` açıldı. Chromium'da 1440, 390 ve 3840 px ölçülerinde belge genişliği viewport'u aşmadı; ana başlık ve Projeler menüsü görüldü. Cloudflare build başarısız olduğu için içerik en son merge SHA'sına ait olarak doğrulanamadı.
+
+/admin/:
+ERROR — `https://zyreklamdijital.com.tr/admin/` ve workers.dev `/admin/` kontrolünde 404/boş yanıt. Login/publish denenmedi.
+
+Secret sızıntısı:
+YOK — `.dev.vars` okunmadı ve commit edilmedi; tracked merge içeriğinde yok, token biçimli secret taraması eşleşme bulmadı. `.dev.vars.example` placeholder dosyasıdır.
+
+Conflict:
+YOK — `--no-ff` merge çakışmasız tamamlandı.
+
+Son git status:
+Temiz (rapor güncellemesi push edildikten sonraki doğrulama).
+
+Son branch durumu:
+`main == origin/main`; feature branch `origin/feat/admin-panel` ile aynı SHA'da. Son rapor commit SHA'sı burada yer almaz; merge SHA yukarıdadır.
+
+## Değişen dosyalar ve kapsam
+
+- `package.json` — CI'da browser/WebGL testlerinin kaynak yarışını önlemek üzere test dosyaları seri çalıştırılır.
+- `ROADMAP.md` — P9 merge/live deployment kanıtı ve açık Cloudflare engeli kaydedildi; P9 tamamlandı işaretlenmedi.
+- `LAST_REPORT.md` — bu nihai rapor.
 
 ## Temizlik ve sınırlar
 
-Test/build/generator tarafından yeniden oluşturulan tracked kategori HTML’leri, sitemap ve P2/P3 test kanıtları başlangıç commit’ine geri alındı. Üretilmiş `dist/`, `hizmetler/`, `public/admin-media-manifest.json` ve `.wrangler/` kaldırıldı. Responsive ekran görüntüleri ayrı görsel kanıt olarak korundu; build/generator artığı değildir.
-
-## Mimari ve commit’ler
-
-Mevcut mimariye A17 ile uyuldu; yeni veri sözleşmesi veya renderer davranışı eklenmedi. Responsive kaynak/test commit’leri:
-
-- `1b8b27feb6377ed50703b8e576e1e4d83d993772` — `style: improve site and admin responsiveness`
-- `f57dcf839934bba39d3366944b8c2ed0667bceef` — `test: wait for responsive screenshot assets`
-- `e7ffac2a9b4ee37a2da3b256efa46d65ffc28771` — `test: clean up local worker state reliably`; test temizliğiyle birlikte A17/P8.7 belge ve screenshot kanıtlarını da kaydeder.
-
-Commit’ler yalnızca `feat/admin-panel` dalında tutuldu ve `origin/feat/admin-panel` üzerine push edilerek uzak ref ve ilgili içerikler tekrar doğrulandı; `main`/production üzerinde işlem yapılmadı.
-
-## Sıradaki tek iş
-
-P3.6 — tanımlı fiziksel masaüstü ve orta seviye mobil cihazlarda FPS kabulini ölçüp sonucu kaydetmek.
+Build/test ile yeniden üretilen kategori HTML'leri, sitemap ve test kanıtları geri alındı; `dist/`, `hizmetler/` ve `.wrangler/` kaldırıldı. `main`'e yalnız CI yeşil ve merge sonrası yerel testler başarılı olduktan sonra push yapıldı. Cloudflare build başarısızlığı ve `/admin/` 404 nedeniyle canlı deployment tamamlandı kabul edilmedi. Sıradaki tek iş: yetkili Cloudflare Workers Build loguyla başarısızlığı çözmek ve canlı doğrulamayı tekrarlamak.
