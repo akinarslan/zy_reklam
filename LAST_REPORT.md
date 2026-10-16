@@ -2,43 +2,37 @@
 
 ## Talimat ve kapsam
 
-Admin panelinin çalışan içerik düzenleme akışını koruyarak sidebar kaldırıldı; sabit üst navigasyon, responsive mobil menü, bölüm renk kimlikleri ve daha net içerik ayırıcıları uygulandı.
+Admin paneli üst navigasyon revizyonunun güvenli teslim doğrulaması yapıldı: çalışma ağacı ve dal kontrol edildi, check/test/build/Wrangler dry-run çalıştırıldı ve generator/build çıktıları temizlendi.
 
 ## Aşama ve iş kimliği
 
-P7.0 — Admin paneli ve Worker altyapısı. Bu görev yalnızca arayüz düzenidir; P7 genel kabulü devam ediyor.
+P7.0 — Admin paneli ve Worker altyapısı. Üst navigasyon UI işi önceki `db40778` (`style(admin): add sticky colored top navigation`) commit'inde mevcuttu ve başlangıçta `origin/feat/admin-panel` ile eşleşiyordu. P7 genel kabulü devam ediyor.
 
 ## Değişen dosyalar
 
-- `src/admin/main.ts` — 12 navigasyon hedefi, dashboard özeti, mevcut iletişim/footer alanlarının ayrıştırılması, medya envanteri, mobil menü ve aktif bölüm davranışı.
-- `src/admin/admin.css` — sabit üst header, yatay kaydırılabilir masaüstü navigasyon, mobil hamburger menü, premium renk sistemi, klavye odakları ve section/kart ayırıcıları.
-- `ROADMAP.md` — P7.0 arayüz işi ve doğrulama günlüğü.
+- `ROADMAP.md` — 2026-10-16 doğrulama günlüğü.
 - `LAST_REPORT.md` — bu rapor.
 
-`admin/index.html` değiştirilmedi; mevcut app root ve entrypoint yeterliydi. `ARCHITECTURE.md` değiştirilmedi; mimari/veri sözleşmesi değişikliği yoktur ve A12 sınırlarına uyulmuştur.
-
-## Tasarım özeti
-
-- Masaüstünde sidebar yok; üst navbar sabittir ve dar alanda yatay kaydırılır. Mobil/tablet düzeninde hamburger menü, `aria-expanded`, Escape ile kapatma ve bölüm seçilince kapanma davranışı vardır.
-- Dashboard, Ana Sayfa, Hizmetler, Projeler, Promosyonlar, 3D Vitrin, İletişim, Footer, SEO, Medya Kütüphanesi, Yayınlama ve Çıkış sekmeleri eklendi.
-- Renkler: Dashboard şampanya/altın; Ana Sayfa zümrüt; Hizmetler teal; Projeler mavi; Promosyonlar mor; 3D Vitrin bakır; İletişim yeşil; Footer gri/altın; SEO bordo; Medya Kütüphanesi indigo; Yayınlama amber; Çıkış kırmızı.
-- Her düzenlenebilir bölüm başlığı, vurgu çizgisi, kart kenarı ve form odağı kendi renk ailesini kullanır. İletişim ve footer alanları mevcut `site` verisini düzenlemeyi sürdürür.
-- 3D Vitrin düzenleme alanı ve medya upload altyapısı mevcut olmadığından bu sekmeler kapsamı dürüstçe açıklayan salt-okunur görünüm olarak sunulur. Yeni upload/yayın özelliği iddia edilmez.
+Admin UI kaynakları bu doğrulama sırasında değiştirilmedi. `ARCHITECTURE.md` değiştirilmedi; mimari/veri sözleşmesi değişikliği yoktur ve A12/P7.0 sınırlarına uyulmuştur.
 
 ## Doğrulama
 
+- Başlangıç `git status --short --branch` temizdi; dal `feat/admin-panel`, HEAD `db40778`; `git diff --stat` boştu.
 - `npm run check` — başarılı (`tsc --noEmit`).
-- `npm test -- --test-concurrency=1` — başarılı: **34 test geçti, 0 başarısız**. Ön denemelerde test sayfalarının generator tarafından üretilmesi gereği ve paralel Chromium kaynak çakışması ortaya çıktı; generator ile sayfalar hazırlandı ve seri çalıştırmada tam suite geçti.
-- `npm run build` — başarılı; `dist/admin/index.html` üretildi. Vite'ın mevcut büyük `SVGLoader` chunk'ı için 500 kB uyarısı devam etti.
-- `npx wrangler deploy --dry-run` — başarılı; 189 asset okundu. Bu yalnızca dry-run'dır, production deploy yapılmadı.
-- Üretim preview tarayıcı kontrolü — API yanıtları yerel test için mock edilerek 12 sekme, header'ın kaydırmada sabit kalması, mobil menü açma/kapatma, aktif sekme, yatay sayfa taşmaması ve taslak kaydetmenin `localStorage` yazması doğrulandı.
-- `git diff --check` — başarılı.
+- Kategori sayfaları generator ile üretildikten ve testlerin gerektirdiği production `dist/` hazırlandıktan sonra `npm test` — başarılı: **34 test geçti, 0 başarısız**.
+- `npm run build` — başarılı; `/admin/` dahil Vite çıktıları üretildi. Three/SVGLoader chunk'ı için mevcut 500 kB boyut uyarısı devam etti.
+- `npx wrangler deploy --dry-run` — başarılı; dist içinden 189 asset okundu. Gerçek deploy yapılmadı.
+- İlk build öncesi `npm test` denemesi `dist/` bulunmadığından başarısız oldu (9 başarılı / 26 başarısız); build sonrası istenen komut tekrar çalıştırıldığında suite bütünüyle geçti.
 
-## Çalışma ağacı ve sınırlar
+## Temizlik ve sınırlar
 
-Generator çıktıları (`index.html`, `hizmetler/`, `projeler/*/index.html`, `promosyonlar/*/index.html`, `public/sitemap.xml`), build çıktısı `dist/` ve `.wrangler/` yerel çalışma durumu temizlendi; build/test için yeniden üretilen tracked sayfalar ve test kanıtları sonrasında kaynak ağacından ayrıldı. Bunlar admin kaynak değişikliği olarak değerlendirilmedi.
+Generator'ın değiştirdiği tracked HTML/sitemap ve testlerin değiştirdiği tracked kanıtlar başlangıçtaki HEAD'e döndürüldü. Bu doğrulamada oluşturulan `dist/`, `hizmetler/` ve `.wrangler/` kaldırıldı; kalan doğrulama ağacı kaynak değişikliği içermiyor. `.dev.vars` dosyasına dokunulmadı.
 
-Değişiklikler sadece `feat/admin-panel` dalında commit edilip `origin/feat/admin-panel` dalına push edilir. `main` dalına geçilmedi, merge edilmedi veya production deploy yapılmadı. Kalıcı taslak depolama, medya upload/depo ve gerçek GitHub publish doğrulaması P7'nin açık işleridir.
+Commit öncesi hedef dal `feat/admin-panel`; başlangıçtaki UI commit'i zaten `origin/feat/admin-panel` üzerindeydi. İstenen commit mesajıyla doğrulama kaydı aynı feature dalına kaydedilip origin'e push edilir. `main` dalına geçilmedi, merge edilmedi ve production deploy yapılmadı.
+
+## Durum ve engeller
+
+P7 devam ediyor. Kalıcı taslak depolama, medya upload/depo ve gerçek GitHub publish doğrulaması bu işin kapsamı dışında ve tamamlanmış sayılmıyor.
 
 ## Sıradaki tek iş
 
