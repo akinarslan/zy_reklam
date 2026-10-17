@@ -385,3 +385,81 @@ html[data-motion=reduced]{scroll-behavior:auto}html[data-motion=reduced] *,html[
     font-size: 19px;
   }
 }
+
+@media (min-width: 1920px) {
+  .shell {
+    width: min(1880px, calc(100% - clamp(120px, 6vw, 220px)));
+  }
+}
+
+@media (min-width: 2560px) {
+  .shell {
+    width: min(2240px, calc(100% - clamp(280px, 11vw, 360px)));
+  }
+}
+
+@media (min-width: 2560px) {
+  .hero-grid {
+    grid-template-columns: 1fr 1.1fr;
+    gap: clamp(120px, 5.5vw, 160px);
+    min-height: clamp(800px, 32vw, 880px);
+  }
+
+  .hero h1,
+  #hero-title {
+    font-size: clamp(90px, 3.7vw, 100px);
+  }
+
+  .sign-stage {
+    height: clamp(600px, 24vw, 680px);
+  }
+
+  .hero-intro,
+  .body-copy,
+  .service-card p {
+    max-width: 820px;
+  }
+
+  .service-card {
+    padding: 40px 38px 52px;
+  }
+
+  .service-card h3 {
+    font-size: clamp(24px, 1.1vw, 28px);
+  }
+
+  .service-card p {
+    max-width: 390px;
+    font-size: 17px;
+  }
+
+  .service-art {
+    height: clamp(220px, 10vw, 260px);
+  }
+
+  .section-heading {
+    column-gap: clamp(100px, 6vw, 150px);
+    margin-bottom: clamp(76px, 4vw, 100px);
+  }
+
+  .section-heading > p:last-child {
+    max-width: 480px;
+  }
+
+  .workshop-grid,
+  .promotion-grid,
+  .contact-grid {
+    gap: clamp(150px, 7vw, 200px);
+  }
+
+  .project-invitation {
+    gap: clamp(100px, 5vw, 140px);
+    padding: clamp(64px, 3.5vw, 84px);
+  }
+}
+
+@media (min-width: 3440px) {
+  .shell {
+    width: min(2560px, calc(100% - clamp(480px, 14vw, 600px)));
+  }
+}

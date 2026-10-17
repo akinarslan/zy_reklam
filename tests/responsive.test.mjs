@@ -100,15 +100,41 @@ test('Ana site viewport matrisi, geniş ekran ölçekleri, menüler ve yatay ta�
     });
     assert.ok(measurement.documentWidth <= viewport.width, `Ana site yatay taşıyor: ${JSON.stringify(measurement)}`);
     assert.ok(measurement.shell.width <= viewport.width, `Container viewport dışına çıktı: ${JSON.stringify(measurement)}`);
-    if (viewport.width >= 1440) {
+    if (viewport.width >= 1440 && viewport.width < 1920) {
       assert.ok(measurement.shell.width <= 1761, `Ana container max sınırını aştı: ${JSON.stringify(measurement)}`);
       assert.equal(measurement.serviceColumns, 4, `Large desktop hizmet grid'i dört kolon değil: ${JSON.stringify(measurement)}`);
       assert.ok(Number.parseFloat(measurement.titleFontSize) <= 86, `Hero başlığı aşırı büyüdü: ${JSON.stringify(measurement)}`);
     }
     if (viewport.width >= 1920) {
-      assert.ok(measurement.showroomStage.height >= 680 && measurement.showroomStage.height <= 800,
+      const expectedShellWidth = viewport.width >= 3440 ? 2560 : viewport.width >= 2560 ? 2240 : 1800;
+      assert.ok(Math.abs(measurement.shell.width - expectedShellWidth) <= 1,
+        `Ana shell hedef genişliğinde değil: ${JSON.stringify(measurement)}`);
+      assert.equal(measurement.serviceColumns, 4, `Large desktop hizmet grid'i dört kolon değil: ${JSON.stringify(measurement)}`);
+      assert.ok(measurement.headerHeight >= 90, `Geniş ekran navbar yüksekliği yetersiz: ${JSON.stringify(measurement)}`);
+    }
+    if (viewport.width >= 1920 && viewport.width < 2560) {
+      assert.ok(Number.parseFloat(measurement.titleFontSize) <= 86,
+        `1920px hero başlığı önceki ölçüsünü aştı: ${JSON.stringify(measurement)}`);
+    }
+    if (viewport.width >= 2560) {
+      const heroHeight = measurement.hero.height;
+      const signStageHeight = measurement.signStage.height;
+      const titleFontSize = Number.parseFloat(measurement.titleFontSize);
+      assert.ok(heroHeight >= 800 && heroHeight <= 880,
+        `2560px+ hero yüksekliği hedef dışında: ${JSON.stringify(measurement)}`);
+      assert.ok(signStageHeight >= 600 && signStageHeight <= 680,
+        `2560px+ tabela sahnesi hedef dışında: ${JSON.stringify(measurement)}`);
+      assert.ok(titleFontSize >= 90 && titleFontSize <= 100,
+        `2560px+ hero başlığı hedef dışında: ${JSON.stringify(measurement)}`);
+    }
+    if (viewport.width >= 1920) {
+      const showroomMinimum = viewport.width >= 2560 ? 740 : 680;
+      const showroomMaximum = viewport.width >= 2560 ? 820 : 720;
+      assert.ok(measurement.showroomStage.height >= showroomMinimum && measurement.showroomStage.height <= showroomMaximum,
         `Showroom hedef ölçüsünün dışında: ${JSON.stringify(measurement)}`);
-      assert.ok(measurement.showcaseImage.height >= 620 && measurement.showcaseImage.height <= 680,
+      const showcaseMinimum = viewport.width >= 2560 ? 720 : 620;
+      const showcaseMaximum = viewport.width >= 2560 ? 800 : 680;
+      assert.ok(measurement.showcaseImage.height >= showcaseMinimum && measurement.showcaseImage.height <= showcaseMaximum,
         `Showcase hedef ölçüsünün dışında: ${JSON.stringify(measurement)}`);
     }
     metrics.push(measurement);
