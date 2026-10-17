@@ -65,7 +65,7 @@ button {
   justify-content: space-between;
   gap: 24px;
   padding: 8px clamp(16px, 3vw, 40px);
-  max-width: 1824px;
+  max-width: var(--admin-shell);
   margin-inline: auto;
 }
 
@@ -124,7 +124,7 @@ button {
   scrollbar-width: thin;
   scrollbar-color: rgba(215, 184, 121, 0.35) transparent;
   border-top: 1px solid rgba(255, 255, 255, 0.045);
-  max-width: 1824px;
+  max-width: var(--admin-shell);
   margin-inline: auto;
 }
 
@@ -211,7 +211,7 @@ button {
 }
 
 .admin-content {
-  max-width: 1760px;
+  max-width: var(--admin-shell);
   margin: 0 auto;
   display: grid;
   gap: 22px;
@@ -855,3 +855,47 @@ button:disabled {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Shared shell keeps header, navigation and editor panels on the same edges. */
+:root { --admin-shell: 1760px; --admin-gutter: clamp(16px, 3vw, 40px); }
+.admin-topbar, .admin-nav, .admin-content {
+  width: min(var(--admin-shell), calc(100% - 2 * var(--admin-gutter)));
+  margin-inline: auto;
+}
+.admin-topbar { padding-inline: 0; }
+.admin-nav { padding-inline: 0; }
+.admin-main { padding-inline: 0; }
+.form-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.mini-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.dashboard-stats { grid-template-columns: repeat(4, minmax(0, 1fr)); max-width: 2080px; }
+.panel, .panel-header, .form-grid, .service-group, .media-upload-form,
+.media-card-body, .upload-preview, .publish-dialog-content { min-width: 0; }
+.media-card-body, .upload-preview, .publish-history, .publish-diff { overflow-wrap: anywhere; }
+.media-card-actions { flex-wrap: wrap; }
+.media-grid { grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr)); }
+@media (max-width: 1100px) {
+  .admin-nav { width: auto; }
+}
+@media (max-width: 1023px) {
+  .dashboard-stats, .mini-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 600px) {
+  :root { --admin-gutter: 12px; }
+  .form-grid, .mini-grid, .dashboard-stats { grid-template-columns: minmax(0, 1fr); }
+  .media-grid { grid-template-columns: repeat(auto-fill, minmax(min(100%, 168px), 1fr)); }
+}
+@media (min-width: 1920px) {
+  :root { --admin-shell: 1800px; }
+  .form-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (min-width: 2560px) {
+  :root { --admin-shell: 2240px; }
+  .form-grid, .mini-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .media-grid { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+}
+@media (min-width: 3440px) {
+  :root { --admin-shell: 2560px; }
+}
+
+/* Long descriptions and direct card fields retain a readable editing measure. */
+.field { max-width: 1200px; }

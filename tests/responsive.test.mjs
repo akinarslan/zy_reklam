@@ -77,6 +77,7 @@ test('Ana site viewport matrisi, geniş ekran ölçekleri, menüler ve yatay ta�
 
   for (const viewport of viewports) {
     await page.setViewportSize(viewport);
+    await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
     const measurement = await page.evaluate(() => {
       const rect = (selector) => {
         const element = document.querySelector(selector);
@@ -92,7 +93,9 @@ test('Ana site viewport matrisi, geniş ekran ölçekleri, menüler ve yatay ta�
         hero: rect('.hero-grid'),
         titleFontSize: getComputedStyle(document.querySelector('#hero-title')).fontSize,
         signStage: rect('.sign-stage'),
-        showroomStage: rect('.showroom-stage'),
+        showroomCount: document.querySelectorAll('#vitrin, [data-showroom-stage]').length,
+        heroColumns: getComputedStyle(document.querySelector('.hero-grid')).gridTemplateColumns.split(' ').length,
+        heroOwnsStage: document.querySelector('[data-hero-3d]').contains(document.querySelector('[data-hero-stage]')),
         showcaseImage: rect('.real-lightbox img'),
         serviceColumns: getComputedStyle(document.querySelector('.service-grid')).gridTemplateColumns.split(' ').length,
         headerHeight: rect('.header-inner')?.height
@@ -120,7 +123,7 @@ test('Ana site viewport matrisi, geniş ekran ölçekleri, menüler ve yatay ta�
       const heroHeight = measurement.hero.height;
       const signStageHeight = measurement.signStage.height;
       const titleFontSize = Number.parseFloat(measurement.titleFontSize);
-      assert.ok(heroHeight >= 800 && heroHeight <= 880,
+      assert.ok(heroHeight >= 760 && heroHeight <= 820,
         `2560px+ hero yüksekliği hedef dışında: ${JSON.stringify(measurement)}`);
       assert.ok(signStageHeight >= 600 && signStageHeight <= 680,
         `2560px+ tabela sahnesi hedef dışında: ${JSON.stringify(measurement)}`);
@@ -128,24 +131,17 @@ test('Ana site viewport matrisi, geniş ekran ölçekleri, menüler ve yatay ta�
         `2560px+ hero başlığı hedef dışında: ${JSON.stringify(measurement)}`);
     }
     if (viewport.width >= 1920) {
-      const showroomMinimum = viewport.width >= 2560 ? 740 : 680;
-      const showroomMaximum = viewport.width >= 2560 ? 820 : 720;
-      assert.ok(measurement.showroomStage.height >= showroomMinimum && measurement.showroomStage.height <= showroomMaximum,
-        `Showroom hedef ölçüsünün dışında: ${JSON.stringify(measurement)}`);
       const showcaseMinimum = viewport.width >= 2560 ? 720 : 620;
       const showcaseMaximum = viewport.width >= 2560 ? 800 : 680;
       assert.ok(measurement.showcaseImage.height >= showcaseMinimum && measurement.showcaseImage.height <= showcaseMaximum,
         `Showcase hedef ölçüsünün dışında: ${JSON.stringify(measurement)}`);
     }
+    assert.equal(measurement.showroomCount, 0);
+    assert.equal(measurement.heroOwnsStage, true);
+    assert.equal(measurement.heroColumns, viewport.width >= 768 ? 2 : 1);
+    assert.ok(measurement.signStage.left >= measurement.hero.left - 1 && measurement.signStage.right <= measurement.hero.right + 1);
     metrics.push(measurement);
-    if ([1440, 1920, 2560, 3440, 3840].includes(viewport.width)) {
-      await page.evaluate(async () => {
-        const image = document.querySelector('.showroom-fallback img');
-        if (image && image.getBoundingClientRect().top < innerHeight) {
-          image.loading = 'eager';
-          await image.decode();
-        }
-      });
+    if ([390, 768, 1366, 1440, 1920, 2560, 3440, 3840].includes(viewport.width)) {
       await page.screenshot({ path: `docs/evidence/responsive/site-${viewport.width}.png` });
     }
   }
@@ -209,6 +205,7 @@ test('Üretilen hizmet, proje ve promosyon sayfaları mobil/tablet/large desktop
       { width: 3840, height: 2160 }
     ]) {
       await page.setViewportSize(viewport);
+    await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
       const response = await page.goto(`${base}${path}`);
       assert.equal(response?.status(), 200, `Sayfa açılamadı: ${path}`);
       const layout = await page.evaluate(() => {

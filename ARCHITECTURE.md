@@ -1,6 +1,6 @@
 # ZY Reklam — Mimari
 
-**Sürüm:** 1.20 · **Tarih:** 2026-10-17 · **Durum:** P3 fiziksel cihaz performans kabulü açık; P7 admin medya/taslak akışı yerel entegrasyonla doğrulandı, KV/R2 provision edildi; production secrets ve canlı GitHub yayını engelli; responsive viewport alt kabulü ve 2K+ ziyaretçi site genişlik ayarı doğrulandı
+**Sürüm:** 1.21 · **Tarih:** 2026-10-17 · **Durum:** P3 fiziksel cihaz performans kabulü açık; P7 admin medya/taslak akışı yerel entegrasyonla doğrulandı, KV/R2 provision edildi; production secrets ve canlı GitHub yayını engelli; responsive viewport alt kabulü ve 2K+ ziyaretçi site genişlik ayarı doğrulandı
 
 **İlgili belgeler:** [Yol haritası](ROADMAP.md) · [Çalışma kuralları](AGENTS.md)
 
@@ -413,3 +413,9 @@ Wrangler 4.151.0 Worker Previews için wrangler.jsonc içinde boş previews blo�
 Preview --dry-run desteklenmediği help ile görüldü. Yalnız previews ayarları ve ortak top-level main/name/assets/compatibility_date içeren geçici config, boş env dosyasıyla wrangler deploy --dry-run kontrolünden geçti; yalnız ASSETS binding'i çıktı. Bu gerçek preview deploy veya production deployment değildir. PR #3 Cloudflare build ve preview URL görsel kabulü doğrulanmadan merge edilmez.
 
 Kaynak: https://developers.cloudflare.com/workers/previews/configuration/
+
+### 2026-10-17 — A21 hero içinde tek 3D sahne ve admin responsive shell (P3.7f/P8.7b)
+
+Kullanıcının yeni talimatı A12 bağımsız tabela showroom sunumunu kaldırır. Ana sayfada yalnız mevcut src/scene hero renderer yaşam döngüsü başlatılır; showroom DOM, stylesheet import ve bootstrap çağrısı yoktur. Özgün ZY REKLAM geometrisi, lazy yükleme, reduced-motion/poster/context yedeği ve kaynak temizliği korunur. Gerçek lightbox ve araç fotoğrafı showcase bölümü, hizmet/proje/promosyon sayfaları ve iletişim akışları korunur. 2560px hero shell 2240px, metin/sahne kolonları yaklaşık %44/%56; yükseklik 768px, sahne 614px.
+
+Admin yalnız frontend sunum revizyonudur: topbar/nav/content ortak shell 1920→1800, 2560→2240, 3440/3840→2560px; kısa alanlar en fazla dört kolon, uzun alanlar 1200px ile sınırlı. Dashboard 1/2/4 kolon, medya kartları kontrollü auto-fill. API/auth/KV/R2/yayın/veri sözleşmesi değişmez. A20 previews:{} izolasyonu korunur. Mocked frontend responsive kanıtı production login/publish veya fiziksel cihaz performans kabulü değildir.

@@ -520,7 +520,7 @@ const renderApp = (): void => {
           <button type="button" class="nav-services" data-tone="services" data-target="services" aria-pressed="false">Hizmetler</button>
           <button type="button" class="nav-projects" data-tone="projects" data-target="projects" aria-pressed="false">Projeler</button>
           <button type="button" class="nav-promotions" data-tone="promotions" data-target="promotions" aria-pressed="false">Promosyonlar</button>
-          <button type="button" class="nav-showroom" data-tone="showroom" data-target="showroom" aria-pressed="false">3D Vitrin</button>
+          <button type="button" class="nav-showroom" data-tone="showroom" data-target="showroom" aria-pressed="false">3D Hero</button>
           <button type="button" class="nav-contact" data-tone="contact" data-target="contact" aria-pressed="false">İletişim</button>
           <button type="button" class="nav-footer" data-tone="footer" data-target="footer" aria-pressed="false">Footer</button>
           <button type="button" class="nav-seo" data-tone="seo" data-target="seo" aria-pressed="false">SEO</button>
@@ -552,8 +552,8 @@ const renderApp = (): void => {
             ${renderPromotions()}
           </section>
           <section class="panel section-panel section-showroom" id="showroom-panel">
-            <div class="panel-header"><div><span class="section-kicker">GÖRSEL VİTRİN</span><h2>3D Vitrin</h2><p class="panel-subtitle">Site vitrininin mevcut görünümü ve yönetim kapsamı.</p></div></div>
-            <div class="notice-card"><strong>Vitrin içeriği bu panelden düzenlenmiyor.</strong><p>3D vitrin kaynakları site uygulamasının parçasıdır; bu panelde vitrin için içerik düzenleme alanı bulunmamaktadır.</p></div>
+            <div class="panel-header"><div><span class="section-kicker">GÖRSEL VİTRİN</span><h2>3D Hero</h2><p class="panel-subtitle">Hero sahnesinin mevcut görünümü ve yönetim kapsamı.</p></div></div>
+            <div class="notice-card"><strong>Hero sahnesi bu panelden düzenlenmiyor.</strong><p>ZY REKLAM 3D sahnesi ana sayfanın hero alanında yer alır; bu panelde sahne için içerik düzenleme alanı bulunmamaktadır.</p></div>
           </section>
           <section class="panel section-panel section-contact" id="contact-panel">
             <div class="panel-header"><div><span class="section-kicker">İLETİŞİM BİLGİLERİ</span><h2>İletişim</h2><p class="panel-subtitle">Ziyaretçilerin ulaşacağı doğrulanmış iletişim alanları.</p></div></div>
