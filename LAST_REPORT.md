@@ -1,69 +1,41 @@
-# ZY REKLAM PRODUCTION ADMIN DEPLOY RAPORU
+# ZY REKLAM ADMIN RESPONSIVE + HERO RAPORU
 
-R2:
-OK
+Tarih: 2026-10-17
+Aşama/iş: P8.7b / P3.7f; mimari v1.21/A21.
+Branch: fix/admin-responsive-hero (origin/main 8da241719b5afd32ebac3ff097e0d149ebf6347a üzerinden ayrı worktree).
+PR: henüz oluşturulmadı. Commit/Merge SHA: henüz oluşmadı.
 
-Bucket:
-`zy-reklam-admin-media-staging`
+ADMIN
 
-Public access:
-DISABLED — `wrangler r2 bucket dev-url get` disabled; no custom domains are connected. Bucket Standard storage class.
+| Viewport | Content | Topbar | Nav | Document | Overflow |
+| --- | --- | --- | --- | --- | --- |
+| 390 | 366 | 366 | hamburger | 390 | YOK |
+| 768 | 721.91 | 721.91 | hamburger | 768 | YOK |
+| 1366 | 1286 | 1286 | 1286 | 1366 | YOK |
+| 1920 | 1800 | 1800 | 1800 | 1920 | YOK |
+| 2560 | 2240 | 2240 | 2240 | 2560 | YOK |
+| 3440 | 2560 | 2560 | 2560 | 3440 | YOK |
+| 3840 | 2560 | 2560 | 2560 | 3840 | YOK |
 
-KV:
-OK
+Mobil/tablet/desktop/2K/ultrawide: PASS — 15 Chromium viewport.
+Menu/Forms/Media/Publishing/Dialog: PASS (frontend mock; gerçek publish yok).
+Dashboard: 1/2/4 kolon; kart en fazla 509.5px. Formlar en fazla dört kolon, textarea/uzun alan en fazla 1200px. Medya 1440:5,1920:6,2560:7,3440/3840:9 kolon; görsel/video contain. Upload dosya seçimi/yerel önizleme ve mobil/tablet menü/dialog sınırları doğrulandı.
 
-KV binding:
-MATCH — Cloudflare namespace listindeki ADMIN_DRAFTS ID, `wrangler.jsonc` ile eşleşiyor.
+PUBLIC
+390/768/1366/1440/1920/2560/3440/3840 hero: PASS; 15 viewport overflow YOK.
+Ayrı 3D Vitrin / Showroom: YOK. Hero içinde mevcut özgün Three.js ZY REKLAM sahnesi: PASS. Duplicate canvas: YOK; tek canvas ve scroll sonrası aynı canvas, showroom network isteği yok.
+2560 hero: 2240×768px; stage: 1187.56×614.39px; kolon oranı yaklaşık %44/%56. Showcase lightbox/araç fotoğrafı korundu.
+Referans kompozisyon: metindeki oranlara göre PASS; ekte ayrı referans görseli bulunmadığı için görsel birebir eşleşmesi değerlendirilemedi.
 
-Secrets:
-INCOMPLETE — `wrangler secret list` 0/4 gösterdi. Değerler istenmedi, okunmadı veya yazılmadı.
+CI/DOĞRULAMA
+Check: PASS. Build: PASS (ertelenen renderer 606.05kB mevcut chunk uyarısı).
+Tests: 41/41 PASS; seri tam test. Kaldırılmış showroom özelliklerine ait üç test yerine tek sahne regresyonu ve yeni bağımsız admin frontend testi var; test atlanmadı.
+Public regression: PASS — 14 kategori × 5 viewport, menüler, iletişim, reduced motion/WebGL/context/fallback ve cleanup.
+Ekran görüntüleri docs/evidence/responsive altında; istenen yedi admin/yedi site ve 2560 dört panel görüntüsü görsel incelendi. Mobil/tablet menu/upload/dialog görüntüleri de üretildi.
+GitHub Verify/Cloudflare Preview/production Build/live public/live admin: henüz çalıştırılmadı. Başarılı olmadan merge yok.
 
-Secret leak:
-NONE — bu çalışmada production secret veya `.dev.vars` okunmadı/değiştirilmedi.
+Değişen dosyalar: src/admin/admin.css, src/admin/main.ts (yalnız sahne açıklaması), index.html, src/main.ts, src/styles/main.css, paylaşılan menüden üretilen proje/promosyon HTML, tests/admin-responsive.test.mjs ve fixture helper, tests/admin-worker.test.mjs, tests/responsive.test.mjs, tests/showroom.test.mjs, mimari/roadmap ve responsive kanıtlar.
+Backend/API/auth/publish/media veri mantığı ve Wrangler config değişmedi. previews:{} korunur; uzaktaki binding/secret izolasyonu build sonrası doğrulanacak. Production secret/.dev.vars okunmadı, secret değeri Git/rapora eklenmedi. PowerShell kullanılmadı. Ana çalışma ağacındaki kullanıcı/generated farkları korunuyor.
 
-Check:
-PASS — `npm.cmd run check`
-
-Build:
-PASS — `npm.cmd run build`; `dist/admin/index.html` ve admin JS/CSS üretildi. Mevcut 599.52 kB SVGLoader chunk uyarısı sürüyor.
-
-Tests:
-42/42 PASS — `npm.cmd test -- --test-concurrency=1`. Local Worker route test also checks `/` homepage, unauthenticated `/api/admin/session`, `/admin`, `/admin/`, `/admin/index.html`, and admin JS/CSS assets.
-
-Wrangler dry-run:
-PASS — KV, R2 ve ASSETS binding'leri gösterildi; gerçek deployment yapılmadı.
-
-PR #2:
-OPEN / DRAFT — yeni PR oluşturulmadı.
-
-PR Verify:
-GREEN on implementation head `0d7c4805b63f06be136a91f3d67625f080c4f94b` — run `38897936832`. Documentation-only pushes afterward triggered reruns. The added route assertions and this report update are being pushed now and require a fresh Verify before merge.
-
-Cloudflare Build:
-FAILED — PR preview build ID `4bcd17f8-cd9a-47d3-b4a9-0162acee435c`. Dashboard oturumu authenticated olmadığı için build logunun nedeni okunamadı; GitHub check kaydı da ayrıntılı log sağlamadı.
-
-Live site:
-NOT CHECKED — merge/deployment yapılmadı.
-
-Live /admin/:
-NOT CHECKED — önceki sürümde 404 olduğu bildirilmişti; bu çalışmada tekrar denenmedi.
-
-Admin login:
-NOT TESTED — production secrets eksik; login yapılmadı.
-
-R2 media staging:
-NOT TESTED — bucket varlığı ve private access doğrulandı; object upload/preview/delete smoke yapılmadı.
-
-Admin publish:
-NOT EXECUTED — gerçek GitHub publish yapılmadı.
-
-Final main SHA:
-`a11fa8da1127c74c5021947ef0ca62531b905e49` — değişmedi.
-
-Fix branch:
-`fix/cloudflare-admin-deploy`; uygulama düzeltmesi `cc9150104b61f4c4ea0c5bd0624e258b6d09c5a4`. Bu dalda `/admin` canonical redirect, `/admin/` → `/admin/index.html`, gerçek KV ID, route/asset/API/root testleri ve durum belgeleri bulunur.
-
-Engel / sıradaki tek iş:
-Önce dört production secret'ı kullanıcı kendi terminalinde güvenle tanımlamalı; sonra authenticated Cloudflare Dashboard'dan Build `4bcd17f8-cd9a-47d3-b4a9-0162acee435c` logunu incelemeliyiz. Bu kapılar ve güncel PR Verify yeşil olmadan PR Ready for review yapılmayacak, merge edilmeyecek veya deploy edilmeyecek.
-
-İş güvenli noktada durduruldu; başarısız kapı nedeniyle production merge/deploy ilerletilmedi.
+Engel: yok; uzak kabul bekleniyor. Genel P3.6/P7/P8 kapanmaz. Bu Chromium emülasyonudur; fiziksel cihaz/GPU kabulü değildir. Gerçek production login/publish çalıştırılmadı.
+Sıradaki tek iş: commit/push/PR ardından Verify ve izole Cloudflare Preview kabulünü tamamlamak.

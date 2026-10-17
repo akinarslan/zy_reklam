@@ -1,17 +1,30 @@
-import {test,before,after} from 'node:test';
+import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import {spawn} from 'node:child_process';
-import {chromium} from 'playwright';
-import {mkdir,writeFile} from 'node:fs/promises';
-const base='http://127.0.0.1:4195';let server,browser;const checks=[];
-before(async()=>{server=spawn(process.execPath,['node_modules/vite/bin/vite.js','preview','--host','127.0.0.1','--port','4195','--strictPort'],{stdio:'ignore'});for(let n=0;n<100;n++){if(server.exitCode!==null)throw Error('preview failed');try{if((await fetch(base)).ok)break;}catch{}await new Promise(r=>setTimeout(r,100));}browser=await chromium.launch({executablePath:process.env.ZY_CHROMIUM_PATH||undefined,args:['--no-sandbox','--disable-dev-shm-usage','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']});await mkdir('docs/evidence',{recursive:true});});
-after(async()=>{const version=await browser?.version();await browser?.close();server?.kill();await writeFile('docs/evidence/P3_7_SHOWROOM_VERIFICATION.json',JSON.stringify({date:new Date().toISOString(),browser:version,renderer:'ANGLE SwiftShader; viewport emulation, not a physical GPU',checks},null,2)+'\n');});
-async function open(width=1440,reduced=false){const page=await browser.newPage({viewport:{width,height:1000},isMobile:width<640,hasTouch:width<640,reducedMotion:reduced?'reduce':'no-preference'});await page.goto(base);await page.locator('#vitrin').scrollIntoViewIfNeeded();await page.evaluate(()=>scrollTo(0,document.querySelector('#vitrin').offsetTop-40));await page.waitForFunction(()=>document.querySelector('[data-showroom-stage]').dataset.state==='ready');return page;}
-const data=page=>page.locator('[data-showroom-stage]').evaluate(e=>({...e.dataset}));
-const idle=page=>page.waitForFunction(()=>document.querySelector('[data-showroom-stage]').dataset.loop==='idle');
-test('Bağımsız bölüm, gerçek 3D, obje bazlı fare/touch tepkisi ve boşta durma',async()=>{for(const width of [1440,360]){const page=await open(width);assert.equal(await page.evaluate(()=>{const s=document.querySelector('#vitrin');return s.previousElementSibling.classList.contains('hero')&&s.nextElementSibling.classList.contains('brand-showcase');}),true);const productData=await data(page);assert.ok(Number(productData.triangles)>10000);assert.equal(productData.chrome,'true');assert.equal(productData.letterStyle,'approved-wordmark-geometric');const capHeights=productData.panelCapHeights.split(',').map(Number);assert.equal(capHeights.length,4);assert.ok(capHeights.every(h=>h===capHeights[0]));assert.ok(Number(productData.titleCapHeight)>capHeights[0]*1.2);assert.equal(productData.lightPalette.split(',').length,5);assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);await page.mouse.move(0,0);await idle(page);const before=await data(page);await page.waitForTimeout(250);assert.equal((await data(page)).frames,before.frames);
-for(const id of ['upper','lower','totem']){const button=page.locator(`[data-showroom-select=${id}]`);if(width===360)await button.tap();else await button.focus();await page.waitForFunction(id=>document.querySelector('[data-showroom-stage]').dataset[id+'Active']==='true',id);const state=await data(page);for(const other of ['upper','lower','totem'].filter(x=>x!==id))assert.equal(state[other+'Active'],'false');await page.waitForTimeout(400);if(width===1440&&id!=='totem')await page.locator('#vitrin').screenshot({path:`docs/evidence/p3-7-showroom-${id}-lit.jpg`,type:'jpeg',quality:88});if(id==='totem')await page.locator('#vitrin').screenshot({path:`docs/evidence/p3-7-showroom-lit-${width}.jpg`,type:'jpeg',quality:88});await page.locator('h2#showroom-title').evaluate(e=>e.focus());await page.evaluate(()=>document.activeElement?.blur());await page.waitForTimeout(1700);}
-const canvas=page.locator('[data-showroom-mount] canvas');await canvas.scrollIntoViewIfNeeded();const box=await canvas.boundingBox();if(width===1440){await page.mouse.move(box.x+box.width*.35,box.y+box.height*.29);await page.waitForFunction(()=>document.querySelector('[data-showroom-stage]').dataset.upperActive==='true');assert.equal((await data(page)).totemActive,'false');await page.mouse.move(0,0);}else{await page.touchscreen.tap(box.x+box.width*.5,box.y+box.height*.18);await page.waitForFunction(()=>document.querySelector('[data-showroom-stage]').dataset.upperActive==='true');await page.waitForTimeout(1800);}
-await idle(page);await page.locator('#vitrin').screenshot({path:`docs/evidence/p3-7-showroom-${width}.jpg`,type:'jpeg',quality:88});await page.evaluate(()=>scrollTo(0,document.body.scrollHeight));await page.waitForTimeout(200);const stopped=await data(page);await page.waitForTimeout(250);assert.equal((await data(page)).frames,stopped.frames);assert.equal(stopped.loop,'stopped');checks.push({check:'geometry, independent pointer/touch, idle/offscreen, overflow',width,passed:true,triangles:before.triangles});await page.close();}});
-test('Reduced motion korur; hareket yok, ışık ve 3D var',async()=>{const page=await open(360,true);await idle(page);const initial=await data(page);await page.locator('[data-showroom-select=totem]').tap();await page.waitForFunction(()=>document.querySelector('[data-showroom-stage]').dataset.totemActive==='true');assert.equal((await data(page)).totemPose,initial.totemPose);assert.equal(await page.locator('[data-showroom-mount] canvas').count(),1);checks.push({check:'reduced motion with real 3D and fixed pose',passed:true});await page.close();});
-test('Lazy yükleme ve Three.js/context kaybında statik yedek',async()=>{const page=await browser.newPage({viewport:{width:1440,height:500}});await page.goto(base);assert.equal(await page.locator('[data-showroom-mount] canvas').count(),0);await page.route('**/renderer-*.js',r=>r.abort());await page.locator('#vitrin').scrollIntoViewIfNeeded();await page.waitForFunction(()=>document.querySelector('[data-showroom-stage]').dataset.state==='fallback');assert.equal(await page.locator('.showroom-fallback img').evaluate(e=>e.complete&&e.naturalWidth>0),true);await page.close();const p=await open();await p.locator('[data-showroom-mount] canvas').evaluate(c=>c.dispatchEvent(new Event('webglcontextlost',{cancelable:true})));await p.waitForFunction(()=>document.querySelector('[data-showroom-stage]').dataset.state==='fallback');assert.equal(await p.locator('[data-showroom-mount] canvas').count(),0);checks.push({check:'lazy loading, module failure and context-loss fallback',passed:true});await p.close();});
+import { spawn } from 'node:child_process';
+import { chromium } from 'playwright';
+
+test('Retired showroom never boots; one hero canvas survives scrolling without duplicate renderers',async()=>{
+ const server=spawn(process.execPath,['node_modules/vite/bin/vite.js','preview','--host','127.0.0.1','--port','4195','--strictPort'],{stdio:'ignore',windowsHide:true});
+ let browser;
+ try{
+  const base='http://127.0.0.1:4195';
+  for(let n=0;n<100;n++){if(server.exitCode!==null)throw Error('Preview failed');try{if((await fetch(base)).ok)break;}catch{}await new Promise(r=>setTimeout(r,100));}
+  browser=await chromium.launch({executablePath:process.env.ZY_CHROMIUM_PATH||undefined,args:['--no-sandbox','--disable-dev-shm-usage','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']});
+  const page=await browser.newPage({viewport:{width:2560,height:1440}}),requests=[],errors=[];
+  page.on('request',r=>requests.push(r.url()));page.on('pageerror',e=>errors.push(e.message));
+  await page.goto(base);
+  await page.waitForFunction(()=>document.querySelector('[data-hero-stage]').dataset.sceneState==='ready');
+  const canvas=await page.locator('[data-hero-3d] canvas').elementHandle();
+  assert.equal(await page.locator('#vitrin,[data-showroom-stage]').count(),0);
+  assert.equal(await page.locator('canvas').count(),1);
+  assert.equal(await page.locator('.real-lightbox').count(),1);
+  for(let i=0;i<2;i++){
+   await page.evaluate(()=>scrollTo(0,document.body.scrollHeight));await page.waitForTimeout(150);
+   await page.evaluate(()=>scrollTo(0,0));await page.waitForTimeout(150);
+  }
+  assert.equal(await page.locator('canvas').count(),1);
+  assert.equal(await canvas.evaluate(c=>c===document.querySelector('[data-hero-stage] canvas')),true);
+  assert.equal(requests.some(u=>u.includes('/showroom/')||u.includes('showroom-')),false);
+  assert.deepEqual(errors,[]);
+ }finally{await browser?.close();server.kill();}
+});

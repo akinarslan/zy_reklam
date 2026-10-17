@@ -1,6 +1,6 @@
 # ZY Reklam — Yol Haritası
 
-**Sürüm:** 1.20 · **Başlangıç:** 2026-10-01 · **Güncelleme:** 2026-10-17
+**Sürüm:** 1.21 · **Başlangıç:** 2026-10-01 · **Güncelleme:** 2026-10-17
 
 **Kaynak:** [ARCHITECTURE.md](ARCHITECTURE.md) · **Zorunlu kontrol:** [AGENTS.md](AGENTS.md)
 
@@ -615,3 +615,14 @@ Sıradaki tek iş:
 - Doğrulama: YAML 1.2 parser PASS, bash -n PASS; workflow scripti gerçek canlı Worker üzerinde HTML marker, CSS marker, JS HTTP 200 ve non-empty kontrolleriyle PASS. Python YAML modülü bulunmadığından resmi npm yaml 2.9.1 paketi SHA-512 integrity doğrulamasıyla geçici araç olarak kullanıldı; proje bağımlılıkları değişmedi.
 - Kabul kapısı: PR Verify GREEN sonrası merge; merge SHA üzerinde Live Worker Smoke ve Cloudflare production Build sonucu ayrıca doğrulanacak. P9 geneli/P3.6/P7 kapanmaz.
 - Sıradaki tek iş: fix/live-worker-smoke commit/push ve PR Verify kapısını tamamlamak.
+
+### 2026-10-17 — P8.7b/P3.7f admin responsive + hero kompozisyonu (devam ediyor)
+
+- Talimat: admin içerik/topbar/nav ortak genişliği, kontrollü form/dashboard/medya; public bağımsız showroom kaldırılır ve özgün 3D hero korunur.
+- Başlangıç: origin/main 8da241719b5afd32ebac3ff097e0d149ebf6347a; fix/admin-responsive-hero ayrı worktree. Ana çalışma ağacının kullanıcı/generated farkları korundu. AGENTS ve mimari/roadmap v1.20 okundu; alt AGENTS yok.
+- Dosyalar: admin CSS ve yalnız açıklama metni main.ts, public index/main/CSS, paylaşılan menüden üretilen kategori HTML, admin-responsive/helper, responsive/showroom/admin-worker testleri, mimari ve roadmap. API/Worker/Wrangler/secret sözleşmeleri değişmedi.
+- Mimari v1.21/A21 kullanıcı talimatıyla bağımsız showroom kapsamını hero içine taşır; P3.6/P7/genel P8 kapanmaz.
+- Kabul: 15 admin ve public viewport, 14 kategori sayfası × 5 viewport; yerel check/build başarılı. Tam test, görsel inceleme, uzak CI/preview ve production kabulü sürüyor. Ayrı referans görseli ekte yok; metindeki kompozisyon ölçütleri esas alınır.
+- Sıradaki tek iş: tam test ve ekran görüntüsü kabulü, sonra commit/PR CI ve izole Preview doğrulaması.
+
+- Yerel kabul: check/build PASS, seri tam test 41/41 PASS; 15 admin/public viewport, 14 kategori×5 viewport. Admin 1800/2240/2560 hedefleri, 1/2/4 dashboard, 1200px uzun alan, 5/6/7/9 medya kolonları ve tek hero canvas geçti. İstenen 7+7 ve 2560 dört panel ekran görüntüsü incelendi. Uzak CI/preview/production kabulü bekleniyor.
