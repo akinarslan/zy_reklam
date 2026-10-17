@@ -1,6 +1,6 @@
 # ZY Reklam — Yol Haritası
 
-**Sürüm:** 1.18 · **Başlangıç:** 2026-10-01 · **Güncelleme:** 2026-10-16
+**Sürüm:** 1.20 · **Başlangıç:** 2026-10-01 · **Güncelleme:** 2026-10-17
 
 **Kaynak:** [ARCHITECTURE.md](ARCHITECTURE.md) · **Zorunlu kontrol:** [AGENTS.md](AGENTS.md)
 
@@ -192,6 +192,16 @@ P7 iki farklı akış içerir. P7.0 admin panelinin site içerik medyası ve yay
 - [x] İstenen site/admin 1440, 1920, 2560, 3440 ve 3840 viewport ekran görüntülerini üret ve görsel olarak incele.
 
 **Durum:** P8.7 responsive alt işi tamamlandı; 42/42 otomatik test, TypeScript ve production build başarılıdır. Chromium viewport emülasyonu fiziksel cihaz/GPU testi değildir. P3.6, P7 ve P8.1–P8.6 açık olduğundan genel P8 kabulü veya canlıya hazır olma sonucu çıkarılmaz.
+
+### P8.7a — 2K ve ultrawide ziyaretçi sitesi genişliği
+
+- [x] 1920–2559px aralığında visitor shell'i 1880px'e, 2560–3439px aralığında 2240px'e, 3440px+ aralığında 2560px'e kadar genişlet; 1440–1919px davranışını koru.
+- [x] Yalnızca ziyaretçi ana sitesinde 2560px+ hero/tabela sahnesi/başlığı kontrollü büyüt; hizmet, proje daveti, workshop, promosyon, iletişim, showroom ve showcase genişliğini metin ölçülerini koruyarak düzenle. Admin CSS'e dokunma.
+- [x] 1920×1080, 2560×1440, 3440×1440 ve 3840×2160 görüntülerini üretip incele; 390, 768, 1366, 1440 ve 1920 regresyonları dahil viewport matrisinde yatay taşmayı doğrula.
+
+- [ ] PR #3 CI/Cloudflare build kapısı GREEN olduktan sonra merge, otomatik production Build SUCCESS ve canlı dört geniş ekranı doğrula.
+
+**Durum:** Yerel uygulama ve Chromium viewport kabulü tamamlandı; Cloudflare preview build başarısız olduğundan canlı yayın alt işi engelli; P8 genel kabulü açık kalır. Ölçülen shell genişlikleri sırasıyla 1800, 2240, 2560 ve 2560px; 2560px hero 819px, tabela sahnesi 614px'tir. Playwright seri tam test 42/42, TypeScript kontrolü ve production build başarılıdır. Fiziksel ekran/GPU ve genel P8 performans kabulü değildir.
 
 ## 12. P9 — Canlı geçiş
 
@@ -562,3 +572,37 @@ Sıradaki tek iş:
 - Kayıt: uygulama `cc9150104b61f4c4ea0c5bd0624e258b6d09c5a4` ve rapor `0d7c4805b63f06be136a91f3d67625f080c4f94b` commit'leri `fix/cloudflare-admin-deploy` dalında; `origin` ile eşleşti. PR #2 mevcut ve draft/open; GitHub Verify yeşil.
 - Temizlik: build/test tarafından üretilen statik sayfalar, evidence ve `dist`/`.wrangler` geçici çıktıları temizlenecek; `.dev.vars` okunmadı ve hiçbir secret Git'e eklenmedi.
 - Sıradaki tek iş: production secret'ları değerleri sohbet/dosya/log dışında kalacak şekilde kullanıcı tarafından terminalde tanımlamak ve Cloudflare Dashboard build log erişimi sağlamak; sonra Build'i tekrar doğrulayıp PR #2 Ready for review/merge kapısına dönmek.
+
+### 2026-10-17 — P8.7a 2K / ultrawide ziyaretçi site düzeni
+
+- Talimat: 2560px ve üzerindeki ziyaretçi ana sayfasının dar shell'ini genişlet; 1440–1919px görünümünü ve 390/768/1366/1440/1920 regresyonlarını koru. Admin paneline dokunma; dört geniş ekran görüntüsünü incele; `fix/2k-layout-width` dalında commit/push ve PR aç, CI yeşil olmadan merge etme.
+- Aşama/iş: P8.7a; P8 genel kabulü, P3.6 ve P7 açık kaldı.
+- Başlangıç: güncel `AGENTS.md`, mimari v1.18 ve roadmap v1.18 okundu. Çalışma ağacı temizdi. `origin/main` `88be180`; yerel `main` sekiz commit gerideydi, bu yüzden istenen yeni dal güncel `origin/main` üzerinden açıldı. `fix/cloudflare-admin-deploy` dalı ve değişiklikleri korunmuştur.
+- Uygulama: sadece ziyaretçi `src/styles/main.css`, `showroom.css`, `showcase.css` ve responsive testleri değişti; admin CSS'e dokunulmadı. Shell 1920/2560/3440/3840'te sırasıyla 1800/2240/2560/2560px; 2560px hero 819px, sign-stage 614px. Showroom 740–820px, showcase görseli 720–800px aralığında ölçeklenir. Hizmet kartı, proje daveti, workshop/promosyon/iletişim aralıkları ve kısıtlı paragraf genişlikleri 2560px+ için ferahlatıldı. 1440–1919 mevcut boyut kuralları korunur.
+- Doğrulama: `npm.cmd run check` başarılı; `npm.cmd run build` başarılı (mevcut 599.52 kB SVGLoader chunk uyarısı). `npm.cmd test -- --test-concurrency=1`: **42/42**. Playwright ana site 15 viewport'ta, kategori sayfaları mobil/tablet/desktop/ultrawide boyutlarında taşmasız geçti; navbar, dört hedef shell genişliği, 2560+ hero/tabela boyutu, showcase/showroom ölçüleri doğrulandı. `site-{1920,2560,3440,3840}.png` görüntüleri üretildi ve görsel olarak incelendi; 2560 ana içerik geniş ve dengeli, navbar sağlamdır. Gerçek fiziksel panel/GPU kontrolü çalıştırılmadı.
+- Test uyumu: mevcut promosyon kategorisi başlığı `src/content/promotions.json` kaynağında `Ofis  Malzemeleri` olduğu için promosyon navigasyon testinin beklenen eski string'i güncel içerikle hizalandı; içerik verisi değiştirilmedi.
+- Mimari: sunum ölçüsü kararı A19 olarak kaydedildi; veri sözleşmesi, route/yayın mimarisi ve admin alanı değişmedi.
+- Git/push/PR: doğrulama tamamlandıktan sonra commit, `origin/fix/2k-layout-width` push'u ve PR oluşturma durumu kaydedilecek. CI GREEN sonrasında kullanıcı talimatına uygun PR merge ve otomatik Cloudflare deployment doğrulanacak; manuel deploy yapılmayacak.
+- Sıradaki tek iş: PR Verify sonucunu izlemek; GREEN olmadan main merge yoktur.
+
+### 2026-10-17 — P8.7a teslim ve CI kapısı (devam ediyor)
+
+- Güncel AGENTS.md, ARCHITECTURE v1.19 ve ROADMAP v1.19 yeniden okundu. Başlangıçta fix/2k-layout-width üzerinde mevcut beş CSS/test değişikliği, iki plan belgesi ve dört ziyaretçi screenshot değişikliği vardı; korundu. HEAD ve fetch ile doğrulanan origin/main 88be180fc0942551645ea54d905675e10a871673 idi.
+- Showroom talimattaki yaklaşık ölçülere uyarlandı: 2560px'te 742.39px; 3440/3840'te 820px. Renderer/DPR ve admin kaynakları değişmedi.
+- Yeni doğrulama: npm.cmd run check PASS; npm.cmd run build PASS (sandbox spawn EPERM sonrası gerekli izinle yeniden çalıştırıldı); npm.cmd test -- --test-concurrency=1 42/42 PASS. Production preview ölçümleri: shell 1800/2240/2560/2560px; 2560 hero 2240 × 819.19px, sign-stage 1099.59 × 614.39px. Document/viewport 1920/1920, 2560/2560, 3440/3440, 3840/3840; yatay taşma yok.
+- 1920/2560/3440/3840 görüntüleri ile 2560 showroom/showcase/hizmet/footer bölümleri görsel incelendi. 390/768/1366/1440/1920 regresyonları PASS. Fiziksel GPU kontrolü çalıştırılmadı.
+- Uzak kaynak commit'i a8266995a162d86119ff89d23e51020a6711cd51; beş kaynak dosya fetch sonrası uzak dal ile birebir eşleşti. PR #3: https://github.com/akinarslan/zy_reklam/pull/3. Generated çıktılar ve screenshot'lar kaynak commit'ine dahil edilmedi.
+- Cloudflare preview Build 5670fa58-f840-424e-8d7d-4b0d75f2dfd5 FAILED; GitHub Verify sonucu bekleniyor. CI GREEN olmadan merge yok. Manuel wrangler deploy çalıştırılmadı.
+- Mimari v1.19/A19 korunur; veri sözleşmesi değişmedi. P8.7a canlı yayın alt kapısı devam ediyor; genel P8/P3.6/P7 kapanmadı.
+- Sıradaki tek iş: PR #3 CI ve Cloudflare preview build kapısını çözerek yetkilendirilmiş merge/otomatik yayın/canlı viewport doğrulamasını tamamlamak.
+
+- Erişim/temizlik sınırı: bu oturumda bağlı tarayıcı yok, Wrangler auth token kontrolü Not logged in döndü; build hata logu alınamadı. Otomatik onay denetimi toplu git restore işlemini kullanıcı değişikliklerini kaybetme riskiyle reddetti; hiçbir dosya geri alınmadı. Generated/evidence farkları yerelde korundu, commit'e dahil edilmedi. Kullanıcının yalnız CSS/test commit talimatı nedeniyle plan/rapor belgeleri yerel güncellendi.
+
+### 2026-10-17 — PR #3 güvenli Cloudflare Preview yapılandırması (devam ediyor)
+
+- Talimat/iş: P8.7a ve P9 preview kapısı; mevcut PR #3 ve fix/2k-layout-width kullanılır. Başlangıç HEAD/uzak feature a826699; origin/main 88be180. Çalışma ağacındaki mevcut belge, generated HTML/evidence ve screenshot farkları korundu.
+- AGENTS.md, mimari v1.19 ve roadmap v1.19 yeniden okundu. Resmi Worker Previews belgeleri ve yerel Wrangler 4.151.0 şeması/preview help incelendi.
+- wrangler.jsonc içine boş previews bloğu eklendi. Production binding'leri/ASSETS değişmedi. KV list isteği expired auth / refresh network hatası verdi; kaynak ID uydurulmadı. İzin verilen alternatifle admin storage preview'da kapalı, preview KV/R2 NOT NEEDED. Secret eklenmedi/kopyalanmadı; uzak Previews Base secret metadatası henüz doğrulanmadı.
+- npm.cmd ci, check ve build PASS. Preview komutunda dry-run seçeneği yok. Yalnız preview ayarlarıyla oluşturulan geçici config ve boş env üzerinden wrangler deploy --dry-run PASS; sadece ASSETS binding'i gösterildi. Gerçek production deploy yapılmadı. Tam seri test devam ediyor.
+- Mimari v1.20/A20 bu izolasyon kararını kaydeder. P3.6/P7/P8 genel kabulü kapanmaz. Generated dosyalar commit kapsamına alınmaz.
+- Sıradaki tek iş: config'i mevcut PR #3 dalına push edip Verify ve Cloudflare preview sonucunu, ardından gerçek preview URL'de dört geniş ekranı doğrulamak.

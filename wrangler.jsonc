@@ -3,6 +3,9 @@
   "name": "zy-reklam",
   "main": "worker/index.ts",
   "compatibility_date": "2026-10-15",
+  // Layout previews intentionally have no admin KV/R2 bindings or configured secrets.
+  // Assets remain top-level; production storage below is not inherited by Previews.
+  "previews": {},
   "kv_namespaces": [
     {
       "binding": "ADMIN_DRAFTS",

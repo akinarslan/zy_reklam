@@ -66,7 +66,7 @@ test('Mobil promosyon menüsü: dokunma, kategoriye geçiş ve iç/dış Escape 
   await page.screenshot({ path: 'docs/evidence/promotions-menu-360.png' });
   await page.locator('[data-promo-menu] .promo-menu-card').nth(1).tap();
   await page.waitForURL('**/promosyonlar/ofis-kirtasiye/');
-  assert.equal(await page.locator('h1').textContent(), 'Ofis ve Kırtasiye Malzemeleri');
+  assert.equal(await page.locator('h1').textContent(), categories.find(({ id }) => id === 'ofis-kirtasiye')?.title);
   assert.equal(await page.locator('.promo-breadcrumb').isVisible(), true);
   await button.tap(); await page.locator('[data-promo-menu] summary').tap();
   await page.keyboard.press('Escape');

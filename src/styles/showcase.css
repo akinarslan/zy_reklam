@@ -36,3 +36,13 @@ html[data-motion=reduced] .real-car-reference,html[data-motion=reduced] .real-ca
     height: clamp(620px, 34vw, 680px);
   }
 }
+
+@media (min-width: 2560px) {
+  .real-lightbox {
+    min-height: clamp(720px, 24vw, 800px);
+  }
+
+  .real-lightbox img {
+    height: clamp(720px, 24vw, 800px);
+  }
+}
