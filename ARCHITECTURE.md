@@ -1,6 +1,6 @@
 # ZY Reklam — Mimari
 
-**Sürüm:** 1.18 · **Tarih:** 2026-10-16 · **Durum:** P3 fiziksel cihaz performans kabulü açık; P7 admin medya/taslak akışı yerel entegrasyonla doğrulandı, KV/R2 provision edildi; production secrets ve canlı GitHub yayını engelli; responsive viewport alt kabulü tamamlandı
+**Sürüm:** 1.20 · **Tarih:** 2026-10-17 · **Durum:** P3 fiziksel cihaz performans kabulü açık; P7 admin medya/taslak akışı yerel entegrasyonla doğrulandı, KV/R2 provision edildi; production secrets ve canlı GitHub yayını engelli; responsive viewport alt kabulü ve 2K+ ziyaretçi site genişlik ayarı doğrulandı
 
 **İlgili belgeler:** [Yol haritası](ROADMAP.md) · [Çalışma kuralları](AGENTS.md)
 
@@ -259,8 +259,9 @@ Görsel kanıtlar: açılış, üretim, galeri, stüdyo, form ve footer için se
 | A11 | Projeler altında beş örnek kategori; kontrollü video | Kullanıcı talimatıyla uygulandı | P2.8, müşteri projesi sahipliği varsayılmaz |
 | A12 | Admin paneli Cloudflare Worker ile backend'e bağlandı | Login/session ve local Worker dry-run; A16 KV/R2 kodu/testleri eklendi | Gerçek kaynak provisioning, GitHub `main` yazımı ve Cloudflare deploy doğrulaması açık |
 | A16 | Admin medya kütüphanesi ve kalıcı taslak | Kod + yerel Worker entegrasyonu doğrulandı; Cloudflare provisioning/live publish açık | KV taslak, R2 staging, CSRF, içerik kullanım koruması ve tek GitHub commit'i; visitor attachment sözleşmesinden ayrıdır |
-| A17 | Ana site ve admin için bağımsız responsive ölçekleme | Kod ve Chromium viewport emülasyonu ile doğrulandı; P8 genel kabulü açık | Ana `.shell` 1760px, admin içerik 1760px / header-nav 1824px; admin editör alanı en çok 1200px. DPR mevcut 1,5 sınırında kalır |
+| A17 | Ana site ve admin için bağımsız responsive ölçekleme | Kod ve Chromium viewport emülasyonu ile doğrulandı; P8 genel kabulü açık | Admin içerik 1760px / header-nav 1824px; admin editör alanı en çok 1200px. Ziyaretçi sitesi 1920–2559px aralığında 1880px, 2560–3439px aralığında 2240px, 3440px+ aralığında 2560px shell üst sınırı kullanır. DPR mevcut 1,5 sınırında kalır |
 | A18 | Admin statik route ve production binding yapılandırması | Yerel route/asset testleri, build ve Wrangler dry-run geçti; KV/R2 kaynakları doğrulandı; Workers preview build başarısız, production secrets eksik | `/admin` → `/admin/` → `admin/index.html`; KV ID eşleşiyor, R2 private. Secrets ve başarısız Cloudflare Build logu bekliyor |
+| A19 | 2K ve ultrawide ziyaretçi sitesi ölçeklemesi | 1920/2560/3440/3840 Chromium ölçümleri ve screenshot incelemesi geçti | Yalnızca ziyaretçi `src/styles/` alanı; 2560px+ hero 800–880px, başlık 90–100px, tabela sahnesi 600–680px. Admin CSS ve responsive davranışı değişmez |
 
 Mimari değişiklikte sürüm, tarih, ilgili karar ve etkilenen roadmap işi güncellenir. Yeni kullanıcı talimatıyla değişen kapsam eski kabul ölçütlerine gizlenmez.
 
@@ -285,6 +286,12 @@ Playwright Chromium viewport emülasyonunda 15 ölçüde ana site ve admin sayfa
 `ADMIN_DRAFTS` için Cloudflare'da gerçek namespace oluşturuldu ve ID `wrangler.jsonc` ile eşleşiyor. `zy-reklam-admin-media-staging` R2 bucket'ı oluşturuldu; Wrangler bilgisi Standard storage class gösteriyor, `r2.dev` public erişimi kapalı ve custom domain bağlı değil. Worker GET/HEAD `/admin` isteğini `/admin/`'ye yönlendirir; `/admin/` doğrudan `/admin/index.html` statik varlığına gider. `/api/admin/*` dispatch değişmeden kaldı. Yerel entegrasyon testi admin HTML, JavaScript/CSS varlıkları, `/admin`, `/admin/` ve `/admin/index.html` yollarını doğrular.
 
 TypeScript kontrolü, production build, 42/42 seri test ve Wrangler dry-run geçti; build çıktısında `dist/admin/index.html` ve hash'li JS/CSS var. Dry-run yalnızca config'i derler; production secrets veya canlı deploy doğrulaması değildir. `wrangler secret list` boş döndü. PR #2 head SHA'sındaki GitHub Verify başarılı (run `38897936832`), ancak Cloudflare Workers Builds preview check'i başarısız (build `4bcd17f8-cd9a-47d3-b4a9-0162acee435c`); Cloudflare dashboard session'ı authenticated olmadığından log içeriği alınamadı. Bu nedenle PR draft/merge kapısı ve canlı deployment `/admin/` kontrolü açık kalır; gerçek GitHub publish, manuel deploy veya `main` değişikliği yapılmadı.
+
+### 2026-10-17 — A19 2K ve ultrawide ziyaretçi sitesi ölçeklemesi
+
+Ziyaretçi sitesi shell'i 1920px'te 1800px, 2560px'te 2240px, 3440px ve 3840px'te 2560px ölçüldü. 2560px+ hero 800–880px, tabela sahnesi 600–680px, başlık 90–100px aralığında kontrollü ölçeklenir; hizmet kartları, workshop/promosyon/iletişim kolonları, proje daveti, showroom ve showcase de geniş shell'i kullanırken metin blokları sınırlı kalır. Bu yalnızca CSS sunum kararıdır: admin stilleri, veri sözleşmeleri, Worker, route ve yayın mimarisi değişmedi.
+
+Playwright Chromium testinde 15 ana-site viewport'u ile 14 üretilmiş ziyaretçi sayfası kontrol edildi; 390, 768, 1366, 1440 ve 1920 regresyon ölçüleri yatay taşmasız geçti. 1920×1080, 2560×1440, 3440×1440 ve 3840×2160 ana sayfa görüntüleri üretildi ve incelendi; navbar, 2K hero/tabela boyutu ve dengeli shell boşlukları doğrulandı. Test/emülasyon gerçek fiziksel ekran veya GPU performans ölçümü değildir.
 
 ### 2026-10-01 — v1.1 logo kaynak açıklaması
 
@@ -398,3 +405,11 @@ Kullanıcı A13/A14 araç 3D kapsamını iptal etti. Yeni vitrinde Nissan refera
 ### A15 — Araç fotoğrafında gölge ve aydınlatma (2026-10-04)
 
 P3.7e kullanıcı talimatı: aynı fotoğraf/crop korunur; başlangıçta mat/koyu filtre ve gölge katmanı, mouse hover veya native button dokunma/Enter/Space ile özgün parlak fotoğraf ve beyaz halo. Dokunma ikinci aktivasyonda kapanır; mouse hover geçicidir. AbortController cleanup ve reduced-motion korunur. Araç WebGL/modeli eklenmez. Mevcut DOM/CSS mimarisi içinde rutin görsel etkileşimdir.
+
+### 2026-10-17 — A20 güvenli statik Worker Preview (P8.7a/P9)
+
+Wrangler 4.151.0 Worker Previews için wrangler.jsonc içinde boş previews bloğu kullanılır. Bu layout PR'ında preview admin KV/R2 binding'leri kapalıdır; production ADMIN_DRAFTS ve ADMIN_MEDIA_STAGING üst seviyede değişmeden kalır. ASSETS üst seviyededir. Ayrı preview kaynakları tercih edilir; mevcut Cloudflare oturumu refresh/ağ hatası verdiği için statik preview alternatifi seçildi. Admin preview login/publish bu işin kabulü değildir. Production secret'ları kopyalanmaz, GITHUB_TOKEN eklenmez. Dashboard Previews Base kaynaklı secret varlığı authenticated metadata ile ayrıca doğrulanmalıdır; boş config tek başına uzaktaki secret yokluğu kanıtı değildir.
+
+Preview --dry-run desteklenmediği help ile görüldü. Yalnız previews ayarları ve ortak top-level main/name/assets/compatibility_date içeren geçici config, boş env dosyasıyla wrangler deploy --dry-run kontrolünden geçti; yalnız ASSETS binding'i çıktı. Bu gerçek preview deploy veya production deployment değildir. PR #3 Cloudflare build ve preview URL görsel kabulü doğrulanmadan merge edilmez.
+
+Kaynak: https://developers.cloudflare.com/workers/previews/configuration/
