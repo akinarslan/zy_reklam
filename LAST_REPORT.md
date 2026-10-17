@@ -1,62 +1,69 @@
-# ZY REKLAM MAIN MERGE RAPORU
+# ZY REKLAM PRODUCTION ADMIN DEPLOY RAPORU
 
-PR:
-#1 — https://github.com/akinarslan/zy_reklam/pull/1 (mevcut PR kullanıldı)
+R2:
+OK
 
-PR CI:
-GREEN — GitHub Actions Verify başarılı (run 38890396099, feature SHA `b80f8e706ad23cb23f708a1b4d0b8dcb0dec7d86`). Main üzerindeki Verify ve workers.dev live-smoke da başarılı (run 38891781966).
+Bucket:
+`zy-reklam-admin-media-staging`
 
-Feature branch:
-`b80f8e706ad23cb23f708a1b4d0b8dcb0dec7d86` (`test: stabilize browser CI checks`)
+Public access:
+DISABLED — `wrangler r2 bucket dev-url get` disabled; no custom domains are connected. Bucket Standard storage class.
 
-Main eski SHA:
-`73951ed27e79c31f69cbe1340f7de2a75988e116`
+KV:
+OK
 
-Merge commit:
-`d89664a1ef13fc2f642accf0b651f662be5c7812`
+KV binding:
+MATCH — Cloudflare namespace listindeki ADMIN_DRAFTS ID, `wrangler.jsonc` ile eşleşiyor.
+
+Secrets:
+INCOMPLETE — `wrangler secret list` 0/4 gösterdi. Değerler istenmedi, okunmadı veya yazılmadı.
+
+Secret leak:
+NONE — bu çalışmada production secret veya `.dev.vars` okunmadı/değiştirilmedi.
 
 Check:
 PASS — `npm.cmd run check`
 
 Build:
-PASS — `npm.cmd run build`; mevcut SVGLoader 500 kB chunk uyarısı devam ediyor.
+PASS — `npm.cmd run build`; `dist/admin/index.html` ve admin JS/CSS üretildi. Mevcut 599.52 kB SVGLoader chunk uyarısı sürüyor.
 
 Tests:
-42/42 PASS — `npm.cmd test -- --test-concurrency=1`; `package.json` artık concurrency değerini script içinde açıkça seri ayarlar.
+42/42 PASS — `npm.cmd test -- --test-concurrency=1`. Local Worker route test also checks `/` homepage, unauthenticated `/api/admin/session`, `/admin`, `/admin/`, `/admin/index.html`, and admin JS/CSS assets.
 
 Wrangler dry-run:
-PASS — `npx.cmd wrangler deploy --dry-run`; 190 asset okundu. Gerçek deploy komutu çalıştırılmadı.
+PASS — KV, R2 ve ASSETS binding'leri gösterildi; gerçek deployment yapılmadı.
 
-origin/main push:
-YES — `d89664a1ef13fc2f642accf0b651f662be5c7812` push sonrası remote ref yeniden okundu.
+PR #2:
+OPEN / DRAFT — yeni PR oluşturulmadı.
 
-Cloudflare auto deploy:
-STARTED (FAILED) — main SHA için Workers Builds check'i başarısız oldu; build ID `dba220d1-43ce-4540-9042-80b5a16a14da`. Build nedeni dashboard üzerinden doğrulanamadı. Manuel production deploy yapılmadı.
+PR Verify:
+GREEN on implementation head `0d7c4805b63f06be136a91f3d67625f080c4f94b` — run `38897936832`. Documentation-only pushes afterward triggered reruns. The added route assertions and this report update are being pushed now and require a fresh Verify before merge.
 
-Canlı ana site:
-OK — `https://zyreklamdijital.com.tr/` açıldı. Chromium'da 1440, 390 ve 3840 px ölçülerinde belge genişliği viewport'u aşmadı; ana başlık ve Projeler menüsü görüldü. Cloudflare build başarısız olduğu için içerik en son merge SHA'sına ait olarak doğrulanamadı.
+Cloudflare Build:
+FAILED — PR preview build ID `4bcd17f8-cd9a-47d3-b4a9-0162acee435c`. Dashboard oturumu authenticated olmadığı için build logunun nedeni okunamadı; GitHub check kaydı da ayrıntılı log sağlamadı.
 
-/admin/:
-ERROR — `https://zyreklamdijital.com.tr/admin/` ve workers.dev `/admin/` kontrolünde 404/boş yanıt. Login/publish denenmedi.
+Live site:
+NOT CHECKED — merge/deployment yapılmadı.
 
-Secret sızıntısı:
-YOK — `.dev.vars` okunmadı ve commit edilmedi; tracked merge içeriğinde yok, token biçimli secret taraması eşleşme bulmadı. `.dev.vars.example` placeholder dosyasıdır.
+Live /admin/:
+NOT CHECKED — önceki sürümde 404 olduğu bildirilmişti; bu çalışmada tekrar denenmedi.
 
-Conflict:
-YOK — `--no-ff` merge çakışmasız tamamlandı.
+Admin login:
+NOT TESTED — production secrets eksik; login yapılmadı.
 
-Son git status:
-Temiz (rapor güncellemesi push edildikten sonraki doğrulama).
+R2 media staging:
+NOT TESTED — bucket varlığı ve private access doğrulandı; object upload/preview/delete smoke yapılmadı.
 
-Son branch durumu:
-`main == origin/main`; feature branch `origin/feat/admin-panel` ile aynı SHA'da. Son rapor commit SHA'sı burada yer almaz; merge SHA yukarıdadır.
+Admin publish:
+NOT EXECUTED — gerçek GitHub publish yapılmadı.
 
-## Değişen dosyalar ve kapsam
+Final main SHA:
+`a11fa8da1127c74c5021947ef0ca62531b905e49` — değişmedi.
 
-- `package.json` — CI'da browser/WebGL testlerinin kaynak yarışını önlemek üzere test dosyaları seri çalıştırılır.
-- `ROADMAP.md` — P9 merge/live deployment kanıtı ve açık Cloudflare engeli kaydedildi; P9 tamamlandı işaretlenmedi.
-- `LAST_REPORT.md` — bu nihai rapor.
+Fix branch:
+`fix/cloudflare-admin-deploy`; uygulama düzeltmesi `cc9150104b61f4c4ea0c5bd0624e258b6d09c5a4`. Bu dalda `/admin` canonical redirect, `/admin/` → `/admin/index.html`, gerçek KV ID, route/asset/API/root testleri ve durum belgeleri bulunur.
 
-## Temizlik ve sınırlar
+Engel / sıradaki tek iş:
+Önce dört production secret'ı kullanıcı kendi terminalinde güvenle tanımlamalı; sonra authenticated Cloudflare Dashboard'dan Build `4bcd17f8-cd9a-47d3-b4a9-0162acee435c` logunu incelemeliyiz. Bu kapılar ve güncel PR Verify yeşil olmadan PR Ready for review yapılmayacak, merge edilmeyecek veya deploy edilmeyecek.
 
-Build/test ile yeniden üretilen kategori HTML'leri, sitemap ve test kanıtları geri alındı; `dist/`, `hizmetler/` ve `.wrangler/` kaldırıldı. `main`'e yalnız CI yeşil ve merge sonrası yerel testler başarılı olduktan sonra push yapıldı. Cloudflare build başarısızlığı ve `/admin/` 404 nedeniyle canlı deployment tamamlandı kabul edilmedi. Sıradaki tek iş: yetkili Cloudflare Workers Build loguyla başarısızlığı çözmek ve canlı doğrulamayı tekrarlamak.
+İş güvenli noktada durduruldu; başarısız kapı nedeniyle production merge/deploy ilerletilmedi.

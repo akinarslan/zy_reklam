@@ -69,13 +69,13 @@ npm run worker:dev
 
 ## Cloudflare kaynakları ve yayın güvenliği
 
-`wrangler.jsonc` içindeki sıfırlardan oluşan KV namespace ID'si yalnızca yerel geliştirme/konfigürasyon yer tutucusudur; gerçek deploy öncesi `ADMIN_DRAFTS` için oluşturulan KV namespace'in ID'siyle değiştirilmelidir. Ayrıca aşağıdaki kaynak Cloudflare hesabında önceden oluşturulmalıdır:
+Mevcut `wrangler.jsonc`, `ADMIN_DRAFTS` için provision edilmiş Cloudflare KV namespace ID'sine bağlıdır. Başka bir Cloudflare hesabı/Worker kurulumu için kendi namespace'inizi oluşturup config'teki ID'yi onunla değiştirin. R2 kaynağı da gerçek deployment öncesi hesapta oluşturulmalıdır:
 
 ```sh
 npx wrangler kv namespace create ADMIN_DRAFTS
 npx wrangler r2 bucket create zy-reklam-admin-media-staging
 ```
 
-R2 bucket adı config ile aynı olmalıdır. Worker secret'larını Cloudflare'de `wrangler secret put ADMIN_USERNAME`, `ADMIN_PASSWORD_HASH`, `ADMIN_SESSION_SECRET` ve `GITHUB_TOKEN` ile tanımlayın. `GITHUB_TOKEN` yalnız gerekli GitHub `contents` yazma yetkisiyle ve yayımlama yetkisi açıkça verilmiş ortamda eklenmelidir. Bu Worker `main` dalına commit oluşturur; bağlı Workers Builds bu commit üzerine deploy başlatabilir. Gerçek Cloudflare kaynakları bu değişiklikte oluşturulmamış, GitHub `main`'e gerçek yayın yapılmamış ve production deploy çalıştırılmamıştır. Wrangler `--dry-run` gerçek kaynak/credential doğrulaması değildir.
+R2 API'si hesabınızda etkin değilse Cloudflare Dashboard'dan etkinleştirip bucket oluşturmayı tekrar deneyin. Bucket adı config ile aynı olmalıdır. Worker secret'larını Cloudflare'de `wrangler secret put ADMIN_USERNAME`, `ADMIN_PASSWORD_HASH`, `ADMIN_SESSION_SECRET` ve `GITHUB_TOKEN` ile tanımlayın. `GITHUB_TOKEN` yalnız gerekli GitHub `contents` yazma yetkisiyle ve yayımlama yetkisi açıkça verilmiş ortamda eklenmelidir. Bu Worker `main` dalına commit oluşturur; bağlı Workers Builds bu commit üzerine deploy başlatabilir. Wrangler `--dry-run` config'i derler; gerçek kaynak, credential veya canlı deployment durumunu doğrulamaz.
 
 Doğrulama, test Worker'ı ayrı geçici dizin, yerel KV/R2 emülasyonu ve geçici test credential'larıyla başlatır; çalışma alanındaki `.dev.vars` dosyasını kullanmaz.
