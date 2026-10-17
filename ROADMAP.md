@@ -606,3 +606,12 @@ Sıradaki tek iş:
 - npm.cmd ci, check ve build PASS. Preview komutunda dry-run seçeneği yok. Yalnız preview ayarlarıyla oluşturulan geçici config ve boş env üzerinden wrangler deploy --dry-run PASS; sadece ASSETS binding'i gösterildi. Gerçek production deploy yapılmadı. Tam seri test devam ediyor.
 - Mimari v1.20/A20 bu izolasyon kararını kaydeder. P3.6/P7/P8 genel kabulü kapanmaz. Generated dosyalar commit kapsamına alınmaz.
 - Sıradaki tek iş: config'i mevcut PR #3 dalına push edip Verify ve Cloudflare preview sonucunu, ardından gerçek preview URL'de dört geniş ekranı doğrulamak.
+
+### 2026-10-17 — P9.6 Live Worker Smoke JS false-negative düzeltmesi (devam ediyor)
+
+- Talimat: minified JS içindeki data-project-menu literal varsayımını kaldır; mevcut HTML/CSS kontrollerini koru, JS path/HTTP 200/non-empty kontrolüyle değiştir.
+- Başlangıç: origin/main f3a1e5f; fix/live-worker-smoke bu ref üzerinden ayrı worktree içinde açıldı. Ana çalışma ağacındaki kullanıcı/generated farkları korundu. Güncel AGENTS.md, mimari v1.20 ve roadmap v1.20 incelendi; alt kapsam AGENTS.md yok.
+- Değişiklik: yalnız .github/workflows/live-smoke.yml ve bu kayıt. Wrangler/config/uygulama değişmedi; mimari v1.20/A20 korunur.
+- Doğrulama: YAML 1.2 parser PASS, bash -n PASS; workflow scripti gerçek canlı Worker üzerinde HTML marker, CSS marker, JS HTTP 200 ve non-empty kontrolleriyle PASS. Python YAML modülü bulunmadığından resmi npm yaml 2.9.1 paketi SHA-512 integrity doğrulamasıyla geçici araç olarak kullanıldı; proje bağımlılıkları değişmedi.
+- Kabul kapısı: PR Verify GREEN sonrası merge; merge SHA üzerinde Live Worker Smoke ve Cloudflare production Build sonucu ayrıca doğrulanacak. P9 geneli/P3.6/P7 kapanmaz.
+- Sıradaki tek iş: fix/live-worker-smoke commit/push ve PR Verify kapısını tamamlamak.
