@@ -1,51 +1,43 @@
-# ZY Reklam — Instagram küpü ve tam ekran 3D Vitrin raporu
+# ZY Reklam — P7.0-live A/B uygulama ve kabul raporu
 
-Tarih:2026-10-18
-Talimat: Mevcut dalda Instagram floating CSS küpü ekle; /3d-vitrin/ ilk ekranını tam sahneye dönüştür; metinleri silmeden aşağı taşı, ürün/etkileşimleri koru; commit/push ve Verify/Preview.
-Aşama/iş:P3.7h. Mimari:v1.24/A24; A20/A22/A23 ve veri/API sözleşmeleri korunur.
-Dal:feat/3d-vitrin-page; .worktrees/3d-vitrin-page.
-Commit:Henüz oluşmadı; doğrulanmış kaynaklar commit edilecek.
-PR:#6 önceki turda merged; merge03fc90d6522f8eaa26195b6985738cf99c981ba5. Yeni PR veya branch oluşturulmadı. Bu tur merge:NO; production:NO.
-Durum:Yerel kabul tamamlandı; uzak kayıt/Preview bekliyor.
-Preview:Yeni commit için henüz oluşmadı.
+Tarih: 2026-10-18
+Talimat: Header mini tabelasını ayrı temiz commit'e al; onaylı canlı içerik planını A(manifest/snapshot) ve B(checker/keyed patch) olarak uygula; yerel ve Preview kabulü. Yeni PR/merge/production deploy YASAK.
+Aşama/iş: P2.10 kayıt tamamlandı; P7.0-live-A yerel kabul tamamlandı; P7.0-live-B yerel kabul tamamlandı, Preview bekleniyor. Genel P7 açık.
+Mimari: v1.25/A25; A20–A24 ve statik-first/SEO/3D sınırları korunur.
+Dal/çalışma alanı: feat/3d-vitrin-page; .worktrees/3d-vitrin-page. Ana kullanıcı/generated farkları korundu; reset/clean yapılmadı.
+Header commit:1395e6f63e944a27e233424fbfe79cd70ee7a22b — yalnız5kaynak/test dosyası.
+A commit:a4ebd8c — build manifest/public snapshot ve protokol/cache/test/belge altyapısı.
+Bu kayıt anında B kaynakları henüz commit edilmedi; mevcut HEAD:a4ebd8c18bc046cc98ca6530788df45d69f22a3e.
+Uzak B kaydı ve Preview henüz doğrulanmadı.
+PR:YENİ PR YOK. Merge:YOK. Production deploy:YOK. Main:03fc90d6522f8eaa26195b6985738cf99c981ba5.
+Preview:bekleniyor.
 
-YAPILAN İŞ
-Instagram: beyaz SVG glyph, pembe/mor/turuncu gradient ve yumuşak gölgeli rounded square; CSS perspektif,6sn/3px salınım,hover18/20derece ve1.05scale,tap. Masaüstü58px/tablet54px/mobil50px. WhatsApp58/56px ve konumu aynen korundu. Safe-area ve12–16px aralık. aria-label tam istenen metin; gold keyboard focus; target_blank/noopener/noreferrer. OS ve site hareket azaltma düğmesi animasyonu kapatır. Ek Three.js/RAF yok. Public generatorlar gerçek home sosyal linklerini paylaşır.
-Vitrin: header sonrası wrapper=100svh-header. Canvas ve küçük pill controls ilk ekranda; bilgi başlığı/açıklaması ve temsili ürün notu aşağıdaki normal bilgi bölümünde. Metinler silinmedi/gizlenmedi. Üç ürünün gerçek3D Box3 köşeleri, derinlik ve frustum oranıyla camera fit; yüzde12 hover marjı. Desktop iki tabela solda/totem sağda; dar/dikey tablette dikey kompozisyon. Sadece resize composition/camera ve duruşta diagnostic bounds; modeller/materyaller/ışık/controller değişmedi. DPR,quality,cleanup,idle/offscreen,reduced/context fallback korundu.
+A — VERSION / PUBLIC SNAPSHOT
+Build son statik HTML'in yalnız izinli hizmet/proje/promosyon bölgelerini JSON DOM ağaçlarına projekte eder; site yalnız phone/address/instagram/footerText public alanlarıdır. Build-only linkedom kullanılır; public bundle'a HTML parser/engine eklenmez. Tek ortak statik HTML kaynağı, tarayıcıda ikinci katalog template'i oluşmasını önler. Ana sayfa hizmet kartları aynı services.json gruplarına eşlenir; contact/footer aynı site.json eşlemesini build ve canlı patch'te paylaşır.
+Manifest:/content-version.json; schemaVersion1,git HEAD revision,dört section hash/url. Snapshot:/live-content/<section>.<SHA256>.json. Canonical anahtar sıralı JSON ve SHA256 deterministiktir; aynı public içerik aynı hash'i üretir. Manifest ve JSON'lar aynı dist/deployment içindedir. Admin publish anında KV/manifest değiştirilmez; GitHub commit→başarılı Cloudflare deployment→görünür yeni manifest sırası korunur.
+Yalnız hedefli _headers: manifest no-store,max-age0,must-revalidate; hash'li JSON public,max-age31536000,immutable. Diğer CSS/JS/font/görsel cache kuralları değiştirilmedi. Gerçek local Worker yanıtları test edildi.
 
-INSTAGRAM KABULÜ
-Desktop:PASS. Tablet:PASS. Mobile:PASS. Animation:PASS(6sn). Hover:PASS. Keyboard/focus-visible:PASS. Reduced motion:PASS(OS ve gerçek site düğmesi). Instagram link:PASS(https://www.instagram.com/zy.reklam/); gerçek click yeni sekme test fixture yanıtına gider, Instagram hesabında işlem yok. Target blank/rel:PASS. JS kapalı link:PASS. WhatsApp overlap:YOK. Horizontal overflow:YOK.32 Home/Vitrin kombinasyonu ve üç kategori temsili geçti. Hero caption için76px iç boşluk,1280×720 dahil tüm ekranlarda ikon/metin çakışması yok; ilk ekran korunur.
+B — PUBLIC CHECKER / KEYED PATCH
+Yalnız production build/public sayfalar;45sn tek timer. Hidden'da timer ve istek iptal edilir; visible'da hemen tek kontrol. Aynı revision/hash içerik indirmez; yalnız hash'i değişmiş section JSON'u indirilir. Timeout10sn,manifest16KB/snapshot2MB sınırı,Content-Type/status/schema/hash/tag/attribute/URL allowlist doğrulaması. Admin API veya credential istemez; read-only fetch credentials:omit. Hatalı snapshot mevcut içeriği silmez veya sayfayı yenilemez.
+Patch yalnız services/projects/promotions menü/kart/metin bölgeleri, kategori başlık/açıklamaları ve contact phone/address/social/footer alanlarına uygulanır. Sabit hero sloganı ve3D geometri/model kapsam dışı. Parent innerHTML replacement ve location.reload yok; kararlı anahtarlarla mevcut kartlar korunur.
+Form focus/dirty,3D pointer/touch/keyboard,açık mobil/mega menü/dialog ve oynayan video güncellemeyi erteler. Bekleyen en son snapshot güvenli durumda uygulanır. Dirty form blur sonrası da korunur; açık reset/submit dirty kilidini bırakır, focus ayrıca korunur. Form input/caret,scroll,gerçek WebGL canvas ve video kimliği/zamanı kabulü geçti. WhatsApp submit numarası güncel public config'i okur; form node'u/değerleri yenilenmez.
+Metinler text node olarak üretilir. İzinli tag/attribute/protokol ve public yol listesi dışı veri reddedilir; javascript:,data:,başka origin,admin/API yolu ve inline event attribute snapshot'a alınmaz. Gizli admin taslağı/staging/token verileri public projeksiyona girmez. İlk HTML h1/katalog/iletişim/canonical içeriğini JS kapalıyken de taşır. Vite development HMR,production polling'den ayrı kalır.
 
-3D VİTRİN KABULÜ
-360×800:PASS
-390×844:PASS
-412×915:PASS
-768×1024:PASS
-820×1180:PASS
-834×1194:PASS
-1024×768:PASS
-1024×1366:PASS
-1280×720:PASS
-1366×768:PASS
-1440×900:PASS
-1600×900:PASS
-1920×1080:PASS
-2560×1440:PASS
-3440×1440:PASS
-3840×2160:PASS
-ZY REKLAM:FULL. DAHA İLERİYE:FULL. Totem:FULL. Heading first viewport:YOK. Heading DOM:VAR; scroll sonrası görünür. Controls:PASS. Sticky header:PASS. Horizontal overflow:YOK. Mouse/hover üç ürün ve seçili durumda projected-bounds:PASS. Canvas touch-action:pan-y ve gerçek CDP dokunmayla dikey scroll:PASS. Klavye/touch ürün ışıkları,reduced motion,context/module fallback,JS kapalı poster/iletişim ve idle/offscreen:PASS(mevcut regresyonlar).
-Her16viewport için viewportWidth/Height,headerHeight,stage/canvas rect,controls,sosyal rect ve her ürünün projected NDC/depth bounds ölçüldü. Ürün bounds köşeleri [-1,1] içinde; ürünler birbirine girmiyor,canvas header/controls/float ikonlarla çakışmıyor. Kanıt:docs/evidence/showroom-stage/local/acceptance.json.
-İstenen3d-vitrin-390/768/820/1024-landscape/1366/1920/2560/3440/3840.png görüntüleri üretildi ve incelendi;16ölçünün tamamında screenshot var.2560×1440 yazılı kompozisyon kabulü PASS. Ek dosyada referans görüntüler yok; üçüncü referansla piksel karşılaştırması çalıştırılmadı.
-
-HOME VE SINIRLAR
-Özgün hero3D/scene kodu değişmedi. Home ilk ekran18/18,korunan ikinci bölümün DOM/visible/scroll kabulü PASS; navbar28kombinasyon PASS. Home hero canvas1/showroom0; bağımsız showroom yüklenmez. Admin kaynakları,Worker/auth/KV/R2/Wrangler,secrets,publish değişmedi. Kullanıcı/generated farkları korundu; reset/clean yok.
-
-DOĞRULAMA / KAYIT
-npm.cmd run check:PASS. npm.cmd run build:PASS. npm.cmd test -- --test-concurrency=1:48/48 PASS,0fail(son kaynaklarla tek seri koşu). Test kaldırılmadı; mevcut idle testi başlığı stage sonrasına taşındığı için odağı preventScroll ile wrapper'a verir. İlk hedefli manual-reduced testi media-event yarışı nedeniyle başarısız oldu; gerçek kullanıcı düğmesi ve state beklemesiyle düzeltildi. Ara hedefli koşu son caption-clearance değişikliği için durduruldu; başarı sayılmadı. İlk tam koşu46PASS/2FAIL:1280×720 caption çakışması ve süreli touch-state/idle örnekleme yarışı. Çakışma giderildi; transient seçimler tek tek açılış/kapanış/idle olarak ölçülür, controller süresi değişmez. İlgili hedefli testler ve son tam koşu PASS.
-Uzak SHA/blob,Verify ve yeni Preview sonuçları bekliyor; başarı iddiası yok.
-Merge:NO. Production Build:ÇALIŞTIRILMADI. Live test:ÇALIŞTIRILMADI. Yeni PR/yayın yapılmaması yönündeki son talimat korunur. Sonuç günlüğü/rapor commit sonrasında yerelde güncellenir; rapor SHA döngüsü için ek commit/deploy yapılmaz.
+DOĞRULAMA
+npm.cmd run build(check/TypeScript dahil):PASS. Son tek seri npm.cmd test -- --test-concurrency=1:51/51 PASS,0fail. Önce A'nın build/hash/schema/statik HTML testi ve gerçek Worker cache kabulü; sonra B'nin geniş tarayıcı kabulü yapıldı.
+B senaryoları:A→B,aynı sürüm,tek-section fetch,offline,manifest404/bozukJSON,JSON404/bozukJSON,unsupported schema,hash/unsafe URL reddi,stale B→C yarışı,hidden/visible,dirty form/focus/caret,scroll,kart kimliği,mobil menü,dialog,gerçek WebGL canvas pointer erteleme ve kimliği,kategori text sanitasyonu,site/WhatsApp hedefi,oynayan video erteleme/kimlik/currentTime ve JS kapalı SEO.
+Önceki mini tabela96kombinasyon,18homefold,28navbar,16showroom stage,32Instagram ve vitrin ışık/klavye/touch/reduced/context/module/JS-kapalı regresyonları son tam koşuda PASS. Hiçbir mevcut test kaldırılmadı.
+İlk B testinde clock kurulumu sayfa yükünden önceye alınarak timer kontrol edildi. HTML entity ayrı text node'ları fixture değişiminin oluşmasını engelliyordu; snapshot komşu text node'larını deterministik birleştirir. Düzeltme sonrası hedefli ve son tam koşu başarılıdır. İlk npm registry sertifika erişimi system CA ile çözüldü; TLS doğrulaması kapatılmadı. İlk check'te ImportMeta.env tipi eksikti; vite/client tip referansı eklendi.
+Preview kabulü henüz çalıştırılmadı; başarı iddiası yok.
+Yeni uzak CI sonucu henüz yok.
+Kanıtlar:docs/evidence/live-content/{local,preview}/acceptance.json; preview/remote.json; .live-tests-final.log; header-sign,hero-fold,public-navigation,showroom-stage,vitrine-page kanıtları. 
 
 DEĞİŞEN DOSYALAR
-index.html; scripts/generate-showroom.mjs,generate-services.mjs,generate-projects.mjs,generate-promotions.mjs ve yeni public-social-links.mjs; src/styles/main.css,showroom.css ve yeni instagram.css; src/showroom/page.html,renderer.ts ve yeni framing.ts; tests/vitrine-page.test.mjs ve yeni showroom-stage.test.mjs,helpers/showroom-stage.mjs; ARCHITECTURE.md,ROADMAP.md,LAST_REPORT.md(18dosya). Generated kategori HTML/sitemap,eski kanıt farkları,screenshotlar ve yerel araçlar commit dışında korundu.
-Kanıtlar: .worktrees/3d-vitrin-page/docs/evidence/showroom-stage/{local,preview}; hero-fold ve public-navigation; vitrine-page kabul dosyaları. Mevcut SVGLoader599.52kB uyarısı sürer. Tarayıcı/SwiftShader kabulü fiziksel telefon/iPad/GPU kabulü değildir; P3.6 durdurulmuş ve USB/ADB testi yapılmadı. Genel P3/P7/P8/P9 açık.
-Sıradaki tek iş:Aynı dala commit/push ve yeni Verify/izole Preview kabulü.
+Header ayrı commit:index.html,src/sections/navigation.ts,src/styles/main.css,src/styles/header-sign.css,tests/header-sign.test.mjs.
+A/B:package.json/lock,vite.config.ts,public/_headers,scripts/live-snapshot.mjs; src/content/live/{protocol.js,protocol.d.ts,site.js,site.d.ts,checker.ts,guard.ts,patch.ts}; src/main.ts,src/vite-env.d.ts,src/quote/contact.ts; tests/live-snapshot.test.mjs,live-content.test.mjs,helpers/live-content.mjs ve admin-worker.test.mjs cache kabulü; ARCHITECTURE.md,ROADMAP.md,LAST_REPORT.md,docs/LIVE_CONTENT_PLAN.md.
+Generated HTML/sitemap,eski test kanıtları,screenshotlar ve yerel araç/log farkları korunur; kaynak commit'ine alınmaz. Hero/showroom model/renderer/controller,admin,Worker/auth/KV/R2/Wrangler/secrets değişmedi.
+
+SINIR / SIRADAKİ TEK İŞ
+Gerçek admin production publish ve production canlı kabulü ÇALIŞTIRILMADI. P3.6 fiziksel cihaz kabulü durdurulmuş; USB/ADB/telefon/iPad/GPU testi yapılmadı. Mevcut SVGLoader599.52kB chunk uyarısı sürer. Genel P3/P7/P8/P9 kapanmadı.
+
+Sıradaki tek iş:Aynı feature dalında B kaynak kaydı ve izole Preview kabulünü tamamlamak.

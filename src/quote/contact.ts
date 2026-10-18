@@ -27,7 +27,8 @@ export function setupContact(): () => void {
   const submit = (event: SubmitEvent) => {
     event.preventDefault();
     if (!validate()) return;
-    window.open(`https://wa.me/${brand.whatsappNumber}?text=${encodeURIComponent(message())}`, '_blank', 'noopener,noreferrer');
+    const number = document.documentElement.dataset.contactNumber ?? brand.whatsappNumber;
+    window.open(`https://wa.me/${number}?text=${encodeURIComponent(message())}`, '_blank', 'noopener,noreferrer');
     if (status) status.textContent = 'Mesajı WhatsApp’ta kontrol edip gönderebilirsiniz. Açılmazsa metni kopyalayın veya bizi arayın.';
   };
   const copy = async () => {

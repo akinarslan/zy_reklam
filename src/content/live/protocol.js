@@ -4,7 +4,9 @@ export const canonical = value => JSON.stringify(value, (_, item) => item && typ
 export const safeUrl = (value, kind = 'href') => {
   if (typeof value !== 'string' || /[\\\u0000-\u0020]/.test(value)) return false;
   if (kind !== 'href') return /^\/assets\/[a-zA-Z0-9_./%+-]+(?:\?v=[a-f0-9]+)?$/.test(value) && !/%2e|%2f|\.\./i.test(value);
-  return /^(?:\/(?!\/)(?:#|[a-zA-Z0-9_/#%?=&.+-])*)$/.test(value) && !/\.\.|%2e|%2f/i.test(value)
+  return (/^\/(?:#[a-zA-Z0-9_-]+)?$/.test(value)
+      || /^\/(?:3d-vitrin\/|(?:hizmetler|projeler|promosyonlar)\/[a-z0-9-]+\/)$/.test(value)
+      || safeUrl(value,'src')) && !/\.\.|%2e|%2f/i.test(value)
     || /^#[a-zA-Z0-9_-]+$/.test(value)
     || /^tel:\+?[0-9]+$/.test(value)
     || /^https:\/\/(?:www\.instagram\.com\/[^?#\s]+\/?|wa\.me\/[0-9]+(?:\?text=[^\s]*)?)$/.test(value);

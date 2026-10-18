@@ -764,3 +764,5 @@ Sıradaki tek iş:
 - B modülleri checker/guard/keyed patch olarak ayrıldı. İlk A→B testinde HTML entity'nin ayrı text node'ları fixture eşleşmesini engelledi; snapshot komşu text node'ları deterministik olarak birleştirir. Polling clock test kurulumu sayfa yükünden önceye alındı. İlk kapsamlı B tarayıcı kabulü PASS; ek kategori/site/video ve son tam/Preview kabulü sürüyor.
 - Mimari v1.25/A25; admin publish/Worker/config/secrets ve3D geometri değişmez. Production/cache canlı yayını çalıştırılmadı.
 - Sıradaki tek iş: B tam yerel kabulü ve aynı dal izole Preview doğrulaması.
+
+- P7.0-live son yerel kabul:51/51 tek seri tam test PASS; A/B güvenlik/cache/identity ve önceki regresyonlar PASS. Header1395e6f/Aa4ebd8c. B kaynak kaydı ve Preview kabulü bekleniyor.

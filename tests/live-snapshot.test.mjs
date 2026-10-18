@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {createSnapshots,hash} from '../scripts/live-snapshot.mjs';
 import {canonical,validManifest,validSnapshot,safeUrl} from '../src/content/live/protocol.js';
+import {parseHTML} from 'linkedom';
 
 test('A: deterministic public snapshots, schema, unsafe URL rejection and full initial HTML', async()=>{
  const paths=['/','/3d-vitrin/','/hizmetler/tabela-yonlendirme/','/projeler/tabela/','/promosyonlar/ofis-kirtasiye/'];
@@ -23,7 +24,12 @@ test('A: deterministic public snapshots, schema, unsafe URL rejection and full i
  // Only selected public DOM contributes to each section, never scripts or admin data.
  const next=await createSnapshots(process.cwd(),changed,'b'.repeat(40));
  assert.deepEqual(next.manifest.sections,first.manifest.sections);
- for(const url of ['javascript:alert(1)','//evil.test/','/../admin/','https://evil.test/a','data:text/html,evil']) assert.ok(!safeUrl(url),url);
+ const edited=pages.map(([path,html])=>{const {document}=parseHTML(html);document.querySelector('.service-menu-grid h3').textContent='Edited service';return[path,document.toString()];});
+ const selected=await createSnapshots(process.cwd(),edited,'b'.repeat(40));
+ assert.notEqual(selected.manifest.sections.services.hash,first.manifest.sections.services.hash);
+ for(const section of ['site','projects','promotions'])assert.deepEqual(selected.manifest.sections[section],first.manifest.sections[section]);
+ for(const url of ['javascript:alert(1)','//evil.test/','/../admin/','/admin/','/api/admin/publish','https://evil.test/a','data:text/html,evil']) assert.ok(!safeUrl(url),url);
+ assert.ok(!validSnapshot({schemaVersion:1,section:'services',pages:{}},'services'));
  for(const [,html] of pages) {assert.ok(html.includes('<h1'));assert.ok(html.includes('rel="canonical"'));assert.ok(html.includes('live-content-baseline'));}
  const built=JSON.parse(await readFile('dist/content-version.json','utf8'));
  for(const [key,item] of Object.entries(built.sections)) assert.equal(hash(await readFile(`dist${item.url}`,'utf8')),item.hash,key);
