@@ -684,6 +684,10 @@ button:disabled {
   padding: 20px;
 }
 
+.login-layout #login-form {
+  grid-template-columns: minmax(0, 1fr);
+}
+
 :focus-visible {
   outline: 2px solid var(--gold);
   outline-offset: 3px;

@@ -5,6 +5,7 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import net from 'node:net';
 import { chromium } from 'playwright';
 import { viewports, mockAdmin, adminMetrics } from './helpers/admin-responsive.mjs';
+import { verifyAdminLogin } from './helpers/admin-login.mjs';
 
 let server,browser,base;
 const measurements=[];
@@ -32,6 +33,7 @@ test('Mocked admin: aligned shell, bounded forms/media, menu and publishing acro
   assert.equal(m.fieldOverflow,false,JSON.stringify(m));
   assert.ok(m.textWidth<=1201&&m.wideWidth<=1201,JSON.stringify(m));
   assert.ok(m.formColumns<=4&&m.miniColumns<=4,JSON.stringify(m));
+  if(viewport.width>=1920)assert.equal(m.formColumns,viewport.width>=2560?4:3,JSON.stringify(m));
   assert.ok(m.maxStatWidth<=560,JSON.stringify(m));
   for(const shell of [m.content,m.topbar])assert.ok(shell.left>=0&&shell.right<=viewport.width,JSON.stringify(m));
   if(viewport.width>=1920){
@@ -77,4 +79,8 @@ test('Mocked admin: aligned shell, bounded forms/media, menu and publishing acro
  assert.deepEqual(errors,[]);
  assert.equal(requests.some(r=>r.path.endsWith('/publish')),false,'Responsive test must never publish');
  await page.close();
+});
+
+test('Admin login stays single-column with full-width controls across nine viewports',async()=>{
+ await verifyAdminLogin(browser,base,'docs/evidence/admin-login/local',{mockSession:true});
 });
