@@ -18,7 +18,7 @@ Harici main587c703e666f34aca2766cb525193ed4badbac79 Delete party gözlendi; bu g
 
 HERO ROTATION
 
-Commit: henüz oluşturulmadı; mevcut HEAD checkpoint3802981
+Commit: fedb3b3e74df990dff5ebf1860a2445d1e4104d6 — feat: add full rotation to hero 3d sign; aynı dala push/fetch doğrulandı.
 Initial front: PASS
 Mouse 180: PASS
 Mouse 360: PASS
@@ -61,9 +61,9 @@ CI
 Check: PASS — npm.cmd run check
 Build: PASS — npm.cmd run build (TypeScript dahil)
 Tests: 52/52 PASS,0fail — npm.cmd test -- --test-concurrency=1 son tek seri koşu.
-Verify: henüz çalıştırılmadı (yeni commit yok)
-Cloudflare Preview: yeni kaynak için henüz çalıştırılmadı
-Yerel kabul tamamlandı; uzak sonuçlar henüz başarı sayılmaz.
+İlk Verify: RED — https://github.com/akinarslan/zy_reklam/actions/runs/39158168932 —51/52 PASS; header-sign transition ölçüm yarışı. Header uygulaması değişmeden test tamamlanmayı bekler; hedefli1/1 PASS. Yeni Verify bekleniyor.
+Cloudflare Preview: Build SUCCESS — 78cad27d-33de-4714-b37e-1469c181e52a; https://eaecd36a-zy-reklam.akinarslanceng.workers.dev . Tarayıcı kabulü sürüyor; ASSETS-only/secrets[].
+Uzak feature SHA ve35blob fetch ile doğrulandı. Yeni HEAD ile build ve snapshot1/1 PASS. Preview manifest revision/dört hash/cache doğrulandı; tarayıcı kabulü ve CI testi sürüyor.
 New PR: NO
 Merge: NO
 Production: NO
@@ -78,6 +78,10 @@ DEĞİŞEN DOSYALAR / KANIT
 
 src/scene/hero.ts,renderer.ts ve yeni back.ts,rotation.ts; src/styles/main.css; tests/scene.test.mjs,helpers/live-content.mjs ve yeni hero-rotation.test.mjs,helpers/hero-rotation.mjs; ARCHITECTURE.md,ROADMAP.md,LAST_REPORT.md. Önceki live-plan sonuç kaydı docs/LIVE_CONTENT_PLAN.md korunur/kaydedilir. Generated HTML/sitemap,eski kanıtlar,screenshot/log/yerel araçlar kaynak commit'ine alınmaz.
 Kanıt:docs/evidence/hero-rotation/checkpoint.json,checkpoint-ci.json,local/acceptance.json; .hero-tests-final.log; live-content,hero-fold,public-navigation,showroom-stage kabul dosyaları. Sonuç raporu/günlük commit sonrasında yerelde güncellenir; rapor SHA'sı için döngüsel commit/deploy oluşturulmaz.
-Sıradaki tek iş: Ayrı feature commit/push, yeni Verify ve izole Preview kabulü.
+Sıradaki tek iş: Yeni Verify39158168932 ve izole Preview tarayıcı kabulünü tamamlamak.
 
 Yerel uygulama tamamlandı; uzak kayıt ve kabul bekleniyor.
+
+CI TEST DÜZELTMESİ
+
+360° kaynak commit fedb3b3 ayrı korunur. İlk CI51/52: mevcut header-sign testinin180ms sabit CSS transform ölçümü; diğer51 test PASS. Aynı assertions kaldırılmadan bounded CSS transition-completion beklemesi eklendi. Son hedefli header testi1/1 PASS,96sayfa/viewport + gerçek touch/klavye/reduced/JS kapalı. Yeni PR/merge/production yok. Sıradaki tek iş ayrı test düzeltmesi commit/push, son tam test/Verify ve yeni Preview kabulüdür.

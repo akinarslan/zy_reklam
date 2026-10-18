@@ -51,6 +51,11 @@ test('Public mini sign: shared layout, native home navigation, pointer/Space pre
     await page.setViewportSize({width:1440, height:900});
     await page.goto(base + '/');
     const sign = page.locator('.header-sign');
+    const settleSign = () => page.waitForFunction(() => {
+      const element = document.querySelector('.header-sign');
+      getComputedStyle(element).transform;
+      return element.getAnimations().every(animation => animation.playState === 'finished');
+    }, null, {timeout:3000});
     // A lower-page activation must return to the real home destination/top.
     await page.evaluate(() => { document.documentElement.style.scrollBehavior = 'auto'; scrollTo(0, 1200); });
     assert.ok(await page.evaluate(() => scrollY) > 1000);
@@ -70,21 +75,21 @@ test('Public mini sign: shared layout, native home navigation, pointer/Space pre
     await page.emulateMedia({reducedMotion:'no-preference'});
     await page.waitForFunction(() => document.documentElement.dataset.motion === 'full');
     await page.mouse.move(800, 300);
-    await page.waitForTimeout(180);
+    await settleSign();
     const rest = await sign.evaluate(element => getComputedStyle(element).transform);
     await sign.hover();
-    await page.waitForTimeout(180);
+    await settleSign();
     const hover = await sign.evaluate(element => getComputedStyle(element).transform);
     assert.notEqual(hover, rest);
     const box = await sign.boundingBox();
     await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
     await page.mouse.down();
-    await page.waitForTimeout(180);
+    await settleSign();
     assert.notEqual(await sign.evaluate(element => getComputedStyle(element).transform), hover);
     // Release outside the link so this visual check does not navigate.
     await page.mouse.move(800, 300);
     await page.mouse.up();
-    await page.waitForTimeout(180);
+    await settleSign();
     assert.equal(await sign.evaluate(element => getComputedStyle(element).transform), rest);
     await page.locator('[data-motion-toggle]').click();
     await sign.hover();
@@ -108,7 +113,12 @@ test('Public mini sign: shared layout, native home navigation, pointer/Space pre
     const touchBox = await touchSign.boundingBox();
     const cdp = await touch.context().newCDPSession(touch);
     await cdp.send('Input.dispatchTouchEvent', {type:'touchStart', touchPoints:[{x:touchBox.x + touchBox.width/2,y:touchBox.y + touchBox.height/2}]});
-    await touch.waitForTimeout(180);
+    await touch.waitForFunction(() => {
+      const element = document.querySelector('.header-sign');
+      return element.dataset.pointerPressed === 'true'
+        && element.getAnimations().every(animation => animation.playState === 'finished')
+        && Math.abs(new DOMMatrix(getComputedStyle(element).transform).m11 - .97) < .001;
+    }, null, {timeout:3000});
     assert.equal(await touchSign.getAttribute('data-pointer-pressed'), 'true');
     assert.ok(await touchSign.evaluate(element => Math.abs(new DOMMatrix(getComputedStyle(element).transform).m11 - .97) < .001));
     await cdp.send('Input.dispatchTouchEvent', {type:'touchCancel', touchPoints:[]});
