@@ -1,41 +1,25 @@
-# ZY REKLAM ADMIN RESPONSIVE + HERO RAPORU
+# ZY Reklam — PR #6 navbar düzeltmeleri
 
-Tarih: 2026-10-17
-Aşama/iş: P8.7b / P3.7f; mimari v1.21/A21.
-Branch: fix/admin-responsive-hero (origin/main 8da241719b5afd32ebac3ff097e0d149ebf6347a üzerinden ayrı worktree).
-PR: henüz oluşturulmadı. Commit/Merge SHA: henüz oluşmadı.
+Tarih: 2026-10-18
+Talimat: Aynı PR #6 üzerinde Atölye etiketini eşitle; public navbar sticky kalsın. Tüm kabul kapıları geçmeden merge yok; kapılar geçince merge yetkisi var.
+Aşama/iş: P3.7g-nav, devam ediyor. Mevcut mimari v1.22/A22 ve A20 korundu; veri sözleşmesi değişmedi.
+Dal: feat/3d-vitrin-page; .worktrees/3d-vitrin-page. Yeni dal/PR yok.
 
-ADMIN
+Atölye computed font: Desktop17px/400/line-height22.1px/padding14px0/height50.094px; mobil-tablet19px/400/24.7px/15px/54.688px.
+Hizmetler computed font: aynı ölçüler. Önce1440px12 vs17px ve1920+15 vs17px idi.
+Atölye visual: PASS (1440/2560 ve768 screenshot incelemesi).
+Header position: sticky; top0, z-index20, mevcut koyu yeşil arka plan.
+Home scroll sticky: PASS.
+3D Vitrin scroll sticky: PASS.
+Mobile sticky/menu: PASS —390/412/768;1023px ve altı hamburger.
+Mega menus: PASS — üç menü, erişilebilir linkler/Escape/viewport sınırı.
+Anchor offset: PASS — responsive header77/91/97/103px +20px, dört ana anchor ve cross-page Atölye.
+Horizontal overflow: YOK —1366/1440/1920/2560/3440/3840 ve üç mobil/tablet ölçüsü.
+Tests: yeni navbar1/1 PASS,18 kombinasyon; build/TypeScript PASS; full tests tek seri koşuda45/45 PASS,0 fail.
+Verify: yeni head için bekleniyor.
+Cloudflare Preview: yeni head için bekleniyor.
+Merge: NO.
 
-| Viewport | Content | Topbar | Nav | Document | Overflow |
-| --- | --- | --- | --- | --- | --- |
-| 390 | 366 | 366 | hamburger | 390 | YOK |
-| 768 | 721.91 | 721.91 | hamburger | 768 | YOK |
-| 1366 | 1286 | 1286 | 1286 | 1366 | YOK |
-| 1920 | 1800 | 1800 | 1800 | 1920 | YOK |
-| 2560 | 2240 | 2240 | 2240 | 2560 | YOK |
-| 3440 | 2560 | 2560 | 2560 | 3440 | YOK |
-| 3840 | 2560 | 2560 | 2560 | 3840 | YOK |
-
-Mobil/tablet/desktop/2K/ultrawide: PASS — 15 Chromium viewport.
-Menu/Forms/Media/Publishing/Dialog: PASS (frontend mock; gerçek publish yok).
-Dashboard: 1/2/4 kolon; kart en fazla 509.5px. Formlar en fazla dört kolon, textarea/uzun alan en fazla 1200px. Medya 1440:5,1920:6,2560:7,3440/3840:9 kolon; görsel/video contain. Upload dosya seçimi/yerel önizleme ve mobil/tablet menü/dialog sınırları doğrulandı.
-
-PUBLIC
-390/768/1366/1440/1920/2560/3440/3840 hero: PASS; 15 viewport overflow YOK.
-Ayrı 3D Vitrin / Showroom: YOK. Hero içinde mevcut özgün Three.js ZY REKLAM sahnesi: PASS. Duplicate canvas: YOK; tek canvas ve scroll sonrası aynı canvas, showroom network isteği yok.
-2560 hero: 2240×768px; stage: 1187.56×614.39px; kolon oranı yaklaşık %44/%56. Showcase lightbox/araç fotoğrafı korundu.
-Referans kompozisyon: metindeki oranlara göre PASS; ekte ayrı referans görseli bulunmadığı için görsel birebir eşleşmesi değerlendirilemedi.
-
-CI/DOĞRULAMA
-Check: PASS. Build: PASS (ertelenen renderer 606.05kB mevcut chunk uyarısı).
-Tests: 41/41 PASS; seri tam test. Kaldırılmış showroom özelliklerine ait üç test yerine tek sahne regresyonu ve yeni bağımsız admin frontend testi var; test atlanmadı.
-Public regression: PASS — 14 kategori × 5 viewport, menüler, iletişim, reduced motion/WebGL/context/fallback ve cleanup.
-Ekran görüntüleri docs/evidence/responsive altında; istenen yedi admin/yedi site ve 2560 dört panel görüntüsü görsel incelendi. Mobil/tablet menu/upload/dialog görüntüleri de üretildi.
-GitHub Verify/Cloudflare Preview/production Build/live public/live admin: henüz çalıştırılmadı. Başarılı olmadan merge yok.
-
-Değişen dosyalar: src/admin/admin.css, src/admin/main.ts (yalnız sahne açıklaması), index.html, src/main.ts, src/styles/main.css, paylaşılan menüden üretilen proje/promosyon HTML, tests/admin-responsive.test.mjs ve fixture helper, tests/admin-worker.test.mjs, tests/responsive.test.mjs, tests/showroom.test.mjs, mimari/roadmap ve responsive kanıtlar.
-Backend/API/auth/publish/media veri mantığı ve Wrangler config değişmedi. previews:{} korunur; uzaktaki binding/secret izolasyonu build sonrası doğrulanacak. Production secret/.dev.vars okunmadı, secret değeri Git/rapora eklenmedi. PowerShell kullanılmadı. Ana çalışma ağacındaki kullanıcı/generated farkları korunuyor.
-
-Engel: yok; uzak kabul bekleniyor. Genel P3.6/P7/P8 kapanmaz. Bu Chromium emülasyonudur; fiziksel cihaz/GPU kabulü değildir. Gerçek production login/publish çalıştırılmadı.
-Sıradaki tek iş: commit/push/PR ardından Verify ve izole Cloudflare Preview kabulünü tamamlamak.
+Değişen dosyalar: index.html, src/styles/main.css, src/sections/navigation.ts, tests/projects.test.mjs, tests/public-navigation.test.mjs, tests/helpers/public-navigation.mjs, ROADMAP.md, LAST_REPORT.md. Generated/screenshot/önceki evidence farkları korundu ve kaynak commit kapsamı dışındadır. Admin/scene/Worker/Wrangler değişmedi.
+Engel: yok; kabul zinciri devam ediyor. P3.6 durdurulmuş durumda, fiziksel/USB/ADB testi yapılmadı; genel P3/P7/P8 açık.
+Sıradaki tek iş: tam test, aynı branch commit/push ve yeni head CI/Preview kabulü; ardından yetkilendirilmiş merge/otomatik yayın.

@@ -44,5 +44,5 @@ for (const category of categories) {
   await mkdir(dir, { recursive: true });
   await writeFile(join(dir, 'index.html'), html);
 }
-await writeFile(join(root, 'public/sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${['/', ...categories.map(c => c.href)].map(path => `  <url><loc>https://zyreklamdijital.com.tr${path}</loc></url>`).join('\n')}\n</urlset>\n`);
+await writeFile(join(root, 'public/sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${['/', '/3d-vitrin/', ...categories.map(c => c.href)].map(path => `  <url><loc>https://zyreklamdijital.com.tr${path}</loc></url>`).join('\n')}\n</urlset>\n`);
 console.log(`Generated ${categories.length} promotion pages and shared menus.`);

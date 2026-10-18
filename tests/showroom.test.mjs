@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
 import { chromium } from 'playwright';
 
-test('Retired showroom never boots; one hero canvas survives scrolling without duplicate renderers',async()=>{
+test('Homepage never boots the standalone showroom; one hero canvas survives scrolling',async()=>{
  const server=spawn(process.execPath,['node_modules/vite/bin/vite.js','preview','--host','127.0.0.1','--port','4195','--strictPort'],{stdio:'ignore',windowsHide:true});
  let browser;
  try{

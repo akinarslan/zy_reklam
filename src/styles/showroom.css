@@ -1,6 +1,6 @@
 .showroom { background: radial-gradient(ellipse at 50% 50%,#12382b,#061b14 65%); border-block:1px solid #c5af7530; padding:60px 0 45px; }
 .showroom-heading { display:flex; align-items:end; justify-content:space-between; gap:32px; }
-.showroom-heading h2 { font-size:clamp(30px,3vw,43px); margin-top:12px; }
+.showroom-heading :is(h1,h2) { font-family:Arial,Helvetica,sans-serif; font-size:clamp(30px,3vw,43px); margin:12px 0 0; line-height:1.15; letter-spacing:-.03em; }
 .showroom-heading > p { max-width:360px; font-size:14px; margin:0; }
 .showroom-stage { position:relative; height:580px; margin-top:20px; overflow:hidden; }
 .showroom-mount,.showroom-fallback { position:absolute; inset:0; width:100%; height:100%; }
@@ -36,3 +36,7 @@
     height: clamp(740px, 29vw, 820px);
   }
 }
+
+.showroom-contact { padding-block: 36px 56px; background: var(--bg); }
+.showroom-contact p { max-width: 660px; line-height: 1.7; }
+.showroom-contact .button { margin: 22px 24px 0 0; }

@@ -9,6 +9,7 @@ export default defineConfig({
       input: [
         fileURLToPath(new URL('./index.html', import.meta.url)),
         fileURLToPath(new URL('./admin/index.html', import.meta.url)),
+        fileURLToPath(new URL('./3d-vitrin/index.html', import.meta.url)),
         ...pages.map(id => fileURLToPath(new URL(`./promosyonlar/${id}/index.html`, import.meta.url))),
         ...['tabela', 'totem', 'lazer-kesim', 'dijital-baski', 'ozel-uretim'].map(id => fileURLToPath(new URL(`./projeler/${id}/index.html`, import.meta.url))),
         ...servicePages.map(id => fileURLToPath(new URL(`./hizmetler/${id}/index.html`, import.meta.url)))
