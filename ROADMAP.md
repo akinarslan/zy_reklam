@@ -1,6 +1,6 @@
 # ZY Reklam — Yol Haritası
 
-**Sürüm:** 1.22 · **Başlangıç:** 2026-10-01 · **Güncelleme:** 2026-10-17
+**Sürüm:** 1.23 · **Başlangıç:** 2026-10-01 · **Güncelleme:** 2026-10-18
 
 **Kaynak:** [ARCHITECTURE.md](ARCHITECTURE.md) · **Zorunlu kontrol:** [AGENTS.md](AGENTS.md)
 
@@ -10,7 +10,7 @@
 
 **Aktif aşama:** P3 — Gerçek 3D açılış uygulandı; performans kapanışı devam ediyor.
 
-**Kullanıcı önceliği:** P3.7g — ayrı 3D Vitrin sayfasının commit/PR/Verify/Preview süreci. P3.6 fiziksel cihaz kabulü kullanıcı talimatıyla durduruldu; genel P3/P7/P8 açık kalır.
+**Kullanıcı önceliği:** P3.7g-fold — tüm mobil/tablet/iPad/desktop ilk ekranlarında tam hero ve ikinci bölümün silinmeden normal akışta aşağıda kalması. Aynı feature dalında devam; PR #6 önceki turda merge edilmiş durumda, son talimat yalnız aynı dala commit/push, yeni PR ve production yayını yok.
 
 P1 kaynak, logo, font ve iletişim incelemesi yapıldı; gerçek proje bilgileri/fotoğrafları doğrulanmadığı için P1.5 açık kalır. Planın engel yönetimi uyarınca bağımsız P2 temeli tamamlandı. Vite/TypeScript sayfası, statik SVG poster, mobil menü, hareket tercihi ve temel WhatsApp iletişim akışı çalışıyor. Gerçek 3D açılış şimdi uygulanmıştır. Üretim animasyonları, galeri, stüdyo ve upload henüz uygulanmadı.
 
@@ -114,9 +114,11 @@ Süreler takvim taahhüdü değildir. P1 sonrası logo kalitesi, gerçek görsel
 
 - [x] P3.7b Lightbox ve 360° araç: özgün temsili kaplama/görsel, sürükleme/klavye/ışık kontrolü, mobil ve context yedeği. **Tamamlandı; fiziksel cihaz kabulü P3.6 kapsamında açık.**
 
-- [x] P3.7g Eski iki tabela + asimetrik totem showroom'unu bağımsız `/3d-vitrin/` sayfasında sun; ana sayfa hero 3D sahnesini koru. Yerel ve PR/Verify/Preview alt kabulü tamamlandı; production yayını açık.
+- [x] P3.7g Eski iki tabela + asimetrik totem showroom'unu bağımsız `/3d-vitrin/` sayfasında sun; ana sayfa hero 3D sahnesini koru. Yerel/PR/Preview ve PR #6 otomatik production yayın/canlı alt kabulü tamamlandı; genel P3 açık.
 
-- [ ] P3.7g-nav Ortak public header sticky, eşit Atölye etiketi, responsive anchor offset ve mobil/mega menüler; aynı PR #6 üzerinde test/preview/merge kabulü. **Devam ediyor.**
+- [x] P3.7g-nav Ortak public header sticky, eşit Atölye etiketi, responsive anchor offset ve mobil/mega menüler; PR #6 test/preview/merge ve otomatik production/canlı kabulü tamamlandı.
+
+- [ ] P3.7g-fold Tam ilk ekran hero;18 viewport, korunmuş ikinci bölüm, tablet/navbar ve9 showroom genişliği. **Yerel kabul tamamlandı; aynı dala uzak kayıt/Preview doğrulaması sürüyor. Production kapsam dışı.**
 
 ## 7. P4 — Üretim sahnesi ve hizmetler
 
@@ -688,7 +690,7 @@ Sıradaki tek iş:
 - Dağıtılmış önizleme https://ba97f6a7-zy-reklam.akinarslanceng.workers.dev/3d-vitrin/ üzerinde yedi genişlik taşmasız, tek WebGL showroom canvas; üç ürün ışıkları/klavye/touch/mobil menü/reduced/context-module fallback/JS kapalı/hero/kategori/sitemap PASS. Uzak 390/2560/3840 screenshot görsel incelemesi yapıldı; preview/acceptance.json yerel kanıt. Authenticated metadata ASSETS-only, secret listesi boş; production KV/R2 veya GITHUB_TOKEN yok.
 - Main f378dd128c2b76faaadb3f45666603a56cc1badd yeniden API ile doğrulandı; merge/production deploy yapılmadı. Son rapor ve günlük yerelde güncellendi; gereksiz rapor commit/deploy üretilmedi. P3.6 durdurulmuş, genel P3/P7/P8 açık. Sıradaki tek iş: yeşil PR #6 main merge ve otomatik production yayın/canlı kabul adımı.
 
-### 2026-10-18 — P3.7g-nav PR #6 ortak sticky navbar ve Atölye etiketi (devam ediyor)
+### 2026-10-18 — P3.7g-nav PR #6 ortak sticky navbar ve Atölye etiketi (tamamlandı)
 
 - Talimat: Yeni dal/PR oluşturmadan feat/3d-vitrin-page ve PR #6 üzerinde devam et. Önce navbar düzeltmeleri, tam testler, Verify GREEN ve Cloudflare Preview SUCCESS; tüm kapılar geçerse merge yetkisi var. AGENTS, mimari v1.22 ve roadmap güncel tam metinleri okundu; alt kapsam AGENTS yok. Fetch/API: main f378dd1, açık PR #6 head 3ece361; mevcut kullanıcı/generated farkları korundu.
 - Önceki tarayıcı computed ölçümü: 1440px Atölye12px/Hizmetler17px; 1920/2560/3440/3840 Atölye15px/Hizmetler17px. Font-weight ikisinde400; Atölye padding0/height14–17, Hizmetler padding14px0/height50. Büyük ekran seçici özgüllüğü farkı giderildi; açık nav-workshop-link sınıfı tüm shared header çıktılarında üretiliyor.
@@ -698,3 +700,20 @@ Sıradaki tek iş:
 - Sıradaki tek iş: tam test sonrası aynı branch commit/push, yeni head için CI ve izole Preview kapıları; sonra yetkilendirilmiş merge/otomatik production kontrolü.
 
 - P3.7g-nav yerel tam kabul: npm.cmd test45/45 PASS,0 fail (tek seri koşu); build/TypeScript PASS. Desktop1440/2560, tablet768 ve mobile390 mega menü screenshot görsel incelemesi PASS. Aynı PR #6 yeni head CI/Preview kapısı bekleniyor; merge henüz yapılmadı.
+
+- PR #6 tüm kapılar PASS sonrasında merge edildi: 03fc90d6522f8eaa26195b6985738cf99c981ba5. İki Verify GREEN; Preview SUCCESS;18 navbar ve yedi3D viewport uzak PASS. origin/main ve sekiz güncel blob fetch sonrası eşleşti. Otomatik production Build/main Verify ve canlı yeni sürüm kabulü sürüyor; manuel deploy yok.
+
+- P3.7g/P3.7g-nav tamamlandı: navbar commit 9d62312f2630965aed94abf68b9569c44f7634b0, PR #6 merge 03fc90d6522f8eaa26195b6985738cf99c981ba5. Yerel45/45; PR/push Verify GREEN; Preview SUCCESS e9f98011-219f-4a7e-9abc-55ff6de11069; merge sonrası Verify, production Build ve her iki live smoke SUCCESS. Uzak sekiz kaynak/belge blobu ve main SHA yeniden okundu.
+- Yerel/preview/canlı Home+Vitrin ×9 viewport18 navbar kombinasyonu; scrollY1000/header.top0, eşit17px/400(19pxmobil), hamburger390/412/768, üç mega menü, anchor+20px, sıfır overflow PASS. Preview/canlı yedi WebGL vitrin viewport kontrolü ve ışık/klavye/touch/reduced/fallback/JS kapalı/hero/kategori/sitemap PASS; canlı screenshot görsel incelemesi yapıldı. Kanıtlar public-navigation ve vitrine-page live/preview klasörlerinde; LAST_REPORT nihai rapordur.
+- Mimari v1.22/A22-A20 korundu; yeni branch/PR veya manuel production deploy yok. Kullanıcı/generated farkları korundu; son rapor/günlük için ek commit/deploy üretilmedi. Genel P3/P7/P8/P9 açık; P3.6 durdurulmuş durumda. Sıradaki tek iş: P7.0 admin production secret kurulumu/gerçek yayın kabulü.
+
+### 2026-10-18 — P3.7g-fold tüm ekranlarda ilk görünüm (devam ediyor)
+
+- Talimat: hero + sticky header ilk viewport’u doldursun; ikinci bölüm ve tüm içerik silinmeden/gizlenmeden normal akışta korunsun. iPad/landscape ve3D ayrımı korunur; admin/backend değişmez. Güncel tam AGENTS/mimari/roadmap okundu; alt AGENTS yok. Fetch/API PR #6 merged/main03fc90d doğrulandı. Aynı dal main ile ağaçları eşit olduğu için yalnız fast-forward yapıldı; kullanıcı/generated farkları korundu.
+- Ek talimattaki PR #6 OPEN/3ece361 bilgisi güncel değil: PR daha önce03fc90d ile merge edildi; birleştirilmiş PR’a yeni commit eklenemiyor. Yayın yolu için kullanıcıya kısa seçenek sunuldu; bağımsız yerel iş sürdürüldü. Yeni branch/PR/production işlemi bu kayıt anında yapılmadı.
+- Mimari v1.23/A23: hero min-height100svh-header; grid ve bottom birlikte; kısa landscape/mobil boşluk ve font uyarlaması. İkinci bölümün DOM’u ve bütün içeriği aynen korunur; hero overflow visible. Menü son tipografisi ortak17/19px variable.
+- İlk kabul18/18 ilk ekran PASS; başlık/açıklama/CTA/tabela/caption/hero-bottom sınırları doğrulandı; ikinci bölüm top=viewport yüksekliği, DOM/display/visibility/opacity/height ve scroll sonrası başlık/fotoğraflar PASS. Görsel incelemede WhatsApp/motion çakışması yakalandı ve76px sağ iç boşlukla giderildi; ilk tam test koşusu bu son bulgu için durduruldu, son tam koşu başlatıldı.
+- Testler: responsive matris18ölçü; navbar14viewport×2sayfa; vitrin9genişlik. Hiçbir test kaldırılmadı; önceki sabit hero-grid üst sınırı yeni tam-fold kabulüne göre güncellendi, stage/font bütçesi korunur. Ayrı referans görseli bu ekte yok;2560 kabulü yazılı kriterler üzerindendir.
+- Sıradaki tek iş: son tam test/görsel kabul ve aynı dal commit/push/izole preview; yayın yolu yanıtına göre devam.
+
+- P3.7g-fold son kullanıcı seçimi: yalnız aynı dala commit/push; yeni PR ve yayın yapma. PR #6 tarihsel olarak merged kalır; yeni PR açılmaz, main/production değiştirilmez. Son yerel tam test sonucu raporda; uzaktan kayıt ve Preview kapıları henüz bekleniyor.

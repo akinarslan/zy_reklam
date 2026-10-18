@@ -11,12 +11,15 @@ const viewports = [
   { width: 412, height: 915 },
   { width: 768, height: 1024 },
   { width: 820, height: 1180 },
+  { width: 834, height: 1194 },
   { width: 1024, height: 768 },
+  { width: 1024, height: 1366 },
   { width: 1280, height: 720 },
   { width: 1366, height: 768 },
   { width: 1440, height: 900 },
   { width: 1536, height: 864 },
   { width: 1600, height: 900 },
+  { width: 1900, height: 1000 },
   { width: 1920, height: 1080 },
   { width: 2560, height: 1440 },
   { width: 3440, height: 1440 },
@@ -83,7 +86,7 @@ test('Ana site viewport matrisi, geniş ekran ölçekleri, menüler ve yatay ta�
         const element = document.querySelector(selector);
         if (!element) return null;
         const bounds = element.getBoundingClientRect();
-        return { width: bounds.width, height: bounds.height, left: bounds.left, right: bounds.right };
+        return { width: bounds.width, height: bounds.height, left: bounds.left, right: bounds.right, top: bounds.top, bottom: bounds.bottom };
       };
       return {
         width: innerWidth,
@@ -91,6 +94,8 @@ test('Ana site viewport matrisi, geniş ekran ölçekleri, menüler ve yatay ta�
         documentWidth: document.documentElement.scrollWidth,
         shell: rect('.header-inner'),
         hero: rect('.hero-grid'),
+        heroSection: rect('.hero'),
+        nextSection: rect('.brand-showcase'),
         titleFontSize: getComputedStyle(document.querySelector('#hero-title')).fontSize,
         signStage: rect('.sign-stage'),
         showroomCount: document.querySelectorAll('#vitrin, [data-showroom-stage]').length,
@@ -102,6 +107,7 @@ test('Ana site viewport matrisi, geniş ekran ölçekleri, menüler ve yatay ta�
       };
     });
     assert.ok(measurement.documentWidth <= viewport.width, `Ana site yatay taşıyor: ${JSON.stringify(measurement)}`);
+    assert.ok(measurement.nextSection.top >= viewport.height - 1, `İkinci bölüm ilk ekrana girdi: ${JSON.stringify(measurement)}`);
     assert.ok(measurement.shell.width <= viewport.width, `Container viewport dışına çıktı: ${JSON.stringify(measurement)}`);
     if (viewport.width >= 1440 && viewport.width < 1920) {
       assert.ok(measurement.shell.width <= 1761, `Ana container max sınırını aştı: ${JSON.stringify(measurement)}`);
@@ -123,8 +129,8 @@ test('Ana site viewport matrisi, geniş ekran ölçekleri, menüler ve yatay ta�
       const heroHeight = measurement.hero.height;
       const signStageHeight = measurement.signStage.height;
       const titleFontSize = Number.parseFloat(measurement.titleFontSize);
-      assert.ok(heroHeight >= 760 && heroHeight <= 820,
-        `2560px+ hero yüksekliği hedef dışında: ${JSON.stringify(measurement)}`);
+      assert.ok(heroHeight >= 760 && heroHeight <= viewport.height && Math.abs(measurement.heroSection.bottom - viewport.height) < 2,
+        `2560px+ hero ilk ekranı tam doldurmalı: ${JSON.stringify(measurement)}`);
       assert.ok(signStageHeight >= 600 && signStageHeight <= 680,
         `2560px+ tabela sahnesi hedef dışında: ${JSON.stringify(measurement)}`);
       assert.ok(titleFontSize >= 90 && titleFontSize <= 100,

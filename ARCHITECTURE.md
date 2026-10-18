@@ -1,6 +1,6 @@
 # ZY Reklam — Mimari
 
-**Sürüm:** 1.22 · **Tarih:** 2026-10-17 · **Durum:** P3 fiziksel cihaz performans kabulü açık; P7 admin medya/taslak akışı yerel entegrasyonla doğrulandı, KV/R2 provision edildi; production secrets ve canlı GitHub yayını engelli; responsive viewport alt kabulü ve 2K+ ziyaretçi site genişlik ayarı doğrulandı
+**Sürüm:** 1.23 · **Tarih:** 2026-10-18 · **Durum:** P3 fiziksel cihaz performans kabulü açık; P7 admin medya/taslak akışı yerel entegrasyonla doğrulandı, KV/R2 provision edildi; production secrets ve canlı GitHub yayını engelli; responsive viewport alt kabulü ve 2K+ ziyaretçi site genişlik ayarı doğrulandı
 
 **İlgili belgeler:** [Yol haritası](ROADMAP.md) · [Çalışma kuralları](AGENTS.md)
 
@@ -425,3 +425,11 @@ Admin yalnız frontend sunum revizyonudur: topbar/nav/content ortak shell 1920�
 Kullanıcının yeni önceliği, A21 ile ana sayfadan kaldırılan eski iki kutu harf tabela ve asimetrik totem showroom’unun /3d-vitrin/ ayrı statik sayfasında sunulmasıdır. Ana sayfa özgün hero 3D sahnesi korunur; ana sayfada showroom DOM/bootstrap/varlık isteği geri eklenmez. Yeni src/vitrine.ts girişi paylaşılan gezinme/hareket/iletişim guard’larını ve yalnız bu sayfanın showroom controller’ını başlatır. Yeni sayfada hero sahnesi yoktur; tek showroom canvas’ı, lazy/idle/offscreen/reduced/context fallback ve cleanup mevcut modül üzerinden korunur. Geometri, ürün ışıkları ve renderer kodu değiştirilmez.
 
 Sayfa şablonu src/showroom/page.html, ortak header/footer/WhatsApp üretimi scripts/generate-showroom.mjs içindedir. Build zinciri 3d-vitrin/index.html çıktısını ve Vite girişini içerir; tüm paylaşılan menüler /3d-vitrin/ hedefine gider, canonical ve sitemap yeni gerçek URL’yi içerir. Worker/API/auth/admin responsive ve A20 preview izolasyonu değişmez. P3.6 kullanıcı isteğiyle durdurulmuştur; bu sayfanın yazılım tarayıcı regresyonları fiziksel cihaz kabulü değildir.
+
+### 2026-10-18 — A23 tam ilk ekran hero ve iPad kabulü (P3.7g-fold)
+
+Kullanıcının yeni talimatı, A21/A22’deki sabit hero-grid yükseklik kabulünü viewport yüksekliğine bağlı bir ilk ekran sözleşmesiyle günceller. Public sticky header dahil hesaplanır: hero min-height = 100svh - --public-header-height. Hero-grid ve hero-bottom aynı flex section içinde kalan alanı paylaşır; 100svh mobil tarayıcı araç çubuğu değişiminde stabil küçük viewport referansıdır. Kısa landscape ve dar mobil ekranlarda yalnız hero iç boşlukları, başlık/CTA ve stage yüksekliği uyarlanır; içerik kırpılmaz. Hero-bottom hareket kontrolü sabit WhatsApp ikonu için yatay yer ayırır.
+
+Brand-showcase ve altındaki bütün bölümler aynı DOM/içerik ve normal document flow ile korunur. Hiçbiri silinmez veya display/visibility/opacity/height/overflow ile saklanmaz; ilk viewport bittiği yerde ikinci bölüm başlar, scroll sonrası normal görünür. Hero overflow visible olur. Menü tipografisinin tek son seçicisi --public-nav-font-size ile17px/19px üretir; Atölye ve üç summary aynı400 ağırlık ve metrikleri taşır.
+
+A22 ayrımı değişmez: ana sayfada yalnız özgün hero canvas; showroom ve varlıkları yalnız /3d-vitrin/. Scene/showroom controller/model/renderer, admin, Worker/Wrangler/auth/KV/R2/secrets değişmez. Yeni kabul18 ilk ekran ölçüsü,14 navbar viewport’u ×2 sayfa ve9 vitrin genişliğidir; fiziksel iPad/GPU ölçümü değildir. PR #6 önceki talimatla zaten merge edilmiştir. Kullanıcının son seçimi yalnız aynı feat/3d-vitrin-page dalına commit/push yapılmasıdır; yeni branch/PR, main merge veya production yayını yapılmaz.
