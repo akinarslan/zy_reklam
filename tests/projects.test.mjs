@@ -13,19 +13,19 @@ before(async()=>{
 after(async()=>{await browser?.close();server?.kill();await writeFile('docs/evidence/P2_PROJECTS_VERIFICATION.json',JSON.stringify({date:new Date().toISOString(),stage:'P2.8',checks},null,2)+'\n');});
 test('İki mega menü: beş proje kartı, karşılıklı kapanma, klavye ve mobil dokunma',async()=>{
  for(const width of [360,768,1440]){
-  const page=await browser.newPage({viewport:{width,height:1000},hasTouch:width===360,isMobile:width===360,reducedMotion:'reduce'});await page.goto(base);
+  const page=await browser.newPage({viewport:{width,height:1000},hasTouch:width<1024,isMobile:width<1024,reducedMotion:'reduce'});await page.goto(base);
   const project=page.locator('[data-project-menu]'),promo=page.locator('[data-promo-menu]');
-  if(width===360)await page.locator('[data-nav-toggle]').tap();
-  await project.locator('summary')[width===360?'click':'hover']();assert.equal(await project.locator('.promo-menu-card').count(),5);
+  if(width<1024)await page.locator('[data-nav-toggle]').tap();
+  await project.locator('summary')[width<1024?'click':'hover']();assert.equal(await project.locator('.promo-menu-card').count(),5);
   await project.locator('img').evaluateAll(images=>Promise.all(images.map(i=>i.decode())));
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
-  if(width!==360) assert.equal(await project.locator('.project-menu-grid').evaluate(e=>getComputedStyle(e).gridTemplateColumns.split(' ').length),5);
-  if(width===1440||width===360)await page.screenshot({path:`docs/evidence/projects-menu-${width}.png`});
+  if(width>=1024) assert.equal(await project.locator('.project-menu-grid').evaluate(e=>getComputedStyle(e).gridTemplateColumns.split(' ').length),5);
+  if(width===1440||width<1024)await page.screenshot({path:`docs/evidence/projects-menu-${width}.png`});
   await page.keyboard.press('Escape');assert.equal(await project.locator('summary').evaluate(e=>document.activeElement===e),true);
   await page.keyboard.press('ArrowDown');assert.equal(await project.locator('a').first().evaluate(e=>document.activeElement===e),true);
-  await promo.locator('summary')[width===360?'click':'hover']();assert.equal(await project.evaluate(e=>e.open),false);assert.equal(await promo.evaluate(e=>e.open),true);
-  await project.locator('summary')[width===360?'click':'hover']();assert.equal(await promo.evaluate(e=>e.open),false);
-  if(width===360){await project.locator('.promo-menu-card').nth(1).tap();await page.waitForURL('**/projeler/totem/');}
+  await promo.locator('summary')[width<1024?'click':'hover']();assert.equal(await project.evaluate(e=>e.open),false);assert.equal(await promo.evaluate(e=>e.open),true);
+  await project.locator('summary')[width<1024?'click':'hover']();assert.equal(await promo.evaluate(e=>e.open),false);
+  if(width<1024){await project.locator('.promo-menu-card').nth(1).tap();await page.waitForURL('**/projeler/totem/');}
   else {await project.locator('summary').hover();assert.equal(await project.evaluate(e=>e.open),true);await project.locator('.promo-menu-card').first().click();await page.waitForURL('**/projeler/tabela/');}
   checks.push({check:'dual-menu',width,passed:true});await page.close();
  }

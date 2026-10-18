@@ -1,15 +1,25 @@
-# ZY Reklam — 3D Vitrin kayıt ve önizleme raporu
+# ZY Reklam — PR #6 navbar düzeltmeleri
 
 Tarih: 2026-10-18
-Talimat: Hazır P3.7g değişikliğinin commit/PR/Verify/Preview sürecine devam et.
-Aşama/iş: P3.7g; mimari v1.22/A22 ve A20 korunur.
-Dal/çalışma alanı: feat/3d-vitrin-page; .worktrees/3d-vitrin-page.
-Başlangıç uzak main: f378dd128c2b76faaadb3f45666603a56cc1badd.
+Talimat: Aynı PR #6 üzerinde Atölye etiketini eşitle; public navbar sticky kalsın. Tüm kabul kapıları geçmeden merge yok; kapılar geçince merge yetkisi var.
+Aşama/iş: P3.7g-nav, devam ediyor. Mevcut mimari v1.22/A22 ve A20 korundu; veri sözleşmesi değişmedi.
+Dal: feat/3d-vitrin-page; .worktrees/3d-vitrin-page. Yeni dal/PR yok.
 
-İki tabela ve asimetrik totem /3d-vitrin/ sayfasında, ortak menü/footer/iletişim, canonical ve sitemap ile hazır. Ana sayfa hero 3D, showroom geometri/renderer/controller, admin, Worker ve Wrangler korunur.
-Doğrulama: npm.cmd run build PASS (TypeScript dahil); npm.cmd test tek seri koşuda 44/44 PASS. Yedi viewport, üç ürün ışıkları, klavye/touch, idle/offscreen, reduced-motion, module/context fallback, JS kapalı iletişim ve yerel Worker route HTTP200 PASS. Mevcut 599.52kB SVGLoader uyarısı sürer.
-Değişen kaynaklar: index.html, package.json, vite.config.ts; scripts/generate-showroom.mjs, generate-projects.mjs, generate-promotions.mjs; src/vitrine.ts, src/showroom/page.html, src/styles/showroom.css; tests/vitrine-page.test.mjs, showroom.test.mjs, admin-worker.test.mjs; ARCHITECTURE.md, ROADMAP.md, LAST_REPORT.md. Generated/evidence/screenshot/yerel araç farkları commit dışındadır ve korunur.
-Uzak kayıt: commit/push/PR ve Verify/Cloudflare Preview henüz bekleniyor; başarı önceden iddia edilmez. Main merge/production deploy yapılmadı.
-Sınır: P3.6 fiziksel cihaz kabulü durdurulmuş durumda; fiziksel/USB/ADB/telefon testi yapılmadı. Genel P3/P7/P8 açık.
-Engel: yerel kabulde yok; uzak kontroller bekleniyor.
-Sıradaki tek iş: commit/push/PR ve uzak Verify/izole Preview kabulünü tamamlamak.
+Atölye computed font: Desktop17px/400/line-height22.1px/padding14px0/height50.094px; mobil-tablet19px/400/24.7px/15px/54.688px.
+Hizmetler computed font: aynı ölçüler. Önce1440px12 vs17px ve1920+15 vs17px idi.
+Atölye visual: PASS (1440/2560 ve768 screenshot incelemesi).
+Header position: sticky; top0, z-index20, mevcut koyu yeşil arka plan.
+Home scroll sticky: PASS.
+3D Vitrin scroll sticky: PASS.
+Mobile sticky/menu: PASS —390/412/768;1023px ve altı hamburger.
+Mega menus: PASS — üç menü, erişilebilir linkler/Escape/viewport sınırı.
+Anchor offset: PASS — responsive header77/91/97/103px +20px, dört ana anchor ve cross-page Atölye.
+Horizontal overflow: YOK —1366/1440/1920/2560/3440/3840 ve üç mobil/tablet ölçüsü.
+Tests: yeni navbar1/1 PASS,18 kombinasyon; build/TypeScript PASS; full tests tek seri koşuda45/45 PASS,0 fail.
+Verify: yeni head için bekleniyor.
+Cloudflare Preview: yeni head için bekleniyor.
+Merge: NO.
+
+Değişen dosyalar: index.html, src/styles/main.css, src/sections/navigation.ts, tests/projects.test.mjs, tests/public-navigation.test.mjs, tests/helpers/public-navigation.mjs, ROADMAP.md, LAST_REPORT.md. Generated/screenshot/önceki evidence farkları korundu ve kaynak commit kapsamı dışındadır. Admin/scene/Worker/Wrangler değişmedi.
+Engel: yok; kabul zinciri devam ediyor. P3.6 durdurulmuş durumda, fiziksel/USB/ADB testi yapılmadı; genel P3/P7/P8 açık.
+Sıradaki tek iş: tam test, aynı branch commit/push ve yeni head CI/Preview kabulü; ardından yetkilendirilmiş merge/otomatik yayın.

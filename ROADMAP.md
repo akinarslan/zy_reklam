@@ -114,7 +114,9 @@ Süreler takvim taahhüdü değildir. P1 sonrası logo kalitesi, gerçek görsel
 
 - [x] P3.7b Lightbox ve 360° araç: özgün temsili kaplama/görsel, sürükleme/klavye/ışık kontrolü, mobil ve context yedeği. **Tamamlandı; fiziksel cihaz kabulü P3.6 kapsamında açık.**
 
-- [x] P3.7g Eski iki tabela + asimetrik totem showroom'unu bağımsız `/3d-vitrin/` sayfasında sun; ana sayfa hero 3D sahnesini koru. Yerel kabul tamamlandı; PR/Verify/Preview alt kabulü devam ediyor, production yayını açık.
+- [x] P3.7g Eski iki tabela + asimetrik totem showroom'unu bağımsız `/3d-vitrin/` sayfasında sun; ana sayfa hero 3D sahnesini koru. Yerel ve PR/Verify/Preview alt kabulü tamamlandı; production yayını açık.
+
+- [ ] P3.7g-nav Ortak public header sticky, eşit Atölye etiketi, responsive anchor offset ve mobil/mega menüler; aynı PR #6 üzerinde test/preview/merge kabulü. **Devam ediyor.**
 
 ## 7. P4 — Üretim sahnesi ve hizmetler
 
@@ -673,7 +675,7 @@ Sıradaki tek iş:
 - P3.7g yerel kabul tamamlandı; .worktrees/3d-vitrin-page içinde değişiklikler commit edilmemiş durumda. Uzak main ls-remote ile f378dd128c2b76faaadb3f45666603a56cc1badd doğrulandı; uzak feature dalı bulunmadı. Bu tur test/yayın yapılmadı, mevcut farklar korundu. Mimari v1.22/A22 değişmedi; P3.6 durdurulmuş durumda.
 - Sıradaki tek iş: hazır değişikliği commit/PR/Verify/Preview sürecine almak. Rapor LAST_REPORT.md içine yazıldı.
 
-### 2026-10-18 — P3.7g uzak kayıt ve önizleme kabulü (devam ediyor)
+### 2026-10-18 — P3.7g uzak kayıt ve önizleme kabulü (tamamlandı; production yayını açık)
 
 - Talimat: Hazır 3D Vitrin değişikliğinin commit/PR/Verify/Preview sürecine devam et. Güncel AGENTS, mimari v1.22 ve roadmap okundu; alt AGENTS yok. Ana ağacın kullanıcı/generated farkları korundu. Fetch ve GitHub API main f378dd128c2b76faaadb3f45666603a56cc1badd ile eşleşti; mevcut feature PR yok.
 - Yerel kabul: npm.cmd run build (TypeScript dahil) PASS; npm.cmd test tek seri koşuda 44/44 PASS, 0 fail. Yedi 390/768/1366/1920/2560/3440/3840 viewport, ürün ışıkları, klavye/touch, idle/offscreen, reduced-motion, module/context fallback ve JS kapalı yollar geçti. Yerel Worker yeni route HTTP200 kontrolü tam pakette geçti.
@@ -681,3 +683,18 @@ Sıradaki tek iş:
 - Kayıt kapsamı: 12 uygulama/test kaynağı ve mimari/roadmap/rapor. Yeniden üretilen HTML/sitemap, eski kanıt farkları, yerel araçlar ve screenshot dosyaları commit kapsamına alınmaz; CI build tekrar üretir. Yeni kanıtlar docs/evidence/vitrine-page içinde yereldedir.
 - Durum: yerel kabul tamamlandı; uzak commit/PR/Verify/Preview sonucu henüz bekleniyor. Main merge veya production deploy bu kabulün tamamlandığı anlamına gelmez.
 - Sıradaki tek iş: feature commit/push ve PR ile uzak Verify/izole Preview kabulünü tamamlamak.
+
+- P3.7g uzak alt kabul tamamlandı: commit 3ece3615d2965ddabffba2ace63c094f6e501de2, PR #6 OPEN. Uzak SHA ve 15 dosya fetch ile yeniden doğrulandı; PR açıklamasındaki son kabul kanıtı API üzerinden tekrar okundu. PR/push Verify 39138084907/39138070938 SUCCESS; Cloudflare Preview Build 1281db0b-fede-4567-baad-23611b11096c SUCCESS.
+- Dağıtılmış önizleme https://ba97f6a7-zy-reklam.akinarslanceng.workers.dev/3d-vitrin/ üzerinde yedi genişlik taşmasız, tek WebGL showroom canvas; üç ürün ışıkları/klavye/touch/mobil menü/reduced/context-module fallback/JS kapalı/hero/kategori/sitemap PASS. Uzak 390/2560/3840 screenshot görsel incelemesi yapıldı; preview/acceptance.json yerel kanıt. Authenticated metadata ASSETS-only, secret listesi boş; production KV/R2 veya GITHUB_TOKEN yok.
+- Main f378dd128c2b76faaadb3f45666603a56cc1badd yeniden API ile doğrulandı; merge/production deploy yapılmadı. Son rapor ve günlük yerelde güncellendi; gereksiz rapor commit/deploy üretilmedi. P3.6 durdurulmuş, genel P3/P7/P8 açık. Sıradaki tek iş: yeşil PR #6 main merge ve otomatik production yayın/canlı kabul adımı.
+
+### 2026-10-18 — P3.7g-nav PR #6 ortak sticky navbar ve Atölye etiketi (devam ediyor)
+
+- Talimat: Yeni dal/PR oluşturmadan feat/3d-vitrin-page ve PR #6 üzerinde devam et. Önce navbar düzeltmeleri, tam testler, Verify GREEN ve Cloudflare Preview SUCCESS; tüm kapılar geçerse merge yetkisi var. AGENTS, mimari v1.22 ve roadmap güncel tam metinleri okundu; alt kapsam AGENTS yok. Fetch/API: main f378dd1, açık PR #6 head 3ece361; mevcut kullanıcı/generated farkları korundu.
+- Önceki tarayıcı computed ölçümü: 1440px Atölye12px/Hizmetler17px; 1920/2560/3440/3840 Atölye15px/Hizmetler17px. Font-weight ikisinde400; Atölye padding0/height14–17, Hizmetler padding14px0/height50. Büyük ekran seçici özgüllüğü farkı giderildi; açık nav-workshop-link sınıfı tüm shared header çıktılarında üretiliyor.
+- Yeni kabul: Desktop iki etiket17px/400/line-height22.1px/padding14px0/height50.094px; mobil/tablet19px/400/24.7px/15px/54.688px. 3D Vitrin özel vurgusu korunur. CSS sticky top0/z-index20/koyu yeşil arka plan; responsive --public-header-height77/91/97/103px ve +20px scroll-padding. 768 dahil1023px altı hamburger; CSS/JS breakpoint eşleşir.
+- Yeni public-navigation tarayıcı testi ana sayfa ve /3d-vitrin/ ×9 viewport18 kombinasyon PASS: başlangıç/orta/footer, gerçek scrollY1000/header.top0, üç mega menü, mobil açık menünün scroll bağlantısı ve sınırları, dört anchor ve sayfalar arası Atölye geçişi; temsilî hizmet/proje/promosyon header kontrolü. Screenshot görsel incelemesi desktop1440/2560 ve tablet768 PASS. Build/TypeScript PASS; tam test/uzak kabul sürüyor.
+- Mimari/veri sözleşmesi değişmedi; v1.22/A22 ve A20 korundu. P3.6 kullanıcı talimatıyla durdurulmuş, genel P3/P7/P8 açık. Kaynaklar: index.html, main.css, navigation.ts, projects.test.mjs ve yeni public-navigation test/helper; ROADMAP/LAST_REPORT. Admin/scene/Worker/Wrangler değişmez.
+- Sıradaki tek iş: tam test sonrası aynı branch commit/push, yeni head için CI ve izole Preview kapıları; sonra yetkilendirilmiş merge/otomatik production kontrolü.
+
+- P3.7g-nav yerel tam kabul: npm.cmd test45/45 PASS,0 fail (tek seri koşu); build/TypeScript PASS. Desktop1440/2560, tablet768 ve mobile390 mega menü screenshot görsel incelemesi PASS. Aynı PR #6 yeni head CI/Preview kapısı bekleniyor; merge henüz yapılmadı.
