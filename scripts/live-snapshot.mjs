@@ -13,7 +13,7 @@ const childTrees = node => [...node.childNodes].map(tree).filter(item=>item!==nu
   return items;
 },[]);
 export function tree(node,index=0) {
-  if (node.nodeType === 3) return node.textContent;
+  if (node.nodeType === 3) return node.textContent.replace(/\r\n?/g,'\n');
   if (node.nodeType !== 1) return null;
   const tag=node.localName;
   if (!tags.has(tag)) throw Error(`Unsupported public tag ${tag}`);

@@ -11,6 +11,9 @@ test('A: deterministic public snapshots, schema, unsafe URL rejection and full i
  const revision='a'.repeat(40);
  const first=await createSnapshots(process.cwd(),pages,revision),second=await createSnapshots(process.cwd(),[...pages].reverse(),revision);
  assert.deepEqual(first.manifest,second.manifest);
+ const windows=await createSnapshots(process.cwd(),pages.map(([path,html])=>[path,html.replace(/\r?\n/g,'\r\n')]),revision);
+ const linux=await createSnapshots(process.cwd(),pages.map(([path,html])=>[path,html.replace(/\r\n/g,'\n')]),revision);
+ assert.deepEqual(windows.manifest.sections,linux.manifest.sections);
  assert.equal(canonical({b:2,a:1}),canonical({a:1,b:2}));
  assert.ok(validManifest(first.manifest));
  assert.ok(!validManifest({...first.manifest,schemaVersion:2}));
