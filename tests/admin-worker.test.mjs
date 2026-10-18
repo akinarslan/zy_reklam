@@ -133,6 +133,9 @@ test('Local Worker persists drafts, validates uploads, protects used files, and 
     const homePage = await fetch(`${base}/`);
     assert.equal(homePage.status, 200);
     assert.match(await homePage.text(), /ZY REKLAM/);
+    const vitrinePage = await fetch(`${base}/3d-vitrin/`);
+    assert.equal(vitrinePage.status, 200);
+    assert.match(await vitrinePage.text(), /<h1 id="showroom-title">3D Vitrin/);
     const sessionApi = await fetch(`${base}/api/admin/session`);
     assert.equal(sessionApi.status, 200);
     assert.equal((await sessionApi.json()).authenticated, false);

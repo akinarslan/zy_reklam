@@ -1,6 +1,6 @@
 # ZY Reklam — Yol Haritası
 
-**Sürüm:** 1.21 · **Başlangıç:** 2026-10-01 · **Güncelleme:** 2026-10-17
+**Sürüm:** 1.22 · **Başlangıç:** 2026-10-01 · **Güncelleme:** 2026-10-17
 
 **Kaynak:** [ARCHITECTURE.md](ARCHITECTURE.md) · **Zorunlu kontrol:** [AGENTS.md](AGENTS.md)
 
@@ -10,7 +10,7 @@
 
 **Aktif aşama:** P3 — Gerçek 3D açılış uygulandı; performans kapanışı devam ediyor.
 
-**Kullanıcı önceliği:** P8.7 — ana site ve admin responsive viewport alt kabulü. Bağımsız responsive işi P3.6/P7 açıkken ilerletildi; hiçbir üst aşama tamamlanmış sayılmaz.
+**Kullanıcı önceliği:** P3.7g — ayrı 3D Vitrin sayfasının commit/PR/Verify/Preview süreci. P3.6 fiziksel cihaz kabulü kullanıcı talimatıyla durduruldu; genel P3/P7/P8 açık kalır.
 
 P1 kaynak, logo, font ve iletişim incelemesi yapıldı; gerçek proje bilgileri/fotoğrafları doğrulanmadığı için P1.5 açık kalır. Planın engel yönetimi uyarınca bağımsız P2 temeli tamamlandı. Vite/TypeScript sayfası, statik SVG poster, mobil menü, hareket tercihi ve temel WhatsApp iletişim akışı çalışıyor. Gerçek 3D açılış şimdi uygulanmıştır. Üretim animasyonları, galeri, stüdyo ve upload henüz uygulanmadı.
 
@@ -113,6 +113,8 @@ Süreler takvim taahhüdü değildir. P1 sonrası logo kalitesi, gerçek görsel
 - [x] P3.7a Referanstaki geometrik harf stili; krom çevre, beş kontrollü ışık rengi; eşit yön yazıları ve büyük ZY REKLAM. **Tamamlandı.**
 
 - [x] P3.7b Lightbox ve 360° araç: özgün temsili kaplama/görsel, sürükleme/klavye/ışık kontrolü, mobil ve context yedeği. **Tamamlandı; fiziksel cihaz kabulü P3.6 kapsamında açık.**
+
+- [x] P3.7g Eski iki tabela + asimetrik totem showroom'unu bağımsız `/3d-vitrin/` sayfasında sun; ana sayfa hero 3D sahnesini koru. Yerel kabul tamamlandı; PR/Verify/Preview alt kabulü devam ediyor, production yayını açık.
 
 ## 7. P4 — Üretim sahnesi ve hizmetler
 
@@ -607,6 +609,21 @@ Sıradaki tek iş:
 - Mimari v1.20/A20 bu izolasyon kararını kaydeder. P3.6/P7/P8 genel kabulü kapanmaz. Generated dosyalar commit kapsamına alınmaz.
 - Sıradaki tek iş: config'i mevcut PR #3 dalına push edip Verify ve Cloudflare preview sonucunu, ardından gerçek preview URL'de dört geniş ekranı doğrulamak.
 
+- Sonuç kanıtı: 7ea672378984b7e0482910d9a723eb7d11efc29d config/belge commit'i mevcut PR #3 dalına push edildi; uzak SHA ve üç dosya fetch sonrası birebir doğrulandı. Cloudflare Preview Build 732c9f2f-0f32-4185-8caa-8a7e5a42eb64 SUCCESS. Deployment 127d79b7-8e3d-41df-a85a-63aa21eba5c8 env anahtarları yalnız ASSETS; KV/R2/secret binding yok. Wrangler preview secret list boş [] döndü, GITHUB_TOKEN ABSENT. İlk CLI auth hatası Node --use-system-ca ile sertifika doğrulaması korunarak çözüldü.
+- npm ci/check/build ve yeni tam seri test 42/42 PASS. Uzak branch URL https://fix-2k-layout-width-zy-reklam.akinarslanceng.workers.dev/ üzerinde 1920/2560/3440/3840 shell 1800/2240/2560/2560px, document/viewport eşit, overflow yok. 2560 hero 2240 × 819.1875px; sign-stage 1099.59375 × 614.390625px. Dört screenshot ve 2560 bölüm ekranları incelendi. / ve /admin/ 200; boş login probe auth secrets yokluğu nedeniyle 503. Gerçek login/publish yapılmadı.
+- GitHub Verify henüz IN PROGRESS; dört merge kapısından kalan budur. Production deploy komutu çalıştırılmadı.
+
+- Merge kapısı geçti: PR ve push Verify run 39026514648 / 39026512291 SUCCESS; Cloudflare Preview SUCCESS; dört uzak viewport PASS. PR #3 merge SHA f3a1e5f2c5db073ffa083be7567e1c113be4c537; origin/main fetch ile yeniden okundu. Manuel production deploy çalıştırılmadı; otomatik build kontrolü sürüyor.
+
+- P8.7a/P9 bu göreve özel preview/merge/yayın alt kabulü tamamlandı: otomatik production Build 8ca1c700-c8cb-4757-8396-8c586484d54b SUCCESS; ana domain dört geniş ekranı aynı ölçülerle, overflow olmadan doğrulandı ve 2560 screenshot incelendi. Uzak main wrangler.jsonc yeniden okundu. Genel P8/P7/P3.6 açık kalır. Main Verify son kontrolde sürüyor; bağımsız live smoke HTML/CSS PASS sonrası JS marker grep exit 1 verdi (run 39026925635); tüm main CI yeşil iddiası yok. Sıradaki tek iş: mevcut Live Worker Smoke JS marker kontrolünü güncel build girişiyle düzeltmek.
+
+### 2026-10-17 — OAuth sonrası PR #3 tekrar doğrulaması
+
+- P8.7a/P9: mevcut Wrangler OAuth whoami ile geçerli; yeniden login yok, PowerShell kullanılmadı. Güncel AGENTS/mimari v1.20/roadmap v1.20 okundu; kullanıcı/generated değişiklikleri korundu.
+- Uzak PR #3 zaten MERGED; head 7ea6723, main f3a1e5f. PR Verify ve Cloudflare Preview SUCCESS; main Verify ve live-smoke SUCCESS; production build SUCCESS. Bu tur yeni merge/deploy yok.
+- Preview env yalnız ASSETS; secret listesi []; GITHUB_TOKEN ABSENT. Dört uzak viewport yeniden PASS: shell 1800/2240/2560/2560px, overflow yok. 2560 hero 2240×819.1875, sign-stage 1099.59375×614.390625; screenshot incelendi.
+- Kod/config değişmedi; check/build/tam test bu tur çalıştırılmadı. Mevcut mimari A20 korundu. Ayrı live workflow JS marker hatası hâlâ FAILED; sıradaki tek iş bu smoke kontrolünü düzeltmek.
+
 ### 2026-10-17 — P9.6 Live Worker Smoke JS false-negative düzeltmesi (devam ediyor)
 
 - Talimat: minified JS içindeki data-project-menu literal varsayımını kaldır; mevcut HTML/CSS kontrollerini koru, JS path/HTTP 200/non-empty kontrolüyle değiştir.
@@ -616,7 +633,13 @@ Sıradaki tek iş:
 - Kabul kapısı: PR Verify GREEN sonrası merge; merge SHA üzerinde Live Worker Smoke ve Cloudflare production Build sonucu ayrıca doğrulanacak. P9 geneli/P3.6/P7 kapanmaz.
 - Sıradaki tek iş: fix/live-worker-smoke commit/push ve PR Verify kapısını tamamlamak.
 
-### 2026-10-17 — P8.7b/P3.7f admin responsive + hero kompozisyonu (devam ediyor)
+- P9.6 ek doğrulama: gerçek workflow script’i beş HTTP fixture senaryosunda PASS; geçerli minified JS kabul, boş/404/201/eksik path reddedildi. Commit 9d2dde330beef635c9a5ee507a26a1fdb497cef3 ve PR #4 uzak kayıtla doğrulandı. Cloudflare Preview SUCCESS, Verify devam ediyor.
+
+- P9.6 merge: iki Verify run 39031796316/39031791323 SUCCESS ve preview SUCCESS sonrasında PR #4 merge edildi; SHA 8da241719b5afd32ebac3ff097e0d149ebf6347a. İlk merge çağrısı otomatik onay denetimince önceki pending push Verify kanıtı nedeniyle reddedildi; salt okunur güncel completed/success kanıtı alındıktan sonra yeniden değerlendirme başarılı oldu. Uzak main workflow içeriği head ile birebir eşleşti.
+
+- P9.6 tamamlandı: PR #4, commit 9d2dde330beef635c9a5ee507a26a1fdb497cef3, merge 8da241719b5afd32ebac3ff097e0d149ebf6347a. PR/push Verify GREEN. Merge SHA Live Worker Smoke SUCCESS (run 39032199464); logda HTML/CSS ve built JS asset PASS. Cloudflare production Build SUCCESS: https://dash.cloudflare.com/60b0fef6df2946e6c1d5efa2a76749f2/workers/services/view/zy-reklam/production/builds/bd010591-6962-4885-b32d-3fbe29d03451. Config/uygulama değişmedi; mimari v1.20/A20 korundu. Genel P9/P7/P3.6 açık. Sıradaki tek iş: P3.6 fiziksel cihaz performans kabulü.
+
+### 2026-10-17 — P8.7b/P3.7f admin responsive + hero kompozisyonu (tamamlandı)
 
 - Talimat: admin içerik/topbar/nav ortak genişliği, kontrollü form/dashboard/medya; public bağımsız showroom kaldırılır ve özgün 3D hero korunur.
 - Başlangıç: origin/main 8da241719b5afd32ebac3ff097e0d149ebf6347a; fix/admin-responsive-hero ayrı worktree. Ana çalışma ağacının kullanıcı/generated farkları korundu. AGENTS ve mimari/roadmap v1.20 okundu; alt AGENTS yok.
@@ -625,4 +648,36 @@ Sıradaki tek iş:
 - Kabul: 15 admin ve public viewport, 14 kategori sayfası × 5 viewport; yerel check/build başarılı. Tam test, görsel inceleme, uzak CI/preview ve production kabulü sürüyor. Ayrı referans görseli ekte yok; metindeki kompozisyon ölçütleri esas alınır.
 - Sıradaki tek iş: tam test ve ekran görüntüsü kabulü, sonra commit/PR CI ve izole Preview doğrulaması.
 
-- Yerel kabul: check/build PASS, seri tam test 41/41 PASS; 15 admin/public viewport, 14 kategori×5 viewport. Admin 1800/2240/2560 hedefleri, 1/2/4 dashboard, 1200px uzun alan, 5/6/7/9 medya kolonları ve tek hero canvas geçti. İstenen 7+7 ve 2560 dört panel ekran görüntüsü incelendi. Uzak CI/preview/production kabulü bekleniyor.
+- P8.7b/P3.7f tamamlandı: PR #5, commit 1e02d5f813139079414999bb903e8dd8603e168e, merge f378dd128c2b76faaadb3f45666603a56cc1badd. İki PR/push Verify GREEN, Preview SUCCESS cfeafaca-69d0-4693-87c5-bf8824baf05f; deployed ASSETS-only, secret listesi boş. Production Build SUCCESS b3cf6846-bebe-4c03-bf58-b9ba26fdadd6; main Verify ve her iki smoke SUCCESS. Preview ve canlı public/admin frontend yedi viewport PASS; production oturum açma/publish yapılmadı. 41/41 seri test, 15 viewport ve 14 kategori×5 viewport, istenen ekran görüntüleri görsel inceleme kanıtı. Mimari v1.21/A21. Genel P3.6/P7/P8 açık. Nihai sonuç yerel rapor/günlük kaydıdır, ek push/deploy yok. Sıradaki tek iş: P3.6 fiziksel cihaz performans kabulü.
+
+### 2026-10-17 — P3.6 fiziksel kabul kısmi ölçüm, kullanıcı talimatıyla durduruldu
+
+- Mimari/roadmap v1.21 ve AGENTS güncel tam metinleri okundu; git fetch/status/branch kontrolü, origin/main f378dd128c2b76faaadb3f45666603a56cc1badd. Kirli kullanıcı ağacı korundu.
+- Gerçek Windows i5-12500H/15.75GiB/Intel Iris Xe donanım GPU/Chrome155: cold LCP1.244sn, warm0.272sn; 3×10sn render çağrısı yaklaşık144/sn (presented FPS değil). Tek canvas, 5dk JS heap5.7–7.6MB/sabit DOM, hata yok. Kullanıcı Wi-Fi, fare/3D/scroll akıcı ve minimize/restore sorunsuz bildirdi.
+- Gerçek tab visibility otomasyonu odak emülasyonuyla maskelendi; düzeltici tekrar test çalıştırılmadı. WebGL unavailable/context/reduced fallback PASS. Lighthouse tek koşu desktop74/mobile54 performans; mobile LCP3.9sn/TBT2050ms yardımcı laboratuvar bulgusu, fiziksel Android sonucu değil. Kod fix yapılmadı.
+- Kullanıcı USB/ADB/telefon testini durdurdu. Android/ısınma/orientation/battery saver/mobil veri/admin fiziksel UI NOT TESTED; P3.6 kutusu açık, bu görev durduruldu. Yeni test/commit/PR/push/deploy yok. Kanıtlar docs/evidence/p36-physical-2026-10-17; rapor LAST_REPORT.md.
+- Yeni öncelik: P3.7g — eski bağımsız iki tabela+totem showroom, /3d-vitrin/ sayfasında; ana sayfa hero 3D korunur. Sıradaki tek iş bu ayrı sayfa uygulaması.
+
+### 2026-10-17 — P3.7g eski showroom /3d-vitrin/ sayfası (yerel kabul tamamlandı; yayın bekliyor)
+
+- Kullanıcı P3.6’yı durdurup eski bağımsız showroom’u (iki tabela + totem) ayrı /3d-vitrin/ sayfasına taşıma önceliğini verdi; hero 3D’nin ana sayfada kalacağını açıkça seçti.
+- Güncel tam AGENTS/mimari/roadmap okundu; git fetch/status/branch ve origin/main f378dd128c2b76faaadb3f45666603a56cc1badd doğrulandı. feat/3d-vitrin-page ayrı worktree, ana kullanıcı/generated farkları korundu; alt AGENTS yok.
+- Uygulama: ayrı Vite girişi, ortak header/footer/WhatsApp generator’ı ve semantik showroom şablonu; menü/canonical/sitemap. Eski geometri, renderer ve controller korunur; hero/admin/backend/config değişmedi. Mimari v1.22/A22 kapsam revizyonudur.
+- Check/build PASS. Worker doğrudan route, yedi viewport, klavye/touch ürün ışıkları, reduced motion/fallback/context/JS kapalı kontrolleri ve mevcut regresyonlar sürüyor. Bu iş P3.6 fiziksel testini yeniden başlatmaz; USB/ADB/telefon testi yok.
+- Commit/PR/push/merge/deploy yapılmadı; kullanıcı bu yeni iş için yayın/kayıt talimatı vermedi. Sıradaki tek iş: yerel işlev/görsel kabulünü tamamlamak.
+
+- P3.7g yerel kabul: check/build PASS; mevcut41 regresyon PASS, yeni3 sayfa testi3/3 PASS ayrı koşu. Yerel Worker /3d-vitrin/ HTTP200; yedi390/768/1366/1920/2560/3440/3840 viewport taşmasız, tekcanvas, üç ürün ışıkları/klavye/touch/reduced/fallback/context/JS kapalı geçti. Yedi screenshot görsel incelendi. Hero markup ve scene/admin/Worker/config/mainCSS birebir korundu. Local preview http://127.0.0.1:4197/3d-vitrin/. Yeni fiziksel/USB/ADB testi yok; P3.6 durduruldu. Commit/PR/push/deploy yok, main f378dd1 değişmedi. Sıradaki tek iş: hazır değişikliği commit/PR/Verify/Preview yayın sürecine almak.
+
+### 2026-10-18 — Son durum doğrulaması
+
+- P3.7g yerel kabul tamamlandı; .worktrees/3d-vitrin-page içinde değişiklikler commit edilmemiş durumda. Uzak main ls-remote ile f378dd128c2b76faaadb3f45666603a56cc1badd doğrulandı; uzak feature dalı bulunmadı. Bu tur test/yayın yapılmadı, mevcut farklar korundu. Mimari v1.22/A22 değişmedi; P3.6 durdurulmuş durumda.
+- Sıradaki tek iş: hazır değişikliği commit/PR/Verify/Preview sürecine almak. Rapor LAST_REPORT.md içine yazıldı.
+
+### 2026-10-18 — P3.7g uzak kayıt ve önizleme kabulü (devam ediyor)
+
+- Talimat: Hazır 3D Vitrin değişikliğinin commit/PR/Verify/Preview sürecine devam et. Güncel AGENTS, mimari v1.22 ve roadmap okundu; alt AGENTS yok. Ana ağacın kullanıcı/generated farkları korundu. Fetch ve GitHub API main f378dd128c2b76faaadb3f45666603a56cc1badd ile eşleşti; mevcut feature PR yok.
+- Yerel kabul: npm.cmd run build (TypeScript dahil) PASS; npm.cmd test tek seri koşuda 44/44 PASS, 0 fail. Yedi 390/768/1366/1920/2560/3440/3840 viewport, ürün ışıkları, klavye/touch, idle/offscreen, reduced-motion, module/context fallback ve JS kapalı yollar geçti. Yerel Worker yeni route HTTP200 kontrolü tam pakette geçti.
+- Koruma: hero markup, scene/admin/main/Worker/Wrangler ve showroom modelleri/renderer/controller değişmedi. Mimari v1.22/A22 ve A20 preview izolasyonu korunur. Mevcut SVGLoader 599.52kB uyarısı sürer; fiziksel/USB/ADB/telefon testi yapılmadı.
+- Kayıt kapsamı: 12 uygulama/test kaynağı ve mimari/roadmap/rapor. Yeniden üretilen HTML/sitemap, eski kanıt farkları, yerel araçlar ve screenshot dosyaları commit kapsamına alınmaz; CI build tekrar üretir. Yeni kanıtlar docs/evidence/vitrine-page içinde yereldedir.
+- Durum: yerel kabul tamamlandı; uzak commit/PR/Verify/Preview sonucu henüz bekleniyor. Main merge veya production deploy bu kabulün tamamlandığı anlamına gelmez.
+- Sıradaki tek iş: feature commit/push ve PR ile uzak Verify/izole Preview kabulünü tamamlamak.

@@ -1,6 +1,6 @@
 # ZY Reklam — Mimari
 
-**Sürüm:** 1.21 · **Tarih:** 2026-10-17 · **Durum:** P3 fiziksel cihaz performans kabulü açık; P7 admin medya/taslak akışı yerel entegrasyonla doğrulandı, KV/R2 provision edildi; production secrets ve canlı GitHub yayını engelli; responsive viewport alt kabulü ve 2K+ ziyaretçi site genişlik ayarı doğrulandı
+**Sürüm:** 1.22 · **Tarih:** 2026-10-17 · **Durum:** P3 fiziksel cihaz performans kabulü açık; P7 admin medya/taslak akışı yerel entegrasyonla doğrulandı, KV/R2 provision edildi; production secrets ve canlı GitHub yayını engelli; responsive viewport alt kabulü ve 2K+ ziyaretçi site genişlik ayarı doğrulandı
 
 **İlgili belgeler:** [Yol haritası](ROADMAP.md) · [Çalışma kuralları](AGENTS.md)
 
@@ -419,3 +419,9 @@ Kaynak: https://developers.cloudflare.com/workers/previews/configuration/
 Kullanıcının yeni talimatı A12 bağımsız tabela showroom sunumunu kaldırır. Ana sayfada yalnız mevcut src/scene hero renderer yaşam döngüsü başlatılır; showroom DOM, stylesheet import ve bootstrap çağrısı yoktur. Özgün ZY REKLAM geometrisi, lazy yükleme, reduced-motion/poster/context yedeği ve kaynak temizliği korunur. Gerçek lightbox ve araç fotoğrafı showcase bölümü, hizmet/proje/promosyon sayfaları ve iletişim akışları korunur. 2560px hero shell 2240px, metin/sahne kolonları yaklaşık %44/%56; yükseklik 768px, sahne 614px.
 
 Admin yalnız frontend sunum revizyonudur: topbar/nav/content ortak shell 1920→1800, 2560→2240, 3440/3840→2560px; kısa alanlar en fazla dört kolon, uzun alanlar 1200px ile sınırlı. Dashboard 1/2/4 kolon, medya kartları kontrollü auto-fill. API/auth/KV/R2/yayın/veri sözleşmesi değişmez. A20 previews:{} izolasyonu korunur. Mocked frontend responsive kanıtı production login/publish veya fiziksel cihaz performans kabulü değildir.
+
+### 2026-10-17 — A22 bağımsız /3d-vitrin/ sayfası (P3.7g)
+
+Kullanıcının yeni önceliği, A21 ile ana sayfadan kaldırılan eski iki kutu harf tabela ve asimetrik totem showroom’unun /3d-vitrin/ ayrı statik sayfasında sunulmasıdır. Ana sayfa özgün hero 3D sahnesi korunur; ana sayfada showroom DOM/bootstrap/varlık isteği geri eklenmez. Yeni src/vitrine.ts girişi paylaşılan gezinme/hareket/iletişim guard’larını ve yalnız bu sayfanın showroom controller’ını başlatır. Yeni sayfada hero sahnesi yoktur; tek showroom canvas’ı, lazy/idle/offscreen/reduced/context fallback ve cleanup mevcut modül üzerinden korunur. Geometri, ürün ışıkları ve renderer kodu değiştirilmez.
+
+Sayfa şablonu src/showroom/page.html, ortak header/footer/WhatsApp üretimi scripts/generate-showroom.mjs içindedir. Build zinciri 3d-vitrin/index.html çıktısını ve Vite girişini içerir; tüm paylaşılan menüler /3d-vitrin/ hedefine gider, canonical ve sitemap yeni gerçek URL’yi içerir. Worker/API/auth/admin responsive ve A20 preview izolasyonu değişmez. P3.6 kullanıcı isteğiyle durdurulmuştur; bu sayfanın yazılım tarayıcı regresyonları fiziksel cihaz kabulü değildir.
