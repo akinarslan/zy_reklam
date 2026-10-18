@@ -1,6 +1,6 @@
 # ZY Reklam — Mimari
 
-**Sürüm:** 1.23 · **Tarih:** 2026-10-18 · **Durum:** P3 fiziksel cihaz performans kabulü açık; P7 admin medya/taslak akışı yerel entegrasyonla doğrulandı, KV/R2 provision edildi; production secrets ve canlı GitHub yayını engelli; responsive viewport alt kabulü ve 2K+ ziyaretçi site genişlik ayarı doğrulandı
+**Sürüm:** 1.24 · **Tarih:** 2026-10-18 · **Durum:** P3 fiziksel cihaz performans kabulü açık; P7 admin medya/taslak akışı yerel entegrasyonla doğrulandı, KV/R2 provision edildi; production secrets ve canlı GitHub yayını engelli; responsive viewport alt kabulü ve 2K+ ziyaretçi site genişlik ayarı doğrulandı
 
 **İlgili belgeler:** [Yol haritası](ROADMAP.md) · [Çalışma kuralları](AGENTS.md)
 
@@ -433,3 +433,9 @@ Kullanıcının yeni talimatı, A21/A22’deki sabit hero-grid yükseklik kabul�
 Brand-showcase ve altındaki bütün bölümler aynı DOM/içerik ve normal document flow ile korunur. Hiçbiri silinmez veya display/visibility/opacity/height/overflow ile saklanmaz; ilk viewport bittiği yerde ikinci bölüm başlar, scroll sonrası normal görünür. Hero overflow visible olur. Menü tipografisinin tek son seçicisi --public-nav-font-size ile17px/19px üretir; Atölye ve üç summary aynı400 ağırlık ve metrikleri taşır.
 
 A22 ayrımı değişmez: ana sayfada yalnız özgün hero canvas; showroom ve varlıkları yalnız /3d-vitrin/. Scene/showroom controller/model/renderer, admin, Worker/Wrangler/auth/KV/R2/secrets değişmez. Yeni kabul18 ilk ekran ölçüsü,14 navbar viewport’u ×2 sayfa ve9 vitrin genişliğidir; fiziksel iPad/GPU ölçümü değildir. PR #6 önceki talimatla zaten merge edilmiştir. Kullanıcının son seçimi yalnız aynı feat/3d-vitrin-page dalına commit/push yapılmasıdır; yeni branch/PR, main merge veya production yayını yapılmaz.
+
+### 2026-10-18 — A24 tam ilk ekran showroom ve CSS Instagram küpü (P3.7h)
+
+Kullanıcı showroom başlık/açıklamasını silmeden ilk sahneden sonraki normal bilgi bölümüne taşır. Header sonrası wrapper min-height100svh-header; canvas ve küçük ürün kontrolleri bu alandadır. Sosyal bağlantılar ve kontroller için fiziksel boşluk ayrılır. Mevcut üç ürün geometrisi, materyalleri, ışık etkileşimleri ve controller değişmez. Sadece resize kompozisyonu/kamera fit hesapları ayrık framing.ts içinde gerçek Box3 sınırları ve perspective frustum üzerinden yapılır; yüzde12 etkileşim marjı bırakılır. Yatayda iki tabela solda/totem sağda; dar veya dikey tablette tabelalar üstte/totem altta. Geometriye dokunulmaz; DPR ve idle/offscreen/context/reduced yaşam döngüsü korunur. Projected bounds resize ve hareket duruşunda veri kanıtına yazılır; ek RAF yok.
+
+Instagram doğrudan güvenli yeni-sekme bağlantısı ve beyaz SVG glyph ile CSS rounded cube olur;6sn/3px sakin transform,18/20derece hover,scale1.05/tap. OS ve kullanıcı reduced-motion tercihinde animasyon kapalıdır. WhatsApp ölçüsü/konumu korunur; Instagram üstte74/72px offset ile12–16px boşluk bırakır. Public generatorlar home kaynaklı iki sosyal bağlantıyı paylaşır; admin/backend değişmez. A23 home ilk ekran kabulü korunur. Aynı feature dalında commit/push ve izole Preview; yeni PR/merge/production yok. Referans görüntüler ekte bulunmadığından yazılı kriterler esas alınır.

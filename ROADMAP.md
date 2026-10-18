@@ -1,6 +1,6 @@
 # ZY Reklam — Yol Haritası
 
-**Sürüm:** 1.23 · **Başlangıç:** 2026-10-01 · **Güncelleme:** 2026-10-18
+**Sürüm:** 1.24 · **Başlangıç:** 2026-10-01 · **Güncelleme:** 2026-10-18
 
 **Kaynak:** [ARCHITECTURE.md](ARCHITECTURE.md) · **Zorunlu kontrol:** [AGENTS.md](AGENTS.md)
 
@@ -10,7 +10,7 @@
 
 **Aktif aşama:** P3 — Gerçek 3D açılış uygulandı; performans kapanışı devam ediyor.
 
-**Kullanıcı önceliği:** P3.7g-fold — tüm mobil/tablet/iPad/desktop ilk ekranlarında tam hero ve ikinci bölümün silinmeden normal akışta aşağıda kalması. Aynı feature dalında devam; PR #6 önceki turda merge edilmiş durumda, son talimat yalnız aynı dala commit/push, yeni PR ve production yayını yok.
+**Kullanıcı önceliği:** P3.7h — Instagram floating CSS küp ve header sonrası tam showroom kadrajı; aynı feat/3d-vitrin-page dalına commit/push, yeni PR/merge/production yok.
 
 P1 kaynak, logo, font ve iletişim incelemesi yapıldı; gerçek proje bilgileri/fotoğrafları doğrulanmadığı için P1.5 açık kalır. Planın engel yönetimi uyarınca bağımsız P2 temeli tamamlandı. Vite/TypeScript sayfası, statik SVG poster, mobil menü, hareket tercihi ve temel WhatsApp iletişim akışı çalışıyor. Gerçek 3D açılış şimdi uygulanmıştır. Üretim animasyonları, galeri, stüdyo ve upload henüz uygulanmadı.
 
@@ -118,7 +118,9 @@ Süreler takvim taahhüdü değildir. P1 sonrası logo kalitesi, gerçek görsel
 
 - [x] P3.7g-nav Ortak public header sticky, eşit Atölye etiketi, responsive anchor offset ve mobil/mega menüler; PR #6 test/preview/merge ve otomatik production/canlı kabulü tamamlandı.
 
-- [ ] P3.7g-fold Tam ilk ekran hero;18 viewport, korunmuş ikinci bölüm, tablet/navbar ve9 showroom genişliği. **Yerel kabul tamamlandı; aynı dala uzak kayıt/Preview doğrulaması sürüyor. Production kapsam dışı.**
+- [x] P3.7g-fold Tam ilk ekran hero;18 viewport, korunmuş ikinci bölüm, tablet/navbar ve9 showroom genişliği. **Kaynak/uzak kayıt/Preview alt kabulü tamamlandı; production kullanıcı talimatıyla yapılmadı.**
+
+- [ ] P3.7h Instagram küpü ve tam showroom ilk ekranı;16viewport, gerçek projected bounds, korunan açıklama/üç ürün/etkileşimler ve home regresyonu. **Devam ediyor.**
 
 ## 7. P4 — Üretim sahnesi ve hizmetler
 
@@ -717,3 +719,18 @@ Sıradaki tek iş:
 - Sıradaki tek iş: son tam test/görsel kabul ve aynı dal commit/push/izole preview; yayın yolu yanıtına göre devam.
 
 - P3.7g-fold son kullanıcı seçimi: yalnız aynı dala commit/push; yeni PR ve yayın yapma. PR #6 tarihsel olarak merged kalır; yeni PR açılmaz, main/production değiştirilmez. Son yerel tam test sonucu raporda; uzaktan kayıt ve Preview kapıları henüz bekleniyor.
+
+- P3.7g-fold son kullanıcı seçimi: yalnız aynı dala commit/push; yeni PR ve yayın yapma. PR #6 tarihsel olarak merged kalır; yeni PR açılmaz, main/production değiştirilmez. Yerel46/46, check/build PASS; uzak commit 424cc3b0073698d2757e76030967a9e7c0519690 ve dokuz blob yeniden doğrulandı. Verify/Cloudflare Preview SUCCESS; uzak18 fold,28 navbar ve9 gerçek WebGL vitrin ölçüsü PASS. Son rapor ve kanıtlar yerelde güncellendi; rapor için ek commit/deployment yok.
+
+- Nihai P3.7g-fold kan?t?: Verify39146411881 npm ci/build/browser install/test/artifact ad?mlar? SUCCESS, browser-evidence12143687920; feature live-smoke SKIPPED. Preview build cc7ccebe-c556-4629-af40-115dec6e8c58 SUCCESS, https://0d3c8e90-zy-reklam.akinarslanceng.workers.dev; ASSETS-only/secrets[]. Yerel46/46 ve uzak18fold/28navbar/9vitrin PASS. ?stenen11 yerel first-fold screenshot ve uzak390/834/2560 home,390/2560vitrin g?r?nt?leri incelendi. Main03fc90d yeniden do?ruland?; yeni PR/merge/production yok. S?radaki tek i? yaln?z kullan?c?n?n daha sonra isteyece?i yay?n yolunu belirlemek; mevcut yetki tamamland?.
+
+### 2026-10-18 — P3.7h Instagram ve tam showroom kadrajı (devam ediyor)
+
+- Güncel tam AGENTS/mimari1.23/roadmap okundu; alt AGENTS yok. Fetch feature424cc3b ve main03fc90d doğrulandı. Kullanıcı/generated farkları korunur; aynı worktree/dal. PR #6 merged olduğundan yeni PR açılmaz; önceki yayın yasağı korunur.
+- Instagram CSS rounded cube, beyaz SVG glyph, güvenli link,6sn/3px hareket, hover/tap/focus, reduced-motion. Ortak generatorlar public sayfalarda aynı Instagram/WhatsApp bağlantılarını üretir. WhatsApp konum/boyutu korunur.
+- A24/v1.24: bilgi metni silinmeden stage sonrasına; stagewrapper100svh-header, küçük controls ve sosyal boşlukları. Model/controller dokunulmadan camera/frustum Box3 fit ve aspect duyarlı kompozisyon. İlk16ölçü geçti; görsel kontrolde portrait tablet küçük kaldığından dikey dizilim eklendi. Son sürüm tam test/görsel kabulü bekleniyor. Admin/Worker/auth/KV/R2/secrets ve home hero sahnesi değişmez.
+- Sıradaki tek iş: son kaynaklarla yerel tam kabul, aynı dal commit/push ve Verify/izole Preview kabulü. Fiziksel P3.6 yeniden başlatılmaz.
+
+- Ara doğrulama: ilk tam koşu46/48;1280×720 Instagram/caption çakışması ve süreli touch-state/idle test yarışı yakalandı. Caption76px boşluğu tüm ekranlara uygulanarak çakışma giderildi; controller değişmeden her touch seçiminin açılması/kapanması/idle durumu bağımsız ölçülür. Hedefli Instagram32kombinasyon ve ürün/idle testleri PASS. Son tam seri koşu başlatıldı; bu anlık kayıtta sonucu henüz bekleniyor. Son koşuda Home18/18 ve kategori/menü regresyonları geçti.
+
+- P3.7h yerel kabul tamamlandı: check/build PASS,48/48 tek seri tam test PASS;16stage projected bounds/üç ürün/başlık aşağıda/controls,32social/reduced-motion/safe link,18homefold ve28navbar. İlk hedefli koşuda manual-reduced testinin media-event yarışı bulundu; test gerçek motion düğmesi ve state beklemesiyle düzeltildi. Ara hedefli koşu son caption-clearance için durduruldu. İlk tam koşu46PASS/2FAIL:1280x720 caption/Instagram çakışması ve süreli touch testinin bitiş/idle ölçüm yarışı. Caption76px boşluğu tüm ekranlara yayıldı; controller değiştirilmeden her dokunmanın kapanışı testte beklenir ve doğrulanır. İki hedefli kontrol ve son tam paket PASS. İstenen9 screenshot görsel incelendi. Model/controller/hero/admin/Worker/Wrangler korunur. Yeni branch/PR/merge/production yok. Sıradaki tek iş: aynı dala commit/push ve yeni Verify/Preview kabulü.

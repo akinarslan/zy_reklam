@@ -1,3 +1,4 @@
+import { publicSocialLinks } from './public-social-links.mjs';
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { join } from 'node:path';
@@ -39,7 +40,7 @@ for (const category of categories) {
 <link rel="icon" type="image/svg+xml" href="/assets/brand/favicon.svg"><link rel="stylesheet" href="/src/styles/main.css"><script type="module" src="/src/main.ts"></script></head>
 <body class="promo-page"><a class="skip-link" href="#main-content">İçeriğe geç</a>${pageHeader}
 <main id="main-content"><section class="promo-category-hero"><div class="shell"><nav class="promo-breadcrumb" aria-label="İçerik yolu"><a href="/">Ana sayfa</a><span aria-hidden="true">/</span><a href="/#promosyonlar">Promosyonlar</a></nav><div class="promo-category-intro"><div><p class="eyebrow">PROMOSYON KOLEKSİYONU</p><h1>${esc(category.title)}</h1><p class="body-copy">${esc(category.description)}</p><a class="button" href="/#iletisim">Baskı ve adet seçeneklerini konuşalım <span aria-hidden="true">↗</span></a></div><div class="promo-category-cover">${image(cover, '(max-width: 767px) 90vw, 440px', true)}</div></div></div></section>
-<div class="shell promo-collections">${collections}</div><section class="promo-category-end"><div class="shell"><p class="eyebrow">BİRLİKTE ŞEKİLLENDİRELİM</p><h2>Markanıza uygun<br><span>seçeneği bulalım.</span></h2><p class="body-copy">Logo uygulaması, ürün içeriği ve adet seçeneklerini birlikte netleştirelim.</p><a class="button" href="/#iletisim">Projenizi anlatın <span aria-hidden="true">↗</span></a><div class="promo-other-categories" aria-label="Diğer promosyon kategorileri">${categories.filter(c => c.id !== category.id).map(c => `<a href="${c.href}">${esc(c.title)} <span aria-hidden="true">↗</span></a>`).join('')}</div></div></section></main>${footer}</body></html>\n`;
+<div class="shell promo-collections">${collections}</div><section class="promo-category-end"><div class="shell"><p class="eyebrow">BİRLİKTE ŞEKİLLENDİRELİM</p><h2>Markanıza uygun<br><span>seçeneği bulalım.</span></h2><p class="body-copy">Logo uygulaması, ürün içeriği ve adet seçeneklerini birlikte netleştirelim.</p><a class="button" href="/#iletisim">Projenizi anlatın <span aria-hidden="true">↗</span></a><div class="promo-other-categories" aria-label="Diğer promosyon kategorileri">${categories.filter(c => c.id !== category.id).map(c => `<a href="${c.href}">${esc(c.title)} <span aria-hidden="true">↗</span></a>`).join('')}</div></div></section></main>${footer}${publicSocialLinks(home)}</body></html>\n`;
   const dir = join(root, 'promosyonlar', category.id);
   await mkdir(dir, { recursive: true });
   await writeFile(join(dir, 'index.html'), html);

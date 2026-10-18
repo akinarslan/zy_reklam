@@ -47,14 +47,16 @@ test('Standalone showroom preserves all three products, keyboard/touch lighting 
   await page.waitForFunction(()=>document.querySelector('[data-showroom-stage]').dataset.state==='ready');
   for(const id of ['upper','lower','totem']){
    const button=page.locator('[data-showroom-select='+id+']');if(width<640)await button.tap();else await button.focus();
+   assert.equal(await button.getAttribute('aria-pressed'),'true',JSON.stringify({width,id,state:await page.locator('[data-showroom-stage]').evaluate(e=>({...e.dataset}))}));
    await page.waitForFunction(id=>document.querySelector('[data-showroom-stage]').dataset[id+'Active']==='true',id);
-   assert.equal(await button.getAttribute('aria-pressed'),'true');
    await page.waitForFunction(id=>{
     const state=document.querySelector('[data-showroom-stage]').dataset;
     return state[id+'Active']==='true'&&['upper','lower','totem'].filter(x=>x!==id).every(other=>state[other+'Active']==='false');
-   },id);
+   },id).catch(async error=>{throw new Error(JSON.stringify({width,id,state:await page.locator('[data-showroom-stage]').evaluate(e=>({...e.dataset}))}),{cause:error});});
+   // Each touch response is transient. Let it finish before checking the next product independently.
+   if(width<640){await page.waitForFunction(()=>{const s=document.querySelector('[data-showroom-stage]').dataset;return s.selected===''&&s.loop==='idle'&&['upper','lower','totem'].every(id=>s[id+'Active']==='false');});assert.equal(await button.getAttribute('aria-pressed'),'false');}
   }
-  await page.locator('#showroom-title').evaluate(e=>{e.tabIndex=-1;e.focus();});await page.evaluate(()=>document.activeElement.blur());await page.mouse.move(0,0);
+  await page.locator('.showroom-stage-wrapper').evaluate(e=>{e.tabIndex=-1;e.focus({preventScroll:true});});await page.evaluate(()=>document.activeElement.blur());await page.mouse.move(0,0);
   await page.waitForFunction(()=>document.querySelector('[data-showroom-stage]').dataset.loop==='idle');
   const frames=await page.locator('[data-showroom-stage]').getAttribute('data-frames');await page.waitForTimeout(200);assert.equal(await page.locator('[data-showroom-stage]').getAttribute('data-frames'),frames);
   await page.setViewportSize({width,height:500});

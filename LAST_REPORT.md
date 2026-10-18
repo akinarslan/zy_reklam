@@ -1,39 +1,51 @@
-# ZY Reklam — navbar, tam ilk ekran ve 3D Vitrin son düzeltmeleri
+# ZY Reklam — Instagram küpü ve tam ekran 3D Vitrin raporu
 
-Tarih: 2026-10-18
-Talimat: Navbar + first fold + tablet/iPad + ayrı 3D Vitrin kabulü. Son kullanıcı seçimi: aynı dala commit/push; yeni PR ve yayın yapma.
-Aşama/iş: P3.7g-fold — yerel kabul tamamlandı; uzak kayıt/Preview bekliyor. Production bu talimatın dışında.
-Mimari: v1.23/A23; A22 sayfa ayrımı ve A20 Preview izolasyonu korundu. Veri/API sözleşmesi değişmedi.
-Dal: feat/3d-vitrin-page; çalışma alanı .worktrees/3d-vitrin-page.
-Commit: Henüz oluşmadı; hazır kaynaklar commit edilecek.
-PR: https://github.com/akinarslan/zy_reklam/pull/6 önceki turda MERGED, merge 03fc90d6522f8eaa26195b6985738cf99c981ba5. Yeni PR açılmadı; yeni merge yok.
-Preview: Yeni commit için henüz bekleniyor.
+Tarih:2026-10-18
+Talimat: Mevcut dalda Instagram floating CSS küpü ekle; /3d-vitrin/ ilk ekranını tam sahneye dönüştür; metinleri silmeden aşağı taşı, ürün/etkileşimleri koru; commit/push ve Verify/Preview.
+Aşama/iş:P3.7h. Mimari:v1.24/A24; A20/A22/A23 ve veri/API sözleşmeleri korunur.
+Dal:feat/3d-vitrin-page; .worktrees/3d-vitrin-page.
+Commit:Henüz oluşmadı; doğrulanmış kaynaklar commit edilecek.
+PR:#6 önceki turda merged; merge03fc90d6522f8eaa26195b6985738cf99c981ba5. Yeni PR veya branch oluşturulmadı. Bu tur merge:NO; production:NO.
+Durum:Yerel kabul tamamlandı; uzak kayıt/Preview bekliyor.
+Preview:Yeni commit için henüz oluşmadı.
 
-SONUÇ / DEĞİŞİKLİK
-Hero min-height = 100svh - --public-header-height. Grid ile hero-bottom aynı bölümde kalan yüksekliği paylaşır. Kısa landscape ve dar mobil boşlukları/başlık/CTA/stage boyutları uyarlandı; içerik kırpılmadı. Hero overflow visible. WhatsApp ile hareket düğmesi için 76px yatay yer ayrıldı; çakışma testi eklendi.
-“Markanız ışıkta. Markanız yolda.” bölümünün DOM ve tüm içeriği aynen korundu; silme veya display/visibility/opacity/height/overflow ile saklama yok. Ana sayfa index.html origin/main ile birebir aynı. Bütün alt bölümler normal akışta.
-Ortak navbar tipografisi tek --public-nav-font-size değişkeninde: desktop17px/400, mobil-tablet19px/400. Atölye, Hizmetler, Projeler ve Promosyonlar computed font-size/weight/line-height/letter-spacing/padding/height eşit. 3D Vitrin vurgusu korundu.
-Sticky header top0/z-index20, koyu zemin; 77/91/97/103px header offset, +20px anchor boşluğu; 1023px ve altında hamburger korundu. Başlangıç/orta/footer ve scrollY1000, üç mega menü, klavye/Escape/dokunma ve dört anchor kabulü geçti.
+YAPILAN İŞ
+Instagram: beyaz SVG glyph, pembe/mor/turuncu gradient ve yumuşak gölgeli rounded square; CSS perspektif,6sn/3px salınım,hover18/20derece ve1.05scale,tap. Masaüstü58px/tablet54px/mobil50px. WhatsApp58/56px ve konumu aynen korundu. Safe-area ve12–16px aralık. aria-label tam istenen metin; gold keyboard focus; target_blank/noopener/noreferrer. OS ve site hareket azaltma düğmesi animasyonu kapatır. Ek Three.js/RAF yok. Public generatorlar gerçek home sosyal linklerini paylaşır.
+Vitrin: header sonrası wrapper=100svh-header. Canvas ve küçük pill controls ilk ekranda; bilgi başlığı/açıklaması ve temsili ürün notu aşağıdaki normal bilgi bölümünde. Metinler silinmedi/gizlenmedi. Üç ürünün gerçek3D Box3 köşeleri, derinlik ve frustum oranıyla camera fit; yüzde12 hover marjı. Desktop iki tabela solda/totem sağda; dar/dikey tablette dikey kompozisyon. Sadece resize composition/camera ve duruşta diagnostic bounds; modeller/materyaller/ışık/controller değişmedi. DPR,quality,cleanup,idle/offscreen,reduced/context fallback korundu.
+
+INSTAGRAM KABULÜ
+Desktop:PASS. Tablet:PASS. Mobile:PASS. Animation:PASS(6sn). Hover:PASS. Keyboard/focus-visible:PASS. Reduced motion:PASS(OS ve gerçek site düğmesi). Instagram link:PASS(https://www.instagram.com/zy.reklam/); gerçek click yeni sekme test fixture yanıtına gider, Instagram hesabında işlem yok. Target blank/rel:PASS. JS kapalı link:PASS. WhatsApp overlap:YOK. Horizontal overflow:YOK.32 Home/Vitrin kombinasyonu ve üç kategori temsili geçti. Hero caption için76px iç boşluk,1280×720 dahil tüm ekranlarda ikon/metin çakışması yok; ilk ekran korunur.
+
+3D VİTRİN KABULÜ
+360×800:PASS
+390×844:PASS
+412×915:PASS
+768×1024:PASS
+820×1180:PASS
+834×1194:PASS
+1024×768:PASS
+1024×1366:PASS
+1280×720:PASS
+1366×768:PASS
+1440×900:PASS
+1600×900:PASS
+1920×1080:PASS
+2560×1440:PASS
+3440×1440:PASS
+3840×2160:PASS
+ZY REKLAM:FULL. DAHA İLERİYE:FULL. Totem:FULL. Heading first viewport:YOK. Heading DOM:VAR; scroll sonrası görünür. Controls:PASS. Sticky header:PASS. Horizontal overflow:YOK. Mouse/hover üç ürün ve seçili durumda projected-bounds:PASS. Canvas touch-action:pan-y ve gerçek CDP dokunmayla dikey scroll:PASS. Klavye/touch ürün ışıkları,reduced motion,context/module fallback,JS kapalı poster/iletişim ve idle/offscreen:PASS(mevcut regresyonlar).
+Her16viewport için viewportWidth/Height,headerHeight,stage/canvas rect,controls,sosyal rect ve her ürünün projected NDC/depth bounds ölçüldü. Ürün bounds köşeleri [-1,1] içinde; ürünler birbirine girmiyor,canvas header/controls/float ikonlarla çakışmıyor. Kanıt:docs/evidence/showroom-stage/local/acceptance.json.
+İstenen3d-vitrin-390/768/820/1024-landscape/1366/1920/2560/3440/3840.png görüntüleri üretildi ve incelendi;16ölçünün tamamında screenshot var.2560×1440 yazılı kompozisyon kabulü PASS. Ek dosyada referans görüntüler yok; üçüncü referansla piksel karşılaştırması çalıştırılmadı.
+
+HOME VE SINIRLAR
+Özgün hero3D/scene kodu değişmedi. Home ilk ekran18/18,korunan ikinci bölümün DOM/visible/scroll kabulü PASS; navbar28kombinasyon PASS. Home hero canvas1/showroom0; bağımsız showroom yüklenmez. Admin kaynakları,Worker/auth/KV/R2/Wrangler,secrets,publish değişmedi. Kullanıcı/generated farkları korundu; reset/clean yok.
+
+DOĞRULAMA / KAYIT
+npm.cmd run check:PASS. npm.cmd run build:PASS. npm.cmd test -- --test-concurrency=1:48/48 PASS,0fail(son kaynaklarla tek seri koşu). Test kaldırılmadı; mevcut idle testi başlığı stage sonrasına taşındığı için odağı preventScroll ile wrapper'a verir. İlk hedefli manual-reduced testi media-event yarışı nedeniyle başarısız oldu; gerçek kullanıcı düğmesi ve state beklemesiyle düzeltildi. Ara hedefli koşu son caption-clearance değişikliği için durduruldu; başarı sayılmadı. İlk tam koşu46PASS/2FAIL:1280×720 caption çakışması ve süreli touch-state/idle örnekleme yarışı. Çakışma giderildi; transient seçimler tek tek açılış/kapanış/idle olarak ölçülür, controller süresi değişmez. İlgili hedefli testler ve son tam koşu PASS.
+Uzak SHA/blob,Verify ve yeni Preview sonuçları bekliyor; başarı iddiası yok.
+Merge:NO. Production Build:ÇALIŞTIRILMADI. Live test:ÇALIŞTIRILMADI. Yeni PR/yayın yapılmaması yönündeki son talimat korunur. Sonuç günlüğü/rapor commit sonrasında yerelde güncellenir; rapor SHA döngüsü için ek commit/deploy yapılmaz.
 
 DEĞİŞEN DOSYALAR
-src/styles/main.css; tests/responsive.test.mjs, tests/vitrine-page.test.mjs, tests/helpers/public-navigation.mjs; yeni tests/hero-fold.test.mjs ve tests/helpers/hero-fold.mjs; ARCHITECTURE.md, ROADMAP.md, LAST_REPORT.md (dokuz kaynak/belge).
-Generated HTML/sitemap, eski test kanıt farkları, screenshot ve yerel araçlar commit kapsamı dışında korundu. Ana kullanıcı ağacına reset/clean uygulanmadı. Scene/showroom geometri-renderer-controller, src/main.ts, src/vitrine.ts, admin, Worker ve Wrangler değişmedi; secret veya müşteri verisi kaydedilmedi.
-
-YEREL DOĞRULAMA
-npm.cmd run check: PASS. npm.cmd run build (TypeScript dahil): PASS. npm.cmd test -- --test-concurrency=1: 46/46 PASS, 0 fail. İlk tam koşu görsel WhatsApp çakışması düzeltmesi için durduruldu; yukarıdaki sonuç son kaynaklarla tamamlanan tek seri koşudur. Hiçbir test kaldırılmadı; eski sabit grid üst sınırı yeni tam ilk ekran sözleşmesine uyarlandı, stage/font bütçeleri korundu.
-18 ilk ekran: 360×800, 390×844, 412×915, 768×1024, 820×1180, 834×1194, 1024×768, 1024×1366, 1280×720, 1366×768, 1440×900, 1536×864, 1600×900, 1900×1000, 1920×1080, 2560×1440, 3440×1440, 3840×2160 — her biri PASS.
-Her ölçüde ikinci bölüm DOM=true, display görünür, visibility=visible, opacity>0, height>0; ikinci bölüm top=viewport yüksekliği, hero.bottom=viewport yüksekliği. Scroll sonrası başlık ve gerçek lightbox/araç fotoğrafları görünür. Başlık, açıklama, CTA, not, tabela, caption ve bottom ilk ekran sınırlarında; yatay taşma ve WhatsApp/motion çakışması yok. Home hero canvas1/showroom0; gerçek WebGL ready.
-Navbar: 14 viewport × Home/Vitrin =28 kombinasyon PASS. Vitrin: 390/768/820/1024/1366/1920/2560/3440/3840 genişlikleri9/9 PASS; tek gerçek WebGL canvas, iki tabela+asimetrik totem; ışıklar/fare/klavye/touch, reduced motion, idle/offscreen, context/module fallback ve JS kapalı poster/iletişim korunur.
-İstenen11 home-first-fold screenshot (390,768,820,834,1024-landscape,1024-portrait,1366,1920,2560,3440,3840) üretildi ve görsel incelendi. Toplam18 ölçünün görüntüsü vardır. Ayrı referans görseli ekte bulunmadığından referans piksel karşılaştırması çalıştırılmadı; yazılı kriterler esas alındı.
-
-UZAK KAYIT / CI / PREVIEW
-Commit/push, uzak SHA/blob doğrulama, yeni Verify ve Preview sonucu henüz bekleniyor; başarı iddiası yok.
-Yeni PR: oluşturulmadı. Main merge: yapılmadı. Production deploy: yapılmadı. Yeni sürüm için production/live smoke: çalıştırılmadı. Önceki PR #6 production sonucu bu değişikliğin yayını olarak sunulmaz.
-
-KANITLAR / SINIRLAR
-.worktrees/3d-vitrin-page/docs/evidence/hero-fold/local/acceptance.json ve bekleyen Preview kanıtı; public-navigation/local ve bekleyen Preview; vitrine-page yerel/preview acceptance.json ve screenshotlar. CI browser-evidence artifact'i workflow tarafından üretilir.
-Mevcut SVGLoader599.52kB chunk uyarısı sürer. Chromium/SwiftShader viewport kabulü fiziksel iPad/telefon/GPU performans kabulü değildir. P3.6 durdurulmuş; USB/ADB/telefon testi yapılmadı. Genel P3/P7/P8/P9 açık kalır.
-Sıradaki tek iş: kullanıcı isterse hazır aynı dal değişikliğinin yayın yolunu ayrıca belirlemek; şu anda yeni PR/yayın yapılmayacak.
-
-Aşağıdaki sonuç feature/Preview sürümünü anlatır; production bu tur güncellenmedi.
-Public navbar tüm çözünürlüklerde sticky hale getirildi; Atölye menü etiketi diğer ana menülerle eşitlendi; ana sayfa mobil, tablet, iPad, desktop, 2K ve ultrawide ekranlarda ilk açılışta yalnızca hero gösterecek şekilde düzenlendi. ‘Markanız ışıkta. Markanız yolda.’ bölümü silinmeden veya gizlenmeden viewport altına taşındı ve scroll sonrası normal şekilde korunuyor. Tam 3D Vitrin deneyimi ayrı /3d-vitrin/ sayfasında çalışmaya devam ediyor.
+index.html; scripts/generate-showroom.mjs,generate-services.mjs,generate-projects.mjs,generate-promotions.mjs ve yeni public-social-links.mjs; src/styles/main.css,showroom.css ve yeni instagram.css; src/showroom/page.html,renderer.ts ve yeni framing.ts; tests/vitrine-page.test.mjs ve yeni showroom-stage.test.mjs,helpers/showroom-stage.mjs; ARCHITECTURE.md,ROADMAP.md,LAST_REPORT.md(18dosya). Generated kategori HTML/sitemap,eski kanıt farkları,screenshotlar ve yerel araçlar commit dışında korundu.
+Kanıtlar: .worktrees/3d-vitrin-page/docs/evidence/showroom-stage/{local,preview}; hero-fold ve public-navigation; vitrine-page kabul dosyaları. Mevcut SVGLoader599.52kB uyarısı sürer. Tarayıcı/SwiftShader kabulü fiziksel telefon/iPad/GPU kabulü değildir; P3.6 durdurulmuş ve USB/ADB testi yapılmadı. Genel P3/P7/P8/P9 açık.
+Sıradaki tek iş:Aynı dala commit/push ve yeni Verify/izole Preview kabulü.

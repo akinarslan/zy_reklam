@@ -1,3 +1,4 @@
+import { publicSocialLinks } from './public-social-links.mjs';
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { join } from 'node:path';
@@ -110,7 +111,7 @@ for (const group of groups) {
       </div>
     </section>
   </main>
-  ${footer}
+  ${footer}${publicSocialLinks(home)}
 </body>
 </html>\n`;
 
