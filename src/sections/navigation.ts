@@ -7,6 +7,32 @@ export function setupNavigation(): () => void {
   const desktop = window.matchMedia('(min-width: 1024px)');
   const abort = new AbortController();
   const options = { signal: abort.signal };
+  const brand = document.querySelector<HTMLAnchorElement>('.header-sign');
+  // Links already support Enter. Space follows button-style press/release while
+  // keeping the native anchor destination and no-JS navigation intact.
+  brand?.addEventListener('keydown', event => {
+    if (event.key !== ' ' || event.altKey || event.ctrlKey || event.metaKey) return;
+    event.preventDefault();
+    brand.dataset.keyPressed = 'true';
+  }, options);
+  brand?.addEventListener('keyup', event => {
+    if (event.key !== ' ' || !brand.hasAttribute('data-key-pressed')) return;
+    event.preventDefault();
+    brand.removeAttribute('data-key-pressed');
+    brand.click();
+  }, options);
+  brand?.addEventListener('pointerdown', event => {
+    if (event.isPrimary && event.button === 0) brand.dataset.pointerPressed = 'true';
+  }, options);
+  const releasePointer = () => brand?.removeAttribute('data-pointer-pressed');
+  window.addEventListener('pointerup', releasePointer, options);
+  window.addEventListener('pointercancel', releasePointer, options);
+  const releaseBrand = () => {
+    brand?.removeAttribute('data-key-pressed');
+    releasePointer();
+  };
+  brand?.addEventListener('blur', releaseBrand, options);
+  window.addEventListener('blur', releaseBrand, options);
   const timers = new Set<ReturnType<typeof setTimeout>>();
   const close = (dropdown: HTMLDetailsElement) => {
     dropdown.open = false;
@@ -74,5 +100,5 @@ export function setupNavigation(): () => void {
   }
   const resize = () => setOpen(false);
   desktop.addEventListener('change', resize);
-  return () => { abort.abort(); timers.forEach(clearTimeout); timers.clear(); desktop.removeEventListener('change', resize); };
+  return () => { releaseBrand(); abort.abort(); timers.forEach(clearTimeout); timers.clear(); desktop.removeEventListener('change', resize); };
 }
