@@ -130,6 +130,13 @@ test('Local Worker persists drafts, validates uploads, protects used files, and 
   let browser;
   try {
     await startWorker();
+    const publicVersion = await fetch(`${base}/content-version.json`);
+    assert.equal(publicVersion.status, 200);
+    assert.match(publicVersion.headers.get('cache-control'), /no-store/);
+    const publicManifest = await publicVersion.json();
+    const publicSnapshot = await fetch(base + publicManifest.sections.site.url);
+    assert.equal(publicSnapshot.status, 200);
+    assert.match(publicSnapshot.headers.get('cache-control'), /immutable/);
     const homePage = await fetch(`${base}/`);
     assert.equal(homePage.status, 200);
     assert.match(await homePage.text(), /ZY REKLAM/);

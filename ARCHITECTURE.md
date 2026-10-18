@@ -1,6 +1,6 @@
 # ZY Reklam — Mimari
 
-**Sürüm:** 1.22 · **Tarih:** 2026-10-17 · **Durum:** P3 fiziksel cihaz performans kabulü açık; P7 admin medya/taslak akışı yerel entegrasyonla doğrulandı, KV/R2 provision edildi; production secrets ve canlı GitHub yayını engelli; responsive viewport alt kabulü ve 2K+ ziyaretçi site genişlik ayarı doğrulandı
+**Sürüm:** 1.26 · **Tarih:** 2026-10-18 · **Durum:** P3 fiziksel cihaz performans kabulü açık; P7 admin medya/taslak akışı yerel entegrasyonla doğrulandı, KV/R2 provision edildi; production secrets ve canlı GitHub yayını engelli; responsive viewport alt kabulü ve 2K+ ziyaretçi site genişlik ayarı doğrulandı
 
 **İlgili belgeler:** [Yol haritası](ROADMAP.md) · [Çalışma kuralları](AGENTS.md)
 
@@ -17,7 +17,7 @@ Temel yolculuk: **İşi anla → Gerçek projeleri gör → Tabela fikrini dene 
 | Sıra | Bölüm | Ziyaretçi deneyimi | İş amacı |
 | --- | --- | --- | --- |
 | 1 | Başlık ve gezinme | ZY kimliği; hizmet, proje, stüdyo ve iletişim bağlantıları | Hızlı yön bulma |
-| 2 | 3D açılış | Özgün ZY amblemi ışıklı pleksi ve metal tabela görünümünde; fareyle sınırlı dönüş | Üretim kalitesini hissettirme |
+| 2 | 3D açılış | Özgün ZY amblemi ışıklı pleksi ve metal tabela görünümünde; sınırlı hover ve sürüklemeyle tam yatay dönüş | Üretim kalitesini hissettirme |
 | 3 | Üretim anlatımı | Metal kasa, LED, pleksi ve ön yüz kaydırmayla ayrılıp birleşir | Yapılan işi açıklama |
 | 4 | Hizmetler | Doğrulanmış tabela/montaj, dijital baskı, lazer kesim ve promosyon; CNC/UV doğrulanmadı | Talebi doğru işe yönlendirme |
 | 5 | Gerçek projeler | Büyük fotoğraflar, tür filtreleri, mevcutsa önce/sonra | Güven ve kanıt |
@@ -132,7 +132,7 @@ Build çıktısı, bağımlılık klasörleri, sırlar ve yüklenen müşteri g�
 ### Açılış sahnesi
 
 - Özgün amblemden türetilen ışıklı pleksi ve altın metal katmanlar; kontrollü çevre ışığı ve yumuşak gölge.
-- Masaüstünde başlangıç sınırı yatay ±18°, dikey ±10°. Hareket yumuşatılır; yazı ve gezinme DOM’da sabit kalır.
+- Normal hover yatay ±18°, dikey ±10°; açık sürüklemede yatay açı sınırsızdır. Bırakmada en yakın ön/arka yüze kısa snap; sol/sağ ok180° geçişi. Yazı ve gezinme DOM’da sabit kalır.
 - Mobilde açık bir dokunma/sürükleme alanı; sayfanın dikey kaydırması engellenmez. Sensör izni veya cihaz eğimi gerekmez.
 - Arka plan çizgileri düşük maliyetli CSS veya sahne unsurlarıdır; tüm sayfada parçacık efekti kullanılmaz.
 - Statik poster ilk ekrandadır. 3D modülü sonradan yüklenir; yükleme başarısızsa poster ve CTA’lar kullanılmaya devam eder.
@@ -425,3 +425,39 @@ Admin yalnız frontend sunum revizyonudur: topbar/nav/content ortak shell 1920�
 Kullanıcının yeni önceliği, A21 ile ana sayfadan kaldırılan eski iki kutu harf tabela ve asimetrik totem showroom’unun /3d-vitrin/ ayrı statik sayfasında sunulmasıdır. Ana sayfa özgün hero 3D sahnesi korunur; ana sayfada showroom DOM/bootstrap/varlık isteği geri eklenmez. Yeni src/vitrine.ts girişi paylaşılan gezinme/hareket/iletişim guard’larını ve yalnız bu sayfanın showroom controller’ını başlatır. Yeni sayfada hero sahnesi yoktur; tek showroom canvas’ı, lazy/idle/offscreen/reduced/context fallback ve cleanup mevcut modül üzerinden korunur. Geometri, ürün ışıkları ve renderer kodu değiştirilmez.
 
 Sayfa şablonu src/showroom/page.html, ortak header/footer/WhatsApp üretimi scripts/generate-showroom.mjs içindedir. Build zinciri 3d-vitrin/index.html çıktısını ve Vite girişini içerir; tüm paylaşılan menüler /3d-vitrin/ hedefine gider, canonical ve sitemap yeni gerçek URL’yi içerir. Worker/API/auth/admin responsive ve A20 preview izolasyonu değişmez. P3.6 kullanıcı isteğiyle durdurulmuştur; bu sayfanın yazılım tarayıcı regresyonları fiziksel cihaz kabulü değildir.
+
+### 2026-10-18 — A23 tam ilk ekran hero ve iPad kabulü (P3.7g-fold)
+
+Kullanıcının yeni talimatı, A21/A22’deki sabit hero-grid yükseklik kabulünü viewport yüksekliğine bağlı bir ilk ekran sözleşmesiyle günceller. Public sticky header dahil hesaplanır: hero min-height = 100svh - --public-header-height. Hero-grid ve hero-bottom aynı flex section içinde kalan alanı paylaşır; 100svh mobil tarayıcı araç çubuğu değişiminde stabil küçük viewport referansıdır. Kısa landscape ve dar mobil ekranlarda yalnız hero iç boşlukları, başlık/CTA ve stage yüksekliği uyarlanır; içerik kırpılmaz. Hero-bottom hareket kontrolü sabit WhatsApp ikonu için yatay yer ayırır.
+
+Brand-showcase ve altındaki bütün bölümler aynı DOM/içerik ve normal document flow ile korunur. Hiçbiri silinmez veya display/visibility/opacity/height/overflow ile saklanmaz; ilk viewport bittiği yerde ikinci bölüm başlar, scroll sonrası normal görünür. Hero overflow visible olur. Menü tipografisinin tek son seçicisi --public-nav-font-size ile17px/19px üretir; Atölye ve üç summary aynı400 ağırlık ve metrikleri taşır.
+
+A22 ayrımı değişmez: ana sayfada yalnız özgün hero canvas; showroom ve varlıkları yalnız /3d-vitrin/. Scene/showroom controller/model/renderer, admin, Worker/Wrangler/auth/KV/R2/secrets değişmez. Yeni kabul18 ilk ekran ölçüsü,14 navbar viewport’u ×2 sayfa ve9 vitrin genişliğidir; fiziksel iPad/GPU ölçümü değildir. PR #6 önceki talimatla zaten merge edilmiştir. Kullanıcının son seçimi yalnız aynı feat/3d-vitrin-page dalına commit/push yapılmasıdır; yeni branch/PR, main merge veya production yayını yapılmaz.
+
+### 2026-10-18 — A24 tam ilk ekran showroom ve CSS Instagram küpü (P3.7h)
+
+Kullanıcı showroom başlık/açıklamasını silmeden ilk sahneden sonraki normal bilgi bölümüne taşır. Header sonrası wrapper min-height100svh-header; canvas ve küçük ürün kontrolleri bu alandadır. Sosyal bağlantılar ve kontroller için fiziksel boşluk ayrılır. Mevcut üç ürün geometrisi, materyalleri, ışık etkileşimleri ve controller değişmez. Sadece resize kompozisyonu/kamera fit hesapları ayrık framing.ts içinde gerçek Box3 sınırları ve perspective frustum üzerinden yapılır; yüzde12 etkileşim marjı bırakılır. Yatayda iki tabela solda/totem sağda; dar veya dikey tablette tabelalar üstte/totem altta. Geometriye dokunulmaz; DPR ve idle/offscreen/context/reduced yaşam döngüsü korunur. Projected bounds resize ve hareket duruşunda veri kanıtına yazılır; ek RAF yok.
+
+Instagram doğrudan güvenli yeni-sekme bağlantısı ve beyaz SVG glyph ile CSS rounded cube olur;6sn/3px sakin transform,18/20derece hover,scale1.05/tap. OS ve kullanıcı reduced-motion tercihinde animasyon kapalıdır. WhatsApp ölçüsü/konumu korunur; Instagram üstte74/72px offset ile12–16px boşluk bırakır. Public generatorlar home kaynaklı iki sosyal bağlantıyı paylaşır; admin/backend değişmez. A23 home ilk ekran kabulü korunur. Aynı feature dalında commit/push ve izole Preview; yeni PR/merge/production yok. Referans görüntüler ekte bulunmadığından yazılı kriterler esas alınır.
+
+### A25 — Public içerik snapshot ve canlı patch (P7.0-live, 2026-10-18)
+
+Kullanıcı planı onayladı: A aşaması build manifest/snapshot, B aşaması45sn görünür public polling ve hedefli DOM patch. Statik-first/çok sayfalı SEO korunur; SPA veya otomatik reload eklenmez. Header işi1395e6f63e944a27e233424fbfe79cd70ee7a22b commit'inde ayrıdır.
+
+Build-only linkedom, son statik HTML'in izinli hizmet/proje/promosyon bölgelerini JSON DOM ağaçlarına projekte eder. Böylece tarayıcıda ikinci bir katalog şablonu yoktur. site yalnız telefon/adres/Instagram/footer public alanlarıdır; HTML'deki karşılıkları aynı patchSite eşlemesiyle build sırasında doldurulur. Sabit slogan ve3D modeller bu protokole girmez. Protokol schemaVersion1, git HEAD revision, canonical sıralı JSON/SHA256 ve /live-content/<section>.<hash>.json kullanır. Manifest ve dört snapshot aynı dist/deployment içindedir; admin publish/KV/R2/Worker yazma sözleşmesi değişmez. GitHub commit sonrası başarılı Cloudflare deployment yeni manifesti görünür yapar.
+
+/content-version.json no-store/max-age0/must-revalidate; yalnız /live-content/* public31536000immutable. Diğer statik cache kuralları değişmez. Cloudflare resmi kaynak: https://developers.cloudflare.com/workers/static-assets/headers/ . Yerel Worker gerçek yanıtlarıyla cache kuralları test edilir.
+
+Public checker yalnız production build ve public sayfalarda çalışır;45sn tek zamanlayıcı, hidden iptal/durma, visible tek hemen kontrol. Yalnız hash'i değişmiş bölümler indirilir; boyut/şema/URL/tag/attribute/hash doğrulanmadan DOM'a dokunulmaz. Tam snapshot hazırlandıktan sonra keyed DOM patch; parent innerHTML replacement yok. Form focus/dirty, açık menü/dialog, sahne pointer/klavye ve oynayan video sırasında bekleyen en son snapshot tutulur. Dirty form açık reset/submit gelene kadar korunur; sonradan blur tek başına kayıp riski doğurmaz. Caret/form/canvas/dialog/video kimlikleri ve scroll korunur. Polling veya patch hatası mevcut içeriği silmez, sayfayı yenilemez; sonraki kontrolde yeniden denenir.
+
+Preview ASSETS-only/secrets[] A20 izolasyonu korunur; yeni PR/merge/production deploy yasaktır. P7 genel admin/live publish ve ziyaretçi eki kabulü bu alt işle kapanmaz.
+
+P7.0-live son kabul kanıtı: Header1395e6f/Aa4ebd8c/Be37b394 ve3802981 satır sonu normalizasyonu. B kaynaklarıyla51/51; son kaynakla build ve A/B2/2. Preview https://d312592c-zy-reklam.akinarslanceng.workers.dev üzerinde21live,18fold,28navbar ve dört hash yerelle eşit; ASSETS-only/secrets[]. Görsel inceleme: home390/1440/2560 ve vitrin768. Yeni PR/merge/production bu görevden yok; main üzerindeki bağımsız Google/party commitleri korunur. Genel P7 ve P3.6 açık.
+
+### A26 — Hero tam yatay dönüş ve arka montaj (P3.7i, 2026-10-18)
+
+Kullanıcının açık talimatı A02/P3.3 sınırlı sürüklemeyi değiştirir; normal hover ±18°/±10° kalır. Mevcut tek renderer/canvas/context/RAF korunur. Ayrı rotation.ts yalnız pointer/klavye hedef açısını yönetir: stage genişliği tam360°, sınırsız yaw, pointer capture/cancel/lostcapture/blur temizliği; en yakın180° katına kısa snap. Klavyede odaklanabilir stage ve görünür gold focus, sol/sağ ok180° vardır. touch-action:pan-y ve dikey kaydırma korunur.
+
+back.ts aynı sign grubuna iki pürüzlü metal ray ve dört altıgen cıvata/vida yuvası ekler; arkada yinelenmiş logo yoktur. Özgün ön logo geometrisi/materyali değişmez. Üç instanced batch,168 ek ana-pass üçgeni:4882→5050; draw-call üst sınırı13→16. Gölge20Hz/final poz, kalite/DPR, idle/offscreen/hidden, context/dispose ve başlangıç reduced-motion poster politikası korunur. Azaltılmış harekette renderer hiç yüklenmez veya açık renderer dispose edilir; hareketli snap yerine poster kalır. Renderer çalışabildiği sade tercihte smoothing doğrudandır.
+
+A25 canlı içerik protokolü/uygulaması ve /3d-vitrin/ model/renderer/controller değişmez. Hero sürükleme sırasında live patch ertelenir; güvenli durumda aynı canvas ile uygulanır. A20 izole Preview ve aynı feature push; yeni PR/merge/production/main yazımı yok. Kabul11viewport ön/arka/ön projected bounds, fare/dokunma/klavye, yaşam döngüsü, live identity ve önceki regresyonları gerektirir; fiziksel P3.6 kabulü değildir.

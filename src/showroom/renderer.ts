@@ -1,6 +1,7 @@
 import { WebGLRenderer, Scene, PerspectiveCamera, HemisphereLight, DirectionalLight, PMREMGenerator, ACESFilmicToneMapping, PCFSoftShadowMap, Mesh, PlaneGeometry, Raycaster, Vector2, Vector3, Box3, ShadowMaterial, type Material } from 'three';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { createProducts, type Outlines } from './models';
+import { fitShowroom, projectedProducts } from './framing';
 export interface ShowroomRenderer { setVisible(value:boolean):void; setReduced(value:boolean):void; select(id:string|null,x?:number,y?:number):void; dispose():void; }
 export function createShowroomRenderer(stage:HTMLElement,mount:HTMLElement,outlines:Outlines,onFailure:()=>void):ShowroomRenderer {
   const renderer=new WebGLRenderer({alpha:true,antialias:true,powerPreference:'low-power'});
@@ -17,7 +18,7 @@ export function createShowroomRenderer(stage:HTMLElement,mount:HTMLElement,outli
   const levels=new Map(products.map(p=>[p.id,0]));const abort=new AbortController();let touchTimer:ReturnType<typeof setTimeout>|undefined;
   const ray=new Raycaster();const pointer=new Vector2();
   function draw(){renderer.render(scene,camera);stage.dataset.frames=String(++frames);stage.dataset.triangles=String(renderer.info.render.triangles);}
-  function stop(){cancelAnimationFrame(raf);raf=0;stage.dataset.loop=visible?'idle':'stopped';last=0;}
+  function stop(){cancelAnimationFrame(raf);raf=0;stage.dataset.loop=visible?'idle':'stopped';last=0;stage.dataset.projectedBounds=JSON.stringify(projectedProducts(camera,products.map(p=>p.group)));}
   function animate(time:number){
     raf=0;if(disposed||!visible||document.hidden)return;
     const dt=last?Math.min((time-last)/1000,.05):1/60;
@@ -51,10 +52,12 @@ export function createShowroomRenderer(stage:HTMLElement,mount:HTMLElement,outli
   canvas.addEventListener('pointerdown',e=>{hit(e);if(e.pointerType!=='mouse'){clearTimeout(touchTimer);touchTimer=setTimeout(()=>select(null),900);}},{signal:abort.signal});
   canvas.addEventListener('pointercancel',()=>select(null),{signal:abort.signal});
   canvas.addEventListener('webglcontextlost',e=>{e.preventDefault();onFailure();},{signal:abort.signal});
-  function resize(){const r=stage.getBoundingClientRect(),mobile=r.width<640;renderer.setPixelRatio(Math.min(devicePixelRatio,mobile?1.15:1.5));renderer.setSize(r.width,r.height,false);camera.aspect=r.width/r.height;
+  function resize(){const r=stage.getBoundingClientRect(),mobile=r.width<640||(r.width<1100&&r.width/r.height<.85);renderer.setPixelRatio(Math.min(devicePixelRatio,r.width<640?1.15:1.5));renderer.setSize(r.width,r.height,false);camera.aspect=r.width/r.height;
     products[0].group.position.set(mobile?0:-2.4,mobile?3.65:1.5,0);products[1].group.position.set(mobile?0:-2.4,mobile?1.7:-1.05,0);products[2].group.position.set(mobile?-.4:3.15,mobile?-1.45:0,0);
     products[0].group.scale.setScalar(mobile?.78:1);products[1].group.scale.setScalar(mobile?.78:1);products[2].group.scale.setScalar(mobile?.78:1);
-    floor.position.y=mobile?-3.99:-3.25;const height=Math.max(mobile?10.2:7.3,(mobile?5.3:11.9)/camera.aspect);camera.position.set(0,mobile?.2:.4,height/(2*Math.tan(35*Math.PI/360)));camera.lookAt(0,mobile?.15:0,0);camera.updateProjectionMatrix();if(visible){draw();wake();}}
+    floor.position.y=mobile?-3.99:-3.25;fitShowroom(camera,products.map(p=>p.group));
+    stage.dataset.projectedBounds=JSON.stringify(projectedProducts(camera,products.map(p=>p.group)));
+    if(visible){draw();wake();}}
   const observer=new ResizeObserver(resize);observer.observe(stage);mount.append(canvas);resize();draw();stage.dataset.products='3';stage.dataset.letterStyle=outlines.lower.font;stage.dataset.chrome='true';stage.dataset.panelCapHeights=products[2].group.children.filter(g=>g.type==='Group').slice(1).map(g=>g.children.find(c=>c.userData.text)?.userData.capHeight).join(',');stage.dataset.titleCapHeight=String(products[2].group.children.find(g=>g.type==='Group')?.children.find(c=>c.userData.text)?.userData.capHeight);stage.dataset.lightPalette='#20bcc9,#c94e58,#467acb,#d78c44,#eef3ed';stage.dataset.geometry='extruded-letters-and-asymmetric-solid';stage.dataset.quality='standard';
   return {setVisible(value){if(value===visible)return;visible=value;if(value){draw();wake();}else{select(null);stop();}},setReduced(value){if(value===reduced)return;reduced=value;wake();},select,dispose(){if(disposed)return;disposed=true;stop();abort.abort();clearTimeout(touchTimer);observer.disconnect();const geometries=new Set<import('three').BufferGeometry>(),materials=new Set<Material>();scene.traverse(o=>{if(o instanceof Mesh){geometries.add(o.geometry);(Array.isArray(o.material)?o.material:[o.material]).forEach(m=>materials.add(m));}});geometries.forEach(g=>g.dispose());materials.forEach(m=>m.dispose());key.shadow.dispose();env.dispose();renderer.dispose();renderer.forceContextLoss();canvas.remove();stage.dataset.resources='disposed';}};
 }

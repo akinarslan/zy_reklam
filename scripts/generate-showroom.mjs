@@ -14,6 +14,7 @@ const header = shared(/<header class="header">[\s\S]*?<\/header>/)
   .replace('href="/3d-vitrin/"', 'href="/3d-vitrin/" aria-current="page"');
 const footer = shared(/<footer class="footer">[\s\S]*?<\/footer>/);
 const whatsapp = shared(/<a class="whatsapp-float"[\s\S]*?<\/a>/);
+const instagram = shared(/<a class="instagram-float"[\s\S]*?<\/a>/);
 const canonical = 'https://zyreklamdijital.com.tr/3d-vitrin/';
 const title = '3D Vitrin | Kutu Harf Tabela ve Totem | ZY REKLAM';
 const description = 'İki kutu harf tabela ve yönlendirme totemini malzeme, derinlik ve ışık etkileşimleriyle keşfedin. Temsili ZY REKLAM ürün tasarımları.';
@@ -52,6 +53,7 @@ const html = `<!doctype html>
   </main>
   ${footer}
   ${whatsapp}
+  ${instagram}
 </body>
 </html>
 `;

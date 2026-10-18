@@ -1,9 +1,11 @@
 import { defineConfig } from 'vite';
 import { fileURLToPath } from 'node:url';
+import { liveSnapshotPlugin } from './scripts/live-snapshot.mjs';
 
 const pages = ['tekstil-giyim', 'ofis-kirtasiye', 'yasam-mutfak-seyahat', 'vip-ekolojik-setler'];
 const servicePages = ['tabela-yonlendirme', 'dijital-baski-kaplama', 'lazer-ozel-uretim', 'promosyon-baski', 'tasarim-kurumsal'];
 export default defineConfig({
+  plugins: [liveSnapshotPlugin()],
   build: {
     rolldownOptions: {
       input: [

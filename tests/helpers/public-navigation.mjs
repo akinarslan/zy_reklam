@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import {mkdir, writeFile} from 'node:fs/promises';
 
-export const navViewports = [[390,844],[412,915],[768,1024],[1366,768],[1440,900],[1920,1080],[2560,1440],[3440,1440],[3840,2160]];
+export const navViewports = [[360,800],[390,844],[412,915],[768,1024],[820,1180],[834,1194],[1024,768],[1024,1366],[1366,768],[1440,900],[1920,1080],[2560,1440],[3440,1440],[3840,2160]];
 
 export async function verifyPublicNavigation(browser, base, output) {
   await mkdir(output, {recursive:true});
@@ -20,12 +20,14 @@ export async function verifyPublicNavigation(browser, base, output) {
       const measurement = await page.evaluate(() => {
         const read = selector => {
           const e=document.querySelector(selector), s=getComputedStyle(e), r=e.getBoundingClientRect();
-          return {fontSize:s.fontSize,fontWeight:s.fontWeight,lineHeight:s.lineHeight,padding:s.padding,height:r.height,fontFamily:s.fontFamily};
+          return {fontSize:s.fontSize,fontWeight:s.fontWeight,lineHeight:s.lineHeight,letterSpacing:s.letterSpacing,padding:s.padding,height:r.height,fontFamily:s.fontFamily};
         };
         const header=document.querySelector('.header'), r=header.getBoundingClientRect();
-        return {width:innerWidth,workshop:read('.nav-workshop-link'),services:read('[data-service-menu]>summary'),header:{height:r.height,top:r.top,position:getComputedStyle(header).position},scrollPadding:parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop),documentWidth:document.documentElement.scrollWidth};
+        return {width:innerWidth,workshop:read('.nav-workshop-link'),services:read('[data-service-menu]>summary'),projects:read('[data-project-menu]>summary'),promotions:read('[data-promo-menu]>summary'),header:{height:r.height,top:r.top,position:getComputedStyle(header).position},scrollPadding:parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop),documentWidth:document.documentElement.scrollWidth};
       });
       assert.deepEqual(measurement.workshop, measurement.services, JSON.stringify(measurement));
+      assert.deepEqual(measurement.workshop, measurement.projects, JSON.stringify(measurement));
+      assert.deepEqual(measurement.workshop, measurement.promotions, JSON.stringify(measurement));
       assert.equal(measurement.workshop.fontWeight, '400');
       assert.equal(measurement.workshop.fontSize, mobile?'19px':'17px');
       assert.equal(measurement.header.position, 'sticky');

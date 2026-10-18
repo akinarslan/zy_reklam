@@ -1,0 +1,51 @@
+/* The original wordmark stays intact; the panel needs no canvas or render loop. */
+.header .header-sign {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: clamp(189px, 12vw, 230px);
+  min-height: 48px;
+  padding: 12px 16px;
+  border: 1px solid #b89d60;
+  border-radius: 5px;
+  background: linear-gradient(155deg, #164331, #061b13 78%);
+  box-shadow: inset 0 1px 0 #f4dfa34d, 0 3px 0 #594c2f, 0 7px 12px #0005;
+  transform: perspective(600px) rotateX(4deg) rotateY(-3deg);
+  transition: transform 140ms ease, box-shadow 140ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.header .header-sign img {
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 0 4px #f5e5b52b);
+}
+@media (hover: hover) and (pointer: fine) {
+  .header .header-sign:hover {
+    transform: perspective(600px) rotateX(2deg) rotateY(-1deg) scale(1.02);
+    box-shadow: inset 0 1px 0 #f4dfa34d, 0 4px 0 #594c2f, 0 9px 16px #0006;
+  }
+}
+.header .header-sign:active,
+.header .header-sign[data-pointer-pressed],
+.header .header-sign[data-key-pressed] {
+  transform: perspective(600px) translateY(2px) scale(.97);
+  box-shadow: inset 0 1px 0 #f4dfa34d, 0 1px 0 #594c2f, 0 3px 7px #0005;
+}
+@media (max-width: 1023px) {
+  .header .header-sign { width: 176px; min-height: 44px; padding: 11px 13px; }
+}
+@media (max-width: 639px) {
+  .header .header-sign { width: 156px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .header .header-sign { transition: none; transform: none; }
+  .header .header-sign:hover,
+  .header .header-sign:active,
+  .header .header-sign[data-pointer-pressed],
+  .header .header-sign[data-key-pressed] { transform: none; }
+}
+html[data-motion="reduced"] .header .header-sign {
+  transition: none;
+  transform: none;
+}

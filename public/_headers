@@ -1,0 +1,4 @@
+/content-version.json
+  Cache-Control: no-store, max-age=0, must-revalidate
+/live-content/*
+  Cache-Control: public, max-age=31536000, immutable

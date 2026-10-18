@@ -1,12 +1,14 @@
 import {
-  WebGLRenderer, Scene, PerspectiveCamera, Group, Mesh, Shape, ExtrudeGeometry,
+  WebGLRenderer, Scene, PerspectiveCamera, Group, Mesh, InstancedMesh, Shape, ExtrudeGeometry,
   MeshStandardMaterial, CircleGeometry, PlaneGeometry, ShadowMaterial,
   HemisphereLight, DirectionalLight, PMREMGenerator, ACESFilmicToneMapping,
-  PCFSoftShadowMap, MathUtils, type Material, type WebGLRenderTarget,
+  PCFSoftShadowMap, MathUtils, Box3, Vector3, type Material, type WebGLRenderTarget,
 } from 'three';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { createLogo } from './logo';
 import { QualityMonitor } from './quality';
+import { createSignBack } from './back';
+import { setupSignRotation } from './rotation';
 
 export interface HeroRenderer {
   setVisible(visible: boolean): void;
@@ -27,11 +29,8 @@ export function createHeroRenderer(stage: HTMLElement, mount: HTMLElement, svg: 
   let frame = 0;
   let previousTime = 0;
   let visible = false;
-  let pointerId: number | null = null;
-  let pointerStartX = 0;
-  let startYaw = 0;
-  let yaw = -.12;
-  let pitch = .05;
+  const target = { yaw: -.12, pitch: .05 };
+  let cleanupRotation: (() => void) | undefined;
   let renderCount = 0;
   let shadowCount = 0;
   let shadowTime = -Infinity;
@@ -46,12 +45,14 @@ export function createHeroRenderer(stage: HTMLElement, mount: HTMLElement, svg: 
   const dispose = () => {
     if (disposed) return;
     disposed = true;
+    cleanupRotation?.();
     cancelAnimationFrame(frame);
     abort.abort();
     resizeObserver?.disconnect();
     scene.traverse(object => {
       if (object instanceof DirectionalLight) object.shadow.dispose();
       if (object instanceof Mesh) {
+        if (object instanceof InstancedMesh) object.dispose();
         object.geometry.dispose();
         const materials = Array.isArray(object.material) ? object.material : [object.material];
         materials.forEach((material: Material) => material.dispose());
@@ -107,6 +108,9 @@ export function createHeroRenderer(stage: HTMLElement, mount: HTMLElement, svg: 
     back.castShadow = true;
     back.receiveShadow = true;
     sign.add(back);
+    sign.add(createSignBack());
+    stage.dataset.backMounts = '4';
+    stage.dataset.backRails = '2';
     const logo = createLogo(svg);
     logo.position.z = .04;
     sign.add(logo);
@@ -122,7 +126,10 @@ export function createHeroRenderer(stage: HTMLElement, mount: HTMLElement, svg: 
     floor.position.y = -2.1;
     floor.receiveShadow = true;
     scene.add(floor);
-    sign.rotation.set(pitch, yaw, 0);
+    const localBounds = new Box3().setFromObject(sign);
+    const corners: Vector3[] = [];
+    for (const x of [localBounds.min.x, localBounds.max.x]) for (const y of [localBounds.min.y, localBounds.max.y]) for (const z of [localBounds.min.z, localBounds.max.z]) corners.push(new Vector3(x, y, z));
+    sign.rotation.set(target.pitch, target.yaw, 0);
     stage.dataset.logoPaths = String(logo.userData.sourcePaths);
     stage.dataset.logoHoles = String(logo.userData.holes);
     stage.dataset.sceneResources = 'active';
@@ -150,6 +157,12 @@ export function createHeroRenderer(stage: HTMLElement, mount: HTMLElement, svg: 
       stage.dataset.rotationX = String(sign.rotation.x);
       stage.dataset.triangles = String(renderer!.info.render.triangles);
       stage.dataset.drawCalls = String(renderer!.info.render.calls);
+      if (settled) {
+        sign.updateWorldMatrix(true, false);
+        camera.updateMatrixWorld();
+        const points = corners.map(point => point.clone().applyMatrix4(sign.matrixWorld).project(camera));
+        stage.dataset.projectedBounds = JSON.stringify({ minX: Math.min(...points.map(p => p.x)), maxX: Math.max(...points.map(p => p.x)), minY: Math.min(...points.map(p => p.y)), maxY: Math.max(...points.map(p => p.y)), minZ: Math.min(...points.map(p => p.z)), maxZ: Math.max(...points.map(p => p.z)) });
+      }
     };
     const resize = () => {
       if (disposed) return;
@@ -168,10 +181,12 @@ export function createHeroRenderer(stage: HTMLElement, mount: HTMLElement, svg: 
       if (disposed || !visible || document.hidden) return;
       const delta = previousTime ? Math.min((now - previousTime) / 1000, .05) : .016;
       previousTime = now;
-      const smoothing = 1 - Math.exp(-9 * delta);
-      sign.rotation.y += (yaw - sign.rotation.y) * smoothing;
-      sign.rotation.x += (pitch - sign.rotation.x) * smoothing;
-      const unsettled = Math.abs(yaw - sign.rotation.y) + Math.abs(pitch - sign.rotation.x) > .0002;
+      const reduced = document.documentElement.dataset.motion === 'reduced' || matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const smoothing = reduced ? 1 : 1 - Math.exp(-(stage.dataset.snap === 'true' ? 20 : 12) * delta);
+      sign.rotation.y += (target.yaw - sign.rotation.y) * smoothing;
+      sign.rotation.x += (target.pitch - sign.rotation.x) * smoothing;
+      const unsettled = Math.abs(target.yaw - sign.rotation.y) + Math.abs(target.pitch - sign.rotation.x) > .0002;
+      if (!unsettled) sign.rotation.set(target.pitch, target.yaw, 0);
       try { render(now, !unsettled); } catch { fallback('render-error'); return; }
       const update = quality.sample(now);
       if (update === 'lower') {
@@ -195,39 +210,10 @@ export function createHeroRenderer(stage: HTMLElement, mount: HTMLElement, svg: 
       stage.dataset.renderLoop = next && !document.hidden ? 'idle' : 'stopped';
       if (next && !document.hidden) { resize(); wake(); }
     };
-    const mouseMove = (event: PointerEvent) => {
-      if (event.pointerType !== 'mouse' || pointerId !== null) return;
-      const bounds = stage.getBoundingClientRect();
-      yaw = MathUtils.clamp((event.clientX - bounds.left) / bounds.width * 2 - 1, -1, 1) * MathUtils.degToRad(18);
-      pitch = MathUtils.clamp((event.clientY - bounds.top) / bounds.height * 2 - 1, -1, 1) * MathUtils.degToRad(10);
-      wake();
-    };
-    const down = (event: PointerEvent) => {
-      if (!event.isPrimary) return;
-      pointerId = event.pointerId; pointerStartX = event.clientX; startYaw = yaw;
-      canvas.setPointerCapture(event.pointerId);
-    };
-    const drag = (event: PointerEvent) => {
-      if (event.pointerId !== pointerId) return;
-      yaw = MathUtils.clamp(startYaw + (event.clientX - pointerStartX) / stage.clientWidth * .8, -MathUtils.degToRad(18), MathUtils.degToRad(18));
-      wake();
-    };
-    const release = (event: PointerEvent) => {
-      if (event.pointerId !== pointerId) return;
-      if (canvas.hasPointerCapture(event.pointerId)) canvas.releasePointerCapture(event.pointerId);
-      pointerId = null;
-    };
-    const leave = (event: PointerEvent) => { if (event.pointerType === 'mouse' && pointerId === null) { yaw = -.12; pitch = .05; wake(); } };
     const visibility = () => setVisible(visible);
     const contextLost = (event: Event) => { event.preventDefault(); if (!disposed) fallback('context-lost'); };
     const options = { signal: abort.signal };
-    canvas.addEventListener('pointermove', mouseMove, options);
-    canvas.addEventListener('pointerdown', down, options);
-    canvas.addEventListener('pointermove', drag, options);
-    canvas.addEventListener('pointerup', release, options);
-    canvas.addEventListener('pointercancel', release, options);
-    canvas.addEventListener('lostpointercapture', () => { pointerId = null; }, options);
-    canvas.addEventListener('pointerleave', leave, options);
+    cleanupRotation = setupSignRotation(stage, canvas, target, wake);
     canvas.addEventListener('webglcontextlost', contextLost, options);
     document.addEventListener('visibilitychange', visibility, options);
     resizeObserver = new ResizeObserver(resize);

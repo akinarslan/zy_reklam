@@ -44,8 +44,8 @@ test('Üretim build’i: özgün konturlar ve delikler; masaüstü/mobil gerçek
     const details = await page.locator('[data-hero-stage]').evaluate(el => ({ ...el.dataset }));
     assert.equal(details.logoPaths, '8');
     assert.equal(Number(details.logoHoles), 2, 'R/A holes must stay open');
-    assert.equal(Number(details.triangles), 4882, 'batching must preserve the baseline main-pass triangle budget');
-    assert.ok(Number(details.drawCalls) > 0 && Number(details.drawCalls) <= 13, 'initial idle render must use at most 13 draw calls');
+    assert.equal(Number(details.triangles), 5050, 'original 4882 triangles plus 168 rear hardware triangles');
+    assert.ok(Number(details.drawCalls) > 0 && Number(details.drawCalls) <= 16, 'three instanced rear hardware batches add at most three calls');
     assert.equal(await page.locator('[data-scene-mount] canvas').count(), 1);
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
     assert.deepEqual(errors, []);
@@ -97,9 +97,9 @@ test('Mobil yatay sürükleme ve gerçek dokunmayla dikey sayfa kaydırma', asyn
     await page.waitForTimeout(20);
   }
   await session.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
-  await page.waitForTimeout(500);
+  await page.waitForFunction(() => document.querySelector('[data-hero-stage]').dataset.renderLoop === 'idle');
   const yaw = Number(await stage.getAttribute('data-rotation-y'));
-  assert.ok(yaw > 0 && yaw <= Math.PI / 10 + .001);
+  assert.ok(Math.abs(yaw - Math.PI) < .001, 'horizontal drag snaps to the rear face at 180 degrees');
   const scrollBefore = await page.evaluate(() => scrollY);
   await session.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x: 180, y }] });
   for (let offset = 20; offset <= 140; offset += 20) {
