@@ -1,6 +1,6 @@
 # ZY Reklam — Yol Haritası
 
-**Sürüm:** 1.24 · **Başlangıç:** 2026-10-01 · **Güncelleme:** 2026-10-18
+**Sürüm:** 1.25 · **Başlangıç:** 2026-10-01 · **Güncelleme:** 2026-10-18
 
 **Kaynak:** [ARCHITECTURE.md](ARCHITECTURE.md) · **Zorunlu kontrol:** [AGENTS.md](AGENTS.md)
 
@@ -10,7 +10,7 @@
 
 **Aktif aşama:** P3 — Gerçek 3D açılış uygulandı; performans kapanışı devam ediyor.
 
-**Kullanıcı önceliği:** P3.7h — Instagram floating CSS küp ve header sonrası tam showroom kadrajı; aynı feat/3d-vitrin-page dalına commit/push, yeni PR/merge/production yok.
+**Kullanıcı önceliği:** P7.0-live A/B uygulaması ve yerel/Preview kabulü. Header mini tabela ayrı1395e6f commit’inde. Plan onaylandı; yeni PR/merge/production yok.
 
 P1 kaynak, logo, font ve iletişim incelemesi yapıldı; gerçek proje bilgileri/fotoğrafları doğrulanmadığı için P1.5 açık kalır. Planın engel yönetimi uyarınca bağımsız P2 temeli tamamlandı. Vite/TypeScript sayfası, statik SVG poster, mobil menü, hareket tercihi ve temel WhatsApp iletişim akışı çalışıyor. Gerçek 3D açılış şimdi uygulanmıştır. Üretim animasyonları, galeri, stüdyo ve upload henüz uygulanmadı.
 
@@ -93,6 +93,8 @@ Süreler takvim taahhüdü değildir. P1 sonrası logo kalitesi, gerçek görsel
 
 - [x] P2.9 Ana sayfanın sağ altında erişilebilir, JS kapalıyken de çalışan WhatsApp butonu; hazır bilgi alma mesajı, güvenli yeni sekme ve mobil güvenli boşluk.
 
+- [x] P2.10 Özgün SVG ile hafif CSS header mini tabelası;16sayfa×6viewport, sticky/boyut, fare/dokunma/Enter/Space ve reduced-motion kabulü. **Yerel49/49 tam test ve görsel kabul tamamlandı; uzak yayın yapılmadı.**
+
 **Kabul:** 360, 768 ve 1440 px genişliklerde yatay taşma yoktur. Başlık masaüstünde 45 pt, mobilde okunaklıdır. CTA ve temel iletişim 3D’den bağımsız çalışır. Klavye odakları görünür; build ve seçilen statik analiz kontrolleri geçer. CI mevcut değilse başarı iddia edilmez; kurulan kontrollerin gerçek çıktısı kaydedilir.
 
 ## 6. P3 — 3D ZY açılış
@@ -120,7 +122,7 @@ Süreler takvim taahhüdü değildir. P1 sonrası logo kalitesi, gerçek görsel
 
 - [x] P3.7g-fold Tam ilk ekran hero;18 viewport, korunmuş ikinci bölüm, tablet/navbar ve9 showroom genişliği. **Kaynak/uzak kayıt/Preview alt kabulü tamamlandı; production kullanıcı talimatıyla yapılmadı.**
 
-- [ ] P3.7h Instagram küpü ve tam showroom ilk ekranı;16viewport, gerçek projected bounds, korunan açıklama/üç ürün/etkileşimler ve home regresyonu. **Devam ediyor.**
+- [x] P3.7h Instagram küpü ve tam showroom ilk ekranı;16viewport, gerçek projected bounds, korunan açıklama/üç ürün/etkileşimler ve home regresyonu. **Yerel/uzak kayıt/Preview alt kabulü tamamlandı; production yapılmadı.**
 
 ## 7. P4 — Üretim sahnesi ve hizmetler
 
@@ -158,6 +160,9 @@ P7 iki farklı akış içerir. P7.0 admin panelinin site içerik medyası ve yay
 
 ### P7.0 — Admin paneli medya/taslak akışı
 
+- [x] P7.0-live-plan Mevcut publish zinciri, sürüm/checker, DOM kapsamı, cache, test ve riskleri [canlı içerik önerisinde](docs/LIVE_CONTENT_PLAN.md) raporla. **Plan kullanıcı tarafından onaylandı; A/B uygulaması başladı.**
+- [ ] P7.0-live Plan incelemesi sonrası statik-first sürüm kontrolü ve güvenli section güncellemeleri; A→B/reload yok/form/scroll/canvas kabulü. **Devam ediyor; son yerel/Preview kabulü bekleniyor.**
+
 - [x] Login/session'a oturum başına CSRF token ve same-origin mutasyon kontrolü ekle.
 - [x] İçerik taslağını KV'de, upload medyasını R2 staging'de kullanıcı bazlı tut; tarayıcı localStorage'ını kaynak olmaktan çıkar.
 - [x] JPG/JPEG/PNG/WebP ve MP4/WebM, izinli klasör/target, MIME/uzantı/imza ve 8 MB/50 MB doğrulamasını uygula.
@@ -168,6 +173,9 @@ P7 iki farklı akış içerir. P7.0 admin panelinin site içerik medyası ve yay
 - [x] `zy-reklam-admin-media-staging` R2 bucket'ını oluştur; Standard sınıfı, r2.dev public erişimi kapalı ve custom domain bağlı değil durumlarını doğrula.
 - [ ] Production secrets'ı güvenli şekilde tanımla ve PR Cloudflare preview Build başarısızlığını authenticated log üzerinden çöz.
 - [ ] Gerçek GitHub `main` yayınını ve olası Workers Builds sonucunu açık yayın yetkisiyle doğrula; bu işte canlı yazma/deploy çalıştırılmadı.
+
+- [x] P7.0-live-A Build manifest ve dört public snapshot; deterministik hash, schemaVersion, statik HTML ve gerçek Worker cache yanıtları yerelde doğrulandı.
+- [ ] P7.0-live-B45sn checker, keyed patch, etkileşim koruması ve A→B/hata/identity yerel+Preview kabulü. **Devam ediyor.**
 
 ### P7.1–P7.6 — Ziyaretçi teklif eki
 
@@ -734,3 +742,25 @@ Sıradaki tek iş:
 - Ara doğrulama: ilk tam koşu46/48;1280×720 Instagram/caption çakışması ve süreli touch-state/idle test yarışı yakalandı. Caption76px boşluğu tüm ekranlara uygulanarak çakışma giderildi; controller değişmeden her touch seçiminin açılması/kapanması/idle durumu bağımsız ölçülür. Hedefli Instagram32kombinasyon ve ürün/idle testleri PASS. Son tam seri koşu başlatıldı; bu anlık kayıtta sonucu henüz bekleniyor. Son koşuda Home18/18 ve kategori/menü regresyonları geçti.
 
 - P3.7h yerel kabul tamamlandı: check/build PASS,48/48 tek seri tam test PASS;16stage projected bounds/üç ürün/başlık aşağıda/controls,32social/reduced-motion/safe link,18homefold ve28navbar. İlk hedefli koşuda manual-reduced testinin media-event yarışı bulundu; test gerçek motion düğmesi ve state beklemesiyle düzeltildi. Ara hedefli koşu son caption-clearance için durduruldu. İlk tam koşu46PASS/2FAIL:1280x720 caption/Instagram çakışması ve süreli touch testinin bitiş/idle ölçüm yarışı. Caption76px boşluğu tüm ekranlara yayıldı; controller değiştirilmeden her dokunmanın kapanışı testte beklenir ve doğrulanır. İki hedefli kontrol ve son tam paket PASS. İstenen9 screenshot görsel incelendi. Model/controller/hero/admin/Worker/Wrangler korunur. Yeni branch/PR/merge/production yok. Sıradaki tek iş: aynı dala commit/push ve yeni Verify/Preview kabulü.
+
+- P3.7h tamamlandı: commit 2d5a55b26aae6e038e9c1acbd7c40a236c4877c4; uzak18blob/SHA doğrulandı. Push Verify 39149287507 SUCCESS; Cloudflare Preview SUCCESS, ASSETS-only/secrets[]. Uzak16stage/projected/hover/touch-scroll,32social,18homefold,28navbar ve9vitrin regresyon PASS. İstenen9 screenshot görsel incelendi. Model/controller/hero/admin/Worker/Wrangler korunur. Yeni branch/PR/merge/production yok. Sıradaki tek iş: kullanıcıdan gelecek yeni talimat; yayın mevcut kapsamın dışında.
+
+- Final CI evidence: run39149287507 log48/48 PASS,0fail; browser-evidence12145216207 SUCCESS(81.14MB). No cancellation/rerun occurred: cancellation request returned409 because the job had already succeeded. Remote WebGL-unavailable fallback PASS. Source2d5a55b/main03fc90d re-read; no new PR/merge/production. Final report written in both workspaces; no report-only commit/deployment.
+
+### 2026-10-18 — P2.10 mini header ve P7.0-live planı
+
+- Güncel tam AGENTS/mimari v1.24/roadmap okundu; alt AGENTS yok. Fetch feature2d5a55b ve main03fc90d doğrulandı. Aynı worktree/dal; kullanıcı/generated farkları korundu.
+- P3.7h önceki tamamlanmış kaynak/Preview kabulü korunur. Mini tabela özgün SVG+CSS; panel/kenar/gölge,140ms hover/press, mouse/touch/Enter/Space, / hedefi ve tam aria-label. Header77/91/97/103px korunur; footer logo/hero/showroom/admin/Worker/Wrangler değişmedi.
+- Kabul: check/build PASS; son tek seri tam test49/49 PASS,0fail. Mini tabela16sayfa×6viewport96kombinasyon; CDP touch basma/iptal/bırakma, native Enter/Space, reduced-motion/focus/JS kapalı PASS. 390/820/1440/2560 görüntüleri incelendi. Mevcut18homefold/28navbar/16stage/32social ve vitrin fallback regresyonları PASS. İlk ek touch kabulü native :active sorununu yakaladı; pointer state ile düzeltildi. Eski tam koşu kaynak düzeltmesi için durduruldu; son koşu başarılıdır.
+- P7.0-live-plan: docs/LIVE_CONTENT_PLAN.md mevcut publish akışı, aynı deployment'ta manifest/hash JSON,45sn visible polling, güvenli DOM kapsamı/etkileşim erteleme, cache, A→B test ve riskleri raporlar. Kullanıcının önce-plan talimatıyla canlı içerik kodu/endpoint/cache/yayın mimarisi değiştirilmedi; uygulama plan incelemesini bekliyor. Mimari v1.24/A20–A24 korunur.
+- Yeni commit/push/PR/merge/production ve uzak CI/Preview yok; P3.6 fiziksel testleri başlatılmadı. Kanıt docs/evidence/header-sign/local/acceptance.json; LAST_REPORT.md kök/worktree aynı rapordur.
+- Sıradaki tek iş: P7.0-live planının kullanıcı tarafından değerlendirilmesi, ardından yerel uygulama.
+
+### 2026-10-18 — P7.0-live A/B (devam ediyor)
+
+- Plan açık kullanıcı talimatıyla onaylandı. Güncel AGENTS/ARCHITECTURE/ROADMAP okundu; fetch main03fc90d ve feature2d5a55b doğrulandı. Mevcut kullanıcı/generated/evidence farkları korundu.
+- Header mini tabela yalnız5kaynak/test dosyasıyla1395e6f63e944a27e233424fbfe79cd70ee7a22b ayrı commit'ine alındı; yeni PR/merge/production yok.
+- A aşaması: build manifest/dört hash'li snapshot ve gömülü baseline, canonical deterministik hash, yalnız public HTML bölgeleri/alanları, allowlist/schema kontrolleri. npm build/check ve A testi PASS; gerçek local Worker manifest no-store ve JSON immutable yanıtları PASS. A kabulünde DOM canlı güncellemesi yoktu.
+- B modülleri checker/guard/keyed patch olarak ayrıldı. İlk A→B testinde HTML entity'nin ayrı text node'ları fixture eşleşmesini engelledi; snapshot komşu text node'ları deterministik olarak birleştirir. Polling clock test kurulumu sayfa yükünden önceye alındı. İlk kapsamlı B tarayıcı kabulü PASS; ek kategori/site/video ve son tam/Preview kabulü sürüyor.
+- Mimari v1.25/A25; admin publish/Worker/config/secrets ve3D geometri değişmez. Production/cache canlı yayını çalıştırılmadı.
+- Sıradaki tek iş: B tam yerel kabulü ve aynı dal izole Preview doğrulaması.

@@ -1,6 +1,6 @@
 # ZY Reklam — Mimari
 
-**Sürüm:** 1.24 · **Tarih:** 2026-10-18 · **Durum:** P3 fiziksel cihaz performans kabulü açık; P7 admin medya/taslak akışı yerel entegrasyonla doğrulandı, KV/R2 provision edildi; production secrets ve canlı GitHub yayını engelli; responsive viewport alt kabulü ve 2K+ ziyaretçi site genişlik ayarı doğrulandı
+**Sürüm:** 1.25 · **Tarih:** 2026-10-18 · **Durum:** P3 fiziksel cihaz performans kabulü açık; P7 admin medya/taslak akışı yerel entegrasyonla doğrulandı, KV/R2 provision edildi; production secrets ve canlı GitHub yayını engelli; responsive viewport alt kabulü ve 2K+ ziyaretçi site genişlik ayarı doğrulandı
 
 **İlgili belgeler:** [Yol haritası](ROADMAP.md) · [Çalışma kuralları](AGENTS.md)
 
@@ -439,3 +439,15 @@ A22 ayrımı değişmez: ana sayfada yalnız özgün hero canvas; showroom ve va
 Kullanıcı showroom başlık/açıklamasını silmeden ilk sahneden sonraki normal bilgi bölümüne taşır. Header sonrası wrapper min-height100svh-header; canvas ve küçük ürün kontrolleri bu alandadır. Sosyal bağlantılar ve kontroller için fiziksel boşluk ayrılır. Mevcut üç ürün geometrisi, materyalleri, ışık etkileşimleri ve controller değişmez. Sadece resize kompozisyonu/kamera fit hesapları ayrık framing.ts içinde gerçek Box3 sınırları ve perspective frustum üzerinden yapılır; yüzde12 etkileşim marjı bırakılır. Yatayda iki tabela solda/totem sağda; dar veya dikey tablette tabelalar üstte/totem altta. Geometriye dokunulmaz; DPR ve idle/offscreen/context/reduced yaşam döngüsü korunur. Projected bounds resize ve hareket duruşunda veri kanıtına yazılır; ek RAF yok.
 
 Instagram doğrudan güvenli yeni-sekme bağlantısı ve beyaz SVG glyph ile CSS rounded cube olur;6sn/3px sakin transform,18/20derece hover,scale1.05/tap. OS ve kullanıcı reduced-motion tercihinde animasyon kapalıdır. WhatsApp ölçüsü/konumu korunur; Instagram üstte74/72px offset ile12–16px boşluk bırakır. Public generatorlar home kaynaklı iki sosyal bağlantıyı paylaşır; admin/backend değişmez. A23 home ilk ekran kabulü korunur. Aynı feature dalında commit/push ve izole Preview; yeni PR/merge/production yok. Referans görüntüler ekte bulunmadığından yazılı kriterler esas alınır.
+
+### A25 — Public içerik snapshot ve canlı patch (P7.0-live, 2026-10-18)
+
+Kullanıcı planı onayladı: A aşaması build manifest/snapshot, B aşaması45sn görünür public polling ve hedefli DOM patch. Statik-first/çok sayfalı SEO korunur; SPA veya otomatik reload eklenmez. Header işi1395e6f63e944a27e233424fbfe79cd70ee7a22b commit'inde ayrıdır.
+
+Build-only linkedom, son statik HTML'in izinli hizmet/proje/promosyon bölgelerini JSON DOM ağaçlarına projekte eder. Böylece tarayıcıda ikinci bir katalog şablonu yoktur. site yalnız telefon/adres/Instagram/footer public alanlarıdır; HTML'deki karşılıkları aynı patchSite eşlemesiyle build sırasında doldurulur. Sabit slogan ve3D modeller bu protokole girmez. Protokol schemaVersion1, git HEAD revision, canonical sıralı JSON/SHA256 ve /live-content/<section>.<hash>.json kullanır. Manifest ve dört snapshot aynı dist/deployment içindedir; admin publish/KV/R2/Worker yazma sözleşmesi değişmez. GitHub commit sonrası başarılı Cloudflare deployment yeni manifesti görünür yapar.
+
+/content-version.json no-store/max-age0/must-revalidate; yalnız /live-content/* public31536000immutable. Diğer statik cache kuralları değişmez. Cloudflare resmi kaynak: https://developers.cloudflare.com/workers/static-assets/headers/ . Yerel Worker gerçek yanıtlarıyla cache kuralları test edilir.
+
+Public checker yalnız production build ve public sayfalarda çalışır;45sn tek zamanlayıcı, hidden iptal/durma, visible tek hemen kontrol. Yalnız hash'i değişmiş bölümler indirilir; boyut/şema/URL/tag/attribute/hash doğrulanmadan DOM'a dokunulmaz. Tam snapshot hazırlandıktan sonra keyed DOM patch; parent innerHTML replacement yok. Form focus/dirty, açık menü/dialog, sahne pointer/klavye ve oynayan video sırasında bekleyen en son snapshot tutulur. Dirty form açık reset/submit gelene kadar korunur; sonradan blur tek başına kayıp riski doğurmaz. Caret/form/canvas/dialog/video kimlikleri ve scroll korunur. Polling veya patch hatası mevcut içeriği silmez, sayfayı yenilemez; sonraki kontrolde yeniden denenir.
+
+Preview ASSETS-only/secrets[] A20 izolasyonu korunur; yeni PR/merge/production deploy yasaktır. P7 genel admin/live publish ve ziyaretçi eki kabulü bu alt işle kapanmaz.

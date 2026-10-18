@@ -1,0 +1,13 @@
+export type Section = 'site'|'services'|'projects'|'promotions';
+export type Tree = string | {tag:string;key:string;attrs:Record<string,string>;children:Tree[]};
+export type Manifest = {schemaVersion:1;revision:string;sections:Record<Section,{hash:string;url:string}>};
+export type Snapshot = {schemaVersion:1;section:Section;data?:{phone:string;address:string;instagram:string;footerText:string};pages?:Record<string,Array<{selector:string;children:Tree[]}>>};
+export const sections:Section[];
+export function canonical(value:unknown):string;
+export function safeUrl(value:unknown,kind?:string):boolean;
+export function validAttribute(name:string,value:unknown):boolean;
+export function regionSelectors(section:Section,path:string):string[];
+export function validManifest(value:unknown):value is Manifest;
+export function validSnapshot(value:unknown,section:Section):value is Snapshot;
+export const tags:Set<string>;
+export const attributes:Set<string>;
