@@ -10,7 +10,7 @@
 
 **Aktif aşama:** P3 — Gerçek 3D açılış uygulandı; performans kapanışı devam ediyor.
 
-**Kullanıcı önceliği:** P2.10/P7.0-live temiz kaynak checkpoint ve Verify39154971646 GREEN doğrulandı; P3.7i hero360° yerel/Preview kabulü devam ediyor. Yeni PR/merge/production kapsam dışı.
+**Kullanıcı önceliği:** P8.7c/P9 — admin login tek sütun CSS düzeltmesi; ayrı fix dalında yerel kabul tamamlandı, Verify/Preview görsel kapıları sonrası merge/otomatik production yetkilendirildi. Matrix kapsam dışı.
 
 P1 kaynak, logo, font ve iletişim incelemesi yapıldı; gerçek proje bilgileri/fotoğrafları doğrulanmadığı için P1.5 açık kalır. Planın engel yönetimi uyarınca bağımsız P2 temeli tamamlandı. Vite/TypeScript sayfası, statik SVG poster, mobil menü, hareket tercihi ve temel WhatsApp iletişim akışı çalışıyor. Gerçek 3D açılış şimdi uygulanmıştır. Üretim animasyonları, galeri, stüdyo ve upload henüz uygulanmadı.
 
@@ -781,3 +781,13 @@ Sıradaki tek iş:
 - P3.7i son yerel kabul: check/build PASS,52/52 tek seri tam test PASS. Yeni11viewport front/back/front projected bounds, gerçek touch/scroll, klavye/capture/idle/context/BFCache ve22live senaryosu (hero identity dahil) PASS. İstenen12 screenshot görsel incelendi,2560 arka montaj görünümü PASS. İlk test kurulum hataları giderildi; ayrı QA hedefli timeout başarı sayılmadı, son tam seri tüm testler PASS. Uzak kayıt/Verify/Preview bekleniyor.
 
 - P3.7i uzak ilk Verify39158168932:51/52 PASS; tek hata mevcut header-sign touch press180ms örneklemesi. Hero360 ve diğer51 kontrol PASS; Cloudflare Build78cad27d SUCCESS. Header CSS/JS değişmeden, test sabit180ms yerine aynı transform/pointer koşulunu ve CSS geçişinin bitişini en çok3sn bekler. Exact rest/hover/press assertions korunur; hedefli header96kombinasyon/gerçek touch1/1 PASS. İlk ek hedefli koşuda rest matrisi de geçiş içinde örneklendiği için başarısızdı; tüm dört sabit bekleme tamamlanma koşuluna çevrildi, son hedefli PASS. Ayrı test düzeltmesi commit/push ve yeni tam yerel/CI/Preview kabulü bekleniyor. Yeni PR/merge/production yok; hero kaynakları fedb3b3 olarak ayrı kalır.
+
+- [ ] P8.7c/P9 Admin login responsive düzeltmesinin Verify/Preview/production kabulü; yerel53/53 ve9login/15editor viewport PASS, uzak kapılar bekleniyor.
+
+### 2026-10-18 — P8.7c/P9 admin login responsive fix (yerel kabul tamamlandı)
+
+- Kullanıcı ek talimatı yeni fix/admin-login-responsive dalı, küçük CSS/test PR’ı ve Verify/Preview/görsel kabulü sonrası merge/otomatik production yetkisi verir; önceki üretim-yazma yasağı bu işle sınırlı olarak değişti. Fetch origin/main b34e1f9, ayrı temiz worktree; ana kullanıcı/generated/evidence dosyaları korundu. Güncel tam AGENTS/mimari1.26/roadmap okundu; alt AGENTS yok.
+- Yalnız .login-layout #login-form tek sütun; genel .form-grid ve editor1920=3/2560+=4 korunur. Mimari v1.26/A20–A26 ve backend/public/3D/Matrix sınırları korunur; sürüm artışı yok.
+- Check/build PASS;53/53 seri tam test PASS, hedefli admin2/2 PASS. Yeni login testi9viewport/tek track/tam genişlik/merkez/sıra/tek satır/overflow; mevcut mocked editor15viewport ve exact geniş-ekran kolon sayısı PASS. İstenen4screenshot görsel incelendi. Gerçek login/publish yok. Kanıt docs/evidence/admin-login/local/acceptance.json ve .admin-login-tests-final.log.
+- Değişen kaynak/test: src/admin/admin.css,tests/admin-responsive.test.mjs,tests/helpers/admin-login.mjs; kayıt ROADMAP/LAST_REPORT. Generated/evidence/log/screenshot commit dışı korunur. Yeni PR/Verify/Preview/merge/production kapıları henüz bekleniyor. GenelP3/P7/P8/P9 açık.
+- Sıradaki tek iş: fix commit/push/PR ve yeşil uzak/görsel kapılar.
