@@ -1,6 +1,6 @@
 # ZY Reklam — Mimari
 
-**Sürüm:** 1.25 · **Tarih:** 2026-10-18 · **Durum:** P3 fiziksel cihaz performans kabulü açık; P7 admin medya/taslak akışı yerel entegrasyonla doğrulandı, KV/R2 provision edildi; production secrets ve canlı GitHub yayını engelli; responsive viewport alt kabulü ve 2K+ ziyaretçi site genişlik ayarı doğrulandı
+**Sürüm:** 1.26 · **Tarih:** 2026-10-18 · **Durum:** P3 fiziksel cihaz performans kabulü açık; P7 admin medya/taslak akışı yerel entegrasyonla doğrulandı, KV/R2 provision edildi; production secrets ve canlı GitHub yayını engelli; responsive viewport alt kabulü ve 2K+ ziyaretçi site genişlik ayarı doğrulandı
 
 **İlgili belgeler:** [Yol haritası](ROADMAP.md) · [Çalışma kuralları](AGENTS.md)
 
@@ -17,7 +17,7 @@ Temel yolculuk: **İşi anla → Gerçek projeleri gör → Tabela fikrini dene 
 | Sıra | Bölüm | Ziyaretçi deneyimi | İş amacı |
 | --- | --- | --- | --- |
 | 1 | Başlık ve gezinme | ZY kimliği; hizmet, proje, stüdyo ve iletişim bağlantıları | Hızlı yön bulma |
-| 2 | 3D açılış | Özgün ZY amblemi ışıklı pleksi ve metal tabela görünümünde; fareyle sınırlı dönüş | Üretim kalitesini hissettirme |
+| 2 | 3D açılış | Özgün ZY amblemi ışıklı pleksi ve metal tabela görünümünde; sınırlı hover ve sürüklemeyle tam yatay dönüş | Üretim kalitesini hissettirme |
 | 3 | Üretim anlatımı | Metal kasa, LED, pleksi ve ön yüz kaydırmayla ayrılıp birleşir | Yapılan işi açıklama |
 | 4 | Hizmetler | Doğrulanmış tabela/montaj, dijital baskı, lazer kesim ve promosyon; CNC/UV doğrulanmadı | Talebi doğru işe yönlendirme |
 | 5 | Gerçek projeler | Büyük fotoğraflar, tür filtreleri, mevcutsa önce/sonra | Güven ve kanıt |
@@ -132,7 +132,7 @@ Build çıktısı, bağımlılık klasörleri, sırlar ve yüklenen müşteri g�
 ### Açılış sahnesi
 
 - Özgün amblemden türetilen ışıklı pleksi ve altın metal katmanlar; kontrollü çevre ışığı ve yumuşak gölge.
-- Masaüstünde başlangıç sınırı yatay ±18°, dikey ±10°. Hareket yumuşatılır; yazı ve gezinme DOM’da sabit kalır.
+- Normal hover yatay ±18°, dikey ±10°; açık sürüklemede yatay açı sınırsızdır. Bırakmada en yakın ön/arka yüze kısa snap; sol/sağ ok180° geçişi. Yazı ve gezinme DOM’da sabit kalır.
 - Mobilde açık bir dokunma/sürükleme alanı; sayfanın dikey kaydırması engellenmez. Sensör izni veya cihaz eğimi gerekmez.
 - Arka plan çizgileri düşük maliyetli CSS veya sahne unsurlarıdır; tüm sayfada parçacık efekti kullanılmaz.
 - Statik poster ilk ekrandadır. 3D modülü sonradan yüklenir; yükleme başarısızsa poster ve CTA’lar kullanılmaya devam eder.
@@ -451,3 +451,13 @@ Build-only linkedom, son statik HTML'in izinli hizmet/proje/promosyon bölgeleri
 Public checker yalnız production build ve public sayfalarda çalışır;45sn tek zamanlayıcı, hidden iptal/durma, visible tek hemen kontrol. Yalnız hash'i değişmiş bölümler indirilir; boyut/şema/URL/tag/attribute/hash doğrulanmadan DOM'a dokunulmaz. Tam snapshot hazırlandıktan sonra keyed DOM patch; parent innerHTML replacement yok. Form focus/dirty, açık menü/dialog, sahne pointer/klavye ve oynayan video sırasında bekleyen en son snapshot tutulur. Dirty form açık reset/submit gelene kadar korunur; sonradan blur tek başına kayıp riski doğurmaz. Caret/form/canvas/dialog/video kimlikleri ve scroll korunur. Polling veya patch hatası mevcut içeriği silmez, sayfayı yenilemez; sonraki kontrolde yeniden denenir.
 
 Preview ASSETS-only/secrets[] A20 izolasyonu korunur; yeni PR/merge/production deploy yasaktır. P7 genel admin/live publish ve ziyaretçi eki kabulü bu alt işle kapanmaz.
+
+P7.0-live son kabul kanıtı: Header1395e6f/Aa4ebd8c/Be37b394 ve3802981 satır sonu normalizasyonu. B kaynaklarıyla51/51; son kaynakla build ve A/B2/2. Preview https://d312592c-zy-reklam.akinarslanceng.workers.dev üzerinde21live,18fold,28navbar ve dört hash yerelle eşit; ASSETS-only/secrets[]. Görsel inceleme: home390/1440/2560 ve vitrin768. Yeni PR/merge/production bu görevden yok; main üzerindeki bağımsız Google/party commitleri korunur. Genel P7 ve P3.6 açık.
+
+### A26 — Hero tam yatay dönüş ve arka montaj (P3.7i, 2026-10-18)
+
+Kullanıcının açık talimatı A02/P3.3 sınırlı sürüklemeyi değiştirir; normal hover ±18°/±10° kalır. Mevcut tek renderer/canvas/context/RAF korunur. Ayrı rotation.ts yalnız pointer/klavye hedef açısını yönetir: stage genişliği tam360°, sınırsız yaw, pointer capture/cancel/lostcapture/blur temizliği; en yakın180° katına kısa snap. Klavyede odaklanabilir stage ve görünür gold focus, sol/sağ ok180° vardır. touch-action:pan-y ve dikey kaydırma korunur.
+
+back.ts aynı sign grubuna iki pürüzlü metal ray ve dört altıgen cıvata/vida yuvası ekler; arkada yinelenmiş logo yoktur. Özgün ön logo geometrisi/materyali değişmez. Üç instanced batch,168 ek ana-pass üçgeni:4882→5050; draw-call üst sınırı13→16. Gölge20Hz/final poz, kalite/DPR, idle/offscreen/hidden, context/dispose ve başlangıç reduced-motion poster politikası korunur. Azaltılmış harekette renderer hiç yüklenmez veya açık renderer dispose edilir; hareketli snap yerine poster kalır. Renderer çalışabildiği sade tercihte smoothing doğrudandır.
+
+A25 canlı içerik protokolü/uygulaması ve /3d-vitrin/ model/renderer/controller değişmez. Hero sürükleme sırasında live patch ertelenir; güvenli durumda aynı canvas ile uygulanır. A20 izole Preview ve aynı feature push; yeni PR/merge/production/main yazımı yok. Kabul11viewport ön/arka/ön projected bounds, fare/dokunma/klavye, yaşam döngüsü, live identity ve önceki regresyonları gerektirir; fiziksel P3.6 kabulü değildir.

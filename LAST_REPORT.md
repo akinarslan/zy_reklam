@@ -1,43 +1,83 @@
-# ZY Reklam — P7.0-live A/B uygulama ve kabul raporu
+# ZY REKLAM HERO 360° + CHECKPOINT RAPORU
 
 Tarih: 2026-10-18
-Talimat: Header mini tabelasını ayrı temiz commit'e al; onaylı canlı içerik planını A(manifest/snapshot) ve B(checker/keyed patch) olarak uygula; yerel ve Preview kabulü. Yeni PR/merge/production deploy YASAK.
-Aşama/iş: P2.10 kayıt tamamlandı; P7.0-live-A yerel kabul tamamlandı; P7.0-live-B yerel kabul tamamlandı, Preview bekleniyor. Genel P7 açık.
-Mimari: v1.25/A25; A20–A24 ve statik-first/SEO/3D sınırları korunur.
-Dal/çalışma alanı: feat/3d-vitrin-page; .worktrees/3d-vitrin-page. Ana kullanıcı/generated farkları korundu; reset/clean yapılmadı.
-Header commit:1395e6f63e944a27e233424fbfe79cd70ee7a22b — yalnız5kaynak/test dosyası.
-A commit:a4ebd8c — build manifest/public snapshot ve protokol/cache/test/belge altyapısı.
-Bu kayıt anında B kaynakları henüz commit edilmedi; mevcut HEAD:a4ebd8c18bc046cc98ca6530788df45d69f22a3e.
-Uzak B kaydı ve Preview henüz doğrulanmadı.
-PR:YENİ PR YOK. Merge:YOK. Production deploy:YOK. Main:03fc90d6522f8eaa26195b6985738cf99c981ba5.
-Preview:bekleniyor.
+Talimat: P2.10/P7.0-live kaynak checkpoint ve Verify kapısını doğrula; ardından mevcut hero renderer/canvas ile tam yatay dönüş ve gerçek arka montaj ekle; ayrı commit/push ve izole Preview. Yeni PR/merge/production/main yazımı yok.
+Aşama/iş: P3.7i yerel kabul TAMAMLANDI; uzak kayıt/Verify/Preview bekleniyor. Genel P3/P7/P8/P9 açık. Mimari: v1.26/A26; A20–A25 korunur.
+Çalışma alanı: .worktrees/3d-vitrin-page. Ana kirli kullanıcı ağacı, generated/evidence ve yerel yardımcı farkları korundu; reset/clean yok.
 
-A — VERSION / PUBLIC SNAPSHOT
-Build son statik HTML'in yalnız izinli hizmet/proje/promosyon bölgelerini JSON DOM ağaçlarına projekte eder; site yalnız phone/address/instagram/footerText public alanlarıdır. Build-only linkedom kullanılır; public bundle'a HTML parser/engine eklenmez. Tek ortak statik HTML kaynağı, tarayıcıda ikinci katalog template'i oluşmasını önler. Ana sayfa hizmet kartları aynı services.json gruplarına eşlenir; contact/footer aynı site.json eşlemesini build ve canlı patch'te paylaşır.
-Manifest:/content-version.json; schemaVersion1,git HEAD revision,dört section hash/url. Snapshot:/live-content/<section>.<SHA256>.json. Canonical anahtar sıralı JSON ve SHA256 deterministiktir; aynı public içerik aynı hash'i üretir. Manifest ve JSON'lar aynı dist/deployment içindedir. Admin publish anında KV/manifest değiştirilmez; GitHub commit→başarılı Cloudflare deployment→görünür yeni manifest sırası korunur.
-Yalnız hedefli _headers: manifest no-store,max-age0,must-revalidate; hash'li JSON public,max-age31536000,immutable. Diğer CSS/JS/font/görsel cache kuralları değiştirilmedi. Gerçek local Worker yanıtları test edildi.
+CHECKPOINT
 
-B — PUBLIC CHECKER / KEYED PATCH
-Yalnız production build/public sayfalar;45sn tek timer. Hidden'da timer ve istek iptal edilir; visible'da hemen tek kontrol. Aynı revision/hash içerik indirmez; yalnız hash'i değişmiş section JSON'u indirilir. Timeout10sn,manifest16KB/snapshot2MB sınırı,Content-Type/status/schema/hash/tag/attribute/URL allowlist doğrulaması. Admin API veya credential istemez; read-only fetch credentials:omit. Hatalı snapshot mevcut içeriği silmez veya sayfayı yenilemez.
-Patch yalnız services/projects/promotions menü/kart/metin bölgeleri, kategori başlık/açıklamaları ve contact phone/address/social/footer alanlarına uygulanır. Sabit hero sloganı ve3D geometri/model kapsam dışı. Parent innerHTML replacement ve location.reload yok; kararlı anahtarlarla mevcut kartlar korunur.
-Form focus/dirty,3D pointer/touch/keyboard,açık mobil/mega menü/dialog ve oynayan video güncellemeyi erteler. Bekleyen en son snapshot güvenli durumda uygulanır. Dirty form blur sonrası da korunur; açık reset/submit dirty kilidini bırakır, focus ayrıca korunur. Form input/caret,scroll,gerçek WebGL canvas ve video kimliği/zamanı kabulü geçti. WhatsApp submit numarası güncel public config'i okur; form node'u/değerleri yenilenmez.
-Metinler text node olarak üretilir. İzinli tag/attribute/protokol ve public yol listesi dışı veri reddedilir; javascript:,data:,başka origin,admin/API yolu ve inline event attribute snapshot'a alınmaz. Gizli admin taslağı/staging/token verileri public projeksiyona girmez. İlk HTML h1/katalog/iletişim/canonical içeriğini JS kapalıyken de taşır. Vite development HMR,production polling'den ayrı kalır.
+Remote branch: origin/feat/3d-vitrin-page
+Expected checkpoint: 3802981273641cf63e5498d7233c5f388ad722a1 — fetch sonrası birebir doğrulandı.
+Header:1395e6f63e944a27e233424fbfe79cd70ee7a22b; A:a4ebd8c18bc046cc98ca6530788df45d69f22a3e; B:e37b394d05086c31e8434243735f0691809f4199; normalizasyon:3802981.
+Verify 39154971646: GREEN/SUCCESS. CI log51/51 PASS,0fail; npm ci/build/browser install/test/artifact SUCCESS. Artifact12147231563,84.68MB.
+Cloudflare Preview: SUCCESS — buildae9114b4-d5c3-4aba-8704-7bf289611a90, https://d312592c-zy-reklam.akinarslanceng.workers.dev . Authenticated metadata yalnız ASSETS, secrets[].
+Source working tree: CLEAN (yeni 360° kaynak düzenlemesinden ÖNCE).
+Uncommitted source changes: YOK (checkpoint anında). Önceki final belge kayıtları, generated/evidence/screenshot/log/yardımcı farkları vardı; uygulama kaynak farkı yoktu. Kapılar doğrulanmadan yeni kaynak düzenlenmedi.
+Harici main587c703e666f34aca2766cb525193ed4badbac79 Delete party gözlendi; bu görev main yazmadı.
 
-DOĞRULAMA
-npm.cmd run build(check/TypeScript dahil):PASS. Son tek seri npm.cmd test -- --test-concurrency=1:51/51 PASS,0fail. Önce A'nın build/hash/schema/statik HTML testi ve gerçek Worker cache kabulü; sonra B'nin geniş tarayıcı kabulü yapıldı.
-B senaryoları:A→B,aynı sürüm,tek-section fetch,offline,manifest404/bozukJSON,JSON404/bozukJSON,unsupported schema,hash/unsafe URL reddi,stale B→C yarışı,hidden/visible,dirty form/focus/caret,scroll,kart kimliği,mobil menü,dialog,gerçek WebGL canvas pointer erteleme ve kimliği,kategori text sanitasyonu,site/WhatsApp hedefi,oynayan video erteleme/kimlik/currentTime ve JS kapalı SEO.
-Önceki mini tabela96kombinasyon,18homefold,28navbar,16showroom stage,32Instagram ve vitrin ışık/klavye/touch/reduced/context/module/JS-kapalı regresyonları son tam koşuda PASS. Hiçbir mevcut test kaldırılmadı.
-İlk B testinde clock kurulumu sayfa yükünden önceye alınarak timer kontrol edildi. HTML entity ayrı text node'ları fixture değişiminin oluşmasını engelliyordu; snapshot komşu text node'larını deterministik birleştirir. Düzeltme sonrası hedefli ve son tam koşu başarılıdır. İlk npm registry sertifika erişimi system CA ile çözüldü; TLS doğrulaması kapatılmadı. İlk check'te ImportMeta.env tipi eksikti; vite/client tip referansı eklendi.
-Preview kabulü henüz çalıştırılmadı; başarı iddiası yok.
-Yeni uzak CI sonucu henüz yok.
-Kanıtlar:docs/evidence/live-content/{local,preview}/acceptance.json; preview/remote.json; .live-tests-final.log; header-sign,hero-fold,public-navigation,showroom-stage,vitrine-page kanıtları. 
+HERO ROTATION
 
-DEĞİŞEN DOSYALAR
-Header ayrı commit:index.html,src/sections/navigation.ts,src/styles/main.css,src/styles/header-sign.css,tests/header-sign.test.mjs.
-A/B:package.json/lock,vite.config.ts,public/_headers,scripts/live-snapshot.mjs; src/content/live/{protocol.js,protocol.d.ts,site.js,site.d.ts,checker.ts,guard.ts,patch.ts}; src/main.ts,src/vite-env.d.ts,src/quote/contact.ts; tests/live-snapshot.test.mjs,live-content.test.mjs,helpers/live-content.mjs ve admin-worker.test.mjs cache kabulü; ARCHITECTURE.md,ROADMAP.md,LAST_REPORT.md,docs/LIVE_CONTENT_PLAN.md.
-Generated HTML/sitemap,eski test kanıtları,screenshotlar ve yerel araç/log farkları korunur; kaynak commit'ine alınmaz. Hero/showroom model/renderer/controller,admin,Worker/auth/KV/R2/Wrangler/secrets değişmedi.
+Commit: henüz oluşturulmadı; mevcut HEAD checkpoint3802981
+Initial front: PASS
+Mouse 180: PASS
+Mouse 360: PASS
+Touch 180: PASS
+Touch vertical scroll: PASS (gerçek CDP touch, pan-y)
+Keyboard: PASS (odaklanabilir stage, gold focus, ArrowLeft/Right180°)
+Back face: PASS (koyu yeşil metal plaka; ters wordmark yok)
+Mounting details: PASS (iki metal ray, dört altıgen cıvata/vida yuvası)
+Snap front: PASS
+Snap back: PASS
+Reduced motion: PASS (mevcut politika: başlangıçta Three indirilmez; açık sahne dispose/poster. OS azaltma altında açıkça etkinleştirilen 3D'de smoothing doğrudan)
+Render idle: PASS
+Canvas identity: SAME
+Duplicate canvas: YOK
+Duplicate renderer: YOK (aynı tek WebGL context ve mevcut tek renderer; ek RAF yok)
+Context fallback: PASS
+Live-content regression: PASS (22senaryo; hero drag sırasında erteleme/sonrasında aynı canvas dahil)
+First-fold regression: PASS (18ölçü; ikinci bölüm DOM/normal akış/scroll görünümü korunur)
+Horizontal overflow: YOK
 
-SINIR / SIRADAKİ TEK İŞ
-Gerçek admin production publish ve production canlı kabulü ÇALIŞTIRILMADI. P3.6 fiziksel cihaz kabulü durdurulmuş; USB/ADB/telefon/iPad/GPU testi yapılmadı. Mevcut SVGLoader599.52kB chunk uyarısı sürer. Genel P3/P7/P8/P9 kapanmadı.
+Normal hover ±18° yaw/±10° pitch; drag yatayda sınırsız, stage genişliği360°. Bırakma en yakın180° katına kısa yumuşak snap. Pointer capture/release/cancel/lostcapture/blur/pagehide temizliği; dikey scroll korunur. Özgün ön logo konturu/materyalleri ve aynı tabela grubu korunur. Üç instanced arka detay batch'i168 üçgen ekler:4882→5050 ana-pass; draw-call üst sınırı13→16. Gölge20Hz/final poz, QualityMonitor, DPR, idle/offscreen/visibility/context/dispose korunur.
 
-Sıradaki tek iş:Aynı feature dalında B kaynak kaydı ve izole Preview kabulünü tamamlamak.
+RESPONSIVE
+
+390×844: PASS
+412×915: PASS
+768×1024: PASS
+820×1180: PASS
+1024×768 landscape: PASS
+1366×768: PASS
+1440×900: PASS
+1920×1080: PASS
+2560×1440: PASS
+3440×1440: PASS
+3840×2160: PASS
+Her ölçüde front/back/front projected Box3 köşeleri/depth [-1,1] içinde; tek canvas/context, stage içinde tabela, taşma yok ve ilk ekran/ikinci bölüm korunur. İstenen12 hero-front/back-390/768/1366/1920/2560/3840.png üretildi ve görsel incelendi. Özellikle2560 arka yüz temiz metal montaj dili ve okunur ışıkla PASS.
+
+CI
+
+Check: PASS — npm.cmd run check
+Build: PASS — npm.cmd run build (TypeScript dahil)
+Tests: 52/52 PASS,0fail — npm.cmd test -- --test-concurrency=1 son tek seri koşu.
+Verify: henüz çalıştırılmadı (yeni commit yok)
+Cloudflare Preview: yeni kaynak için henüz çalıştırılmadı
+Yerel kabul tamamlandı; uzak sonuçlar henüz başarı sayılmaz.
+New PR: NO
+Merge: NO
+Production: NO
+
+DOĞRULAMA NOTLARI / SINIR
+
+Hiçbir mevcut test kaldırılmadı. Eski sınırlı mobil drag beklentisi yeni180° snap sözleşmesine, geometri bütçesi168 ek arka detay üçgenine göre güncellendi; normal hover sınır testi korunur. İlk yeni testte reload sonrası canvas referansı yeniden kurulmalıydı. Live hero testinde pointer'ın stage'e kalıcı odak vererek patch'i uzatması bulundu; ilk testteki elle blur geçici kontrolü kaldırıldı. Pointerdown default focus aktarımı önlendi, native pan-y ve Tab/ok erişimi korundu; son hedefli2/2 PASS. Ara tam koşu bu kaynak düzeltmesi için durduruldu, başarı sayılmadı. Ayrı sahne koşusunda QA context ölçüm ekranı30sn timeout verdi; başarı sayılmadı. Son tam seri52/52 koşu tüm QA/context/regresyon kontrollerini geçer.
+Mevcut header96kombinasyon,18fold,28navbar,16showroom,32Instagram,live A/B/cache/güvenlik ve vitrin etkileşim/fallback testleri son tam koşuda PASS. Admin/Worker/auth/KV/R2/Wrangler ve live checker/protokol/patch kaynakları, showroom model/renderer/controller değişmedi. JS kapalı ilk HTML/SEO ve teklif akışı korunur. Preview live A→B yanıtları intercept/mock sürüm kullanır; gerçek admin publish veya production canlı güncellemesi yapılmadı.
+SVGLoader ortak chunk601.18kB/gzip154.17kB (önceki599.52kB); mevcut500kB uyarısı sürer, eşik yükseltilmedi. Hero renderer chunk10.50kB/gzip4.48kB; dinamik import korunur. Tarayıcı/SwiftShader/CDP viewport kabulü fiziksel cihaz/GPU kabulü değildir; P3.6 durdurulmuş, USB/ADB/telefon/iPad testi çalıştırılmadı. Secrets Git'e/rapora eklenmedi.
+
+DEĞİŞEN DOSYALAR / KANIT
+
+src/scene/hero.ts,renderer.ts ve yeni back.ts,rotation.ts; src/styles/main.css; tests/scene.test.mjs,helpers/live-content.mjs ve yeni hero-rotation.test.mjs,helpers/hero-rotation.mjs; ARCHITECTURE.md,ROADMAP.md,LAST_REPORT.md. Önceki live-plan sonuç kaydı docs/LIVE_CONTENT_PLAN.md korunur/kaydedilir. Generated HTML/sitemap,eski kanıtlar,screenshot/log/yerel araçlar kaynak commit'ine alınmaz.
+Kanıt:docs/evidence/hero-rotation/checkpoint.json,checkpoint-ci.json,local/acceptance.json; .hero-tests-final.log; live-content,hero-fold,public-navigation,showroom-stage kabul dosyaları. Sonuç raporu/günlük commit sonrasında yerelde güncellenir; rapor SHA'sı için döngüsel commit/deploy oluşturulmaz.
+Sıradaki tek iş: Ayrı feature commit/push, yeni Verify ve izole Preview kabulü.
+
+Yerel uygulama tamamlandı; uzak kayıt ve kabul bekleniyor.

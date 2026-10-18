@@ -20,6 +20,7 @@ html[data-motion=reduced]{scroll-behavior:auto}html[data-motion=reduced] *,html[
 .sign-stage:not([data-scene-state=ready]) .scene-mount{visibility:hidden}
 .scene-mount canvas{pointer-events:auto;touch-action:pan-y;cursor:grab}
 .scene-mount canvas:active{cursor:grabbing}
+.sign-stage:focus-visible{outline:2px solid var(--gold);outline-offset:4px;border-radius:8px}
 .object-caption{gap:12px;line-height:1.6}
 .object-caption [data-scene-hint]{text-align:right;letter-spacing:1px}
 

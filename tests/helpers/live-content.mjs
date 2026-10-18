@@ -131,6 +131,17 @@ export async function verifyLiveContent(browser,base,output) {
   await canvas.page.waitForFunction(()=>document.querySelector('[data-service-menu] h3').textContent==='Live service B');
   assert.ok(await canvas.page.evaluate(()=>liveIdentity.canvas===document.querySelector('canvas')&&liveNavigations===0));records.push('real WebGL canvas identity and pointer deferral');
 
+  const hero=await fixture('/',{webgl:true});
+  await hero.page.waitForFunction(()=>document.querySelector('[data-hero-stage]').dataset.sceneState==='ready');
+  const heroBox=await hero.page.locator('canvas').boundingBox();
+  await hero.page.mouse.move(heroBox.x+heroBox.width*.1,heroBox.y+heroBox.height/2);await hero.page.mouse.down();
+  await hero.page.mouse.move(heroBox.x+heroBox.width*.6,heroBox.y+heroBox.height/2,{steps:8});
+  hero.state.manifest=B.manifest;await hero.tick();assert.equal(await hero.title(),originalTitle);
+  await hero.page.mouse.up();await hero.page.mouse.move(0,0);await hero.tick(1500);
+  await hero.page.waitForFunction(()=>document.querySelector('[data-service-menu] h3').textContent==='Live service B');
+  assert.ok(await hero.page.evaluate(()=>liveIdentity.canvas===document.querySelector('canvas')&&liveNavigations===0&&document.querySelectorAll('canvas').length===1));
+  assert.deepEqual(hero.state.jsonCalls,[B.url]);records.push('hero 360 drag defers live patch; same canvas after services update; no reload');
+
   for(const [section,path,titleSelector] of [
     ['services','/hizmetler/tabela-yonlendirme/','.service-category-hero h1'],
     ['projects','/projeler/tabela/','.promo-category-intro h1'],

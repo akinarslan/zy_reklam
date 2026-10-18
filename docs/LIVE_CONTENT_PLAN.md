@@ -1,6 +1,6 @@
 # P7.0-live — Statik içerik için canlı güncelleme planı
 
-Tarih: 2026-10-18. Durum: kullanıcı tarafından onaylandı; A/B uygulaması ve yerel/Preview kabulü sürüyor. Mimari v1.25/A25. Production yayını yapılmadı. Bu belge yayın, secret kurulumu veya main değişikliği yapmaz.
+Tarih: 2026-10-18. Durum: kullanıcı tarafından onaylandı; A/B yerel ve Preview alt kabulü tamamlandı. Mimari v1.25/A25. Production yayını yapılmadı. Bu belge yayın, secret kurulumu veya main değişikliği yapmaz.
 
 ## 1. Mevcut yayın akışı
 
