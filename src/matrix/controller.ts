@@ -18,12 +18,14 @@ export function mountMatrix(hero: HTMLElement): () => void {
   const reduced = () => document.documentElement.dataset.motion === 'reduced' && !state.motion;
   const effectiveMode = () => reduced() ? 'classic' : state.mode;
   const active = () => !destroyed && visible && document.visibilityState !== 'hidden';
+  const sign = hero.querySelector<HTMLElement>('[data-hero-stage]');
+  const foregroundActive = () => sign?.dataset.renderLoop === 'running' || sign?.dataset.dragging === 'true';
   const controls = createControls(hero, state, (key, shift) => { void action(key, shift); }, configure);
   function describe() {
     if (!renderer) return;
     const stats = renderer.stats();
     hero.dataset.matrixState = JSON.stringify({ ...state, mode: effectiveMode(), speed: stats.speed,
-      quality: stats.quality, bloomActive: stats.bloom, p3Active: stats.p3, fingerprint: stats.fingerprint,
+      quality: stats.quality, baseQuality: stats.baseQuality, foregroundBudget: stats.foregroundBudget, bloomActive: stats.bloom, p3Active: stats.p3, fingerprint: stats.fingerprint,
       cameraX: stats.cameraX, cameraY: stats.cameraY, focal: stats.focal, dpr: stats.dpr,
       glyphSet: stats.glyphs, messageStrands: stats.messageStrands, frames, running: Boolean(raf), reduced: reduced() });
     if (!controls.debug.hidden) controls.debug.textContent = `${stats.frameMs.toFixed(1)} ms · CPU ${stats.workMs.toFixed(1)} ms · ${stats.glyphCount} glyph / ${stats.glowCount} glow · q${stats.quality} · DPR ${stats.dpr.toFixed(2)} · ${Math.round(stats.width * stats.dpr)}×${Math.round(stats.height * stats.dpr)} · font ${stats.monoSize.toFixed(2)}×${stats.monoSqueeze.toFixed(2)} · ${stats.p3 ? 'P3' : 'sRGB'} · ${stats.kana ? 'kana' : 'Latin fallback'}`;
@@ -39,7 +41,7 @@ export function mountMatrix(hero: HTMLElement): () => void {
   function rebuild() {
     stop(); renderer?.destroy();
     const options = rendererOptions({ ...state, mode: effectiveMode() });
-    renderer = createRenderer(hero, canvas, bloom, fx, options, reduced());
+    renderer = createRenderer(hero, canvas, bloom, fx, options, reduced(), foregroundActive);
     renderer.speed(warping && !reduced() ? 45 : baseSpeed);
     fx.classList.toggle('matrix-rain-off', !state.effects);
     controls.sync(effectiveMode()); describe(); resume();

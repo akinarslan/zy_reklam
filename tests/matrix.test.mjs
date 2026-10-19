@@ -95,6 +95,19 @@ test('Matrix advanced deterministic state, URL restore, reduced motion, quality 
  await newContext.close();await p.setViewportSize({width:1920,height:1080});await p.evaluate(()=>scrollTo(0,0));await p.screenshot({path:`${out}/matrix-palette-1920.png`});
  await p.evaluate(()=>scrollTo({top:0,behavior:'instant'}));await state(p,'idle',true);
  await p.waitForFunction(()=>{const s=JSON.parse(document.querySelector('.hero').dataset.matrixState);return s.running&&Math.abs(s.cameraX)>1;},null,{timeout:10000,polling:100});assert.ok(Math.abs((await stats(p)).cameraX)>1);
+ // The live WebGL sign borrows the shared budget while rain keeps advancing.
+ await state(p,'glyphs','AB01');await state(p,'msg','WAKE UP');await state(p,'seed','shared');
+ await activeSceneReady(p);await p.waitForFunction(()=>document.querySelector('[data-hero-stage]').dataset.renderLoop==='idle',null,{polling:100});
+ await p.evaluate(()=>{window.budgetMatrix=document.querySelector('[data-matrix-rain]');window.budgetHero=document.querySelector('[data-hero-stage] canvas');});
+ const budgetStart=await stats(p),signBox=await p.locator('[data-hero-stage]').boundingBox();
+ assert.ok(budgetStart.messageStrands>0,'known seeded message fixture must exist before dragging');
+ await p.mouse.move(signBox.x+signBox.width*.1,signBox.y+signBox.height/2);await p.mouse.down();await p.mouse.move(signBox.x+signBox.width*.6,signBox.y+signBox.height/2,{steps:8});
+ await p.waitForFunction(frames=>{const s=JSON.parse(document.querySelector('.hero').dataset.matrixState);return s.foregroundBudget&&s.quality<=.25&&s.running&&s.frames>frames;},budgetStart.frames,{polling:100,timeout:10000});
+ const borrowed=await stats(p);assert.equal(borrowed.density,123);assert.ok(borrowed.messageStrands>0);assert.equal(borrowed.bloomActive,false);
+ await p.mouse.up();await p.mouse.move(0,0);
+ await p.waitForFunction(()=>{const s=JSON.parse(document.querySelector('.hero').dataset.matrixState),hero=document.querySelector('[data-hero-stage]');return hero.dataset.sceneState==='ready'&&hero.dataset.renderLoop==='idle'&&!s.foregroundBudget&&s.quality===s.baseQuality;},null,{polling:100,timeout:10000});
+ assert.equal(await p.evaluate(()=>budgetMatrix===document.querySelector('[data-matrix-rain]')&&budgetHero===document.querySelector('[data-hero-stage] canvas')),true);
+ evidence.advanced.push('native sign drag borrows/restores Matrix draw budget; rain frames/density/messages and both canvas identities retained');
  // Drive the retained upstream governor with costly work; no fixed FPS cap is installed.
  await p.evaluate(()=>{let until=performance.now()+2200;function busy(){const end=performance.now()+30;while(performance.now()<end){}if(performance.now()<until)requestAnimationFrame(busy);}requestAnimationFrame(busy);});
  await p.waitForFunction(()=>JSON.parse(document.querySelector('.hero').dataset.matrixState).quality<1,null,{timeout:10000});assert.equal((await stats(p)).bloomActive,false);
