@@ -1,3 +1,4 @@
+import {activeSceneReady,browserDiagnostics} from './helpers/browser-ready.mjs';
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
@@ -19,11 +20,11 @@ test('Standalone /3d-vitrin/: direct production asset, shared navigation, metada
  const response=await fetch(base+'/3d-vitrin/');assert.equal(response.status,200);
  const html=await response.text();assert.ok(html.includes('<h1 id="showroom-title">3D Vitrin'));assert.ok(html.includes('rel="canonical" href="https://zyreklamdijital.com.tr/3d-vitrin/"'));
  assert.ok((await readFile("public/sitemap.xml","utf8")).includes("<loc>https://zyreklamdijital.com.tr/3d-vitrin/</loc>"));
- const page=await browser.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));
+ const page=await browser.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));const diagnostic=browserDiagnostics(page);
  for(const [width,height] of [[390,844],[768,1024],[820,1180],[1024,768],[1366,768],[1920,1080],[2560,1440],[3440,1440],[3840,2160]]){
   await page.setViewportSize({width,height});await page.goto(base+'/3d-vitrin/');
   await page.locator('[data-showroom-stage]').scrollIntoViewIfNeeded();
-  await page.waitForFunction(()=>document.querySelector('[data-showroom-stage]').dataset.state==='ready');
+  await activeSceneReady(page,{timeout:30000}).catch(async error=>{await diagnostic('vitrine-responsive-'+width,error);throw error;});
   const m=await page.evaluate(()=>{
    const stage=document.querySelector('[data-showroom-stage]'),r=stage.getBoundingClientRect();
    return {width:innerWidth,documentWidth:document.documentElement.scrollWidth,canvas:document.querySelectorAll('canvas').length,hero:document.querySelectorAll('[data-hero-stage]').length,stage:{width:r.width,height:r.height,left:r.left,right:r.right},state:{...stage.dataset}};

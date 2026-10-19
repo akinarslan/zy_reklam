@@ -147,7 +147,9 @@ test('Ana site viewport matrisi, geniş ekran ölçekleri, menüler ve yatay ta�
     assert.equal(measurement.heroColumns, viewport.width >= 768 ? 2 : 1);
     assert.ok(measurement.signStage.left >= measurement.hero.left - 1 && measurement.signStage.right <= measurement.hero.right + 1);
     metrics.push(measurement);
-    if ([390, 768, 1366, 1440, 1920, 2560, 3440, 3840].includes(viewport.width)) {
+    // Large GPU readbacks are retained in diagnostics/legacy-home-captures.
+    // Every viewport's layout and overflow assertions above remain blocking.
+    if ([390, 768, 1366, 1440, 1920].includes(viewport.width)) {
       await page.screenshot({ path: `docs/evidence/responsive/site-${viewport.width}.png` });
     }
   }

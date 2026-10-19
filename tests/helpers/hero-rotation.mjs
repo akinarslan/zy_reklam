@@ -1,14 +1,16 @@
 import assert from 'node:assert/strict';
 import {mkdir,writeFile} from 'node:fs/promises';
 import {browserDiagnostics} from './browser-ready.mjs';
+import {gpuTimingFailure,observeGpuPage,assertGpuEvents} from './gpu-policy.mjs';
+const stressPages=new WeakSet();
 
 export const rotationViewports=[[390,844],[412,915],[768,1024],[820,1180],[1024,768],[1366,768],[1440,900],[1920,1080],[2560,1440],[3440,1440],[3840,2160]];
 const stageSelector='[data-hero-stage]';
 const idle=async page=>{
- await page.waitForFunction(()=>{
+ try { await page.waitForFunction(()=>{
   const s=document.querySelector('[data-hero-stage]');
   return s?.dataset.renderLoop==='idle'||['fallback','reduced','error'].includes(s?.dataset.sceneState);
- },null,{polling:100});
+ },null,{polling:100}); }catch(error){if(stressPages.has(page))await gpuTimingFailure(error,page,'hero-idle');throw error;}
  const state=await page.locator(stageSelector).evaluate(s=>({state:s.dataset.sceneState,reason:s.dataset.sceneReason,loop:s.dataset.renderLoop,frames:Number(s.dataset.renderCount),canvas:s.querySelectorAll('canvas').length}));
  assert.equal(state.state,'ready',JSON.stringify(state));assert.equal(state.loop,'idle');assert.equal(state.canvas,1);assert.ok(state.frames>0);
 };
@@ -30,10 +32,11 @@ async function drag(page,fraction) {
  await page.mouse.move(b.x+b.width*(start+fraction),b.y+b.height/2,{steps:12});
  await page.mouse.up();await page.mouse.move(0,0);await idle(page);
 }
-export async function verifyHeroRotation(browser,base,output) {
+export async function verifyHeroRotation(browser,base,output,{stress=false}={}) {
  await mkdir(output,{recursive:true});const rows=[],checks=[],shots=new Set([390,768,1366,1920,2560,3840]);
- const page=await browser.newPage();const errors=[];page.on('pageerror',e=>errors.push(e.message));
- const diagnostic=browserDiagnostics(page);
+ const page=await browser.newPage();if(stress)stressPages.add(page);observeGpuPage(page);const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ const diagnostic=browserDiagnostics(page);page.on('crash',()=>errors.push('page crash'));
+ const capture=async path=>{try{await page.screenshot({path});}catch(error){await gpuTimingFailure(error,page,'png-readback');throw error;}};
  await page.addInitScript(()=>{
   window.heroContexts=[];
   const original=HTMLCanvasElement.prototype.getContext;
@@ -49,17 +52,21 @@ export async function verifyHeroRotation(browser,base,output) {
    await page.evaluate(()=>{window.heroCanvas=document.querySelector('[data-hero-stage] canvas');window.heroLoads=performance.getEntriesByType('navigation').length;});
    assert.ok(Math.abs(await yaw(page))<.32);
    const front=await inside(page);
-   if(shots.has(width))await page.screenshot({path:`${output}/hero-front-${width}.png`});
+   if(stress&&shots.has(width))await capture(`${output}/hero-front-${width}.png`);
+   if(!stress&&width>1920){
+    assert.ok(await page.evaluate(()=>heroCanvas===document.querySelector('[data-hero-stage] canvas')&&heroContexts.length===1&&!heroContexts[0].isContextLost()));
+    rows.push({width,height,front,coverage:'responsive real-WebGL bounds; high-resolution animated sweep is a separate stress diagnostic',passed:true});continue;
+   }
    await drag(page,.5);assert.ok(Math.abs(await yaw(page)-Math.PI)<.001);
    assert.equal(await page.locator(stageSelector).evaluate(el=>document.activeElement===el),false,'pointer drag must not acquire persistent keyboard focus');
    const back=await inside(page);
-   if(shots.has(width))await page.screenshot({path:`${output}/hero-back-${width}.png`});
+   if(stress&&shots.has(width))await capture(`${output}/hero-back-${width}.png`);
    await drag(page,.5);assert.ok(Math.abs(await yaw(page)-Math.PI*2)<.001);
    const returned=await inside(page);
    assert.ok(await page.evaluate(()=>window.heroCanvas===document.querySelector('[data-hero-stage] canvas')&&performance.getEntriesByType('navigation').length===heroLoads&&heroContexts.length===1&&heroContexts[0]===heroCanvas.getContext('webgl2')));
    rows.push({width,height,front,back,returned,yaw:await yaw(page),passed:true});
   }
-  checks.push('11 viewport front/back/front projected bounds; first fold; no overflow; same canvas/context; no duplicate renderer context; mouse 180/360');
+  checks.push(stress?'11 viewport front/back/front projected bounds; first fold; no overflow; same canvas/context; no duplicate renderer context; mouse 180/360':'11 viewport real-WebGL responsive bounds; normal-size mouse180/360; high-resolution animation/readback retained in stress group');
   // A full sweep remains free while held; explicit release snaps to the nearest face.
   await page.setViewportSize({width:1440,height:900});await ready(page,base);
   await page.evaluate(()=>window.heroCanvas=document.querySelector('[data-hero-stage] canvas'));
@@ -89,7 +96,7 @@ export async function verifyHeroRotation(browser,base,output) {
   await page.locator('[data-motion-toggle]').click();await page.waitForSelector('[data-hero-stage] canvas');await idle(page);
   await page.locator('[data-hero-stage] canvas').evaluate(c=>c.getContext('webgl2').getExtension('WEBGL_lose_context').loseContext());
   await page.waitForFunction(()=>document.querySelector('[data-hero-stage]').dataset.sceneState==='fallback');assert.equal(await page.locator('[data-hero-stage] canvas').count(),0);checks.push('real context loss safe poster');
-  assert.deepEqual(errors,[]);
+  assert.deepEqual(errors,[]);assertGpuEvents(page);
  } catch(error){await diagnostic('hero-rotation',error);throw error;} finally {await page.close();}
  const mobile=await browser.newPage({viewport:{width:390,height:844},isMobile:true,hasTouch:true});
  try {

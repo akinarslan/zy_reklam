@@ -1,6 +1,6 @@
 # ZY Reklam — Yol Haritası
 
-**Sürüm:** 1.27 · **Başlangıç:** 2026-10-01 · **Güncelleme:** 2026-10-19
+**Sürüm:** 1.28 · **Başlangıç:** 2026-10-01 · **Güncelleme:** 2026-10-19
 
 **Kaynak:** [ARCHITECTURE.md](ARCHITECTURE.md) · **Zorunlu kontrol:** [AGENTS.md](AGENTS.md)
 
@@ -10,7 +10,7 @@
 
 **Aktif aşama:** P3 — Gerçek 3D açılış uygulandı; performans kapanışı devam ediyor.
 
-**Kullanıcı önceliği:** P3.7j/P9 Matrix compositor/readback son adayı; yerel doğrulama ve Verify → Preview → PR → merge → production kapıları sürüyor.
+**Kullanıcı önceliği:** P8.8/P9 CI-only release; kullanıcı onaylı runtime13dfebc donduruldu, PR10 merge ve runtime tuning yok.
 
 P1 kaynak, logo, font ve iletişim incelemesi yapıldı; gerçek proje bilgileri/fotoğrafları doğrulanmadığı için P1.5 açık kalır. Planın engel yönetimi uyarınca bağımsız P2 temeli tamamlandı. Vite/TypeScript sayfası, statik SVG poster, mobil menü, hareket tercihi ve temel WhatsApp iletişim akışı çalışıyor. Gerçek 3D açılış şimdi uygulanmıştır. Üretim animasyonları, galeri, stüdyo ve upload henüz uygulanmadı.
 
@@ -880,3 +880,21 @@ Sıradaki tek iş:
 
 <!-- MATRIX_CANCEL_PROGRESS -->
 2026-10-19 P3.7j/P9 native cancel test düzeltmesi:0395ad1 featureVerify39242150252 59/59 GREEN; yeni Preview dört home/dokuz kontrol/sıfır hata/16görsel PASS. PR#9 açıldı; PRVerify39244520843 58/59, yalnız header-sign.test125 touchCancel sonrası anlık attribute okuması true/null yarışı. CDP ack sayfa pointercancel task'ından önce dönebilir; data-pointer-pressed kaldırılmasını aynı mevcut3sn içinde100ms polling ile bekle, null/URL assertion'larını koru. Uygulama/headerCSS/JS değişmez. Son6 hedefli test üç tekrar:6/6 PASS, 6/6 PASS, 6/6 PASS; full:59/59 PASS. SonHEAD:0395ad1623533b1c1dd23ba432420a5a9e55bdf1; pushVerify:39242150252 / success; PRVerify:39244520843 / failure; sonHEADPreview:PASS. Merge/production kapıları henüz tamamlanmadı.
+
+
+
+
+
+
+
+
+
+<!-- CI_POLICY_P8_8 -->
+### 2026-10-19 — P8.8/P9 CI-only policy
+
+- User confirmed intentional main runtime edits and froze 13dfebc. Previous 272d843 engine equality is superseded; PR10/runtime tuning remains excluded. Branch ci/functional-gpu-policy was fast-forwarded from current main with all user/generated/evidence files preserved.
+- A28: blocking functional suite and separate GPU diagnostics; original assertions/raw failures/artifacts preserved, only verified hardware timing advisory, critical errors remain RED. Whole runtime/build source guard uses frozen13dfebc.
+- Prior ed514ad acceptance: blocking61/61, diagnostic5/5, guard4/4; first vitrine60/61 timeout is preserved. Same30s semantic readiness with terminal fallback/one visible canvas/real frames and diagnostics passed targeted3/3 then full61/61. These are historical results, not new13dfebc acceptance.
+- Latest inherited main HTML: 756aa49 contains only content/presentation edits; engine/build sources remain13dfebc. The CI-only commit must not change index.html relative to its main parent. Extra HTML acceptance: in progress.
+- Frozen motor baseline local acceptance: blocking 61/61; GPU 5/5; policy exit 0. Build/guards and full suite run on the new frozen baseline. No runtime code authored. Matrix test defaults follow speed2 while preserving exact ±2 key deltas and +3.6 two-finger delta.
+- Next: complete local acceptance, commit/push, feature Verify GREEN, narrow CI-only PR/PR GREEN, merge, main Verify/two smokes/automatic production and deployed runtime equality. General P3/P7/P8/P9 and stopped physical P3.6 remain open.
