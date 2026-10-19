@@ -1,40 +1,19 @@
-# ZY REKLAM — MATRIX CI VE YAYIN İLERLEME RAPORU
+# ZY REKLAM — MATRIX CI / HEADROOM İLERLEME RAPORU
 
-Tarih: 2026-10-19T10:07:20.127Z
-Aşama/iş: P3.7j/P9 devam ediyor. Mimari v1.27/A27; genel P3/P7/P8/P9 açık.
-Talimat: üç CI timeout'unu çöz; hedefli tekrarlar ve full59 ardından tüm GREEN kapılarıyla Preview/PR/merge/otomatik production ve gerçek domain kabulüne devam et.
-Dal: feat/hero-matrix-rain; .worktrees/hero-matrix-rain. Kullanıcı/generated/evidence farkları korundu; reset/clean yok.
-Kaydedilmiş HEAD: 003a3f3b813af335e29471e8452bc2750ba32940
-Son test-driver: henüz commit edilmedi; bu kayıt için ek commit/deployment üretilmez.
+Tarih: 2026-10-19T11:05:18.504Z
+Aşama/iş: P3.7j/P9 devam ediyor; mimari v1.27/A27. Genel P3/P7/P8/P9 açık.
+Talimat: üç timeout'u çöz, üç hedefli tekrar/full59, tüm GREEN kapılarıyla PR/merge/otomatik production ve gerçek domain kabulünü tamamla.
+Dal/çalışma alanı: feat/hero-matrix-rain; .worktrees/hero-matrix-rain. HEAD: 9b42dedc50fbf8c402d6218ba318435f2289d62a.
 
-Initial SHA: 42e84faab8271065d241bb385adddc4bb83ec840
-Initial Verify: 39197877724 — 56/59 PASS, üç timeout.
-Root cause1: tamamlanan live fixture sayfaları açık kalıyordu; temizlenir, tek görünür gerçek WebGL canvas/render sayacı ve terminal state beklenir.
-Root cause2: 4K sayfa sonrası ortak context/global load bekleniyordu; ayrı route context ve HTTP200/DOMContentLoaded/gerçek app readiness kullanılır.
-Root cause3: başarı-only RAF beklemesi QA'nın slow-device terminal hatasını gizliyordu; timer polling ve tanı kaydı gerçek ortak render bütçesini açığa çıkardı. Fly ve Classic adaptif glyph/column LOD ile CPU işi azaltıldı; hero eşikleri/320 simülasyon/mesajlar/quality1 korunur.
-Ek artifact sorunu: Chromium GPU compositing + SwiftShader ile sürekli güncellenen 4K yüzey snapshot readback'i. Software compositor karşılaştırması 6339→1354ms; Canvas2D enabled, WebGL enabled_readback ve gerçek scene ready. Uygulama/FPS/Matrix kapatma yok.
+2026-10-19 P3.7j/P9 headroom düzeltmesi: Verify39235161577 58/59; ilk üç timeout ve Matrix 4K PNG geçti, Hero3603440 sürükleme sonrası idle30sn timeout. Artifact son görüntüsü2560; CPU3 karşılaştırması düşük kaliteli yakın Fly sütunlarının WebGL slow-device fallback oluşturabildiğini gösterdi. Classic kararlı QUALITY² sütun çizim bütçesi Fly'a da uygulanır; tüm320 simülasyon/mesajlar/quality1, hero kaynakları/FPS/fallback eşikleri korunur. Hero helper terminal state+100ms polling+ready/idle/gerçekcanvas/rendercounter ve hata tanısı kullanır; fallback başarı sayılmaz. Önceki software-compositor test düzeltmesi değişmez; Hero browser profili değiştirilmedi. Baseline'da slow-device; aynı baskı sonrası default/software üçer tur6/6ready/idle. Hedefli5test üç tekrar: 5/5 PASS, 5/5 PASS, 5/5 PASS; full59: 59/59 PASS. Son HEAD9b42dedc50fbf8c402d6218ba318435f2289d62a; featureVerify/Preview/PR/merge/main/live kapıları aynı kaynakla tamamlanmadan production kabulü yok.
 
-Fixler: 678bd862 (semantic waits/cleanup); 98fbeb839 (Fly bütçesi); ea4aeb2 (aktif kayıpsız PNG); 003a3f3 (Classic bütçesi/semantic idle). Son aday yalnız tests/matrix.test.mjs ve görev belgeleridir.
-Ara Verify: 39205618914 58/59; 39210909043 58/59; 39218168700 57/59; 39227692509 58/59. İlk üç/idle son koşuda geçti; kalan 4K PNG çözümü ayrıca doğrulanıyor. RED veya durdurulan koşular başarı sayılmaz.
+İlk üç hata: tamamlanmış live fixture sayfalarının açık GPU kaynakları; 4K context sonrası /admin/ global load bekleyişi; QA başarı-only RAF bekleyişinin terminal hatayı gizlemesi. 678bd862 semantic ready/cleanup, 98fbeb839 adaptif glyph LOD, ea4aeb2 gerçek kayıpsız PNG,003a3f3 Classic sütun bütçesi,9b42ded software compositor test driver kayıtları korunur. Ara RED koşular ve durdurulan deneyler başarı sayılmadı.
+Son yerel hedefli: 5/5 PASS + 5/5 PASS + 5/5 PASS. Son full: 59/59 PASS; 0 fail/cancelled/skipped.
+Son Preview https://c5062df6-zy-reklam.akinarslanceng.workers.dev 9b42ded için dört home/dokuz ek kontrol/sıfır hata/16 görsel PASS idi; yeni renderer kaynakları için tekrar gereklidir.
+PR: YOK. Merge: YOK. Yeni aday için production/main Verify/live/gerçek domain kabulü ÇALIŞTIRILMADI.
 
-YEREL SON KAYNAK
-Altı Matrix preflight: 6/6 PASS.
-Üç ardışık hedefli: 4/4 PASS + 4/4 PASS + 4/4 PASS.
-Check/build: PASS.
-Full: 59/59 PASS; 0 fail/cancelled/skipped; 846544.2547ms.
-20/30/45sn sınırları, 11 viewport, tam DPR/PNG, gerçek Matrix/WebGL, aynı canvas/frame ve tüm assertions korunur. Test skip/silme yok. Son adayın görsel/uzak kabulü tamamlanmadan production kabulü verilmez.
-
-UZAK KAPILAR
-Feature Verify: 39227692509 / failure.
-Son Preview: https://fe724a0d-zy-reklam.akinarslanceng.workers.dev; build metadata ASSETS-only/secrets[].
-VPN kullanıcı tarafından açıldı; TLS erişimi düzeldi. 003a3f3 manifest HTTP200/revision eşleşmesi doğrulandı. Bu erişim tanısı tam Preview kabulü değildir.
-PR: YOK; PR Verify: çalıştırılmadı.
-Merge: YOK; production build/main Verify/live/production Home/Matrix/hero/Vitrin/admin: son kaynak için ÇALIŞTIRILMADI.
-Main son doğrulanan: 7559b3e98082fd29cf9388f09b46be51d3aa5400. Doğrudan main commit/push, manuel production deploy ve gerçek admin publish yok.
-
-DOSYALAR / KANIT / SINIR
-Son değişiklikler: tests/matrix.test.mjs; ARCHITECTURE.md, ROADMAP.md, LAST_REPORT.md. Runtime003a3f3 ile aynıdır; hero/showroom/live/admin/Worker/config kaynakları korunur.
-Kanıt: docs/evidence/matrix/ci-release; compositor-probe.json, classic-budget-comparison.json, local-compositor.json ve CI JSON/logları; .matrix-compositor-*.log. Bu tur eklenen terminal kaynaklı bozuk Türkçe belge satırları UTF-8 olarak düzeltildi.
-Chromium/SwiftShader fiziksel cihaz/GPU kabulü değildir; P3.6 durdurulmuş kalır. SVGLoader500kB uyarısı sürer. Upstream3752d0b/CC BY-NC-SA4.0 atıf/lisans korunur; kullanıcı ek ticari izin alındığını bildirdi, belge bağımsız incelenmedi.
-Sıradaki tek iş: son test-driver için yerel kabulü tamamla; commit/push → feature Verify GREEN → gerçek Preview kabulü → PR/PR Verify GREEN → merge → otomatik production/main Verify/live ve gerçek domain kabulü.
-Final: DEVAM EDİYOR (local-pass); PRODUCTION ACCEPTED değildir.
+Değişen kaynak: src/matrix/renderer.js; tests/helpers/hero-rotation.mjs. Belgeler: ARCHITECTURE.md,ROADMAP.md,LAST_REPORT.md. Hero/showroom/live/admin/Worker/auth/config kaynakları korunur. Kullanıcı/generated/evidence farkları silinmedi; reset/clean yok.
+Kanıt: docs/evidence/matrix/ci-release/39235161577.json/.log/artifact.zip,hero-compositor-before.json,hero-compositor-probe.json,local-headroom.json; .matrix-headroom-*.log. 20/30/45sn sınırları,11viewport,tamDPR/PNG,gerçek WebGL/Matrix ve assertions korunur; test skip/silme yok.
+Sınır: Chromium/SwiftShader/CPU emülasyonu fiziksel cihaz/GPU kabulü değildir; P3.6 durdurulmuş. SVGLoader500kB uyarısı sürer. Upstream atıf/lisans korunur; kullanıcı ek ticari izin alındığını bildirdi, belge bağımsız incelenmedi. Gerçek admin login/publish yok; manuel production deploy veya doğrudan main push yok.
+Sıradaki tek iş: yeni son kaynak doğrulamasını bitir; commit/push → feature Verify GREEN/Preview → PR/PR Verify GREEN → merge → otomatik production/main Verify/live → gerçek domain kabulü.
+Final: DEVAM EDİYOR; production kabulü verilmedi.

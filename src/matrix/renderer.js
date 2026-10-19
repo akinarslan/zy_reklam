@@ -461,10 +461,10 @@ export function createRenderer(host, canvas, bloom, fx, P, reduced) {
       if (s.z <= NEAR) { spawn(s, 1); tailN++; continue; }
       if (s.z > BEHIND) { spawn(s, -1); headN++; continue; }
 
-      // Classic's fixed near planes survive distance LOD, so low quality must
-      // also bound its column draw work. A stable, evenly spread subset avoids
-      // per-frame flicker; all strands still simulate/recycle, messages stay drawn.
-      if (MODE === 'classic' && !s.msg && (i * 0.61803398875) % 1 >= QUALITY[qi] * QUALITY[qi]) continue;
+      // Near strands survive distance LOD in either mode. Bound their draw work
+      // too, leaving headroom for the interactive WebGL sign on slow devices.
+      // The stable subset avoids flicker; every strand simulates, messages stay.
+      if (!s.msg && (i * 0.61803398875) % 1 >= QUALITY[qi] * QUALITY[qi]) continue;
 
       const scale = focal / s.z;
       const sx = cx + (s.x - camX) * scale;      // parallax: depth-dependent sweep

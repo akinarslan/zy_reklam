@@ -1,9 +1,17 @@
 import assert from 'node:assert/strict';
 import {mkdir,writeFile} from 'node:fs/promises';
+import {browserDiagnostics} from './browser-ready.mjs';
 
 export const rotationViewports=[[390,844],[412,915],[768,1024],[820,1180],[1024,768],[1366,768],[1440,900],[1920,1080],[2560,1440],[3440,1440],[3840,2160]];
 const stageSelector='[data-hero-stage]';
-const idle=page=>page.waitForFunction(()=>document.querySelector('[data-hero-stage]').dataset.renderLoop==='idle');
+const idle=async page=>{
+ await page.waitForFunction(()=>{
+  const s=document.querySelector('[data-hero-stage]');
+  return s?.dataset.renderLoop==='idle'||['fallback','reduced','error'].includes(s?.dataset.sceneState);
+ },null,{polling:100});
+ const state=await page.locator(stageSelector).evaluate(s=>({state:s.dataset.sceneState,reason:s.dataset.sceneReason,loop:s.dataset.renderLoop,frames:Number(s.dataset.renderCount),canvas:s.querySelectorAll('canvas').length}));
+ assert.equal(state.state,'ready',JSON.stringify(state));assert.equal(state.loop,'idle');assert.equal(state.canvas,1);assert.ok(state.frames>0);
+};
 const yaw=page=>page.locator(stageSelector).evaluate(el=>Number(el.dataset.rotationY));
 const ready=async(page,base)=>{await page.goto(base+'/');await page.waitForFunction(()=>document.querySelector('[data-hero-stage]')?.dataset.sceneState==='ready',null,{timeout:20000});await idle(page);};
 async function inside(page) {
@@ -25,6 +33,7 @@ async function drag(page,fraction) {
 export async function verifyHeroRotation(browser,base,output) {
  await mkdir(output,{recursive:true});const rows=[],checks=[],shots=new Set([390,768,1366,1920,2560,3840]);
  const page=await browser.newPage();const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ const diagnostic=browserDiagnostics(page);
  await page.addInitScript(()=>{
   window.heroContexts=[];
   const original=HTMLCanvasElement.prototype.getContext;
@@ -81,7 +90,7 @@ export async function verifyHeroRotation(browser,base,output) {
   await page.locator('[data-hero-stage] canvas').evaluate(c=>c.getContext('webgl2').getExtension('WEBGL_lose_context').loseContext());
   await page.waitForFunction(()=>document.querySelector('[data-hero-stage]').dataset.sceneState==='fallback');assert.equal(await page.locator('[data-hero-stage] canvas').count(),0);checks.push('real context loss safe poster');
   assert.deepEqual(errors,[]);
- } finally {await page.close();}
+ } catch(error){await diagnostic('hero-rotation',error);throw error;} finally {await page.close();}
  const mobile=await browser.newPage({viewport:{width:390,height:844},isMobile:true,hasTouch:true});
  try {
   await ready(mobile,base);const b=await mobile.locator(stageSelector).boundingBox(),cdp=await mobile.context().newCDPSession(mobile),y=b.y+b.height/2;

@@ -522,3 +522,8 @@ değişikliği yoktur. Modül/veri/yayın mimarisi aynı kaldığından sürüm 
 
 2026-10-19 A27 test-driver açıklaması: Matrix işlevsel test tarayıcısı SwiftShader ile açık Canvas2D ve gerçek WebGL readback kullanırken software compositor seçer. Bu, sürekli güncellenen 4K GPU yüzeyinin snapshot readback kuyruğunu ayırır. Kontrollü ölçüm 6339→1354ms; scene ready, Canvas2D enabled, WebGL enabled_readback ve tam çözünürlüklü PNG doğrulandı. Aynı canvas/frame, 11 viewport, tam DPR, kayıpsız PNG, 30sn ve tüm assertions korunur. Scene performans ve gerçek Preview/production profilleri değişmez; fiziksel GPU kabulü sayılmaz.
 <!-- MATRIX_CI_QA_NOTES_END -->
+
+
+
+<!-- MATRIX_HEADROOM_PROGRESS -->
+A27 ek açıklama: yakın sütunların QUALITY² kararlı çizim bütçesi her iki Matrix moduna uygulanır. Düşük kalitede daha seyrek çizim; tam kalite, bütün strand simülasyonu/recycle ve mesajlar korunur. Hero/quality/FPS eşikleri ve modül/veri/API/yayın sözleşmeleri değişmez; v1.27 korunur.
