@@ -4,7 +4,7 @@
  * Modified for ZY Reklam Matrix hero experiment. See docs/THIRD_PARTY.md.
  * Upstream rendering math retained; host, lifecycle and input ownership injected.
  */
-export function createRenderer(host, canvas, bloom, fx, P, reduced) {
+export function createRenderer(host, canvas, bloom, fx, P, reduced, foregroundActive = () => false) {
   // Wide gamut: on a P3 display the palette's numbers are read as P3, which
   // reaches a phosphor green sRGB cannot show. Every canvas the rain passes
   // through has to be P3 too, or it is clipped back to sRGB on the way.
@@ -173,6 +173,7 @@ export function createRenderer(host, canvas, bloom, fx, P, reduced) {
   // LOD step leaves headroom without stopping rain or imposing an FPS cap.
   const QUALITY = [1, 0.75, 0.5, 0.375];
   let qi = 0;
+  let foregroundBusy = false, drawQuality = 1;
   let ftEma = 16.7, workEma = 4;    // ms: rAF interval, and our own CPU time per frame
   let lastStep = 0, upWait = 4000, lastDbg = 0;
   // The film's glyphs sit in heavy, soft bloom; a per-head sprite is far
@@ -192,7 +193,7 @@ export function createRenderer(host, canvas, bloom, fx, P, reduced) {
   if (TOUCH) fx.classList.add('matrix-rain-off');  // the overlay is pure fill-rate on a phone
 
   function resize() {
-    dpr = MAX_DPR * QUALITY[qi];
+    dpr = MAX_DPR * drawQuality;
     const rect = host.getBoundingClientRect(); W = Math.max(1, rect.width); H = Math.max(1, rect.height);
     canvas.width = W * dpr; canvas.height = H * dpr;   // render at native pixels
     canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
@@ -397,13 +398,20 @@ export function createRenderer(host, canvas, bloom, fx, P, reduced) {
     last = ts;
 
     if (ts - lastStep > 1000 && (ftEma > 24 || workEma > 24) && qi < QUALITY.length - 1) {
-      qi++; lastStep = ts; upWait = Math.min(60000, upWait * 2); resize();
+      qi++; lastStep = ts; upWait = Math.min(60000, upWait * 2);
     } else if (ts - lastStep > upWait && ftEma < 18 && workEma < 6 && qi > 0) {
-      qi--; lastStep = ts; resize();
+      qi--; lastStep = ts;
     }
+    // Foreground interaction gets the shared CPU/GPU budget immediately, before
+    // the sustained frame governor can react. Rain still draws on every frame;
+    // all strands advance, and the normal budget returns when the sign settles.
+    foregroundBusy = foregroundActive();
+    const nextQuality = Math.min(QUALITY[qi], foregroundBusy ? .25 : 1);
+    if (nextQuality !== drawQuality) { drawQuality = nextQuality; resize(); }
     // Cull distant glyph work as well as pixels. Every strand still advances;
     // modes, seed/density, input and frame-rate-independent motion stay intact.
-    const minSize = 1.5 / (QUALITY[qi] * QUALITY[qi]);
+    const cullQuality = foregroundBusy ? Math.max(drawQuality, .375) : drawQuality;
+    const minSize = 1.5 / (cullQuality * cullQuality);
 
     // 0 -> 1 as we push past cruising speed; drives fog, lens and colour
     const spd = MODE === 'classic' ? 0 : speed;   // the film's rain does not travel
@@ -464,7 +472,7 @@ export function createRenderer(host, canvas, bloom, fx, P, reduced) {
       // Near strands survive distance LOD in either mode. Bound their draw work
       // too, leaving headroom for the interactive WebGL sign on slow devices.
       // The stable subset avoids flicker; every strand simulates, messages stay.
-      if (!s.msg && (i * 0.61803398875) % 1 >= QUALITY[qi] * QUALITY[qi]) continue;
+      if (!s.msg && (i * 0.61803398875) % 1 >= drawQuality * drawQuality) continue;
 
       const scale = focal / s.z;
       const sx = cx + (s.x - camX) * scale;      // parallax: depth-dependent sweep
@@ -567,7 +575,7 @@ export function createRenderer(host, canvas, bloom, fx, P, reduced) {
       if (head.length) strands.push(...head);
     }
 
-    const bloomOn = !bloomOff && qi === 0;
+    const bloomOn = !bloomOff && drawQuality === 1;
     bloom.classList.toggle('matrix-rain-off', !bloomOn);
     if (bloomOn) {
       const bw = bloom.width, bh = bloom.height;
@@ -627,8 +635,8 @@ export function createRenderer(host, canvas, bloom, fx, P, reduced) {
     speed(value) { speedTarget = Math.max(SPEED_MIN, Math.min(SPEED_MAX, value)); },
     resetClock() { last = 0; },
     stats() { return { mode: MODE, seed: SEED_STR, palette: paletteName, density: strands.length,
-      speed: speedTarget, cameraX: camX, cameraY: camY, focal, quality: QUALITY[qi], frameMs: ftEma,
-      workMs: workEma, dpr, bloom: !bloomOff && qi === 0, p3: P3, kana: HAS_KANA,
+      speed: speedTarget, cameraX: camX, cameraY: camY, focal, quality: drawQuality, baseQuality: QUALITY[qi], foregroundBudget: foregroundBusy, frameMs: ftEma,
+      workMs: workEma, dpr, bloom: !bloomOff && drawQuality === 1, p3: P3, kana: HAS_KANA,
       fingerprint, glyphs: glyphs.join(''), messageStrands: strands.filter(s => s.msg).length,
       glyphCount, glowCount, width: W, height: H, monoSize: MONO_SIZE, monoSqueeze: MONO_SQUEEZE }; },
     destroy() { strands.length = 0; PAL = PAL_W = TINTS = []; bloomSrc.width = bloomSrc.height = 1; }
