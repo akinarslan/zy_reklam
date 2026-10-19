@@ -3,9 +3,9 @@ import assert from 'node:assert/strict';
 import {spawn} from 'node:child_process';
 import {mkdir,writeFile} from 'node:fs/promises';
 import {chromium} from 'playwright';
-import {browserDiagnostics,activeSceneReady} from './helpers/browser-ready.mjs';
+import {browserDiagnostics,activeSceneReady,captureActiveMatrixFrame} from './helpers/browser-ready.mjs';
 const base='http://127.0.0.1:4208',out='docs/evidence/matrix/local';
-let browser,server;const evidence={core:[],advanced:[],responsive:[],touch:[],errors:[]};
+let browser,server;const evidence={core:[],advanced:[],responsive:[],touch:[],errors:[],captures:[]};
 before(async()=>{
  await mkdir(out,{recursive:true});
  server=spawn(process.execPath,['node_modules/vite/bin/vite.js','preview','--host','127.0.0.1','--port','4208','--strictPort'],{stdio:'ignore',windowsHide:true});
@@ -131,8 +131,8 @@ test('Matrix full hero bounds and readable controls at eleven viewports; other p
   const ui=await p.evaluate(()=>{const r=e=>e.getBoundingClientRect().toJSON();return{hud:r(document.querySelector('.matrix-rain-hud')),obstacles:[...document.querySelectorAll('.hero-content,.sign-stage,.object-caption,.hero-bottom > *,.instagram-float,.whatsapp-float')].map(r)};});
   assert.ok(ui.obstacles.every(r=>r.bottom<=ui.hud.top||r.top>=ui.hud.bottom||r.right<=ui.hud.left||r.left>=ui.hud.right),'Matrix HUD must clear existing content/controls');
   assert.ok(await p.locator('.hero-content .button').first().isVisible());
-  if(shots.has(width))await p.screenshot({path:`${out}/matrix-fly-${width}.png`});
-  await key(p,'m');assert.equal((await stats(p)).mode,'classic');if(shots.has(width))await p.screenshot({path:`${out}/matrix-classic-${width}.png`});
+  if(shots.has(width))evidence.captures.push(await captureActiveMatrixFrame(p,`${out}/matrix-fly-${width}.png`));
+  await key(p,'m');assert.equal((await stats(p)).mode,'classic');if(shots.has(width))evidence.captures.push(await captureActiveMatrixFrame(p,`${out}/matrix-classic-${width}.png`));
   evidence.responsive.push({...row,passed:true});
  }
  await p.close();

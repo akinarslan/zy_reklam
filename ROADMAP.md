@@ -10,7 +10,7 @@
 
 **Aktif aşama:** P3 — Gerçek 3D açılış uygulandı; performans kapanışı devam ediyor.
 
-**Kullanıcı önceliği:** P3.7j/P9 Matrix ortak render bütçesi düzeltiliyor; araCI58/59 gerçek slow-device gösterdi. Son adayın üç ardışık hedefli/full59/59 ve yayın kapıları sürüyor.
+**Kullanıcı önceliği:** P3.7j/P9 render bütçesi Linux CI'da geçti; son58/59'un tek hatası aktif4K PNG artifact timeout'u. Kayıpsız hızlı encoding/fresh-frame koşuluyla yerel ve uzak yayın kapıları sürüyor.
 
 P1 kaynak, logo, font ve iletişim incelemesi yapıldı; gerçek proje bilgileri/fotoğrafları doğrulanmadığı için P1.5 açık kalır. Planın engel yönetimi uyarınca bağımsız P2 temeli tamamlandı. Vite/TypeScript sayfası, statik SVG poster, mobil menü, hareket tercihi ve temel WhatsApp iletişim akışı çalışıyor. Gerçek 3D açılış şimdi uygulanmıştır. Üretim animasyonları, galeri, stüdyo ve upload henüz uygulanmadı.
 
@@ -842,3 +842,18 @@ Sıradaki tek iş:
 - Son aday hedefli kapısı:3/3+3/3+3/3 art arda PASS,0fail/cancelled/skipped;114780.8359/128166.4848/133368.2919ms. Check/build ardından son kaynaklarla full59 testlik seri paket yeniden başladı; sonucu beklenir. Önceki adayın full59/59'u bu aday yerine sayılmadı. Kanıt .matrix-budget-target-{1,2,3}.log ve .matrix-budget-{check,build,full}.log.
 
 - Son bütçe adayı yerel kapısı tamamlandı: check/build PASS; tek seri full59/59 PASS,0fail/cancelled/skipped,868092.7158ms. Matrix6test/11viewport ve öncekihero/live/fold/navbar/showroom/admin/sosyal regresyonlar PASS.15normal Matrix screenshot görsel incelendi; basınç görüntüsü dePASS. Kanıt ci-release/local-budget.json,local-visual-review.json,pressure-comparison.json. Yeni commit/push/Verify/Preview/PR/production kapıları bekler; sıradaki tek iş aynı feature dalında dar render-budget fix kaydıdır.
+
+
+### 2026-10-19 — Matrix budget fix uzak kayıt (devam ediyor)
+
+- Fix98fbeb839c90312c564beb63f995d8b2c9a0b261 aynı feature dalına push edildi; SHA/beşblob fetch sonrası eşit. Yerel üç ardışık3/3 ve full59/59,check/build,görsel15normal+pressure PASS; commit sonrası build PASS. Feature Verify39210909043 IN_PROGRESS. Cloudflare Preview Build79e1d370 SUCCESS; https://291456c7-zy-reklam.akinarslanceng.workers.dev revision98fbeb839c90312c564beb63f995d8b2c9a0b261,ASSETS-only/secrets[]. Main7559b3e,PR/merge/production yok. Kanıt ci-release/{local-budget,remote-budget,local-visual-review,pressure-comparison}.json. Sıradaki tek iş Verify GREEN sonra Preview tarayıcı/görsel kapısı.
+
+### 2026-10-19 — Aktif4K kayıpsız PNG artifact yolu (devam ediyor)
+
+- Verify39210909043:58/59 PASS. Asıl üç timeout senaryosundan live-content/admin ve gerçek üç örnekli Matrix+WebGL cihaz ölçümü PASS (14.35sn); budget düzeltmesi Linux'ta doğrulandı. Tek yeni hata Matrix responsive testinde3840×2160 Classic PNG çekimi30sn: fonts loaded,scene ready/high/idle,Matrix320/quality0.375/running,console/pageerror/requestfailed boş. Responsive uygulama koşulu değil screenshot acquisition/encoding kapısıdır; bu RED gizlenmedi.
+- Chromium protocol Page.captureScreenshot optimizeForSpeed seçeneğiyle kayıpsızPNG/tamDPR viewport korunur. Süre bütçesi yine30sn. Fonts loaded/scene ready/Matrixrunning ve yeni gerçek frame beklenir; çekim sonrası frame ilerlemesi/aynıMatrix+WebGL node'ları ve PNGIHDRgenişlik/yükseklik doğrulanır.12artifact timing/frame/byte kaydı üretilir. Matrixpause/disable,virtualclock,FPSlimit,DPR/viewport küçültme,skip/retry yok.
+- İlk hedefli11viewport denemesi PASS (1test/79.36sn); final fresh-frame koşulu eklendiği için önceki denemeler nihai üç ardışık koşu yerine sayılmaz. Son koşul ile üç hedefli + full59/59 kapısı yeniden tamamlanacak. Runtime98fbeb839 ile aynıdır; yalnız tests/helpers/browser-ready.mjs ve tests/matrix.test.mjs ile görev kayıtları değişir. Mimari1.27/A27 korundu. PR/merge/production yok. Sıradaki tek iş son capture adayının yerel kapısıdır.
+
+- Son fresh-frame sürümüyle nihai üç ardışık hedefli koşu3/3+3/3+3/3 PASS,0fail/cancelled/skipped;135993.2381/123533.3465/120824.2939ms. Check/build ardından full59 testlik seri paket yeniden başladı. Önceki capture denemeleri bu nihai üç koşu yerine sayılmadı. Kanıt .matrix-capture-final-{1,2,3}.log ve .matrix-capture-{check,build,full}.log. Sıradaki tek iş tam yerel kapının sonucu,ardından dar capture fix commit/push ve Verify'dır.
+
+- 2026-10-19 P3.7j/P9 capture son kaynaklar?: ?? ard???k hedefli3/3 +3/3 +3/3; check/build ve tek seri59/59 PASS,0fail/cancelled/skipped (1161064.811ms).12 tam-DPR aktif PNG capture ve15 g?rsel kabul PASS. Kan?t:ci-release/local-capture.json. Uzak Verify/Preview/PR/production kap?lar? bekliyor.
