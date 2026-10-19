@@ -122,6 +122,9 @@ test('Public mini sign: shared layout, native home navigation, pointer/Space pre
     assert.equal(await touchSign.getAttribute('data-pointer-pressed'), 'true');
     assert.ok(await touchSign.evaluate(element => Math.abs(new DOMMatrix(getComputedStyle(element).transform).m11 - .97) < .001));
     await cdp.send('Input.dispatchTouchEvent', {type:'touchCancel', touchPoints:[]});
+    // The protocol acknowledgement can precede the page's pointercancel task.
+    // Observe the native handler's state instead of sampling across that task.
+    await touch.waitForFunction(() => !document.querySelector('.header-sign').hasAttribute('data-pointer-pressed'), null, {timeout:3000,polling:100});
     assert.equal(await touchSign.getAttribute('data-pointer-pressed'), null);
     assert.equal(new URL(touch.url()).pathname, '/3d-vitrin/');
     await cdp.send('Input.dispatchTouchEvent', {type:'touchStart', touchPoints:[{x:touchBox.x + touchBox.width/2,y:touchBox.y + touchBox.height/2}]});

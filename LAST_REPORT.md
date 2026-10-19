@@ -1,19 +1,26 @@
-# ZY REKLAM — MATRIX CI / HEADROOM İLERLEME RAPORU
+# ZY REKLAM — MATRIX PR #9 CI / YAYIN İLERLEME RAPORU
 
-Tarih: 2026-10-19T11:05:18.504Z
-Aşama/iş: P3.7j/P9 devam ediyor; mimari v1.27/A27. Genel P3/P7/P8/P9 açık.
-Talimat: üç timeout'u çöz, üç hedefli tekrar/full59, tüm GREEN kapılarıyla PR/merge/otomatik production ve gerçek domain kabulünü tamamla.
-Dal/çalışma alanı: feat/hero-matrix-rain; .worktrees/hero-matrix-rain. HEAD: 9b42dedc50fbf8c402d6218ba318435f2289d62a.
+Tarih:2026-10-19T12:20:42.054Z
+Talimat: İlk üç CI timeout'unu çöz; üç hedefli tekrar ve full59; commit/push → featureVerify/Preview → PR/PRVerify → merge → otomatik production/mainVerify/live → gerçek domain kabulüne kadar sürdür.
+Aşama/iş:P3.7j/P9 devam ediyor; v1.27/A27 korunur. GenelP3/P7/P8/P9 açık.
+Dal:feat/hero-matrix-rain; .worktrees/hero-matrix-rain. HEAD:0395ad1623533b1c1dd23ba432420a5a9e55bdf1. Ana kullanıcı/generated/evidence farkları korundu; reset/clean yok.
 
-2026-10-19 P3.7j/P9 headroom düzeltmesi: Verify39235161577 58/59; ilk üç timeout ve Matrix 4K PNG geçti, Hero3603440 sürükleme sonrası idle30sn timeout. Artifact son görüntüsü2560; CPU3 karşılaştırması düşük kaliteli yakın Fly sütunlarının WebGL slow-device fallback oluşturabildiğini gösterdi. Classic kararlı QUALITY² sütun çizim bütçesi Fly'a da uygulanır; tüm320 simülasyon/mesajlar/quality1, hero kaynakları/FPS/fallback eşikleri korunur. Hero helper terminal state+100ms polling+ready/idle/gerçekcanvas/rendercounter ve hata tanısı kullanır; fallback başarı sayılmaz. Önceki software-compositor test düzeltmesi değişmez; Hero browser profili değiştirilmedi. Baseline'da slow-device; aynı baskı sonrası default/software üçer tur6/6ready/idle. Hedefli5test üç tekrar: 5/5 PASS, 5/5 PASS, 5/5 PASS; full59: 59/59 PASS. Son HEAD9b42dedc50fbf8c402d6218ba318435f2289d62a; featureVerify/Preview/PR/merge/main/live kapıları aynı kaynakla tamamlanmadan production kabulü yok.
+2026-10-19 P3.7j/P9 native cancel test düzeltmesi:0395ad1 featureVerify39242150252 59/59 GREEN; yeni Preview dört home/dokuz kontrol/sıfır hata/16görsel PASS. PR#9 açıldı; PRVerify39244520843 58/59, yalnız header-sign.test125 touchCancel sonrası anlık attribute okuması true/null yarışı. CDP ack sayfa pointercancel task'ından önce dönebilir; data-pointer-pressed kaldırılmasını aynı mevcut3sn içinde100ms polling ile bekle, null/URL assertion'larını koru. Uygulama/headerCSS/JS değişmez. Son6 hedefli test üç tekrar:6/6 PASS, 6/6 PASS, 6/6 PASS; full:59/59 PASS. SonHEAD:0395ad1623533b1c1dd23ba432420a5a9e55bdf1; pushVerify:39242150252 / success; PRVerify:39244520843 / failure; sonHEADPreview:PASS. Merge/production kapıları henüz tamamlanmadı.
 
-İlk üç hata: tamamlanmış live fixture sayfalarının açık GPU kaynakları; 4K context sonrası /admin/ global load bekleyişi; QA başarı-only RAF bekleyişinin terminal hatayı gizlemesi. 678bd862 semantic ready/cleanup, 98fbeb839 adaptif glyph LOD, ea4aeb2 gerçek kayıpsız PNG,003a3f3 Classic sütun bütçesi,9b42ded software compositor test driver kayıtları korunur. Ara RED koşular ve durdurulan deneyler başarı sayılmadı.
-Son yerel hedefli: 5/5 PASS + 5/5 PASS + 5/5 PASS. Son full: 59/59 PASS; 0 fail/cancelled/skipped.
-Son Preview https://c5062df6-zy-reklam.akinarslanceng.workers.dev 9b42ded için dört home/dokuz ek kontrol/sıfır hata/16 görsel PASS idi; yeni renderer kaynakları için tekrar gereklidir.
-PR: YOK. Merge: YOK. Yeni aday için production/main Verify/live/gerçek domain kabulü ÇALIŞTIRILMADI.
+KÖK NEDENLER / KAYIT
+Initial42e84fa/Verify39197877724:56/59 üçtimeout. 678bd862:live fixture page cleanup,gerçek WebGL/canvas/rendercounter semantic ready; /admin route freshcontext+HTTP200/DOMContentLoaded/app readiness; QA completion/error timerpolling/failurediagnostics.98fbeb839/003a3f3/0395ad1: uzak/yakın Fly/Classic glyph/kararlı sütun çizim bütçesi, tüm320strand simülasyonu/mesajlar/tamkalite ve heroFPS/fallback eşikleri korunur. CPU3baseline slow-device, sonbütçeyle default/software üçer dönüş6/6ready/idle. ea4aeb2/9b42ded: tamDPR/kayıpsızPNG, canlıframe/canvas assertions; Matrix işlevsel test software compositor, Canvas2D/WebGL açık. Hero/scene/Preview/production browser profili değişmez.
+AraRED39205618914,39210909043,39218168700,39227692509,39235161577 ve PR39244520843 kanıtları korunur. Headercancel task yarışının yeni dar test düzeltmesi uygulama davranışını değiştirmez. Test skip/silme,viewport/çözünürlük/timeout veya assertion zayıflatma yok.
 
-Değişen kaynak: src/matrix/renderer.js; tests/helpers/hero-rotation.mjs. Belgeler: ARCHITECTURE.md,ROADMAP.md,LAST_REPORT.md. Hero/showroom/live/admin/Worker/auth/config kaynakları korunur. Kullanıcı/generated/evidence farkları silinmedi; reset/clean yok.
-Kanıt: docs/evidence/matrix/ci-release/39235161577.json/.log/artifact.zip,hero-compositor-before.json,hero-compositor-probe.json,local-headroom.json; .matrix-headroom-*.log. 20/30/45sn sınırları,11viewport,tamDPR/PNG,gerçek WebGL/Matrix ve assertions korunur; test skip/silme yok.
-Sınır: Chromium/SwiftShader/CPU emülasyonu fiziksel cihaz/GPU kabulü değildir; P3.6 durdurulmuş. SVGLoader500kB uyarısı sürer. Upstream atıf/lisans korunur; kullanıcı ek ticari izin alındığını bildirdi, belge bağımsız incelenmedi. Gerçek admin login/publish yok; manuel production deploy veya doğrudan main push yok.
-Sıradaki tek iş: yeni son kaynak doğrulamasını bitir; commit/push → feature Verify GREEN/Preview → PR/PR Verify GREEN → merge → otomatik production/main Verify/live → gerçek domain kabulü.
-Final: DEVAM EDİYOR; production kabulü verilmedi.
+YEREL/UZAK
+Son hedefli:6/6 PASS + 6/6 PASS + 6/6 PASS. Son tam:59/59 PASS;0fail/cancelled/skipped.
+FeatureVerify:39242150252 / success; PRVerify:39244520843 / failure.
+Preview:https://d91ee55d-zy-reklam.akinarslanceng.workers.dev; sonHEADkabul:PASS;16görsel ve gerçek45sn polling dahil.
+PR#9:https://github.com/akinarslan/zy_reklam/pull/9. Merge:YOK; yeni adayproduction/mainVerify/live/gerçekdomainkabulü ÇALIŞTIRILMADI.
+Mainsonokunan7559b3e98082fd29cf9388f09b46be51d3aa5400. Doğrudanmainpush/manuelyayın/gerçekadminloginpublish yok.
+
+DEĞİŞEN DOSYALAR/SINIR
+Son dar değişiklik:tests/header-sign.test.mjs;ROADMAP.md,LAST_REPORT.md. Mimari/API değişmedi; ARCHITECTURE v1.27/A27 korundu,gereksizsürüm yok. Önceki sourcecommits ve kanıtlar ayrı korunur.
+Kanıt:docs/evidence/matrix/ci-release; local-final.json,remote-final.json,öncekiheadroom/compositor/CIJSON/log/artifact; .matrix-final-*.log. Sonuç raporu için döngüselcommit/deploy yok.
+Chromium/SwiftShader/CPUemülasyonu fizikseltelefon/iPad/GPUkabulü değildir;P3.6durdurulmuş. SVGLoader500kBuyarısı sürer. DüşükkaliteFly/Classic görünümüseyrekleşir;quality1aynı. Upstreamatıf/lisanskorundu,kullanıcıekticariizinbildirdi;belgebağımsızincelenmedi.
+Sıradakitekiş:Sonadayın test/uzakkapılarınıtamamla; mevcutPR#9 GREENsonrasımerge/otomatikproduction/mainVerify/live/gerçekdomainkabulünübitir.
+Final:DEVAMEDİYOR;PRODUCTIONACCEPTEDdeğildir.
