@@ -525,5 +525,12 @@ değişikliği yoktur. Modül/veri/yayın mimarisi aynı kaldığından sürüm 
 
 
 
+
+
 <!-- MATRIX_HEADROOM_PROGRESS -->
 A27 ek açıklama: yakın sütunların QUALITY² kararlı çizim bütçesi her iki Matrix moduna uygulanır. Düşük kalitede daha seyrek çizim; tam kalite, bütün strand simülasyonu/recycle ve mesajlar korunur. Hero/quality/FPS eşikleri ve modül/veri/API/yayın sözleşmeleri değişmez; v1.27 korunur.
+
+
+
+<!-- MATRIX_HERO_READBACK_QA -->
+2026-10-19 A27 test-driver ek açıklaması: PR9 sonrası main CI tanısında Hero3840 scene ready/high/running iken4K GPU readback kuyruğu ikinci dönüşün idle olmasını geciktirdi. Hero360 işlevsel browser da software compositor kullanır; gerçek Canvas2D/WebGL,tekcanvas/context,rendercounter veön/arkaassertions korunur. Matrix veHero screenshotfunctional profilleri software compositor; scene performans/gerçekPreview/production profilleri değişmez. Uygulama/mimari/veri/API/yayın sözleşmesi değişmez;v1.27 korunur.

@@ -1,26 +1,20 @@
-# ZY REKLAM — MATRIX PR #9 CI / YAYIN İLERLEME RAPORU
+# ZY REKLAM — MAIN CI HERO READBACK KAPANIŞI SÜRÜYOR
 
-Tarih:2026-10-19T12:20:42.054Z
-Talimat: İlk üç CI timeout'unu çöz; üç hedefli tekrar ve full59; commit/push → featureVerify/Preview → PR/PRVerify → merge → otomatik production/mainVerify/live → gerçek domain kabulüne kadar sürdür.
-Aşama/iş:P3.7j/P9 devam ediyor; v1.27/A27 korunur. GenelP3/P7/P8/P9 açık.
-Dal:feat/hero-matrix-rain; .worktrees/hero-matrix-rain. HEAD:0395ad1623533b1c1dd23ba432420a5a9e55bdf1. Ana kullanıcı/generated/evidence farkları korundu; reset/clean yok.
+Tarih:2026-10-19T13:55:52.260Z
+Talimat/aşama:P3.7j/P9; ilküçCIhatası → GREENkapıları → productionvegerçekdomainkabulüne kadar sürdür. Mimari:v1.27/A27;genelP3/P7/P8/P9açık.
+Dal:feat/hero-matrix-rain;.worktrees/hero-matrix-rain;HEAD:4ba3b5093c3346cc99f502c78381a7d623f108bc. Kullanıcı/generated/evidencefarkları korundu;reset/clean yok.
 
-2026-10-19 P3.7j/P9 native cancel test düzeltmesi:0395ad1 featureVerify39242150252 59/59 GREEN; yeni Preview dört home/dokuz kontrol/sıfır hata/16görsel PASS. PR#9 açıldı; PRVerify39244520843 58/59, yalnız header-sign.test125 touchCancel sonrası anlık attribute okuması true/null yarışı. CDP ack sayfa pointercancel task'ından önce dönebilir; data-pointer-pressed kaldırılmasını aynı mevcut3sn içinde100ms polling ile bekle, null/URL assertion'larını koru. Uygulama/headerCSS/JS değişmez. Son6 hedefli test üç tekrar:6/6 PASS, 6/6 PASS, 6/6 PASS; full:59/59 PASS. SonHEAD:0395ad1623533b1c1dd23ba432420a5a9e55bdf1; pushVerify:39242150252 / success; PRVerify:39244520843 / failure; sonHEADPreview:PASS. Merge/production kapıları henüz tamamlanmadı.
+2026-10-19 P3.7j/P9 PR9 merge272d843 sonrası otomatik productionSUCCESS,bağımsızLiveSmokeSUCCESS,gerçekdomain4home+9ekkontrol+16görselPASS. MainVerify39255737717 58/59:Hero3840 ikinci drag idle30sn timeout. Tanı:scene ready/high/running,rotation6.067,render45,Matrix699frame/floor.375,sıfırJS/ağhatası;fallback değil. Sürekli invalidating4K GPU surface/readback kuyruğu işlevsel animasyonu geciktiriyor. Matrix'te doğrulanan software compositor Hero360functional browser'a da uygulanır;Canvas2D/WebGL enabled vegpu_compositing disabled_software assert edilir. Scene performans/gerçekPreview/live browser profili,renderer ve20/30/45sn/assertions değişmez. Yeni dar testfix için kaynakları kaydetmeden önce üçaltılı:6/6 PASS, 6/6 PASS, 6/6 PASS;full:59/59 PASS. Yeni darPR/Verify/merge/main kapıları bitmeden genelrelease tamamlanmaz.
 
-KÖK NEDENLER / KAYIT
-Initial42e84fa/Verify39197877724:56/59 üçtimeout. 678bd862:live fixture page cleanup,gerçek WebGL/canvas/rendercounter semantic ready; /admin route freshcontext+HTTP200/DOMContentLoaded/app readiness; QA completion/error timerpolling/failurediagnostics.98fbeb839/003a3f3/0395ad1: uzak/yakın Fly/Classic glyph/kararlı sütun çizim bütçesi, tüm320strand simülasyonu/mesajlar/tamkalite ve heroFPS/fallback eşikleri korunur. CPU3baseline slow-device, sonbütçeyle default/software üçer dönüş6/6ready/idle. ea4aeb2/9b42ded: tamDPR/kayıpsızPNG, canlıframe/canvas assertions; Matrix işlevsel test software compositor, Canvas2D/WebGL açık. Hero/scene/Preview/production browser profili değişmez.
-AraRED39205618914,39210909043,39218168700,39227692509,39235161577 ve PR39244520843 kanıtları korunur. Headercancel task yarışının yeni dar test düzeltmesi uygulama davranışını değiştirmez. Test skip/silme,viewport/çözünürlük/timeout veya assertion zayıflatma yok.
+ÖNCEKİ YAYIN
+PR#9 MERGED:https://github.com/akinarslan/zy_reklam/pull/9;feature4ba3b50,merge/main272d84339f595a63b551de6eb0405870929bce10. FeatureVerify39251344298 vePRVerify39251344378 59/59GREEN;sonPreview0cf62779 dörtviewport,dokuzkontrol,16görsel,sıfırconsole/ağhatasıPASS;ASSETS-only/secrets[]. Cloudflareproductionb8744fb8SUCCESS;LiveSmoke39255737720SUCCESS. Gerçekhttps://zyreklamdijital.com.tr Home/Matrix/Hero360/back/CTA/fold/touch,Vitrin/admin,manifest/hash/cache/Google/JSdisabled/gerçek45snpollingve16görselPASS. MainVerify39255737717RED58/59,bağlısmokeSKIPPED;başarıgizlenmedi,finalreleaseverilmedi.
+Sonfixyalnıztestbrowserprofili;runtime4ba3b50/0395ad1ileaynı. Headercancel,heroidle,ilküçCIhatasıgibiöncekiREDkanıtlarayrıkorunur;no skip/timeoutartırma/assertionzayıflatma/FPSveMatrixdisableyok.
 
-YEREL/UZAK
-Son hedefli:6/6 PASS + 6/6 PASS + 6/6 PASS. Son tam:59/59 PASS;0fail/cancelled/skipped.
-FeatureVerify:39242150252 / success; PRVerify:39244520843 / failure.
-Preview:https://d91ee55d-zy-reklam.akinarslanceng.workers.dev; sonHEADkabul:PASS;16görsel ve gerçek45sn polling dahil.
-PR#9:https://github.com/akinarslan/zy_reklam/pull/9. Merge:YOK; yeni adayproduction/mainVerify/live/gerçekdomainkabulü ÇALIŞTIRILMADI.
-Mainsonokunan7559b3e98082fd29cf9388f09b46be51d3aa5400. Doğrudanmainpush/manuelyayın/gerçekadminloginpublish yok.
-
-DEĞİŞEN DOSYALAR/SINIR
-Son dar değişiklik:tests/header-sign.test.mjs;ROADMAP.md,LAST_REPORT.md. Mimari/API değişmedi; ARCHITECTURE v1.27/A27 korundu,gereksizsürüm yok. Önceki sourcecommits ve kanıtlar ayrı korunur.
-Kanıt:docs/evidence/matrix/ci-release; local-final.json,remote-final.json,öncekiheadroom/compositor/CIJSON/log/artifact; .matrix-final-*.log. Sonuç raporu için döngüselcommit/deploy yok.
-Chromium/SwiftShader/CPUemülasyonu fizikseltelefon/iPad/GPUkabulü değildir;P3.6durdurulmuş. SVGLoader500kBuyarısı sürer. DüşükkaliteFly/Classic görünümüseyrekleşir;quality1aynı. Upstreamatıf/lisanskorundu,kullanıcıekticariizinbildirdi;belgebağımsızincelenmedi.
-Sıradakitekiş:Sonadayın test/uzakkapılarınıtamamla; mevcutPR#9 GREENsonrasımerge/otomatikproduction/mainVerify/live/gerçekdomainkabulünübitir.
-Final:DEVAMEDİYOR;PRODUCTIONACCEPTEDdeğildir.
+YERELSONADAY
+Üçaltılı:6/6 PASS + 6/6 PASS + 6/6 PASS. Full:59/59 PASS;0fail/cancelled/skipped. SonadayVerify/Preview/darPR/merge/main/livekapıları bekliyor.
+Sonbilinenmain:272d84339f595a63b551de6eb0405870929bce10. Gerçekadminlogin/publishveManuelproductiondeploy yok. Doğrudanmainpush yok.
+Değişendosyalar:tests/hero-rotation.test.mjs;ARCHITECTURE.md,ROADMAP.md,LAST_REPORT.md. Kaynakruntime/Worker/auth/configdeğişmez. DokümanlarUTF8;raporiçindöngüselcommit/deployyok.
+Kanıt:docs/evidence/matrix/ci-release/39255737717.json/.log,öncekitümCI/artifact,local-hero-final/remote-hero-final.json,preview/liveacceptance/visual; .matrix-hero-final-*.log. İlk42e84fa/Verify39197877724üçtimeout56/59;semanticreadiness/cleanup/adaptifglyphvekararlısütunbütçesi/functionalreadbackçözümlerikanıtlardadır.
+Sınır:Chromium/SwiftShader/CPUemülasyonufizikseltelefon/iPad/GPUkabulüdeğildir,P3.6durdurulmuş. SVGLoader500kBuyarısısürer. Upstreamlisans/atıfkorundu,kullanıcıticariizinbildirdi;belgebağımsızincelenmedi.
+Sıradakitekiş:Dartestfixyereldoğrulama→commit/push→featureGREEN/Preview→darPR/PRGREEN→merge→production/mainGREEN/LiveSmokevegerçekdomainkabulü.
+Final:DEVAMEDİYOR;MAINGREENbekleniyor.
