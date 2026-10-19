@@ -295,6 +295,14 @@ test('Cihaz ölçüm ekranı: üç gerçek çizim örneği ve indirilen JSON; mo
   await page.locator('#download').click();
   const file = await downloaded;
   const evidence = JSON.parse(await readFile(await file.path(), 'utf8'));
+  const shared = await page.frameLocator('#scene').locator('.hero').evaluate(hero => ({
+    matrix: JSON.parse(hero.dataset.matrixState), matrixCanvas: hero.querySelectorAll('[data-matrix-rain]').length,
+    webglCanvas: hero.querySelectorAll('[data-hero-stage] canvas').length, scene: hero.querySelector('[data-hero-stage]').dataset.sceneState,
+  }));
+  assert.equal(shared.matrixCanvas, 1, 'Matrix remains enabled during the actual three-sample measurement');
+  assert.equal(shared.webglCanvas, 1); assert.equal(shared.scene, 'ready');
+  assert.ok(shared.matrix.frames > 0 && shared.matrix.running, 'Matrix keeps rendering alongside WebGL');
+  assert.equal(shared.matrix.density, 320, 'Adaptive culling must not replace the requested particle field');
   assert.equal(evidence.samples.length, 3);
   assert.equal(evidence.viewport.width, 360);
   assert.equal(evidence.context.environmentClaim, 'emulated');

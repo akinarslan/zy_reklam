@@ -507,3 +507,11 @@ gerçek admin publish ve manuel production deploy yapılmaz. Kullanıcı ticari 
 Reklam yayını için ek izin alındığını bildirdi; upstream atıf/lisans korunur.
 CI beklemeleri çizim RAF'ına değil uygulamanın ready/terminal durumlarına dayanır;
 tamamlanan fixture sayfaları kapatılır. Runtime mimarisi/veri sözleşmesi değişmez.
+
+CI39205618914 tanısı ve kontrollü3×CPU tekrarında kalan ölçüm hatası gerçek
+`slow-device` fallback olarak doğrulandı: Matrix'in0.5 taban ölçeği piksel sayısını
+azaltırken yaklaşık2300 fillText işini/25–40ms CPU yükünü yeterince azaltmıyordu.
+A27 governor'u uzak glyph culling'ini kalite karesiyle artırır ve0.375 ek LOD
+kademesi sunar.320 parçacık simülasyonu, seed/density ve bütün mod/etkileşimler
+korunur; RAF'a sabit FPS sınırı, CI'ye özel kapatma veya hero fallback eşiği
+değişikliği yoktur. Modül/veri/yayın mimarisi aynı kaldığından sürüm artırılmaz.

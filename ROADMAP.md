@@ -10,7 +10,7 @@
 
 **Aktif aşama:** P3 — Gerçek 3D açılış uygulandı; performans kapanışı devam ediyor.
 
-**Kullanıcı önceliği:** P3.7j/P9 Matrix CI timeout düzeltmeleri ve aşamalı yayın kabulü devam ediyor. Üç ardışık hedefli koşu, tam 59/59, feature Verify/Preview ve PR Verify kapıları yeşil olmadan merge yok; yalnız otomatik production yayını doğrulanır.
+**Kullanıcı önceliği:** P3.7j/P9 Matrix ortak render bütçesi düzeltiliyor; araCI58/59 gerçek slow-device gösterdi. Son adayın üç ardışık hedefli/full59/59 ve yayın kapıları sürüyor.
 
 P1 kaynak, logo, font ve iletişim incelemesi yapıldı; gerçek proje bilgileri/fotoğrafları doğrulanmadığı için P1.5 açık kalır. Planın engel yönetimi uyarınca bağımsız P2 temeli tamamlandı. Vite/TypeScript sayfası, statik SVG poster, mobil menü, hareket tercihi ve temel WhatsApp iletişim akışı çalışıyor. Gerçek 3D açılış şimdi uygulanmıştır. Üretim animasyonları, galeri, stüdyo ve upload henüz uygulanmadı.
 
@@ -826,3 +826,19 @@ Sıradaki tek iş:
 - Son kaynaklarla üç ardışık hedefli koşu ve tam paket kapısı sürüyor; henüz yeni commit/push/PR/merge/production yok. Kanıt docs/evidence/matrix/ci-release; sıradaki tek iş yerel doğrulama kapısını tamamlamak.
 
 - Yerel kapı tamamlandı: üç ardışık hedefli koşu3/3+3/3+3/3 (100459/120820/113963ms); ardından check/build ve tek seri tam59/59 PASS,0fail/0cancelled/0skipped,1114829.9942ms. Önceki testler ve viewport/assertion sayıları korunur; timeout artırımı yok. Runtime kaynak diff boş. Kanıt ci-release/local.json ve .matrix-target-final-{1,2,3}.log/.matrix-release-full.log. Sıradaki tek iş dar kapsamlı fix commit/push ve feature Verify kapısıdır; PR/merge/production henüz yapılmadı.
+
+
+### 2026-10-19 — Matrix CI release uzak kayıt (devam ediyor)
+
+- Fix678bd862d60ee3938eb8ffd21d5f34b8b0e81591 aynı feature dalına push edildi; fetch sonrasıSHA/sekizblob eşit. Yerel üç ardışık3/3 ve tam59/59/check/build PASS; runtime diff boş. Feature Verify39205618914 IN_PROGRESS. Cloudflare Preview Build57ca6c76 SUCCESS; https://6246745c-zy-reklam.akinarslanceng.workers.dev feature revision678bd862,ASSETS-only/secrets[]. Production7559b3e,PR/merge/production yazımı yok. Kanıt docs/evidence/matrix/ci-release/{local,remote,39205618914}.json. Sıradaki tek iş Verify GREEN sonra Preview tarayıcı/görsel kapısı.
+
+### 2026-10-19 — Matrix ortak render bütçesi, gerçek üçüncü kök neden (devam ediyor)
+
+- Verify39205618914:58/59 PASS,1FAIL. Önceki live-content ve /admin/ timeout'ları geçti; semantik QA wait gerçek hatayı artık11.6sn'de raporladı: görünür360×800/DPR2 sahnesi ölçüm3/3 hazırlıkta slow-device fallback'e geçti. Console/pageerror/requestfailed boş; Matrix320strands/quality0.5/running ve hero low/disposed. İlk CI'nın45sn wait'i bu terminal sonucu gizliyordu. Log ve failure diagnostic korunur; artifact indirme isteği ağ timeout verdi, CI artifact üretimi başarılıdır ve teşhis CI logunda tamdır.
+- Yerel3×CPU/aynıviewport/gerçek üç ölçümle aynı slow-device yeniden üretildi: yaklaşık2300glyph,25–40ms Matrix CPU,50–72ms frame; fallback. Son bütçe politikası Matrix kalite seviyelerine0.375 ekler ve far glyph culling'ini1.5/(quality²) uygular; tüm320parçacık simülasyonu/girdi/seed/modlar, tek RAF ve hero24FPS koruma eşikleri aynen kalır. CI özel kapatma/sabitFPScap/QA fakePASS yok.
+- Aynı3×CPU senaryosunda son aday iki kez üç ölçümü tamamladı, hero ready/high kaldı; Matrix yaklaşık128–492glyph ve2–15ms CPU. Yağmurun görünür olduğu basınç screenshot'ı görsel incelendi. Denenen0.25 adımı aşırı seyrek görünüm riski nedeniyle final adayda yok; final minimum0.375'tir. Yalnız quadratic culling denemesi de geçti ancak hero low'e indiğinden ek headroom seviyesi korundu.
+- Cihaz ölçüm testi, gerçek üç örneğe ek olarak aynı anda tek Matrix/tek WebGL canvas, Matrixrunning/frames ve320density assert eder. Mevcut tüm ölçüm assertions korunur; test sayısı59. Son adayla üç ardışık hedefli koşu yeniden başladı; ardından full59/59 ve yeni commit/Verify gerekir. Mimari1.27/A27 sınırları korunur; yalnız src/matrix/renderer.js runtime değişir. PR/merge/production yok. Sıradaki tek iş son adayın yerel kapısıdır.
+
+- Son aday hedefli kapısı:3/3+3/3+3/3 art arda PASS,0fail/cancelled/skipped;114780.8359/128166.4848/133368.2919ms. Check/build ardından son kaynaklarla full59 testlik seri paket yeniden başladı; sonucu beklenir. Önceki adayın full59/59'u bu aday yerine sayılmadı. Kanıt .matrix-budget-target-{1,2,3}.log ve .matrix-budget-{check,build,full}.log.
+
+- Son bütçe adayı yerel kapısı tamamlandı: check/build PASS; tek seri full59/59 PASS,0fail/cancelled/skipped,868092.7158ms. Matrix6test/11viewport ve öncekihero/live/fold/navbar/showroom/admin/sosyal regresyonlar PASS.15normal Matrix screenshot görsel incelendi; basınç görüntüsü dePASS. Kanıt ci-release/local-budget.json,local-visual-review.json,pressure-comparison.json. Yeni commit/push/Verify/Preview/PR/production kapıları bekler; sıradaki tek iş aynı feature dalında dar render-budget fix kaydıdır.

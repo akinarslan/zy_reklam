@@ -169,7 +169,9 @@ export function createRenderer(host, canvas, bloom, fx, P, reduced) {
   const TOUCH = typeof matchMedia === 'function' && matchMedia('(pointer: coarse)').matches;
   // an embedded frame is never granted downloads, and its URL is not the page's
   const MAX_DPR = Math.min(window.devicePixelRatio || 1, TOUCH ? 1.5 : 2);
-  const QUALITY = [1, 0.75, 0.5];   // render-scale steps
+  // The background shares the main thread with the WebGL sign. One additional
+  // LOD step leaves headroom without stopping rain or imposing an FPS cap.
+  const QUALITY = [1, 0.75, 0.5, 0.375];
   let qi = 0;
   let ftEma = 16.7, workEma = 4;    // ms: rAF interval, and our own CPU time per frame
   let lastStep = 0, upWait = 4000, lastDbg = 0;
@@ -399,7 +401,9 @@ export function createRenderer(host, canvas, bloom, fx, P, reduced) {
     } else if (ts - lastStep > upWait && ftEma < 18 && workEma < 6 && qi > 0) {
       qi--; lastStep = ts; resize();
     }
-    const minSize = 1.5 / QUALITY[qi];          // far-cull grows as quality drops
+    // Cull distant glyph work as well as pixels. Every strand still advances;
+    // modes, seed/density, input and frame-rate-independent motion stay intact.
+    const minSize = 1.5 / (QUALITY[qi] * QUALITY[qi]);
 
     // 0 -> 1 as we push past cruising speed; drives fog, lens and colour
     const spd = MODE === 'classic' ? 0 : speed;   // the film's rain does not travel
