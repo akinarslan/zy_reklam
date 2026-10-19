@@ -13,7 +13,7 @@ export function mountMatrix(hero: HTMLElement): () => void {
   const fx = document.createElement('div'); fx.className = 'matrix-rain-fx';
   layer.append(canvas, bloom, fx); hero.prepend(layer); hero.classList.add('matrix-rain-host');
   let renderer: MatrixRenderer | null = null, raf = 0, frames = 0, lastStats = 0, warpTimer = 0;
-  let visible = false, destroyed = false, baseSpeed = 6, warping = false, lastBloom = state.bloom || .5;
+  let visible = false, destroyed = false, baseSpeed = 2, warping = false, lastBloom = state.bloom || .5;
   const abort = new AbortController(); const signal = abort.signal;
   const reduced = () => document.documentElement.dataset.motion === 'reduced' && !state.motion;
   const effectiveMode = () => reduced() ? 'classic' : state.mode;
