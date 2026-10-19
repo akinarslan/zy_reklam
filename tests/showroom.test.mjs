@@ -14,15 +14,15 @@ test('Homepage never boots the standalone showroom; one hero canvas survives scr
   page.on('request',r=>requests.push(r.url()));page.on('pageerror',e=>errors.push(e.message));
   await page.goto(base);
   await page.waitForFunction(()=>document.querySelector('[data-hero-stage]').dataset.sceneState==='ready');
-  const canvas=await page.locator('[data-hero-3d] canvas').elementHandle();
+  const canvas=await page.locator('[data-hero-stage] canvas').elementHandle();
   assert.equal(await page.locator('#vitrin,[data-showroom-stage]').count(),0);
-  assert.equal(await page.locator('canvas').count(),1);
+  assert.equal(await page.locator('[data-hero-stage] canvas').count(),1);
   assert.equal(await page.locator('.real-lightbox').count(),1);
   for(let i=0;i<2;i++){
    await page.evaluate(()=>scrollTo(0,document.body.scrollHeight));await page.waitForTimeout(150);
    await page.evaluate(()=>scrollTo(0,0));await page.waitForTimeout(150);
   }
-  assert.equal(await page.locator('canvas').count(),1);
+  assert.equal(await page.locator('[data-hero-stage] canvas').count(),1);
   assert.equal(await canvas.evaluate(c=>c===document.querySelector('[data-hero-stage] canvas')),true);
   assert.equal(requests.some(u=>u.includes('/showroom/')||u.includes('showroom-')),false);
   assert.deepEqual(errors,[]);

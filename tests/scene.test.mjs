@@ -5,6 +5,7 @@ import { chromium } from 'playwright';
 import { mkdir, writeFile, readFile, readdir } from 'node:fs/promises';
 import { gzipSync } from 'node:zlib';
 import { QualityMonitor } from '../src/scene/quality.ts';
+import {browserDiagnostics} from './helpers/browser-ready.mjs';
 
 const base = 'http://127.0.0.1:4187';
 let server, browser;
@@ -270,9 +271,13 @@ test('Sabit masaüstü ve mobil emülasyon profillerinde etkileşim FPS örnekle
 
 test('Cihaz ölçüm ekranı: üç gerçek çizim örneği ve indirilen JSON; mobil taşma yok', async () => {
   const page = await browser.newPage({ viewport: { width: 360, height: 800 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true });
+  const diagnostic=browserDiagnostics(page);
+  try {
   const writes = [];
   page.on('request', request => { if (!['GET', 'HEAD'].includes(request.method())) writes.push(request.url()); });
-  await page.goto(`${base}/qa/scene-performance.html`);
+  const response=await page.goto(`${base}/qa/scene-performance.html`,{waitUntil:'domcontentloaded'});
+  assert.equal(response.status(),200);
+  await page.locator('#start').waitFor({state:'visible'});
   assert.equal(await page.locator('#scene').getAttribute('src'), null, 'no scene loads before explicit measurement');
   await page.locator('#device-kind').selectOption('mobile');
   await page.locator('#environment').selectOption('emulated');
@@ -281,11 +286,23 @@ test('Cihaz ölçüm ekranı: üç gerçek çizim örneği ve indirilen JSON; mo
   await page.locator('#sample-duration').selectOption('3000');
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
   await page.locator('#start').click();
-  await page.waitForFunction(() => !document.querySelector('#result').hidden, null, { timeout: 45000 });
+  // The tool has explicit completion/error states. An error must fail with its
+  // cause, not spend 45 seconds waiting for a result it will never produce.
+  await page.waitForFunction(() => !document.querySelector('#running').hidden || document.querySelector('#start').disabled, null, {polling:100});
+  await page.waitForFunction(() => !document.querySelector('#result').hidden || !document.querySelector('#start').disabled, null, {timeout:45000,polling:100});
+  assert.equal(await page.locator('#result').isVisible(),true,await page.locator('#status').textContent());
   const downloaded = page.waitForEvent('download');
   await page.locator('#download').click();
   const file = await downloaded;
   const evidence = JSON.parse(await readFile(await file.path(), 'utf8'));
+  const shared = await page.frameLocator('#scene').locator('.hero').evaluate(hero => ({
+    matrix: JSON.parse(hero.dataset.matrixState), matrixCanvas: hero.querySelectorAll('[data-matrix-rain]').length,
+    webglCanvas: hero.querySelectorAll('[data-hero-stage] canvas').length, scene: hero.querySelector('[data-hero-stage]').dataset.sceneState,
+  }));
+  assert.equal(shared.matrixCanvas, 1, 'Matrix remains enabled during the actual three-sample measurement');
+  assert.equal(shared.webglCanvas, 1); assert.equal(shared.scene, 'ready');
+  assert.ok(shared.matrix.frames > 0 && shared.matrix.running, 'Matrix keeps rendering alongside WebGL');
+  assert.equal(shared.matrix.density, 320, 'Adaptive culling must not replace the requested particle field');
   assert.equal(evidence.samples.length, 3);
   assert.equal(evidence.viewport.width, 360);
   assert.equal(evidence.context.environmentClaim, 'emulated');
@@ -301,7 +318,8 @@ test('Cihaz ölçüm ekranı: üç gerçek çizim örneği ve indirilen JSON; mo
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
   await writeFile('docs/evidence/P3_DEVICE_TOOL_SAMPLE.json', JSON.stringify({ ...evidence, testEnvironment: 'Headless software GPU; not a physical-device acceptance report.' }, null, 2) + '\n');
   checks.push({ check: 'device-tool-three-samples-json-no-upload-mobile-layout', samples: evidence.samples.length, passed: true });
-  await page.close();
+  }catch(error){await diagnostic('scene-device-measurement',error);throw error;}
+  finally{await page.close();}
 });
 
 test('Cihaz ölçümü: hareket tercihi korunur; kullanıcı iptali, resize ve gizli sekme geçersiz sayılır', async () => {
@@ -311,7 +329,7 @@ test('Cihaz ölçümü: hareket tercihi korunur; kullanıcı iptali, resize ve g
   await page.locator('#device-os').fill('Linux test');
   await page.locator('#start').click();
   await page.waitForFunction(() => document.querySelector('#status').textContent.includes('Hareket azaltma etkin'));
-  assert.equal(await page.frameLocator('#scene').locator('canvas').count(), 0);
+  assert.equal(await page.frameLocator('#scene').locator('[data-hero-stage] canvas').count(), 0);
   assert.equal(await page.locator('#result').isVisible(), false);
   await page.locator('#enable-motion').click();
   await page.waitForFunction(() => document.querySelector('#progress').textContent.includes('Ölçüm 1/3'));
@@ -342,10 +360,10 @@ test('Cihaz ölçümü sırasında gerçek WebGL context kaybı başarılı rapo
   await page.locator('#device-os').fill('Linux');
   await page.locator('#start').click();
   await page.waitForFunction(() => document.querySelector('#progress').textContent.includes('Ölçüm 1/3'));
-  await page.frameLocator('#scene').locator('canvas').evaluate(canvas => canvas.getContext('webgl2').getExtension('WEBGL_lose_context').loseContext());
+  await page.frameLocator('#scene').locator('[data-hero-stage] canvas').evaluate(canvas => canvas.getContext('webgl2').getExtension('WEBGL_lose_context').loseContext());
   await page.waitForFunction(() => document.querySelector('#status').textContent.includes('fallback'));
   assert.equal(await page.locator('#download').isVisible(), false);
-  assert.equal(await page.frameLocator('#scene').locator('canvas').count(), 0);
+  assert.equal(await page.frameLocator('#scene').locator('[data-hero-stage] canvas').count(), 0);
   checks.push({ check: 'device-tool-real-context-loss-no-success-report', passed: true });
   await page.close();
 });

@@ -1,34 +1,26 @@
-# ADMIN LOGIN RESPONSIVE FIX RAPORU
+# ZY REKLAM — MATRIX PR #9 CI / YAYIN İLERLEME RAPORU
 
-Tarih: 2026-10-18
-Talimat: Login grid’ini izole et; editor grid’ini koru; ayrı branch/PR, yeşil Verify ve Preview görsel kabulü sonrası merge/otomatik production kabulü.
-Aşama/iş: P8.7c / P9 admin login responsive fix — yerel kabul tamamlandı; uzak kapılar bekleniyor.
-Mimari: v1.26/A20–A26; rutin CSS düzeltmesi, mimari/veri/API sözleşmesi değişmedi.
-Branch: fix/admin-login-responsive
-Başlangıç: origin/main b34e1f9d0de1bb1a28e715e39c4d6619d4a0e8b1; ayrı .worktrees/admin-login-responsive. Eski feature ve ana kirli çalışma ağacı korundu.
-Commit: henüz oluşturulmadı
-PR: henüz oluşturulmadı
-390: PASS
-1920: PASS
-2560: PASS
-3840: PASS
-Login grid: 1 COLUMN — dokuz viewport PASS
-Button: PASS
-Status: PASS
-Horizontal overflow: YOK
-Admin editor regression: PASS — mevcut15viewport mock kabulü;1920=3,2560/3440/3840=4kolon.
-Check: PASS
-Build: PASS
-Tests: 53/53 PASS — tek seri npm.cmd test -- --test-concurrency=1; hedefli admin2/2 de PASS.
-Verify: bekleniyor
-Cloudflare Preview: bekleniyor
-PR merge: NO
-Production deploy: çalıştırılmadı
-Production /admin/: henüz kontrol edilmedi
-Matrix: NOT IMPLEMENTED
+Tarih:2026-10-19T12:20:42.054Z
+Talimat: İlk üç CI timeout'unu çöz; üç hedefli tekrar ve full59; commit/push → featureVerify/Preview → PR/PRVerify → merge → otomatik production/mainVerify/live → gerçek domain kabulüne kadar sürdür.
+Aşama/iş:P3.7j/P9 devam ediyor; v1.27/A27 korunur. GenelP3/P7/P8/P9 açık.
+Dal:feat/hero-matrix-rain; .worktrees/hero-matrix-rain. HEAD:0395ad1623533b1c1dd23ba432420a5a9e55bdf1. Ana kullanıcı/generated/evidence farkları korundu; reset/clean yok.
 
-Değişiklik: Yalnız .login-layout #login-form için grid-template-columns:minmax(0,1fr). Panel480px üst sınırı, merkez, renk/input/button/status stilleri ve genel editor grid kuralları korunur. Worker/auth/KV/R2/session/CSRF/loginAPI/parola/publish/public/hero/showroom/live içerik kaynakları değişmez.
-Test: Yeni helper dokuz390×844,768×1024,1024×768,1366×768,1440×900,1920×1080,2560×1440,3440×1440,3840×2160 ölçüsünde tek track, alanların form genişliği/x hizası, merkez, DOM sırası, tek satır yazı ve overflow kontrol eder. Login/session yanıtı yerelde mock; gerçek login/publish yok. Mevcut admin testinde editor kolon sayısı geniş ekranda kesin eşitlikle doğrulanır. Hiçbir test kaldırılmadı.
-Görsel kabul: admin-login-390/1920/2560/3840.png üretildi ve incelendi; dört ölçü PASS. Kanıt docs/evidence/admin-login/local/acceptance.json ve .admin-login-tests-final.log.
-Dosyalar: src/admin/admin.css; tests/admin-responsive.test.mjs; yeni tests/helpers/admin-login.mjs; ROADMAP.md ve LAST_REPORT.md. Generated/evidence/screenshot/log dosyaları commit dışı korunur. Mevcut601.18kB SVGLoader uyarısı sürer. Fiziksel cihaz/GPU testi yapılmadı; genelP3/P7/P8/P9 kapanmaz.
-Sıradaki tek iş: Ayrı fix commit/push ve PR; Verify/izole Preview kapıları.
+2026-10-19 P3.7j/P9 native cancel test düzeltmesi:0395ad1 featureVerify39242150252 59/59 GREEN; yeni Preview dört home/dokuz kontrol/sıfır hata/16görsel PASS. PR#9 açıldı; PRVerify39244520843 58/59, yalnız header-sign.test125 touchCancel sonrası anlık attribute okuması true/null yarışı. CDP ack sayfa pointercancel task'ından önce dönebilir; data-pointer-pressed kaldırılmasını aynı mevcut3sn içinde100ms polling ile bekle, null/URL assertion'larını koru. Uygulama/headerCSS/JS değişmez. Son6 hedefli test üç tekrar:6/6 PASS, 6/6 PASS, 6/6 PASS; full:59/59 PASS. SonHEAD:0395ad1623533b1c1dd23ba432420a5a9e55bdf1; pushVerify:39242150252 / success; PRVerify:39244520843 / failure; sonHEADPreview:PASS. Merge/production kapıları henüz tamamlanmadı.
+
+KÖK NEDENLER / KAYIT
+Initial42e84fa/Verify39197877724:56/59 üçtimeout. 678bd862:live fixture page cleanup,gerçek WebGL/canvas/rendercounter semantic ready; /admin route freshcontext+HTTP200/DOMContentLoaded/app readiness; QA completion/error timerpolling/failurediagnostics.98fbeb839/003a3f3/0395ad1: uzak/yakın Fly/Classic glyph/kararlı sütun çizim bütçesi, tüm320strand simülasyonu/mesajlar/tamkalite ve heroFPS/fallback eşikleri korunur. CPU3baseline slow-device, sonbütçeyle default/software üçer dönüş6/6ready/idle. ea4aeb2/9b42ded: tamDPR/kayıpsızPNG, canlıframe/canvas assertions; Matrix işlevsel test software compositor, Canvas2D/WebGL açık. Hero/scene/Preview/production browser profili değişmez.
+AraRED39205618914,39210909043,39218168700,39227692509,39235161577 ve PR39244520843 kanıtları korunur. Headercancel task yarışının yeni dar test düzeltmesi uygulama davranışını değiştirmez. Test skip/silme,viewport/çözünürlük/timeout veya assertion zayıflatma yok.
+
+YEREL/UZAK
+Son hedefli:6/6 PASS + 6/6 PASS + 6/6 PASS. Son tam:59/59 PASS;0fail/cancelled/skipped.
+FeatureVerify:39242150252 / success; PRVerify:39244520843 / failure.
+Preview:https://d91ee55d-zy-reklam.akinarslanceng.workers.dev; sonHEADkabul:PASS;16görsel ve gerçek45sn polling dahil.
+PR#9:https://github.com/akinarslan/zy_reklam/pull/9. Merge:YOK; yeni adayproduction/mainVerify/live/gerçekdomainkabulü ÇALIŞTIRILMADI.
+Mainsonokunan7559b3e98082fd29cf9388f09b46be51d3aa5400. Doğrudanmainpush/manuelyayın/gerçekadminloginpublish yok.
+
+DEĞİŞEN DOSYALAR/SINIR
+Son dar değişiklik:tests/header-sign.test.mjs;ROADMAP.md,LAST_REPORT.md. Mimari/API değişmedi; ARCHITECTURE v1.27/A27 korundu,gereksizsürüm yok. Önceki sourcecommits ve kanıtlar ayrı korunur.
+Kanıt:docs/evidence/matrix/ci-release; local-final.json,remote-final.json,öncekiheadroom/compositor/CIJSON/log/artifact; .matrix-final-*.log. Sonuç raporu için döngüselcommit/deploy yok.
+Chromium/SwiftShader/CPUemülasyonu fizikseltelefon/iPad/GPUkabulü değildir;P3.6durdurulmuş. SVGLoader500kBuyarısı sürer. DüşükkaliteFly/Classic görünümüseyrekleşir;quality1aynı. Upstreamatıf/lisanskorundu,kullanıcıekticariizinbildirdi;belgebağımsızincelenmedi.
+Sıradakitekiş:Sonadayın test/uzakkapılarınıtamamla; mevcutPR#9 GREENsonrasımerge/otomatikproduction/mainVerify/live/gerçekdomainkabulünübitir.
+Final:DEVAMEDİYOR;PRODUCTIONACCEPTEDdeğildir.

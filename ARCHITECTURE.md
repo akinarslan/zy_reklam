@@ -1,6 +1,6 @@
 # ZY Reklam — Mimari
 
-**Sürüm:** 1.26 · **Tarih:** 2026-10-18 · **Durum:** P3 fiziksel cihaz performans kabulü açık; P7 admin medya/taslak akışı yerel entegrasyonla doğrulandı, KV/R2 provision edildi; production secrets ve canlı GitHub yayını engelli; responsive viewport alt kabulü ve 2K+ ziyaretçi site genişlik ayarı doğrulandı
+**Sürüm:** 1.27 · **Tarih:** 2026-10-19 · **Durum:** P3 fiziksel cihaz performans kabulü açık; P7 admin medya/taslak akışı yerel entegrasyonla doğrulandı, KV/R2 provision edildi; production secrets ve canlı GitHub yayını engelli; responsive viewport alt kabulü ve 2K+ ziyaretçi site genişlik ayarı doğrulandı
 
 **İlgili belgeler:** [Yol haritası](ROADMAP.md) · [Çalışma kuralları](AGENTS.md)
 
@@ -461,3 +461,69 @@ Kullanıcının açık talimatı A02/P3.3 sınırlı sürüklemeyi değiştirir;
 back.ts aynı sign grubuna iki pürüzlü metal ray ve dört altıgen cıvata/vida yuvası ekler; arkada yinelenmiş logo yoktur. Özgün ön logo geometrisi/materyali değişmez. Üç instanced batch,168 ek ana-pass üçgeni:4882→5050; draw-call üst sınırı13→16. Gölge20Hz/final poz, kalite/DPR, idle/offscreen/hidden, context/dispose ve başlangıç reduced-motion poster politikası korunur. Azaltılmış harekette renderer hiç yüklenmez veya açık renderer dispose edilir; hareketli snap yerine poster kalır. Renderer çalışabildiği sade tercihte smoothing doğrudandır.
 
 A25 canlı içerik protokolü/uygulaması ve /3d-vitrin/ model/renderer/controller değişmez. Hero sürükleme sırasında live patch ertelenir; güvenli durumda aynı canvas ile uygulanır. A20 izole Preview ve aynı feature push; yeni PR/merge/production/main yazımı yok. Kabul11viewport ön/arka/ön projected bounds, fare/dokunma/klavye, yaşam döngüsü, live identity ve önceki regresyonları gerektirir; fiziksel P3.6 kabulü değildir.
+
+### A27 — Hero Matrix yerel deneyi ve Mimo teslimi (P3.7j, 2026-10-19)
+
+Kullanıcının açık yeni talimatı yalnız ana sayfa hero’sunda hematteo/matrix-rain
+3752d0b75fd87911a92682313a02e6520ad88d02 uyarlamasına izin verir. A20–A26 ve
+statik-first/SEO/ilk ekran sözleşmesi korunur. src/matrix/setup.ts hero guard’ından
+sonra dinamik import yapar; Vitrin/admin/kategoriler motor veya CSS indirmez.
+Mevcut src/scene renderer/model/controller/QualityMonitor kodu değişmez. Hero’da
+bir mevcut WebGL canvas + bir Matrix Canvas2D + bir düşük çözünürlüklü bloom canvas
+vardır; bloom’un yardımcı tamponları DOM dışındadır. Yeni Three/WebGL context yoktur.
+
+Upstream renderer.js çekirdeği .d.ts sözleşmesiyle; TypeScript state/controls/input/
+controller modülleri ve yalnız .matrix-rain-* stilleriyle ayrılır. Layer hero’nun
+tam sınırlarında absolute/clipped ve pointer-events:none; hero yüksekliği, özgün
+başlık/CTA/tabela/ikinci bölüm akışı değişmez. Klavye görünür hero ile sınırlı;
+form/editable/browser modifier/native Space ve 3D sahne önceliklidir. Wheel ve
+touch passive; sayfa scroll’u korunur. H yalnız Matrix HUD’unu etkiler.
+
+State yalnız mx* query parametrelerindedir; hash site anchor’larına aittir.
+Metinler textContent/native input; bounded density/bloom/seed/message/glyphs ve
+palet/P3 allowlist uygulanır. PNG yalnız Matrix katmanıdır; clipboard/fullscreen/
+download desteklenmez veya reddedilirse başarı bildirimi gösterilmez. Display-P3
+desteklenmeyen canvas’ta sRGB kullanılır; aynı canvas kimliğini korumak için ilk
+context gamut’u sonradan değiştirilemiyorsa P3 isteği de sRGB fallback olarak kalır.
+
+Tek Matrix RAF controller’a aittir. IO/offscreen ve visibility hidden durdurur;
+görünür dönüşte yalnız bir döngü başlar. ResizeObserver, AbortController, timer,
+RAF ve DOM cleanup dispose edilir; BFCache pause/resume ayrı korunur. Upstream EMA,
+çözünürlük kademesi, far-cull ve bloom degrade korunur; uzun draw maliyeti de düşüşü
+tetikleyebilir. Site/OS reduced-motion classic, sabit kamera ve flash azaltmayı
+uygular; advanced açık motion override yalnız Matrix’i etkiler.
+
+CC BY-NC-SA4.0 atıf/orijinal lisans docs/THIRD_PARTY.md ve docs/licenses içindedir.
+Ticari yayın izni doğrulanmadı. Bu görev local-only; Codex commit/push/PR/merge/main
+yazımı ve tüm deployment’lar yasak. Mimo review/commit/push sonraki ayrı adımdır;
+teknik teslim kapısı Main Verify GREEN ve tüm Matrix/mevcut testlerin PASS olmasıdır.
+Genel P3/P7/P8/P9 ile durdurulmuş fiziksel P3.6 bu deneyle kapanmaz.
+
+2026-10-19 yayın kapsamı revizyonu: Mimo checkpoint 42e84fa sonrasında kullanıcı
+üç CI timeout'unun düzeltilmesi, aynı feature'a commit/push, Verify/Preview/PR
+kapıları ve tümü yeşilken PR merge + otomatik production kabulünü yetkilendirdi.
+Önceki local-only yasağı bu yeni görev için geçerli değildir; doğrudan main push,
+gerçek admin publish ve manuel production deploy yapılmaz. Kullanıcı ticari ZY
+Reklam yayını için ek izin alındığını bildirdi; upstream atıf/lisans korunur.
+CI beklemeleri çizim RAF'ına değil uygulamanın ready/terminal durumlarına dayanır;
+tamamlanan fixture sayfaları kapatılır. Runtime mimarisi/veri sözleşmesi değişmez.
+
+CI39205618914 tanısı ve kontrollü3×CPU tekrarında kalan ölçüm hatası gerçek
+`slow-device` fallback olarak doğrulandı: Matrix'in0.5 taban ölçeği piksel sayısını
+azaltırken yaklaşık2300 fillText işini/25–40ms CPU yükünü yeterince azaltmıyordu.
+A27 governor'u uzak glyph culling'ini kalite karesiyle artırır ve0.375 ek LOD
+kademesi sunar.320 parçacık simülasyonu, seed/density ve bütün mod/etkileşimler
+korunur; RAF'a sabit FPS sınırı, CI'ye özel kapatma veya hero fallback eşiği
+değişikliği yoktur. Modül/veri/yayın mimarisi aynı kaldığından sürüm artırılmaz.
+
+
+<!-- MATRIX_CI_QA_NOTES_START -->
+2026-10-19 A27 Classic bütçe açıklaması: sabit yakın Classic depth plane'leri mesafe culling'inden kaçıyordu. Düşük kalitede çizilecek sütunlar QUALITY² oranında kararlı bir alt kümeden seçilir; tüm 320 strand simülasyonu/recycle ve mesajlar korunur. Quality1 tam çizimi değişmez. Sabit FPS cap, CI koşulu veya feature kapatma yok; modül/veri/API/yayın sınırları aynı, v1.27 korunur.
+
+2026-10-19 A27 test-driver açıklaması: Matrix işlevsel test tarayıcısı SwiftShader ile açık Canvas2D ve gerçek WebGL readback kullanırken software compositor seçer. Bu, sürekli güncellenen 4K GPU yüzeyinin snapshot readback kuyruğunu ayırır. Kontrollü ölçüm 6339→1354ms; scene ready, Canvas2D enabled, WebGL enabled_readback ve tam çözünürlüklü PNG doğrulandı. Aynı canvas/frame, 11 viewport, tam DPR, kayıpsız PNG, 30sn ve tüm assertions korunur. Scene performans ve gerçek Preview/production profilleri değişmez; fiziksel GPU kabulü sayılmaz.
+<!-- MATRIX_CI_QA_NOTES_END -->
+
+
+
+<!-- MATRIX_HEADROOM_PROGRESS -->
+A27 ek açıklama: yakın sütunların QUALITY² kararlı çizim bütçesi her iki Matrix moduna uygulanır. Düşük kalitede daha seyrek çizim; tam kalite, bütün strand simülasyonu/recycle ve mesajlar korunur. Hero/quality/FPS eşikleri ve modül/veri/API/yayın sözleşmeleri değişmez; v1.27 korunur.
