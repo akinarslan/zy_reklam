@@ -1,6 +1,6 @@
 # ZY Reklam — Yol Haritası
 
-**Sürüm:** 1.26 · **Başlangıç:** 2026-10-01 · **Güncelleme:** 2026-10-18
+**Sürüm:** 1.27 · **Başlangıç:** 2026-10-01 · **Güncelleme:** 2026-10-18
 
 **Kaynak:** [ARCHITECTURE.md](ARCHITECTURE.md) · **Zorunlu kontrol:** [AGENTS.md](AGENTS.md)
 
@@ -10,7 +10,7 @@
 
 **Aktif aşama:** P3 — Gerçek 3D açılış uygulandı; performans kapanışı devam ediyor.
 
-**Kullanıcı önceliği:** P8.7c/P9 — admin login tek sütun CSS düzeltmesi; ayrı fix dalında yerel kabul tamamlandı, Verify/Preview görsel kapıları sonrası merge/otomatik production yetkilendirildi. Matrix kapsam dışı.
+**Kullanıcı önceliği:** P3.7j Matrix hero yerel kabulü tamamlandı; commit/push Mimo incelemesini bekler. Codex PR/merge/main/deployment yapmaz.
 
 P1 kaynak, logo, font ve iletişim incelemesi yapıldı; gerçek proje bilgileri/fotoğrafları doğrulanmadığı için P1.5 açık kalır. Planın engel yönetimi uyarınca bağımsız P2 temeli tamamlandı. Vite/TypeScript sayfası, statik SVG poster, mobil menü, hareket tercihi ve temel WhatsApp iletişim akışı çalışıyor. Gerçek 3D açılış şimdi uygulanmıştır. Üretim animasyonları, galeri, stüdyo ve upload henüz uygulanmadı.
 
@@ -791,3 +791,18 @@ Sıradaki tek iş:
 - Check/build PASS;53/53 seri tam test PASS, hedefli admin2/2 PASS. Yeni login testi9viewport/tek track/tam genişlik/merkez/sıra/tek satır/overflow; mevcut mocked editor15viewport ve exact geniş-ekran kolon sayısı PASS. İstenen4screenshot görsel incelendi. Gerçek login/publish yok. Kanıt docs/evidence/admin-login/local/acceptance.json ve .admin-login-tests-final.log.
 - Değişen kaynak/test: src/admin/admin.css,tests/admin-responsive.test.mjs,tests/helpers/admin-login.mjs; kayıt ROADMAP/LAST_REPORT. Generated/evidence/log/screenshot commit dışı korunur. Yeni PR/Verify/Preview/merge/production kapıları henüz bekleniyor. GenelP3/P7/P8/P9 açık.
 - Sıradaki tek iş: fix commit/push/PR ve yeşil uzak/görsel kapılar.
+
+### 2026-10-19 — P3.7j Matrix hero yerel deney / Mimo teslimi (devam ediyor)
+
+- Kullanıcı yalnız yerel implementasyon/test ve Mimo handoff ister; Codex commit/push/PR/merge/main/deployment yasak. Güncel tam AGENTS/mimari/roadmap ve upstream README/LICENSE/index okundu. origin/main7559b3e üzerinden ayrı feat/hero-matrix-rain/.worktrees/hero-matrix-rain; eski dirty ağaçlar korunur.
+- Main Verify39166173042 tamamlandı/success;53/53,0fail; bağlı live-smoke ve bağımsız39166173033 success. Artifact12151286742. Bu temel kapı geçildi; Matrix kabulü yerine sayılmaz.
+- A27/v1.27: bağımsız Canvas2D upstream motor, scoped hero/lifecycle/inputs, query state/Türkçe erişilebilir controls ve CC BY-NC-SA atıf. Mevcut scene/showroom/admin/Worker/live uygulama kaynakları korunur. Ticari yayın izni doğrulanmadı; yalnız yerel deney.
+- İlk Matrix hedefli koşu3/4: core/advanced/gerçek CDP touch PASS; diğer sayfalar kontrolünde yanlış fixture URL’i Vite fallback ile home’a döndü. Gerçek kategori yollarıyla düzeltildi; assertion korunur. Görsel inceleme dar fine-pointer viewport’ta hint/hero-bottom çakışması buldu;1100px altında kısa pad yerleşimiyle giderildi. Son kaynaklarla hedefli ve tam kabul sürüyor.
+- Sıradaki tek iş: son kaynakların tüm yerel işlev/görsel/regresyon kabulünü tamamlayıp Mimo teslim raporunu yazmak.
+
+### 2026-10-19 — P3.7j yerel kabul tamamlandı / Mimo
+
+- Son check/build PASS;59/59 seri tam test,0fail/0cancelled/0skipped. Main Verify39166173042 GREEN/53; smoke success. Ayrı feature HEAD hâlâ7559b3e; index boş; protected source diff boş. Codex commit/push/PR/merge/main/deployment yok.
+- Matrix6test/core/advanced/URL/capability/cleanup/gerçekCDPtouch,11viewport/15görsel/zero unexpectederrors; hero36011/live22/fold18/nav28/showroom16/social32/header96 ve admin regresyonları PASS. Kanıt docs/evidence/matrix/local/acceptance.json,visual-review.json,main-ci.json,source-integrity.json ve .matrix-tests-final.log. Ara başarısız/durdurulan koşular LAST_REPORT içinde açıklanır.
+- A27/v1.27 ve CC BY-NC-SA attribution/license; ticari yayın izni doğrulanmadı. Yerel teknik Mimo commit incelemesine hazırdır; ticari yayın kabulü değildir. FizikselP3.6/genelP3/P7/P8/P9 kapanmaz.
+- Sıradaki tek iş: Mimo kaynak inceleme ve ayrı görevde commit/push kararı.

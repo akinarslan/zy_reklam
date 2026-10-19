@@ -43,9 +43,10 @@ export async function verifyLiveContent(browser,base,output) {
   });
   await page.clock.install();
   await page.goto(base+path);
-  if(options.webgl)await page.waitForSelector('canvas',{timeout:20000});
+  if(path==='/')await page.waitForSelector('[data-matrix-rain]',{state:'attached'});
+  if(options.webgl)await page.waitForSelector('[data-hero-stage] canvas,[data-showroom-stage] canvas',{timeout:20000});
   await page.evaluate(()=>{
-   window.liveIdentity={form:document.querySelector('form'),canvas:document.querySelector('canvas'),hero:document.querySelector('.hero'),nav:document.querySelector('#main-nav')};
+   window.liveMatrix=document.querySelector('[data-matrix-rain]'); window.liveIdentity={form:document.querySelector('form'),canvas:document.querySelector('[data-hero-stage] canvas,[data-showroom-stage] canvas'),hero:document.querySelector('.hero'),nav:document.querySelector('#main-nav')};
    window.liveNavigations=0;window.addEventListener('beforeunload',()=>window.liveNavigations++);
   });
   const tick=async(ms=45001)=>{await page.clock.fastForward(ms);await page.waitForTimeout(100);};
@@ -104,8 +105,8 @@ export async function verifyLiveContent(browser,base,output) {
 
   const dialog=await fixture();await dialog.page.evaluate(()=>{const d=document.createElement('dialog');d.id='live-test-dialog';d.textContent='Open dialog';document.body.appendChild(d);d.showModal();window.liveIdentity.dialog=d;});
   dialog.state.manifest=B.manifest;await dialog.tick();assert.equal(await dialog.title(),originalTitle);
-  assert.ok(await dialog.page.evaluate(()=>liveIdentity.dialog===document.querySelector('dialog')&&liveIdentity.dialog.open));
-  await dialog.page.locator('dialog').evaluate(element=>element.close());await dialog.tick(1000);
+  assert.ok(await dialog.page.evaluate(()=>liveIdentity.dialog===document.querySelector('#live-test-dialog')&&liveIdentity.dialog.open));
+  await dialog.page.locator('#live-test-dialog').evaluate(element=>element.close());await dialog.tick(1000);
   await dialog.page.waitForFunction(()=>document.querySelector('[data-service-menu] h3').textContent==='Live service B');records.push('open dialog identity and deferred apply');
 
   const visibility=await fixture();
@@ -124,22 +125,22 @@ export async function verifyLiveContent(browser,base,output) {
   release();await race.page.waitForTimeout(200);assert.equal(await race.title(),'Live service C');records.push('late B cannot overwrite C');
 
   const canvas=await fixture('/3d-vitrin/',{webgl:true});
-  const box=await canvas.page.locator('canvas').boundingBox();
+  const box=await canvas.page.locator('[data-hero-stage] canvas,[data-showroom-stage] canvas').boundingBox();
   await canvas.page.mouse.move(box.x+box.width/2,box.y+box.height/2);await canvas.page.mouse.down();
   canvas.state.manifest=B.manifest;await canvas.tick();assert.equal(await canvas.title(),originalTitle);
   await canvas.page.mouse.up();await canvas.page.mouse.move(5,200);await canvas.tick(1000);
   await canvas.page.waitForFunction(()=>document.querySelector('[data-service-menu] h3').textContent==='Live service B');
-  assert.ok(await canvas.page.evaluate(()=>liveIdentity.canvas===document.querySelector('canvas')&&liveNavigations===0));records.push('real WebGL canvas identity and pointer deferral');
+  assert.ok(await canvas.page.evaluate(()=>liveIdentity.canvas===document.querySelector('[data-hero-stage] canvas,[data-showroom-stage] canvas')&&liveMatrix===document.querySelector('[data-matrix-rain]')&&liveNavigations===0));records.push('real WebGL canvas identity and pointer deferral');
 
   const hero=await fixture('/',{webgl:true});
   await hero.page.waitForFunction(()=>document.querySelector('[data-hero-stage]').dataset.sceneState==='ready');
-  const heroBox=await hero.page.locator('canvas').boundingBox();
+  const heroBox=await hero.page.locator('[data-hero-stage] canvas,[data-showroom-stage] canvas').boundingBox();
   await hero.page.mouse.move(heroBox.x+heroBox.width*.1,heroBox.y+heroBox.height/2);await hero.page.mouse.down();
   await hero.page.mouse.move(heroBox.x+heroBox.width*.6,heroBox.y+heroBox.height/2,{steps:8});
   hero.state.manifest=B.manifest;await hero.tick();assert.equal(await hero.title(),originalTitle);
   await hero.page.mouse.up();await hero.page.mouse.move(0,0);await hero.tick(1500);
   await hero.page.waitForFunction(()=>document.querySelector('[data-service-menu] h3').textContent==='Live service B');
-  assert.ok(await hero.page.evaluate(()=>liveIdentity.canvas===document.querySelector('canvas')&&liveNavigations===0&&document.querySelectorAll('canvas').length===1));
+  assert.ok(await hero.page.evaluate(()=>liveIdentity.canvas===document.querySelector('[data-hero-stage] canvas,[data-showroom-stage] canvas')&&liveMatrix!==null&&liveMatrix===document.querySelector('[data-matrix-rain]')&&liveNavigations===0&&document.querySelectorAll('[data-hero-stage] canvas,[data-showroom-stage] canvas').length===1));
   assert.deepEqual(hero.state.jsonCalls,[B.url]);records.push('hero 360 drag defers live patch; same canvas after services update; no reload');
 
   for(const [section,path,titleSelector] of [

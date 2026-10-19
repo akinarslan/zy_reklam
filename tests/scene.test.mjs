@@ -311,7 +311,7 @@ test('Cihaz ölçümü: hareket tercihi korunur; kullanıcı iptali, resize ve g
   await page.locator('#device-os').fill('Linux test');
   await page.locator('#start').click();
   await page.waitForFunction(() => document.querySelector('#status').textContent.includes('Hareket azaltma etkin'));
-  assert.equal(await page.frameLocator('#scene').locator('canvas').count(), 0);
+  assert.equal(await page.frameLocator('#scene').locator('[data-hero-stage] canvas').count(), 0);
   assert.equal(await page.locator('#result').isVisible(), false);
   await page.locator('#enable-motion').click();
   await page.waitForFunction(() => document.querySelector('#progress').textContent.includes('Ölçüm 1/3'));
@@ -342,10 +342,10 @@ test('Cihaz ölçümü sırasında gerçek WebGL context kaybı başarılı rapo
   await page.locator('#device-os').fill('Linux');
   await page.locator('#start').click();
   await page.waitForFunction(() => document.querySelector('#progress').textContent.includes('Ölçüm 1/3'));
-  await page.frameLocator('#scene').locator('canvas').evaluate(canvas => canvas.getContext('webgl2').getExtension('WEBGL_lose_context').loseContext());
+  await page.frameLocator('#scene').locator('[data-hero-stage] canvas').evaluate(canvas => canvas.getContext('webgl2').getExtension('WEBGL_lose_context').loseContext());
   await page.waitForFunction(() => document.querySelector('#status').textContent.includes('fallback'));
   assert.equal(await page.locator('#download').isVisible(), false);
-  assert.equal(await page.frameLocator('#scene').locator('canvas').count(), 0);
+  assert.equal(await page.frameLocator('#scene').locator('[data-hero-stage] canvas').count(), 0);
   checks.push({ check: 'device-tool-real-context-loss-no-success-report', passed: true });
   await page.close();
 });

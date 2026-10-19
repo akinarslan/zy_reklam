@@ -7,7 +7,8 @@ const idle=page=>page.waitForFunction(()=>document.querySelector('[data-hero-sta
 const yaw=page=>page.locator(stageSelector).evaluate(el=>Number(el.dataset.rotationY));
 const ready=async(page,base)=>{await page.goto(base+'/');await page.waitForFunction(()=>document.querySelector('[data-hero-stage]')?.dataset.sceneState==='ready',null,{timeout:20000});await idle(page);};
 async function inside(page) {
- const data=await page.locator(stageSelector).evaluate(el=>({bounds:JSON.parse(el.dataset.projectedBounds),mounts:el.dataset.backMounts,rails:el.dataset.backRails,count:document.querySelectorAll('canvas').length,overflow:document.documentElement.scrollWidth>innerWidth,heroBottom:document.querySelector('.hero').getBoundingClientRect().bottom,next:document.querySelector('.brand-showcase').getBoundingClientRect().top,height:innerHeight}));
+ const data=await page.locator(stageSelector).evaluate(el=>({bounds:JSON.parse(el.dataset.projectedBounds),mounts:el.dataset.backMounts,rails:el.dataset.backRails,count:document.querySelectorAll('[data-hero-stage] canvas').length,matrix:document.querySelectorAll('[data-matrix-rain]').length,overflow:document.documentElement.scrollWidth>innerWidth,heroBottom:document.querySelector('.hero').getBoundingClientRect().bottom,next:document.querySelector('.brand-showcase').getBoundingClientRect().top,height:innerHeight}));
+ assert.equal(data.matrix,1);
  assert.equal(data.count,1);assert.equal(data.overflow,false);assert.equal(data.mounts,'4');assert.equal(data.rails,'2');
  for(const [name,value]of Object.entries(data.bounds))assert.ok(value>=-1&&value<=1,`${name}: ${value}`);
  assert.ok(Math.abs(data.heroBottom-data.height)<2);assert.ok(data.next>=data.height-1);
@@ -36,7 +37,7 @@ export async function verifyHeroRotation(browser,base,output) {
  try {
   for(const [width,height]of rotationViewports) {
    await page.setViewportSize({width,height});await ready(page,base);
-   await page.evaluate(()=>{window.heroCanvas=document.querySelector('canvas');window.heroLoads=performance.getEntriesByType('navigation').length;});
+   await page.evaluate(()=>{window.heroCanvas=document.querySelector('[data-hero-stage] canvas');window.heroLoads=performance.getEntriesByType('navigation').length;});
    assert.ok(Math.abs(await yaw(page))<.32);
    const front=await inside(page);
    if(shots.has(width))await page.screenshot({path:`${output}/hero-front-${width}.png`});
@@ -46,21 +47,21 @@ export async function verifyHeroRotation(browser,base,output) {
    if(shots.has(width))await page.screenshot({path:`${output}/hero-back-${width}.png`});
    await drag(page,.5);assert.ok(Math.abs(await yaw(page)-Math.PI*2)<.001);
    const returned=await inside(page);
-   assert.ok(await page.evaluate(()=>window.heroCanvas===document.querySelector('canvas')&&performance.getEntriesByType('navigation').length===heroLoads&&heroContexts.length===1&&heroContexts[0]===heroCanvas.getContext('webgl2')));
+   assert.ok(await page.evaluate(()=>window.heroCanvas===document.querySelector('[data-hero-stage] canvas')&&performance.getEntriesByType('navigation').length===heroLoads&&heroContexts.length===1&&heroContexts[0]===heroCanvas.getContext('webgl2')));
    rows.push({width,height,front,back,returned,yaw:await yaw(page),passed:true});
   }
   checks.push('11 viewport front/back/front projected bounds; first fold; no overflow; same canvas/context; no duplicate renderer context; mouse 180/360');
   // A full sweep remains free while held; explicit release snaps to the nearest face.
   await page.setViewportSize({width:1440,height:900});await ready(page,base);
-  await page.evaluate(()=>window.heroCanvas=document.querySelector('canvas'));
+  await page.evaluate(()=>window.heroCanvas=document.querySelector('[data-hero-stage] canvas'));
   const b=await page.locator(stageSelector).boundingBox();
   await page.mouse.move(b.x+b.width*.1,b.y+b.height/2);await page.mouse.down();
   await page.mouse.move(b.x+b.width*.92,b.y+b.height/2,{steps:16});
   await page.waitForTimeout(650);assert.ok(await yaw(page)>4.5);
-  await page.locator('canvas').evaluate(c=>c.dispatchEvent(new PointerEvent('pointercancel',{pointerId:1,pointerType:'mouse'})));
+  await page.locator('[data-hero-stage] canvas').evaluate(c=>c.dispatchEvent(new PointerEvent('pointercancel',{pointerId:1,pointerType:'mouse'})));
   await page.mouse.up();await page.mouse.move(0,0);await idle(page);assert.equal(await page.locator(stageSelector).getAttribute('data-dragging'),'false');
   await page.mouse.move(b.x+b.width*.1,b.y+b.height/2);await page.mouse.down();await page.mouse.move(b.x+b.width*.6,b.y+b.height/2,{steps:8});
-  await page.locator('canvas').evaluate(c=>{if(c.hasPointerCapture(1))c.releasePointerCapture(1);});
+  await page.locator('[data-hero-stage] canvas').evaluate(c=>{if(c.hasPointerCapture(1))c.releasePointerCapture(1);});
   await page.mouse.up();await page.mouse.move(0,0);await idle(page);assert.equal(await page.locator(stageSelector).getAttribute('data-dragging'),'false');
   checks.push('unclamped held sweep; pointercancel; lostpointercapture; no stuck drag');
   await page.locator(stageSelector).focus();const before=await yaw(page);await page.keyboard.press('ArrowRight');await idle(page);assert.ok(Math.abs(await yaw(page)-before-Math.PI)<.001);
@@ -73,12 +74,12 @@ export async function verifyHeroRotation(browser,base,output) {
   checks.push('idle RAF/shadow stopped; final shadow matches snapped pose');
   await page.evaluate(()=>window.dispatchEvent(new PageTransitionEvent('pagehide',{persisted:true})));assert.equal(await page.locator(stageSelector).getAttribute('data-render-loop'),'stopped');
   await page.evaluate(()=>window.dispatchEvent(new PageTransitionEvent('pageshow',{persisted:true})));await idle(page);
-  assert.ok(await page.evaluate(()=>heroCanvas===document.querySelector('canvas')));checks.push('BFCache pagehide/show same canvas');
-  await page.locator('[data-motion-toggle]').click();assert.equal(await page.locator('canvas').count(),0);assert.equal(await page.locator(stageSelector).getAttribute('data-scene-state'),'reduced');
+  assert.ok(await page.evaluate(()=>heroCanvas===document.querySelector('[data-hero-stage] canvas')));checks.push('BFCache pagehide/show same canvas');
+  await page.locator('[data-motion-toggle]').click();assert.equal(await page.locator('[data-hero-stage] canvas').count(),0);assert.equal(await page.locator(stageSelector).getAttribute('data-scene-state'),'reduced');
   checks.push('site reduced motion stops and disposes 3D; poster retained');
-  await page.locator('[data-motion-toggle]').click();await page.waitForSelector('canvas');await idle(page);
-  await page.locator('canvas').evaluate(c=>c.getContext('webgl2').getExtension('WEBGL_lose_context').loseContext());
-  await page.waitForFunction(()=>document.querySelector('[data-hero-stage]').dataset.sceneState==='fallback');assert.equal(await page.locator('canvas').count(),0);checks.push('real context loss safe poster');
+  await page.locator('[data-motion-toggle]').click();await page.waitForSelector('[data-hero-stage] canvas');await idle(page);
+  await page.locator('[data-hero-stage] canvas').evaluate(c=>c.getContext('webgl2').getExtension('WEBGL_lose_context').loseContext());
+  await page.waitForFunction(()=>document.querySelector('[data-hero-stage]').dataset.sceneState==='fallback');assert.equal(await page.locator('[data-hero-stage] canvas').count(),0);checks.push('real context loss safe poster');
   assert.deepEqual(errors,[]);
  } finally {await page.close();}
  const mobile=await browser.newPage({viewport:{width:390,height:844},isMobile:true,hasTouch:true});
