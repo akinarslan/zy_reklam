@@ -104,8 +104,8 @@ export function createHeroRenderer(stage: HTMLElement, mount: HTMLElement, svg: 
     plate.lineTo(-w / 2 + r, h / 2); plate.quadraticCurveTo(-w / 2, h / 2, -w / 2, h / 2 - r);
     plate.lineTo(-w / 2, -h / 2 + r); plate.quadraticCurveTo(-w / 2, -h / 2, -w / 2 + r, -h / 2);
     const back = new Mesh(new ExtrudeGeometry(plate, { depth: .22, steps: 1, bevelEnabled: true, bevelSize: .025, bevelThickness: .025, bevelSegments: 2, curveSegments: 6 }), [new MeshStandardMaterial({ color: '#0a2217', metalness: .55,transparent: true,
-opacity: 0.5, roughness: .48 }), new MeshStandardMaterial({ color: '#64775c',transparent: true,
-opacity: 0.5, metalness: .85, roughness: .3 })]);
+opacity: 0.7, roughness: .48 }), new MeshStandardMaterial({ color: '#64775c',transparent: true,
+opacity: 0.7, metalness: .85, roughness: .3 })]);
     back.position.z = -.25;
     back.castShadow = true;
     back.receiveShadow = true;
