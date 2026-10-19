@@ -17,7 +17,7 @@ export function setupHeroScene(): () => void {
   const state = (value: string, reason = '') => {
     stage.dataset.sceneState = value;
     stage.dataset.sceneReason = reason;
-    if (hint) hint.textContent = value === 'ready' ? (matchMedia('(max-width: 767px)').matches ? 'SÜRÜKLE · ARKASINI İNCELE' : 'FAREYLE DÖNDÜR · SÜRÜKLEYEREK ARKASINI İNCELE') : 'FİKİRDEN UYGULAMAYA';
+   if (hint) hint.textContent = '';
   };
   const cancel = () => {
     generation++;
