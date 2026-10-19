@@ -5,6 +5,7 @@ import { chromium } from 'playwright';
 import { mkdir, writeFile, readFile, readdir } from 'node:fs/promises';
 import { gzipSync } from 'node:zlib';
 import { QualityMonitor } from '../src/scene/quality.ts';
+import {browserDiagnostics} from './helpers/browser-ready.mjs';
 
 const base = 'http://127.0.0.1:4187';
 let server, browser;
@@ -270,9 +271,13 @@ test('Sabit masaüstü ve mobil emülasyon profillerinde etkileşim FPS örnekle
 
 test('Cihaz ölçüm ekranı: üç gerçek çizim örneği ve indirilen JSON; mobil taşma yok', async () => {
   const page = await browser.newPage({ viewport: { width: 360, height: 800 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true });
+  const diagnostic=browserDiagnostics(page);
+  try {
   const writes = [];
   page.on('request', request => { if (!['GET', 'HEAD'].includes(request.method())) writes.push(request.url()); });
-  await page.goto(`${base}/qa/scene-performance.html`);
+  const response=await page.goto(`${base}/qa/scene-performance.html`,{waitUntil:'domcontentloaded'});
+  assert.equal(response.status(),200);
+  await page.locator('#start').waitFor({state:'visible'});
   assert.equal(await page.locator('#scene').getAttribute('src'), null, 'no scene loads before explicit measurement');
   await page.locator('#device-kind').selectOption('mobile');
   await page.locator('#environment').selectOption('emulated');
@@ -281,7 +286,11 @@ test('Cihaz ölçüm ekranı: üç gerçek çizim örneği ve indirilen JSON; mo
   await page.locator('#sample-duration').selectOption('3000');
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
   await page.locator('#start').click();
-  await page.waitForFunction(() => !document.querySelector('#result').hidden, null, { timeout: 45000 });
+  // The tool has explicit completion/error states. An error must fail with its
+  // cause, not spend 45 seconds waiting for a result it will never produce.
+  await page.waitForFunction(() => !document.querySelector('#running').hidden || document.querySelector('#start').disabled, null, {polling:100});
+  await page.waitForFunction(() => !document.querySelector('#result').hidden || !document.querySelector('#start').disabled, null, {timeout:45000,polling:100});
+  assert.equal(await page.locator('#result').isVisible(),true,await page.locator('#status').textContent());
   const downloaded = page.waitForEvent('download');
   await page.locator('#download').click();
   const file = await downloaded;
@@ -301,7 +310,8 @@ test('Cihaz ölçüm ekranı: üç gerçek çizim örneği ve indirilen JSON; mo
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
   await writeFile('docs/evidence/P3_DEVICE_TOOL_SAMPLE.json', JSON.stringify({ ...evidence, testEnvironment: 'Headless software GPU; not a physical-device acceptance report.' }, null, 2) + '\n');
   checks.push({ check: 'device-tool-three-samples-json-no-upload-mobile-layout', samples: evidence.samples.length, passed: true });
-  await page.close();
+  }catch(error){await diagnostic('scene-device-measurement',error);throw error;}
+  finally{await page.close();}
 });
 
 test('Cihaz ölçümü: hareket tercihi korunur; kullanıcı iptali, resize ve gizli sekme geçersiz sayılır', async () => {

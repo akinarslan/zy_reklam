@@ -498,3 +498,12 @@ Ticari yayın izni doğrulanmadı. Bu görev local-only; Codex commit/push/PR/me
 yazımı ve tüm deployment’lar yasak. Mimo review/commit/push sonraki ayrı adımdır;
 teknik teslim kapısı Main Verify GREEN ve tüm Matrix/mevcut testlerin PASS olmasıdır.
 Genel P3/P7/P8/P9 ile durdurulmuş fiziksel P3.6 bu deneyle kapanmaz.
+
+2026-10-19 yayın kapsamı revizyonu: Mimo checkpoint 42e84fa sonrasında kullanıcı
+üç CI timeout'unun düzeltilmesi, aynı feature'a commit/push, Verify/Preview/PR
+kapıları ve tümü yeşilken PR merge + otomatik production kabulünü yetkilendirdi.
+Önceki local-only yasağı bu yeni görev için geçerli değildir; doğrudan main push,
+gerçek admin publish ve manuel production deploy yapılmaz. Kullanıcı ticari ZY
+Reklam yayını için ek izin alındığını bildirdi; upstream atıf/lisans korunur.
+CI beklemeleri çizim RAF'ına değil uygulamanın ready/terminal durumlarına dayanır;
+tamamlanan fixture sayfaları kapatılır. Runtime mimarisi/veri sözleşmesi değişmez.

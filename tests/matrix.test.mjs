@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {spawn} from 'node:child_process';
 import {mkdir,writeFile} from 'node:fs/promises';
 import {chromium} from 'playwright';
+import {browserDiagnostics,activeSceneReady} from './helpers/browser-ready.mjs';
 const base='http://127.0.0.1:4208',out='docs/evidence/matrix/local';
 let browser,server;const evidence={core:[],advanced:[],responsive:[],touch:[],errors:[]};
 before(async()=>{
@@ -118,7 +119,7 @@ test('Matrix owns one RAF and disposes completely; optional Canvas 2D failure pr
  }finally{await p.close();}
 });
 test('Matrix full hero bounds and readable controls at eleven viewports; other pages and no-JS stay static',async()=>{
- const p=await browser.newPage();const errors=[];p.on('pageerror',e=>errors.push(e.message));p.on('requestfailed',r=>errors.push(r.url()));
+ const p=await browser.newPage();const errors=[];const diagnostic=browserDiagnostics(p);p.on('pageerror',e=>errors.push(e.message));p.on('requestfailed',r=>errors.push(r.url()));
  try{
  const shots=new Set([390,768,1366,1920,2560,3840]);
  for(const [width,height] of [[390,844],[412,915],[768,1024],[820,1180],[1024,768],[1366,768],[1440,900],[1920,1080],[2560,1440],[3440,1440],[3840,2160]]) {
@@ -134,13 +135,27 @@ test('Matrix full hero bounds and readable controls at eleven viewports; other p
   await key(p,'m');assert.equal((await stats(p)).mode,'classic');if(shots.has(width))await p.screenshot({path:`${out}/matrix-classic-${width}.png`});
   evidence.responsive.push({...row,passed:true});
  }
+ await p.close();
  for(const path of ['/3d-vitrin/','/admin/','/hizmetler/tabela-yonlendirme/','/projeler/tabela/','/promosyonlar/ofis-kirtasiye/']) {
-  const responses=[];const fn=r=>responses.push(r.url());p.on('request',fn);await p.goto(base+path);await p.waitForTimeout(150);p.off('request',fn);
-  assert.equal(await p.locator('[data-matrix-rain],.matrix-rain-hud').count(),0);assert.ok(!responses.some(url=>/\/controller-[^/]+\.js/.test(url)));
+  // Isolate route absence from the 4K GPU allocation retained by the preceding
+  // responsive navigation. The page must actually boot, not merely return HTML.
+  const routePage=await browser.newPage();const routeDiagnostic=browserDiagnostics(routePage);
+  const responses=[];routePage.on('request',r=>responses.push(r.url()));
+  routePage.on('pageerror',e=>errors.push(e.message));routePage.on('requestfailed',r=>errors.push(r.url()));
+  try{
+   const response=await routePage.goto(base+path,{waitUntil:'domcontentloaded'});assert.equal(response.status(),200);
+   if(path==='/admin/')await routePage.locator('#login-form button[type="submit"]').waitFor({state:'visible'});
+   else if(path==='/3d-vitrin/')await activeSceneReady(routePage);
+   else await routePage.locator('main h1').waitFor({state:'visible'});
+   // Wait for the entry module too: no-Matrix before module execution is vacuous.
+   await routePage.waitForFunction(()=>performance.getEntriesByType('resource').some(e=>e.initiatorType==='script'));
+   assert.equal(await routePage.locator('[data-matrix-rain],.matrix-rain-hud').count(),0);assert.ok(!responses.some(url=>/\/controller-[^/]+\.js/.test(url)));
+  }catch(error){await routeDiagnostic('matrix-route-'+path.split('/').filter(Boolean).join('-'),error);throw error;}
+  finally{await routePage.close();}
  }
  const nojs=await browser.newPage({javaScriptEnabled:false});await nojs.goto(base);assert.ok(await nojs.locator('#hero-title').isVisible());assert.ok(await nojs.locator('#brand-showcase-title').count());assert.equal(await nojs.locator('[data-matrix-rain]').count(),0);await nojs.close();
  assert.deepEqual(errors,[]);evidence.errors.push(...errors);
- }finally{await p.close();}
+ }catch(error){await diagnostic('matrix-responsive',error);throw error;}finally{await p.close();}
 });
 test('Matrix missing kana and unsupported P3 use font and sRGB fallbacks',async()=>{
  const p=await browser.newPage();

@@ -18,9 +18,11 @@ the effect to the existing hero, honor site motion preferences, account for
 expensive draw time, preserve page scroll and provide accessible Turkish controls.
 The adaptation of this source retains the same CC BY-NC-SA 4.0 terms.
 
-This is a **local experiment**, not a commercial publication authorization.
-The upstream notice excludes commercial use. Additional permission for commercial
-publication has not been supplied or verified. Mimo must retain this notice and
-resolve that permission before considering commercial publication. No upstream
+The upstream license itself does not authorize commercial use. On 2026-10-19,
+the user confirmed that additional permission had been obtained for publication
+on the commercial ZY Reklam site, and said they would provide its scope. This is
+a record of the user's confirmation, not an independently reviewed permission
+document or a change to the upstream license. Retain attribution and this notice.
+No upstream
 iframe, external runtime dependency, remotely hosted font or new Three.js renderer
 is used. This notice does not relicense unrelated existing ZY Reklam code/assets.

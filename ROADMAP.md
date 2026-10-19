@@ -1,6 +1,6 @@
 # ZY Reklam — Yol Haritası
 
-**Sürüm:** 1.27 · **Başlangıç:** 2026-10-01 · **Güncelleme:** 2026-10-18
+**Sürüm:** 1.27 · **Başlangıç:** 2026-10-01 · **Güncelleme:** 2026-10-19
 
 **Kaynak:** [ARCHITECTURE.md](ARCHITECTURE.md) · **Zorunlu kontrol:** [AGENTS.md](AGENTS.md)
 
@@ -10,7 +10,7 @@
 
 **Aktif aşama:** P3 — Gerçek 3D açılış uygulandı; performans kapanışı devam ediyor.
 
-**Kullanıcı önceliği:** P3.7j Matrix hero yerel kabulü tamamlandı; commit/push Mimo incelemesini bekler. Codex PR/merge/main/deployment yapmaz.
+**Kullanıcı önceliği:** P3.7j/P9 Matrix CI timeout düzeltmeleri ve aşamalı yayın kabulü devam ediyor. Üç ardışık hedefli koşu, tam 59/59, feature Verify/Preview ve PR Verify kapıları yeşil olmadan merge yok; yalnız otomatik production yayını doğrulanır.
 
 P1 kaynak, logo, font ve iletişim incelemesi yapıldı; gerçek proje bilgileri/fotoğrafları doğrulanmadığı için P1.5 açık kalır. Planın engel yönetimi uyarınca bağımsız P2 temeli tamamlandı. Vite/TypeScript sayfası, statik SVG poster, mobil menü, hareket tercihi ve temel WhatsApp iletişim akışı çalışıyor. Gerçek 3D açılış şimdi uygulanmıştır. Üretim animasyonları, galeri, stüdyo ve upload henüz uygulanmadı.
 
@@ -806,3 +806,23 @@ Sıradaki tek iş:
 - Matrix6test/core/advanced/URL/capability/cleanup/gerçekCDPtouch,11viewport/15görsel/zero unexpectederrors; hero36011/live22/fold18/nav28/showroom16/social32/header96 ve admin regresyonları PASS. Kanıt docs/evidence/matrix/local/acceptance.json,visual-review.json,main-ci.json,source-integrity.json ve .matrix-tests-final.log. Ara başarısız/durdurulan koşular LAST_REPORT içinde açıklanır.
 - A27/v1.27 ve CC BY-NC-SA attribution/license; ticari yayın izni doğrulanmadı. Yerel teknik Mimo commit incelemesine hazırdır; ticari yayın kabulü değildir. FizikselP3.6/genelP3/P7/P8/P9 kapanmaz.
 - Sıradaki tek iş: Mimo kaynak inceleme ve ayrı görevde commit/push kararı.
+
+### 2026-10-19 — P3.7j Mimo commit/push, Preview kabulü, Verify RED (devam ediyor)
+
+- Kullanıcı talimatı: kaynak dosyaları dosya dosya incele, `feat/hero-matrix-rain` dalına commit et ve push et; PR/merge/main/production/force-push yok; `git add .`/`reset`/`clean`/`restore`/kullanıcı dosyası silme yok; check/build/test FAIL ise commit/push yok; Verify RED ise yeni fix commit yok, önce rapor; rapor dosyası commit edilmez.
+- İnceleme: worktree HEAD 7559b3e, origin/main aynı; beklenen 20 dosya (Matrix testleri/src, attribution, ARCHITECTURE/ROADMAP/LAST_REPORT) dışında kaynak diff yok; Matrix yalnız `main > .hero[data-hero-3d]` üzerinde mount olur, tek Matrix + tek bloom canvas, hero WebGL korunur, passive wheel/touch, form/modifier guard, `mx*` query state (hash dokunulmaz), tam dispose, CC BY-NC-SA atıf mevcut. `index.html` CRLF-stat artefaktı nedeniyle staged dışı bırakıldı.
+- Yerel doğrulama: `npm run check` PASS, `npm run build` PASS, `npm test -- --test-concurrency=1` 59/59 PASS. Commit `42e84faab8271065d241bb385adddc4bb83ec840` (tek Matrix feature commit); push SUCCESS, uzak `feat/hero-matrix-rain` == yerel HEAD (rev-parse/ls-tree/remote içerik ile doğrulandı).
+- Cloudflare Preview: Build SUCCESS (Workers Builds 117884596329); Preview `https://8a0448be-zy-reklam.akinarslanceng.workers.dev` revision `42e84fa` sunuyor. Hızlı kabul 22/22 PASS, 0 konsol hatası: Matrix görünür/hero-only, başlıklar üstte, CTA, 360° −0.12→3.1416, yardım `?`, fly/classic, palet, warp speed=45, anchor, scroll, mobil scroll 0→700, `/3d-vitrin/` Matrix yok + showroom hazır. Ekran görüntüleri docs/evidence/matrix/preview-home-1440.png, preview-home-help-1440.png, preview-vitrin-1440.png (commit dışı).
+- GitHub Verify RED: run 39197877724 / job 117884455932; `npm test` 56 pass / 3 fail, tümü TimeoutError (live-content canvas wait `/3d-vitrin/` 20s, matrix.test admin goto 30s, scene.test waitForFunction 45s); live-smoke skipped; build/ci adımları PASS. Aynı seri yerelde 59/9 PASS; hata kod kaynaklı değil CI zamanlama/timeout. Talimat gereği yeni fix commit üretilmedi; kullanıcı kararı (yeniden çalıştırma vs. test timeout fix commit) bekleniyor.
+- Rapor: MIMO_MATRIX_COMMIT_PUSH_REPORT.md (kök) + docs/evidence/matrix/MIMO_REPORT.md kopyası, commit edilmedi. ROADMAP/LAST_REPORT güncellemeleri de bilinçli olarak bu commit dışında bırakıldı (tek commit kuralı). Sıradaki tek iş: kullanıcının Preview görsel onayı, Verify RED kararını ve PR/merge talimatını beklemek.
+
+### 2026-10-19 — P3.7j/P9 Matrix CI semantik beklemeler ve yayın kapısı (devam ediyor)
+
+- Yeni talimat önceki local-only yasağını bu görev için kaldırır: üç CI timeout'u, üç ardışık hedefli PASS, tam 59/59, aynı feature commit/push, feature Verify/Preview, PR Verify, PR merge ve otomatik production/main Verify/live/domain kabulü. Doğrudan main push, force push, admin publish ve manuel production deploy yok. Kullanıcı ek ticari izin alındığını bildirdi; upstream lisans/atıf korunur.
+- Fetch: local/origin feature 42e84faab8271065d241bb385adddc4bb83ec840, main7559b3e. Önceki kullanıcı/generated/evidence farkları korundu. Güncel tam AGENTS/ARCHITECTURE/ROADMAP okundu; alt kapsam AGENTS yok. Mimari v1.27/A27; runtime ve veri/API sözleşmesi değişmedi.
+- İlk CI39197877724 logu yeniden okundu:56/59, üç timeout. Stack live-content helper135'teki HOME WebGL fixture'ını gösterir; önceki Mimo günlüğündeki /3d-vitrin/ yorumu bu stack ile düzeltilir. Hero öncesinde açık kalan tamamlanmış Matrix fixture'ları kapatılır; active ready/terminal state, tek görünür canvas ve gerçek çizim sayacı beklenir. Fallback/reduced aktif WebGL kabulü sayılmaz; Matrix/WebGL identity assertions aynen korunur.
+- Matrix responsive11viewport assertions korunur; 4K sayfa diğer route kontrollerinden önce kapatılır. Her route taze context/page'de HTTP200 + DOMContentLoaded + gerçek login/showroom/kategori readiness ile doğrulanır. Admin kontrolü artık tüm alt kaynakların global load olayına bağlı değildir.
+- QA üç örnek/JSON/elapsed/frame assertions korunur. Parent belge RAF'ına bağlı başarı-only wait yerine100ms semantik polling ile running→result/error tamamlanması izlenir; tool hata mesajı anında başarısız olur. İlk CI bu tool'un status/iframe state'ini kaydetmediğinden tarihsel terminal sebep kesinleştirilemez; yeni failure-only tanı URL/readyState/viewport/visibility/motion/stage/Matrix/console/network/progress kaydeder. Timeout limitleri20/30/45sn artırılmadı.
+- Son kaynaklarla üç ardışık hedefli koşu ve tam paket kapısı sürüyor; henüz yeni commit/push/PR/merge/production yok. Kanıt docs/evidence/matrix/ci-release; sıradaki tek iş yerel doğrulama kapısını tamamlamak.
+
+- Yerel kapı tamamlandı: üç ardışık hedefli koşu3/3+3/3+3/3 (100459/120820/113963ms); ardından check/build ve tek seri tam59/59 PASS,0fail/0cancelled/0skipped,1114829.9942ms. Önceki testler ve viewport/assertion sayıları korunur; timeout artırımı yok. Runtime kaynak diff boş. Kanıt ci-release/local.json ve .matrix-target-final-{1,2,3}.log/.matrix-release-full.log. Sıradaki tek iş dar kapsamlı fix commit/push ve feature Verify kapısıdır; PR/merge/production henüz yapılmadı.
