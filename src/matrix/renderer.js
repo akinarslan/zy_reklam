@@ -149,7 +149,7 @@ export function createRenderer(host, canvas, bloom, fx, P, reduced) {
   let focal = FOCAL;        // eased: widens (dolly-zoom) as speed climbs
 
   // speed: eased toward a target so acceleration ramps instead of jumping
-  const SPEED_MIN = -20, SPEED_MAX = 60, CRUISE = 6, WARP = 45;
+  const SPEED_MIN = -20, SPEED_MAX = 60, CRUISE = 2, WARP = 45;
   let speedTarget = CRUISE, speed = CRUISE;   // forward walking speed (world units / frame)
 
   const IDLE_DRIFT = !REDUCED && P.get('idle') === '1';
