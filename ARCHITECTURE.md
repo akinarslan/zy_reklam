@@ -516,4 +516,9 @@ kademesi sunar.320 parçacık simülasyonu, seed/density ve bütün mod/etkileş
 korunur; RAF'a sabit FPS sınırı, CI'ye özel kapatma veya hero fallback eşiği
 değişikliği yoktur. Modül/veri/yayın mimarisi aynı kaldığından sürüm artırılmaz.
 
-2026-10-19 A27 Classic b?t?e ek a??klamas?: sabit yak?n Classic depth plane'leri mesafe culling'inden ka??yordu.3?CPU/3840 bas?nc?nda floor0.375'te bile3.1?4.3k glyph/12?24ms CPU ?l??ld?. Classic ?izilecek s?tunlar? QUALITY? oran?nda, kararl? golden-ratio s?ra ?rneklemesiyle se?er; t?m320 strand sim?lasyonu/recycle ve mesajlar korunur; quality1 ayn? ?izimdir. SabitFPS cap/CI ko?ulu/feature kapatma yok. Mod?l/veri/API/yay?n s?n?rlar? de?i?mez; v1.27 korunur.
+
+<!-- MATRIX_CI_QA_NOTES_START -->
+2026-10-19 A27 Classic bütçe açıklaması: sabit yakın Classic depth plane'leri mesafe culling'inden kaçıyordu. Düşük kalitede çizilecek sütunlar QUALITY² oranında kararlı bir alt kümeden seçilir; tüm 320 strand simülasyonu/recycle ve mesajlar korunur. Quality1 tam çizimi değişmez. Sabit FPS cap, CI koşulu veya feature kapatma yok; modül/veri/API/yayın sınırları aynı, v1.27 korunur.
+
+2026-10-19 A27 test-driver açıklaması: Matrix işlevsel test tarayıcısı SwiftShader ile açık Canvas2D ve gerçek WebGL readback kullanırken software compositor seçer. Bu, sürekli güncellenen 4K GPU yüzeyinin snapshot readback kuyruğunu ayırır. Kontrollü ölçüm 6339→1354ms; scene ready, Canvas2D enabled, WebGL enabled_readback ve tam çözünürlüklü PNG doğrulandı. Aynı canvas/frame, 11 viewport, tam DPR, kayıpsız PNG, 30sn ve tüm assertions korunur. Scene performans ve gerçek Preview/production profilleri değişmez; fiziksel GPU kabulü sayılmaz.
+<!-- MATRIX_CI_QA_NOTES_END -->

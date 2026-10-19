@@ -10,7 +10,7 @@
 
 **Aktif aşama:** P3 — Gerçek 3D açılış uygulandı; performans kapanışı devam ediyor.
 
-**Kullanıcı önceliği:** P3.7j/P9 render bütçesi Linux CI'da geçti; son58/59'un tek hatası aktif4K PNG artifact timeout'u. Kayıpsız hızlı encoding/fresh-frame koşuluyla yerel ve uzak yayın kapıları sürüyor.
+**Kullanıcı önceliği:** P3.7j/P9 Matrix compositor/readback son adayı; yerel doğrulama ve Verify → Preview → PR → merge → production kapıları sürüyor.
 
 P1 kaynak, logo, font ve iletişim incelemesi yapıldı; gerçek proje bilgileri/fotoğrafları doğrulanmadığı için P1.5 açık kalır. Planın engel yönetimi uyarınca bağımsız P2 temeli tamamlandı. Vite/TypeScript sayfası, statik SVG poster, mobil menü, hareket tercihi ve temel WhatsApp iletişim akışı çalışıyor. Gerçek 3D açılış şimdi uygulanmıştır. Üretim animasyonları, galeri, stüdyo ve upload henüz uygulanmadı.
 
@@ -856,18 +856,15 @@ Sıradaki tek iş:
 
 - Son fresh-frame sürümüyle nihai üç ardışık hedefli koşu3/3+3/3+3/3 PASS,0fail/cancelled/skipped;135993.2381/123533.3465/120824.2939ms. Check/build ardından full59 testlik seri paket yeniden başladı. Önceki capture denemeleri bu nihai üç koşu yerine sayılmadı. Kanıt .matrix-capture-final-{1,2,3}.log ve .matrix-capture-{check,build,full}.log. Sıradaki tek iş tam yerel kapının sonucu,ardından dar capture fix commit/push ve Verify'dır.
 
-- 2026-10-19 P3.7j/P9 capture son kaynaklar?: ?? ard???k hedefli3/3 +3/3 +3/3; check/build ve tek seri59/59 PASS,0fail/cancelled/skipped (1161064.811ms).12 tam-DPR aktif PNG capture ve15 g?rsel kabul PASS. Kan?t:ci-release/local-capture.json. Uzak Verify/Preview/PR/production kap?lar? bekliyor.
+### 2026-10-19 — P3.7j/P9 CI kapanış kaydı
 
-2026-10-19 kay?t: son capture commit ea4aeb2cbd1e8ea1de3354366c6fab510d414be4; origin feature SHA ve d?rt commit blobu fetch sonras? birebir do?ruland?. De?i?meyen test/runtime kaynak hashleri local-capture.json ile e?le?ir; post-commit build PASS. Feature Verify39218168700 s?r?yor; Cloudflare Buildadacf2ac SUCCESS, yeni Preview79f21036 ASSETS-only/secrets[]. workers.dev TLS eri?imi yerel ba?lant?da kesiliyor; Preview kabul? hen?z yap?lmad?. Yeni PR/merge/production yok.
-
-2026-10-19 P3.7j/P9 devam: Verify39218168700 RED57/59. ?lk live/admin/QA kontrolleri PASS; yeni Matrix idle kamera sabit3.4sn ?rneklemesi ve4KClassic Page.captureScreenshot30sn FAIL. Son capture ea4aeb2 h?z optimizasyonu tek ba??na yeterli olmad?; bu sonu? GREEN say?lmaz. Yeni yaln?z-test aday?: idle ger?ek running/camera hareket ko?ulu; Page.startScreencast ile yeni sunulmu? compositor PNG karesi,epoch timestamp/tamDPR/IHDR/ayn?canvases/frame ilerlemesi/30sn b?t?e korunur.3?CPU4K probe3454ms ve g?rselPASS; advanced+11viewport probe2/2PASS. Yeni aday i?in ?? ard???k4/4 ve ard?ndan full59 ko?uyor; hen?z commit/push yok. Preview TLS eri?imi h?l? engelli; yeni PR/merge/production yok.
-
-- Presented-frame ilk aday ??4/4 PASS;check/build PASS. Tam paket,4KClassic yerel13.4sn ?l??m?n?n kalite-rebuild ge?i?ini incelemek i?in durduruldu; bu ara tam ko?u ba?ar? say?lmaz. Son adaya governor1sn+describe250ms periyodu boyunca de?i?meyen kalite ve ilerleyen ger?ek frame ko?ulu eklendi; kalite zorlanmaz/animasyon durmaz,30sn toplam b?t?e korunur.
-
-2026-10-19 A27 Classic b?t?e ek a??klamas?: sabit yak?n Classic depth plane'leri mesafe culling'inden ka??yordu.3?CPU/3840 bas?nc?nda floor0.375'te bile3.1?4.3k glyph/12?24ms CPU ?l??ld?. Classic ?izilecek s?tunlar? QUALITY? oran?nda, kararl? golden-ratio s?ra ?rneklemesiyle se?er; t?m320 strand sim?lasyonu/recycle ve mesajlar korunur; quality1 ayn? ?izimdir. SabitFPS cap/CI ko?ulu/feature kapatma yok. Mod?l/veri/API/yay?n s?n?rlar? de?i?mez; v1.27 korunur.
-
-Compositor capture/quality-settling/software2D denemeleri nihai kayna?a al?nmad?; HEAD ea4aeb2'nin kay?ps?z aktif PNG helper'? aynen korunur. Idle kamera sabit bekleme yerine ger?ek running/hareket bekler; adaptive test density/frame/nonzero glyph assertions ile g??lendirildi. Son aday?n ??4/4 ve tam59 kabulleri bekliyor.
-
-2026-10-19 P3.7j/P9 sonClassic aday?: ?nceki capture/settling/software2D denemeleri nihai kayna?a al?nmad?. Yaln?z Classic adaptive QUALITY? column draw budget ve semantic idle/g??lendirilmi? density/frame/glyph testi; t?m320sim?lasyon/mesaj/fullquality korunur. ?? ard???k4/4 PASS (138126.728/135568.8486/154653.2726ms),check/build PASS; son tek seri59 paket s?r?yor. Kan?t classic-budget-comparison.json ve .matrix-classic-target-{1,2,3}.log. Son aday hen?z commit/push edilmedi; sonVerify39218168700 RED57/59,PreviewTLSengelli;PR/merge/production yok.
-
-- Son Classic kaynaklar?: ??4/4/check/build/full59/59 PASS (843602.2852ms),15 g?ncel g?rsel incelendi. Kan?t ci-release/local-classic.json,local-visual-review.json,classic-budget-comparison.json. Sonu?lar yerel kabul; uzakVerify/Preview/production yerine say?lmaz.
+- Initial: 42e84fa / Verify39197877724, 56/59 ve üç timeout. 678bd862: live fixture temizliği, HTTP/DOMContentLoaded ve gerçek scene/canvas/render readiness, QA terminal durumunu 100ms polling ile izleme. Limitler artırılmadı.
+- Verify39205618914, 58/59: gerçek slow-device fallback ortaya çıktı. 98fbeb839: kalite karesine bağlı uzak glyph culling ve 0.375 LOD. Aynı 3× CPU senaryosunda üç gerçek QA örneği iki kez ready/high tamamlandı; 320 strand ve hero koruma eşikleri korundu.
+- Verify39210909043, 58/59: QA geçti, 4K Classic PNG timeout kaldı. ea4aeb2: kayıpsız hızlı PNG, tam DPR/IHDR, ilerleyen frame ve aynı canvas denetimi. Yerel üç3/3 ve 59/59 geçti; Verify39218168700, 57/59: sabit idle kamera örneklemesi ve 4K PNG başarısızdı.
+- 003a3f3: Classic yakın depth plane'leri için QUALITY² oranında kararlı sütun çizim bütçesi; tüm strand simülasyonu/recycle, mesajlar ve quality1 tam çizim korunur. Aynı 3840/3× CPU ölçümü yaklaşık 3.1–4.3k glyph/12–24ms yerine 420–490 glyph/3.7–6.1ms verdi. Semantic idle ve density/frame/nonzero glyph assertions eklendi. Üç4/4 ve yerel59/59 geçti; Verify39227692509, 58/59: yalnız 4K PNG kaldı. Bu RED sonuçlar gizlenmedi.
+- İlk screencast/kalite bekleme/accelerated-2D kapatma denemeleri çözüm sayılmadı ve kaynağa alınmadı. Durdurulan ara tam koşular başarı sayılmaz. 003a3f3 runtime'ı değiştirilmeden compositor karşılaştırıldı: varsayılan GPU compositing + SwiftShader 6339ms; software compositor 1354ms, gerçek WebGL ready, Canvas2D enabled ve WebGL enabled_readback. Tam 3840×2160 PNG görsel incelendi.
+- Son aday yalnız Matrix işlevsel test browser'ına --disable-gpu-compositing ekler ve GPU feature metadata kaydeder. Matrix/Canvas2D/WebGL kapatılmaz; pause, FPS cap, CI koşullu feature-disable veya assertion/viewport azaltma yok. Scene performans ve gerçek Preview/production browser profilleri değişmez. Altı Matrix preflight 6/6 PASS.
+- Son kaynak: hedefli 4/4 PASS + 4/4 PASS + 4/4 PASS; check/build PASS; tam paket 59/59 PASS; 0 fail/cancelled/skipped; 846544.2547ms. Son HEAD 003a3f3b813af335e29471e8452bc2750ba32940; test-driver henüz commit edilmedi. Verify 39227692509 / failure. Genel P3/P7/P8/P9 açık kalır.
+- Kullanıcı VPN açtı; workers.dev TLS erişimi düzeldi. 003a3f3 Preview fe724a0d manifest HTTP200/revision eşleşti; authenticated ASSETS-only/secrets[]. Son Preview: https://fe724a0d-zy-reklam.akinarslanceng.workers.dev. Yeni PR yok; merge yok; doğrudan main yazımı, manuel production deploy ve gerçek admin publish yok.
+- Kanıt: docs/evidence/matrix/ci-release; local-compositor.json, compositor-probe.json, classic-budget-comparison.json, ilgili CI JSON/logları ve yerel test logları. Bu kayıtlar için döngüsel commit/deployment oluşturulmaz.
+<!-- MATRIX_CI_RELEASE_LOG_END -->

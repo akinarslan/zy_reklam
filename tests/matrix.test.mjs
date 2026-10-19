@@ -10,7 +10,10 @@ before(async()=>{
  await mkdir(out,{recursive:true});
  server=spawn(process.execPath,['node_modules/vite/bin/vite.js','preview','--host','127.0.0.1','--port','4208','--strictPort'],{stdio:'ignore',windowsHide:true});
  for(let i=0;i<100;i++){try{if((await fetch(base)).ok)break;}catch{}await new Promise(r=>setTimeout(r,100));}
- browser=await chromium.launch({args:['--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']});
+ // Keep Canvas 2D and actual SwiftShader WebGL enabled; software compositing
+ // avoids queuing 4K snapshot readback behind a continuously invalidated GPU surface.
+ browser=await chromium.launch({args:['--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader','--disable-gpu-compositing']});
+ const graphics=await browser.newBrowserCDPSession();const info=await graphics.send('SystemInfo.getInfo');evidence.graphics=info.gpu.featureStatus;evidence.chromiumVersion=browser.version();await graphics.detach();
 });
 after(async()=>{await browser?.close();server?.kill();await writeFile(`${out}/acceptance.json`,JSON.stringify(evidence,null,2));});
 const stats=p=>p.locator('.hero').evaluate(e=>JSON.parse(e.dataset.matrixState));
