@@ -77,7 +77,7 @@ test('Matrix controls, capabilities, shortcut safety, lifecycle and same canvas'
  }finally{await p.close();}
 });
 test('Matrix advanced deterministic state, URL restore, reduced motion, quality and anchors',async()=>{
- const context=await browser.newContext({viewport:{width:1366,height:768}});const p=await context.newPage();
+ const context=await browser.newContext({viewport:{width:1366,height:768}});const p=await context.newPage();const diagnostic=browserDiagnostics(p);
  try{
  await ready(p,'/?mxSeed=shared&mxPalette=gold&mxMode=classic&mxDensity=123&mxMsg=WAKE+UP&mxGlyphs=AB01&mxBloom=.75&mxHalo=0&mxRamp=0&mxP3=0&mxIdle=1#hizmetler');
  await p.evaluate(()=>scrollTo(0,0));const a=await stats(p);assert.equal(a.density,123);assert.equal(a.mode,'classic');assert.equal(a.p3Active,false);assert.match(a.glyphSet,/^[AB01]+$/);assert.ok(a.messageStrands>0);
@@ -90,14 +90,16 @@ test('Matrix advanced deterministic state, URL restore, reduced motion, quality 
  const original=await stats(p),restored=await stats(other);
  for(const key of ['seed','palette','density','msg','glyphs','mode','bloom','halo','ramp','p3','idle','fingerprint']) assert.equal(restored[key],original[key],key);
  await newContext.close();await p.setViewportSize({width:1920,height:1080});await p.evaluate(()=>scrollTo(0,0));await p.screenshot({path:`${out}/matrix-palette-1920.png`});
- await p.evaluate(()=>scrollTo(0,0));await state(p,'idle',true);await p.waitForTimeout(3400);assert.ok(Math.abs((await stats(p)).cameraX)>1);
+ await p.evaluate(()=>scrollTo({top:0,behavior:'instant'}));await state(p,'idle',true);
+ await p.waitForFunction(()=>{const s=JSON.parse(document.querySelector('.hero').dataset.matrixState);return s.running&&Math.abs(s.cameraX)>1;},null,{timeout:10000,polling:100});assert.ok(Math.abs((await stats(p)).cameraX)>1);
  // Drive the retained upstream governor with costly work; no fixed FPS cap is installed.
  await p.evaluate(()=>{let until=performance.now()+2200;function busy(){const end=performance.now()+30;while(performance.now()<end){}if(performance.now()<until)requestAnimationFrame(busy);}requestAnimationFrame(busy);});
  await p.waitForFunction(()=>JSON.parse(document.querySelector('.hero').dataset.matrixState).quality<1,null,{timeout:10000});assert.equal((await stats(p)).bloomActive,false);
+ const adapted=await stats(p);assert.equal(adapted.density,123);await p.waitForFunction(frames=>JSON.parse(document.querySelector('.hero').dataset.matrixState).frames>frames,adapted.frames,{polling:100});assert.match(await p.locator('.matrix-rain-debug').textContent(),/[1-9][0-9]* glyph/);
  for(const anchor of ['#projeler','#iletisim','#hizmetler','#hakkinda']) {await p.evaluate(a=>{location.hash=a;},anchor);await p.waitForTimeout(100);assert.equal(new URL(p.url()).hash,anchor);assert.equal(await p.locator('[data-matrix-rain]').count(),1);}
  const reducedPage=await browser.newPage({reducedMotion:'reduce'});await ready(reducedPage);assert.equal((await stats(reducedPage)).mode,'classic');assert.equal((await stats(reducedPage)).reduced,true);assert.equal(await reducedPage.locator('[data-matrix-action="m"]').textContent(),'Klasik');await state(reducedPage,'motion',true);assert.equal((await stats(reducedPage)).mode,'fly');assert.equal(await reducedPage.locator('[data-matrix-action="m"]').textContent(),'Fly');await reducedPage.close();
  evidence.advanced.push('seed determinism, 40–900 density, glyph/message strands, bloom/halo/ramp/P3, idle, adaptive quality/bloom disable, new-context URL roundtrip, native anchors, OS/site motion policy');
- }finally{await context.close();}
+ }catch(error){await diagnostic('matrix-advanced',error);throw error;}finally{await context.close();}
 });
 test('Matrix owns one RAF and disposes completely; optional Canvas 2D failure preserves hero',async()=>{
  const p=await browser.newPage();const errors=[];p.on('pageerror',e=>errors.push(e.message));

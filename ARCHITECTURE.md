@@ -515,3 +515,5 @@ A27 governor'u uzak glyph culling'ini kalite karesiyle artırır ve0.375 ek LOD
 kademesi sunar.320 parçacık simülasyonu, seed/density ve bütün mod/etkileşimler
 korunur; RAF'a sabit FPS sınırı, CI'ye özel kapatma veya hero fallback eşiği
 değişikliği yoktur. Modül/veri/yayın mimarisi aynı kaldığından sürüm artırılmaz.
+
+2026-10-19 A27 Classic b?t?e ek a??klamas?: sabit yak?n Classic depth plane'leri mesafe culling'inden ka??yordu.3?CPU/3840 bas?nc?nda floor0.375'te bile3.1?4.3k glyph/12?24ms CPU ?l??ld?. Classic ?izilecek s?tunlar? QUALITY? oran?nda, kararl? golden-ratio s?ra ?rneklemesiyle se?er; t?m320 strand sim?lasyonu/recycle ve mesajlar korunur; quality1 ayn? ?izimdir. SabitFPS cap/CI ko?ulu/feature kapatma yok. Mod?l/veri/API/yay?n s?n?rlar? de?i?mez; v1.27 korunur.
