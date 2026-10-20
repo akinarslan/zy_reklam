@@ -1,3 +1,4 @@
+import {verifyMatrixResponsive} from './helpers/matrix-responsive.mjs';
 import {test,before,after} from 'node:test';
 import assert from 'node:assert/strict';
 import {spawn} from 'node:child_process';
@@ -28,11 +29,11 @@ test('Matrix controls, capabilities, shortcut safety, lifecycle and same canvas'
  await ready(p);await p.waitForFunction(()=>document.querySelector('[data-hero-stage]').dataset.sceneState==='ready');
  assert.equal(await p.locator('[data-matrix-rain]').count(),1);assert.equal(await p.locator('[data-hero-stage] canvas').count(),1);
  await p.evaluate(()=>{window.matrixIdentity=document.querySelector('[data-matrix-rain]');window.signIdentity=document.querySelector('[data-hero-stage] canvas');});
- assert.equal((await stats(p)).mode,'fly');assert.equal((await stats(p)).palette,'green');
- await key(p,'w');assert.equal((await stats(p)).speed,8);await key(p,'s');assert.equal((await stats(p)).speed,6);
- await key(p,'ArrowUp');assert.equal((await stats(p)).speed,8);await key(p,'ArrowDown');assert.equal((await stats(p)).speed,6);
+ assert.equal((await stats(p)).mode,'fly');assert.equal((await stats(p)).palette,'green');assert.equal((await stats(p)).speed,2,'user-approved cruise speed');
+ await key(p,'w');assert.equal((await stats(p)).speed,4);await key(p,'s');assert.equal((await stats(p)).speed,2);
+ await key(p,'ArrowUp');assert.equal((await stats(p)).speed,4);await key(p,'ArrowDown');assert.equal((await stats(p)).speed,2);
  await p.mouse.move(120,150);await p.waitForTimeout(300);assert.notEqual((await stats(p)).cameraX,0);
- await p.mouse.wheel(0,65);await p.waitForTimeout(300);assert.ok(await p.evaluate(()=>scrollY>0));assert.ok((await stats(p)).speed<6);
+ await p.mouse.wheel(0,65);await p.waitForTimeout(300);assert.ok(await p.evaluate(()=>scrollY>0));assert.ok((await stats(p)).speed<2);
  await p.evaluate(()=>scrollTo(0,0));await key(p,'Space');assert.equal((await stats(p)).speed,45);
  await p.screenshot({path:`${out}/matrix-warp-1920.png`});await p.waitForTimeout(1600);assert.ok((await stats(p)).speed<45);
  await key(p,'m');assert.equal((await stats(p)).mode,'classic');await key(p,'m');assert.equal((await stats(p)).mode,'fly');
@@ -123,45 +124,7 @@ test('Matrix owns one RAF and disposes completely; optional Canvas 2D failure pr
  evidence.core.push('one RAF after sign idle; nonpersisted pagehide removes all Matrix UI/RAF; no resurrection; unavailable Canvas 2D leaves static/3D hero');
  }finally{await p.close();}
 });
-test('Matrix full hero bounds and readable controls at eleven viewports; other pages and no-JS stay static',async()=>{
- const p=await browser.newPage();const errors=[];const diagnostic=browserDiagnostics(p);p.on('pageerror',e=>errors.push(e.message));p.on('requestfailed',r=>errors.push(r.url()));
- try{
- const shots=new Set([390,768,1366,1920,2560,3840]);
- for(const [width,height] of [[390,844],[412,915],[768,1024],[820,1180],[1024,768],[1366,768],[1440,900],[1920,1080],[2560,1440],[3440,1440],[3840,2160]]) {
-  await p.setViewportSize({width,height});await ready(p);await p.waitForFunction(()=>document.querySelector('[data-hero-stage]').dataset.sceneState==='ready');
-  const row=await p.evaluate(()=>{const r=s=>document.querySelector(s).getBoundingClientRect().toJSON();return{width:innerWidth,height:innerHeight,hero:r('.hero'),layer:r('.matrix-rain-layer'),heading:r('#hero-title'),stage:r('[data-hero-stage]'),bottom:r('.hero-bottom'),next:r('.brand-showcase'),overflow:document.documentElement.scrollWidth>innerWidth,matrix:document.querySelectorAll('[data-matrix-rain]').length,webgl:document.querySelectorAll('[data-hero-stage] canvas').length,pointer:getComputedStyle(document.querySelector('[data-matrix-rain]')).pointerEvents};});
-  assert.equal(row.overflow,false);assert.equal(row.matrix,1);assert.equal(row.webgl,1);assert.equal(row.pointer,'none');
-  for(const field of ['x','y','width','height'])assert.ok(Math.abs(row.hero[field]-row.layer[field])<1);
-  assert.ok(row.next.top>=height-1);assert.ok(row.hero.bottom<=height+1);assert.ok(row.heading.top>=row.hero.top);assert.ok(row.bottom.bottom<=height);
-  const ui=await p.evaluate(()=>{const r=e=>e.getBoundingClientRect().toJSON();return{hud:r(document.querySelector('.matrix-rain-hud')),obstacles:[...document.querySelectorAll('.hero-content,.sign-stage,.object-caption,.hero-bottom > *,.instagram-float,.whatsapp-float')].map(r)};});
-  assert.ok(ui.obstacles.every(r=>r.bottom<=ui.hud.top||r.top>=ui.hud.bottom||r.right<=ui.hud.left||r.left>=ui.hud.right),'Matrix HUD must clear existing content/controls');
-  assert.ok(await p.locator('.hero-content .button').first().isVisible());
-  if(shots.has(width))evidence.captures.push(await captureActiveMatrixFrame(p,`${out}/matrix-fly-${width}.png`));
-  await key(p,'m');assert.equal((await stats(p)).mode,'classic');if(shots.has(width))evidence.captures.push(await captureActiveMatrixFrame(p,`${out}/matrix-classic-${width}.png`));
-  evidence.responsive.push({...row,passed:true});
- }
- await p.close();
- for(const path of ['/3d-vitrin/','/admin/','/hizmetler/tabela-yonlendirme/','/projeler/tabela/','/promosyonlar/ofis-kirtasiye/']) {
-  // Isolate route absence from the 4K GPU allocation retained by the preceding
-  // responsive navigation. The page must actually boot, not merely return HTML.
-  const routePage=await browser.newPage();const routeDiagnostic=browserDiagnostics(routePage);
-  const responses=[];routePage.on('request',r=>responses.push(r.url()));
-  routePage.on('pageerror',e=>errors.push(e.message));routePage.on('requestfailed',r=>errors.push(r.url()));
-  try{
-   const response=await routePage.goto(base+path,{waitUntil:'domcontentloaded'});assert.equal(response.status(),200);
-   if(path==='/admin/')await routePage.locator('#login-form button[type="submit"]').waitFor({state:'visible'});
-   else if(path==='/3d-vitrin/')await activeSceneReady(routePage);
-   else await routePage.locator('main h1').waitFor({state:'visible'});
-   // Wait for the entry module too: no-Matrix before module execution is vacuous.
-   await routePage.waitForFunction(()=>performance.getEntriesByType('resource').some(e=>e.initiatorType==='script'));
-   assert.equal(await routePage.locator('[data-matrix-rain],.matrix-rain-hud').count(),0);assert.ok(!responses.some(url=>/\/controller-[^/]+\.js/.test(url)));
-  }catch(error){await routeDiagnostic('matrix-route-'+path.split('/').filter(Boolean).join('-'),error);throw error;}
-  finally{await routePage.close();}
- }
- const nojs=await browser.newPage({javaScriptEnabled:false});await nojs.goto(base);assert.ok(await nojs.locator('#hero-title').isVisible());assert.ok(await nojs.locator('#brand-showcase-title').count());assert.equal(await nojs.locator('[data-matrix-rain]').count(),0);await nojs.close();
- assert.deepEqual(errors,[]);evidence.errors.push(...errors);
- }catch(error){await diagnostic('matrix-responsive',error);throw error;}finally{await p.close();}
-});
+test('Matrix full hero bounds and readable controls at eleven viewports; other pages and no-JS stay static',async()=>{await verifyMatrixResponsive(browser,base,out,evidence);});
 test('Matrix missing kana and unsupported P3 use font and sRGB fallbacks',async()=>{
  const p=await browser.newPage();
  try{
@@ -182,7 +145,7 @@ test('Matrix real CDP touch: steering, vertical scroll, two-finger speed, double
  await touch('touchStart',[[40,250]]);await touch('touchMove',[[90,230]]);await p.waitForTimeout(150);assert.notEqual((await stats(p)).cameraX,0);await touch('touchEnd',[]);
  await p.evaluate(()=>scrollTo(0,0));await touch('touchStart',[[40,400]]);for(let y=380;y>=240;y-=20){await touch('touchMove',[[40,y]]);await p.waitForTimeout(20);}await touch('touchEnd',[]);await p.waitForTimeout(200);assert.ok(await p.evaluate(()=>scrollY>30));
  await p.evaluate(()=>scrollTo(0,0));await p.waitForTimeout(200);
- await touch('touchStart',[[35,240,1],[95,240,2]]);await touch('touchMove',[[35,210,1],[95,210,2]]);await touch('touchEnd',[]);assert.ok((await stats(p)).speed>6);
+ const speedBeforeTwoFingers=(await stats(p)).speed;await touch('touchStart',[[35,240,1],[95,240,2]]);await touch('touchMove',[[35,210,1],[95,210,2]]);await touch('touchEnd',[]);await p.waitForFunction(before=>Math.abs(JSON.parse(document.querySelector('.hero').dataset.matrixState).speed-before-3.6)<.0001,speedBeforeTwoFingers,{polling:100});assert.ok(Math.abs((await stats(p)).speed-speedBeforeTwoFingers-3.6)<.0001);
  await p.evaluate(()=>scrollTo(0,0));await p.waitForTimeout(200);
  await touch('touchStart',[[40,250]]);await touch('touchEnd',[]);await p.waitForTimeout(100);await touch('touchStart',[[40,250]]);await touch('touchEnd',[]);assert.equal((await stats(p)).speed,45);
  await p.locator('[data-matrix-action="c"]').tap();assert.equal((await stats(p)).palette,'amber');await p.locator('[data-matrix-action="m"]').tap();assert.equal((await stats(p)).mode,'classic');

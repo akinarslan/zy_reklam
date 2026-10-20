@@ -1,6 +1,6 @@
 # ZY Reklam — Mimari
 
-**Sürüm:** 1.27 · **Tarih:** 2026-10-19 · **Durum:** P3 fiziksel cihaz performans kabulü açık; P7 admin medya/taslak akışı yerel entegrasyonla doğrulandı, KV/R2 provision edildi; production secrets ve canlı GitHub yayını engelli; responsive viewport alt kabulü ve 2K+ ziyaretçi site genişlik ayarı doğrulandı
+**Sürüm:** 1.28 · **Tarih:** 2026-10-19 · **Durum:** P3 fiziksel cihaz performans kabulü açık; P7 admin medya/taslak akışı yerel entegrasyonla doğrulandı, KV/R2 provision edildi; production secrets ve canlı GitHub yayını engelli; responsive viewport alt kabulü ve 2K+ ziyaretçi site genişlik ayarı doğrulandı
 
 **İlgili belgeler:** [Yol haritası](ROADMAP.md) · [Çalışma kuralları](AGENTS.md)
 
@@ -527,3 +527,18 @@ değişikliği yoktur. Modül/veri/yayın mimarisi aynı kaldığından sürüm 
 
 <!-- MATRIX_HEADROOM_PROGRESS -->
 A27 ek açıklama: yakın sütunların QUALITY² kararlı çizim bütçesi her iki Matrix moduna uygulanır. Düşük kalitede daha seyrek çizim; tam kalite, bütün strand simülasyonu/recycle ve mesajlar korunur. Hero/quality/FPS eşikleri ve modül/veri/API/yayın sözleşmeleri değişmez; v1.27 korunur.
+
+
+
+
+
+
+
+
+
+<!-- CI_POLICY_A28 -->
+### A28 — Blocking functional CI / GPU stress diagnostics (2026-10-19)
+
+Runtime tuning is stopped. PR #10 and the uncommitted elapsed-damping experiment are excluded. The user explicitly approved main 13dfebc6666b7dcfcf880228aab5a93ea928396e as the new frozen runtime, including intentional CTA/caption/hint/CSS changes, Matrix speed 2 and rear plate opacity 0.6. This supersedes exact runtime equality with 272d843. This CI-only release must preserve all runtime, asset, build and configuration inputs from the new baseline.
+
+Normal functional mouse/touch/keyboard, rotation, rear hardware, real WebGL, canvas/context identity, responsive bounds, no overflow, reduced motion, fallback and lifecycle/BFCache remain blocking. Full eleven-width animated sweeps, large PNG/readback and hardware/idle measurements retain their assertions in the separate GPU diagnostic job. It runs automatically, manually and weekly, preserving raw TAP, original exit codes, diagnostics and artifacts. Only allowlisted hardware timeouts with independently healthy WebGL/Matrix/UI evidence become warnings. Crash, pageerror, context loss, UI corruption, assertions, unknown errors, missing evidence and runner aborts fail. No blanket continue-on-error. Live smoke depends on blocking verify. Details: docs/CI_GPU_POLICY.md. Architecture v1.28 changes only verification policy; data/API/runtime contracts are preserved.
